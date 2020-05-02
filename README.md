@@ -12,9 +12,11 @@ df.plot_animated()
 
 ## Inspiration
 
-The inspiration for this project comes from [bar_chart_race](https://github.com/dexplo/bar_chart_race) by [Ted Petrou](https://github.com/tdpetrou)
+The inspiration for this project comes from:
 
-Which produces animations from DataFrames like:
+- [bar_chart_race](https://github.com/dexplo/bar_chart_race) by [Ted Petrou](https://github.com/tdpetrou)
+- [Pandas-Bokeh](https://github.com/PatrikHlobil/Pandas-Bokeh) by [Patrik Hlobil](https://github.com/PatrikHlobil)
+
+`bar_chart_race` produces animations from DataFrames like:
 
 ![bar_chart_race example](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/videos/covid19_horiz_desc.gif)
-

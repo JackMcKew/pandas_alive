@@ -3,4 +3,4 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-df.animated_plot()
+df.plot_animated()

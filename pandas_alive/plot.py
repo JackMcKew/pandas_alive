@@ -1,8 +1,27 @@
 import pandas as pd
 from pandas.core.base import PandasObject
+from .charts import _BarChartRace, bar_chart_race
 
-def plot(input_df,settings=None,**kwargs):
-    print("Implement Plotting method")
+
+def get_allowed_kinds():
+    return ["barh"]
+
+
+def plot(input_df: pd.DataFrame, kind: str = "barh", **kwargs):
+
+    df = input_df.copy()
+    if isinstance(df, pd.Series):
+        df = pd.DataFrame(df)
+
+    allowed_kinds = get_allowed_kinds()
+
+    if kind not in allowed_kinds:
+        allowed_kinds = "', '".join(allowed_kinds)
+        raise ValueError("Allowed plot kinds are '%s'." % allowed_kinds)
+
+    if kind == "barh":
+        
+
 
 ##############################################################################
 ########### Class to add Animated plotting methods to Pandas DataFrame
@@ -17,8 +36,8 @@ class BasePlotMethods(PandasObject):
     def __call__(self, *args, **kwargs):
         raise NotImplementedError
 
+
 class AnimatedAccessor(BasePlotMethods):
-    
     def __call__(self, *args, **kwargs):
         return plot(self.df, *args, **kwargs)
 
@@ -27,7 +46,7 @@ class AnimatedAccessor(BasePlotMethods):
 
         return self._parent
 
-    def barh(self, x: str = None, y:str=None, **kwds):
+    def barh(self, x: str = None, y: str = None, **kwds):
         """ Make an animated horizontal bar plot.
 
         Args:
@@ -37,5 +56,5 @@ class AnimatedAccessor(BasePlotMethods):
         Returns:
             [type]: [description]
         """
-        
+
         return self(kind="barh", x=x, y=y, **kwds)
