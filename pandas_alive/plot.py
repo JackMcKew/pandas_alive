@@ -29,6 +29,12 @@ def plot(input_df: pd.DataFrame, kind: str = "barh", **kwargs):
                 config.OUTPUT_FILENAME
             )
             bcr.make_animation()
+        elif config.OUTPUT_TYPE == "html":
+            return bar_chart_race(
+                df
+            )
+        else:
+            raise NotImplementedError(f"{config.OUTPUT_TYPE} is not implemented yet")
         # raise NotImplementedError("Barh is not supported yet")
 
 
