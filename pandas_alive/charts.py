@@ -342,7 +342,7 @@ class BarChart(BaseChart):
 @attr.s
 class LineChart(BaseChart):
     line_width: int = attr.ib()
-
+    
     def __attrs_post_init__(self):
         self.data_cols = self.get_data_cols()
         if self.fig is not None:
@@ -353,12 +353,21 @@ class LineChart(BaseChart):
             self.fig = plt.figure()
             self.ax = plt.axes()
         self.line_colors = self.get_colors(self.cmap)
-        self._lines = {}
+        self._lines: Dict = {}
         for name in self.data_cols:
             self._lines[name] = {}
             self._lines[name]["x"] = []
             self._lines[name]["y"] = []
         self.fps = 1000 / self.period_length * self.steps_per_period
+        self.df_values = self.prepare_data()
+
+    def prepare_data(self):
+        df_values = self.df.reset_index(drop=True)
+        df_values.index = df_values.index * self.steps_per_period
+        
+        new_index = range(df_values.index.max() + 1)
+        df_values = df_values.reindex(new_index).interpolate()
+        return df_values
 
     def plot_line(self, i):
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
@@ -386,7 +395,11 @@ class LineChart(BaseChart):
         self.ax.plot([], [], self.line_width)
 
     def get_frames(self):
-        return range(len(self.df.index))
+        return range(len(self.df_values))
+
+
+    # def get_frames(self):
+    #     return range(len(self.df.index))
 
     def make_animation(
         self, filename,
@@ -400,7 +413,7 @@ class LineChart(BaseChart):
             anim.save(filename, fps=self.fps)
 
 
-def animate_multiple_plots(filename: str, plots: List[Union[BarChart]]):
+def animate_multiple_plots(filename: str, plots: List[Union[BarChart,LineChart]]):
     """ Plot multiple animated plots
 
     Args:
@@ -409,7 +422,10 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart]]):
 
     def update_all_graphs(frame):
         for plot in plots:
-            plot.anim_func(frame)
+            try:
+                plot.anim_func(frame)
+            except:
+                pass
 
     fig, axes = plt.subplots(len(plots))
     for num, plot in enumerate(plots):
