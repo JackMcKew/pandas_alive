@@ -82,7 +82,7 @@ class BaseChart:
                 data_cols.append(col)
         if not data_cols:
             raise Exception("No numeric data columns found for plotting.")
-        
+
         self.df.rename(columns={col: str(col) for col in data_cols}, inplace=True)
         data_cols = [str(col) for col in data_cols]
 
@@ -343,7 +343,7 @@ class BarChart(BaseChart):
 @attr.s
 class LineChart(BaseChart):
     line_width: int = attr.ib()
-    
+
     def __attrs_post_init__(self):
         self.data_cols = self.get_data_cols()
         if self.fig is not None:
@@ -367,18 +367,21 @@ class LineChart(BaseChart):
         # TODO Rename to interpolate and add settings
         # Period interpolated to match bar chart for multiple plotting
         # https://stackoverflow.com/questions/30056399/interpolate-and-fill-pandas-dataframe-with-datetime-index
-        
-        self.df = self.df.reindex(pd.date_range(start=self.df.index.min(),
-                                                  end=self.df.index.max(),
-                                                  periods=((len(self.df.index) - 1) * self.steps_per_period) + 1))   
+
+        self.df = self.df.reindex(
+            pd.date_range(
+                start=self.df.index.min(),
+                end=self.df.index.max(),
+                periods=((len(self.df.index) - 1) * self.steps_per_period) + 1,
+            )
+        )
         # self.df = self.df.reset_index(drop=True)
         # self.df.index = self.df.index * self.steps_per_period
         # new_index = range(self.df.index.max() + 1)
-        self.df = self.df.interpolate(method='time')
+        self.df = self.df.interpolate(method="time")
         # self.df = self.df.reindex(pd.date_range(start=orig_index.min(),
         #                                           end=orig_index.max(),
-        #                                           periods=len(self.df.index)))   
-        
+        #                                           periods=len(self.df.index)))
 
     def plot_line(self, i):
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
@@ -407,7 +410,6 @@ class LineChart(BaseChart):
 
     def get_frames(self):
         return range(len(self.df.index))
-
 
     # def get_frames(self):
     #     return range(len(self.df.index))
