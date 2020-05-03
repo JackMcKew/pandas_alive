@@ -10,7 +10,7 @@ With **Pandas-Alive**, creating stunning, animated visualisations is as easy as 
 df.plot_animated()
 ```
 
-![Example Bar Chart](example-bar-chart.gif)
+![Example Bar Chart](example-barh-chart.gif)
 
 ## Installation
 
@@ -29,6 +29,7 @@ Must begin with a pandas DataFrame containing 'wide' data where:
 The data below is an example of properly formatted data. It shows total deaths from COVID-19 for the highest 20 countries by date.
 
 ![Example Data Table](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png)
+[Example Table](example_dataset_table.md)
 
 To produce the above visualisation:
 
@@ -103,7 +104,10 @@ df.diff().plot_animated(kind='line')
 
 `pandas-alive` supports multiple animated charts in a single visualisation.
 
-- Create each chart type
+- Create each chart type ensure to disable writing to file with `write_to_file=False`
+- Create a list of all charts to include in animation
+- Use `animate_multiple_plots` with a `filename` and the list of charts (this will use `matplotlib.subplots`)
+- Done!
 
 ``` python
 import pandas_alive
@@ -126,6 +130,17 @@ The inspiration for this project comes from:
 - [bar_chart_race](https://github.com/dexplo/bar_chart_race) by [Ted Petrou](https://github.com/tdpetrou)
 - [Pandas-Bokeh](https://github.com/PatrikHlobil/Pandas-Bokeh) by [Patrik Hlobil](https://github.com/PatrikHlobil)
 
-`bar_chart_race` produces animations from DataFrames like:
+## Contributing
 
-![bar_chart_race example](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/videos/covid19_horiz_desc.gif)
+Pull requests are welcome! Please help cover more and more chart types!
+
+## Requirements
+
+This package utilises the [matplotlib.animation function](https://matplotlib.org/3.2.1/api/animation_api.html), thus requiring a writer library.
+
+Ensure to have one of the supported tooling software installed prior to use!
+
+- [ffmpeg](https://ffmpeg.org/)
+- [ImageMagick](https://imagemagick.org/index.php)
+- [Pillow](https://pillow.readthedocs.io/en/stable/)
+- See more at <https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes>
