@@ -2,7 +2,7 @@ import pandas as pd
 from pandas.core.base import PandasObject
 import typing
 import matplotlib
-from .charts import BarChart
+from .charts import BarChart, LineChart
 
 # from .settings import OUTPUT_TYPE, OUTPUT_FILENAME
 from . import config
@@ -19,6 +19,7 @@ def plot(
     x: str = None,
     y: str = None,
     kind: str = "barh",
+    line_width:int = 3,
     write_to_file:bool=True,
     use_index: bool = True,
     steps_per_period: int = 10,
@@ -77,7 +78,20 @@ def plot(
     elif kind == "line":
         if config.OUTPUT_TYPE == "file":
             # line_race = 
-            line_race.make_animation(config.OUTPUT_FILENAME)
+            line_race = LineChart(
+                df,
+                line_width=line_width,
+                use_index=True,
+                steps_per_period=steps_per_period,
+                period_length=period_length,
+                figsize=figsize,
+                cmap=cmap,
+                title=title,
+                fig=fig,
+                kwargs=kwargs
+            )
+            if write_to_file:
+                line_race.make_animation(config.OUTPUT_FILENAME)
             return line_race
 
 

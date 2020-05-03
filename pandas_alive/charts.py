@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib import ticker, colors
-from typing import Tuple, Union, List, Optional
+from typing import Tuple, Union, List, Optional, Dict
 import attr
 
 DARK24 = [
@@ -53,6 +53,8 @@ class BaseChart:
     figsize: Tuple[float, float] = attr.ib()
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
+    cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
+    kwargs = attr.ib()
 
     def validate_params(self) -> None:
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
@@ -81,6 +83,7 @@ class BaseChart:
         if not data_cols:
             raise Exception("No numeric data columns found for plotting.")
         
+        self.df.rename(columns={col: str(col) for col in data_cols}, inplace=True)
         data_cols = [str(col) for col in data_cols]
 
         return data_cols
@@ -109,11 +112,9 @@ class BarChart(BaseChart):
     sort: str = attr.ib()
     n_bars: int = attr.ib()
     label_bars: bool = attr.ib()
-    cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
     bar_label_size: Union[int, float] = attr.ib()
     tick_label_size: Union[int, float] = attr.ib()
     period_label_size: Union[int, float] = attr.ib()
-    kwargs = attr.ib()
 
     def __attrs_post_init__(self):
         self.n_bars = self.n_bars or self.df.shape[1]
@@ -331,21 +332,17 @@ class BarChart(BaseChart):
 
         anim = super().make_animation(self.get_frames(), self.init_func)
 
-        # if self.html:
-        #     return anim.to_html5_video()
-
         extension = filename.split(".")[-1]
         if extension == "gif":
             anim.save(filename, fps=self.fps, writer="imagemagick")
         else:
             anim.save(filename, fps=self.fps)
 
+
 @attr.s
 class LineChart(BaseChart):
     line_width: int = attr.ib()
-    _xdata: List = attr.ib(default=[])
-    _ydata: List = attr.ib(default=[])
-    
+
     def __attrs_post_init__(self):
         self.data_cols = self.get_data_cols()
         if self.fig is not None:
@@ -355,13 +352,35 @@ class LineChart(BaseChart):
         else:
             self.fig = plt.figure()
             self.ax = plt.axes()
+        self.line_colors = self.get_colors(self.cmap)
+        self._lines = {}
+        for name in self.data_cols:
+            self._lines[name] = {}
+            self._lines[name]["x"] = []
+            self._lines[name]["y"] = []
+        self.fps = 1000 / self.period_length * self.steps_per_period
 
     def plot_line(self, i):
-        self.ax.set_xlim(self.series.index.min(), self.series.index.max())
-        self.ax.set_ylim((self.series.min(), self.series.max()))
-        self.xdata.append(self.series.index[i])
-        self.ydata.append(self.series.iloc[i])
-        self.ax.plot(self.xdata, self.ydata, self.line_width)
+        self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
+        self.ax.set_ylim(
+            self.df.select_dtypes(include=[pd.np.number]).min().min(),
+            self.df.select_dtypes(include=[pd.np.number]).max().max(),
+        )
+        for name, color in zip(self.data_cols, self.line_colors):
+
+            self._lines[name]["x"].append(self.df[name].index[i])
+            self._lines[name]["y"].append(self.df[name].iloc[i])
+            self.ax.plot(
+                self._lines[name]["x"],
+                self._lines[name]["y"],
+                self.line_width,
+                color=color,
+            )
+        # self.ax.set_xlim(self.series.index.min(), self.series.index.max())
+        # self.ax.set_ylim((self.series.min(), self.series.max()))
+        # self.xdata.append(self.series.index[i])
+        # self.ydata.append(self.series.iloc[i])
+        # self.ax.plot(self.xdata, self.ydata, self.line_width)
         # return self.line
 
     def anim_func(self, i):
@@ -373,20 +392,21 @@ class LineChart(BaseChart):
         self.ax.plot([], [], self.line_width)
 
     def get_frames(self):
-        return range(len(self.series))
+        return range(len(self.df.index))
 
-    def make_animation(self):
+    def make_animation(
+        self, filename,
+    ):
 
         # self.line.set_data([],[])
 
         anim = super().make_animation(self.get_frames(), self.init_func)
 
-        extension = self.filename.split(".")[-1]
+        extension = filename.split(".")[-1]
         if extension == "gif":
-            anim.save(self.filename, fps=self.fps, writer="imagemagick")
+            anim.save(filename, fps=self.fps, writer="imagemagick")
         else:
-            anim.save(self.filename, fps=self.fps)
-
+            anim.save(filename, fps=self.fps)
 
 
 def animate_multiple_plots(filename: str, plots: List[Union[BarChart]]):
@@ -422,6 +442,7 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart]]):
     else:
         anim.save(filename, fps=plots[0].fps)
 
+
 # if __name__ == "__main__":
 #     # import pandas as pd
 #     # df = pd.read_csv(
@@ -431,4 +452,3 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart]]):
 #     # )
 
 #     # print(df.plot)
-

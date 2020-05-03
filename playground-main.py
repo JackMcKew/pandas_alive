@@ -8,7 +8,15 @@ df = pandas_alive.load_dataset()
 
 # df.diff().max(axis=1).plot_animated(kind='line')
 
-bcr = df.plot_animated(orientation='v',write_to_file=False)
+i=0
 
-print(bcr.data_cols())
+# print(df.select_dtypes(include=[pd.np.number]).min().min())
+# print(df.select_dtypes(include=[pd.np.number]).max().max())
+
+# print(df.values.min())
+
+# print(df.values.max())
+
+print(df.diff().plot_animated(kind='line'))
+
 
