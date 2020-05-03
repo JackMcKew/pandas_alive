@@ -74,7 +74,7 @@ def plot(
 
     elif kind == "line":
         if config.OUTPUT_TYPE == "file":
-            line_race = line_chart_race(df,)
+            line_race = 
             line_race.make_animation(config.OUTPUT_FILENAME)
             return line_race
 

@@ -47,12 +47,12 @@ DARK24 = [
 @attr.s
 class BaseChart:
     df: pd.DataFrame = attr.ib()
-    use_index: bool = attr.ib(default=True)
-    steps_per_period: int = attr.ib(default=10)
-    period_length: int = attr.ib(default=500)
-    figsize: Tuple[float, float] = attr.ib(default=(6.5, 3.5))
-    title: str = attr.ib(default=None)
-    fig: plt.Figure = attr.ib(default=None)
+    use_index: bool = attr.ib()
+    steps_per_period: int = attr.ib()
+    period_length: int = attr.ib()
+    figsize: Tuple[float, float] = attr.ib()
+    title: str = attr.ib()
+    fig: plt.Figure = attr.ib()
 
     def validate_params(self) -> None:
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
@@ -88,15 +88,15 @@ class BaseChart:
 
 @attr.s
 class BarChart(BaseChart):
-    orientation: str = attr.ib(default="h")
-    sort: str = attr.ib(default="desc")
-    n_bars: int = attr.ib(default=None)
-    label_bars: bool = attr.ib(default=None)
-    cmap: Union[str, colors.Colormap, List[str]] = attr.ib(default="dark24")
-    bar_label_size: Union[int, float] = attr.ib(default=7)
-    tick_label_size: Union[int, float] = attr.ib(default=7)
-    period_label_size: Union[int, float] = attr.ib(default=16)
-    kwargs = attr.ib(default=None)
+    orientation: str = attr.ib()
+    sort: str = attr.ib()
+    n_bars: int = attr.ib()
+    label_bars: bool = attr.ib()
+    cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
+    bar_label_size: Union[int, float] = attr.ib()
+    tick_label_size: Union[int, float] = attr.ib()
+    period_label_size: Union[int, float] = attr.ib()
+    kwargs = attr.ib()
 
     def __attrs_post_init__(self):
         self.n_bars = self.n_bars or self.df.shape[1]
@@ -323,6 +323,9 @@ class BarChart(BaseChart):
         else:
             anim.save(filename, fps=self.fps)
 
+@attr.s
+class LineChart(BaseChart):
+    line_width: int = attr.ib()
 
 # class _LineChartRace(_BaseChart):
 #     def __init__(
