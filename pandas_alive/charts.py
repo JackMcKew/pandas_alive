@@ -33,6 +33,15 @@ DARK24 = [
 ]
 
 
+# def output_animation(chart: Union[_BarChartRace,_LineChartRace]):
+#     def wrap_function():
+#         anim = chart.make_animation()
+#         extension = chart.filename.split(".")[-1]
+#         if extension == "gif":
+#             anim.save(chart.filename, fps=chart.fps, writer="imagemagick")
+#         else:
+#             anim.save(chart.filename, fps=chart.fps)
+
 class _BaseChart:
     def __init__(
         self,
@@ -636,26 +645,6 @@ def bar_chart_race(
     )
 
     # return bcr.make_animation()
-
-
-def load_dataset(name="covid19"):
-    """
-    Return a pandas DataFrame suitable for immediate use in `bar_chart_race`
-
-    Parameters
-    ----------
-    name : str, default 'covid19'
-        Name of dataset to load. Either 'covid19' or 'urban_pop'
-
-    Returns
-    -------
-    pandas DataFrame
-    """
-    return pd.read_csv(
-        f"https://raw.githubusercontent.com/dexplo/bar_chart_race/master/data/{name}.csv",
-        index_col="date",
-        parse_dates=["date"],
-    )
 
 def animate_multiple_plots(filename: str,plots: List[Union[_BarChartRace,_LineChartRace]]):
     """ Plot multiple animated plots

@@ -1,6 +1,7 @@
+from pandas_alive.base import OUTPUT_FILENAME, OUTPUT_TYPE
 import pandas as pd
 from pandas.core.base import PandasObject
-from .charts import _BarChartRace, bar_chart_race
+from .charts import _BarChartRace, bar_chart_race, line_chart_race
 
 
 def get_allowed_kinds():
@@ -20,7 +21,15 @@ def plot(input_df: pd.DataFrame, kind: str = "barh", **kwargs):
         raise ValueError("Allowed plot kinds are '%s'." % allowed_kinds)
 
     if kind == "barh":
-        
+        print(OUTPUT_FILENAME)
+        if OUTPUT_TYPE == "file":
+            # bcr = bar_chart_race(
+            #     df,
+            #     OUTPUT_FILENAME
+            # )
+            # bcr.make_animation()
+            print(OUTPUT_FILENAME)
+        # raise NotImplementedError("Barh is not supported yet")
 
 
 ##############################################################################
