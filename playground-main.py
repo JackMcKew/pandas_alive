@@ -6,7 +6,7 @@ pandas_alive.output_file('test.mp4')
 
 df = pandas_alive.load_dataset()
 
-df.diff().max(axis=1).plot_animated(kind='line')
+# df.diff().max(axis=1).plot_animated(kind='line')
 
 # bcr = df.plot_animated()
 
