@@ -18,6 +18,6 @@ print(bc.get_frames())
 
 # print(lc.prepare_data())
 
-animate_multiple_plots('Multi-test.mp4',[bc,lc])
+# animate_multiple_plots('Multi-test.mp4',[bc,lc])
 
 

@@ -359,15 +359,6 @@ class LineChart(BaseChart):
             self._lines[name]["x"] = []
             self._lines[name]["y"] = []
         self.fps = 1000 / self.period_length * self.steps_per_period
-        self.df_values = self.prepare_data()
-
-    def prepare_data(self):
-        df_values = self.df.reset_index(drop=True)
-        df_values.index = df_values.index * self.steps_per_period
-        
-        new_index = range(df_values.index.max() + 1)
-        df_values = df_values.reindex(new_index).interpolate()
-        return df_values
 
     def plot_line(self, i):
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
@@ -395,7 +386,7 @@ class LineChart(BaseChart):
         self.ax.plot([], [], self.line_width)
 
     def get_frames(self):
-        return range(len(self.df_values))
+        return range(len(self.df.index))
 
 
     # def get_frames(self):
