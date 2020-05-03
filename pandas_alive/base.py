@@ -22,7 +22,7 @@ def load_dataset(name: str = "covid19") -> pd.DataFrame:
     )
 
 
-def animate_multiple_plots(filename: str, plots: List[Union[BarChart,LineChart]]):
+def animate_multiple_plots(filename: str, plots: List[Union[BarChart, LineChart]]):
     """ Plot multiple animated plots
 
     Args:
@@ -57,7 +57,6 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart,LineChart]]
         anim.save(filename, fps=plots[0].fps, writer="imagemagick")
     else:
         anim.save(filename, fps=plots[0].fps)
-
 
 
 # def plot_animated_grid(children_plots: List):

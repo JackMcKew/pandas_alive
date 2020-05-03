@@ -19,8 +19,8 @@ def plot(
     x: str = None,
     y: str = None,
     kind: str = "barh",
-    line_width:int = 3,
-    write_to_file:bool=True,
+    line_width: int = 3,
+    write_to_file: bool = True,
     use_index: bool = True,
     steps_per_period: int = 10,
     period_length: int = 500,
@@ -65,7 +65,7 @@ def plot(
                 tick_label_size=tick_label_size,
                 period_label_size=period_label_size,
                 fig=fig,
-                kwargs=kwargs
+                kwargs=kwargs,
             )
             if write_to_file:
                 bcr.make_animation(config.OUTPUT_FILENAME)
@@ -77,7 +77,7 @@ def plot(
 
     elif kind == "line":
         if config.OUTPUT_TYPE == "file":
-            # line_race = 
+            # line_race =
             line_race = LineChart(
                 df,
                 line_width=line_width,
@@ -88,7 +88,7 @@ def plot(
                 cmap=cmap,
                 title=title,
                 fig=fig,
-                kwargs=kwargs
+                kwargs=kwargs,
             )
             if write_to_file:
                 line_race.make_animation(config.OUTPUT_FILENAME)
