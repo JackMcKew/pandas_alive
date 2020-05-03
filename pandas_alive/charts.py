@@ -376,12 +376,6 @@ class LineChart(BaseChart):
                 self.line_width,
                 color=color,
             )
-        # self.ax.set_xlim(self.series.index.min(), self.series.index.max())
-        # self.ax.set_ylim((self.series.min(), self.series.max()))
-        # self.xdata.append(self.series.index[i])
-        # self.ydata.append(self.series.iloc[i])
-        # self.ax.plot(self.xdata, self.ydata, self.line_width)
-        # return self.line
 
     def anim_func(self, i):
         for line in self.ax.lines:
@@ -397,9 +391,6 @@ class LineChart(BaseChart):
     def make_animation(
         self, filename,
     ):
-
-        # self.line.set_data([],[])
-
         anim = super().make_animation(self.get_frames(), self.init_func)
 
         extension = filename.split(".")[-1]
@@ -442,13 +433,3 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart]]):
     else:
         anim.save(filename, fps=plots[0].fps)
 
-
-# if __name__ == "__main__":
-#     # import pandas as pd
-#     # df = pd.read_csv(
-#     #     f"data/covid19.csv",
-#     #     index_col="date",
-#     #     parse_dates=["date"],
-#     # )
-
-#     # print(df.plot)
