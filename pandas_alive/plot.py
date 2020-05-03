@@ -1,16 +1,16 @@
 
 import pandas as pd
 from pandas.core.base import PandasObject
-from .charts import _BarChartRace, bar_chart_race, line_chart_race
+from .charts import bar_chart_race, line_chart_race
 # from .settings import OUTPUT_TYPE, OUTPUT_FILENAME
 from . import config
 # import config
 
 def get_allowed_kinds():
-    return ["barh"]
+    return ["barh","line"]
 
 
-def plot(input_df: pd.DataFrame, kind: str = "barh", **kwargs):
+def plot(input_df: pd.DataFrame, x: str = None, y:str = None, kind: str = "barh", **kwargs):
 
     df = input_df.copy()
     if isinstance(df, pd.Series):
@@ -35,7 +35,14 @@ def plot(input_df: pd.DataFrame, kind: str = "barh", **kwargs):
             )
         else:
             raise NotImplementedError(f"{config.OUTPUT_TYPE} is not implemented yet")
-        # raise NotImplementedError("Barh is not supported yet")
+
+    elif kind == "line":
+        if config.OUTPUT_TYPE == "file":
+            line_race = line_chart_race(
+                df,
+                config.OUTPUT_FILENAME
+            )
+            line_race.make_animation()
 
 
 ##############################################################################

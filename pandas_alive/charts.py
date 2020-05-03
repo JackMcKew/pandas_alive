@@ -124,7 +124,7 @@ class _LineChartRace(_BaseChart):
             fig,
             kwargs,
         )
-        self.series = series
+        self.series = series.iloc[:,0]
         self.filename = filename
         self.line_width = line_width
         self.xdata = []
@@ -473,17 +473,17 @@ class _BarChartRace(_BaseChart):
 
 def line_chart_race(
     series,
-    filename,
-    line_width,
-    use_index,
-    steps_per_period,
-    period_length,
-    title,
-    figsize,
-    tick_label_size,
-    bar_label_size,
-    period_label_size,
-    fig,
+    filename=None,
+    line_width=3,
+    use_index=True,
+    steps_per_period=10,
+    period_length=500,
+    title=None,
+    figsize=(6.5,3.5),
+    tick_label_size=7,
+    bar_label_size=7,
+    period_label_size=16,
+    fig=None,
     **kwargs,
 ):
     return _LineChartRace(
