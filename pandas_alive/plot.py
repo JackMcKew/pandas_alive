@@ -2,7 +2,7 @@ import pandas as pd
 from pandas.core.base import PandasObject
 import typing
 import matplotlib
-from .charts import BarChart, bar_chart_race
+from .charts import BarChart
 
 # from .settings import OUTPUT_TYPE, OUTPUT_FILENAME
 from . import config
@@ -74,7 +74,7 @@ def plot(
 
     elif kind == "line":
         if config.OUTPUT_TYPE == "file":
-            line_race = 
+            # line_race = 
             line_race.make_animation(config.OUTPUT_FILENAME)
             return line_race
 
