@@ -1,5 +1,5 @@
-OUTPUT_TYPE:str = "file"
-OUTPUT_FILENAME:str = ""
+OUTPUT_TYPE: str = "file"
+OUTPUT_FILENAME: str = ""
 
 
 def output_file(filename: str) -> None:
@@ -18,6 +18,7 @@ def output_file(filename: str) -> None:
     global OUTPUT_FILENAME
     OUTPUT_TYPE = "file"
     OUTPUT_FILENAME = filename
+
 
 def output_html():
 

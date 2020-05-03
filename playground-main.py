@@ -8,7 +8,7 @@ df = pandas_alive.load_dataset()
 
 # df.diff().max(axis=1).plot_animated(kind='line')
 
-bcr = df.plot_animated()
+bcr = df.plot_animated(orientation='v')
 
 
 

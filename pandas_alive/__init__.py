@@ -1,4 +1,4 @@
-from .plot import plot,AnimatedAccessor
+from .plot import plot, AnimatedAccessor
 from .base import load_dataset
 from .config import output_file, output_html
 

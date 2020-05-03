@@ -1,17 +1,40 @@
-
 import pandas as pd
 from pandas.core.base import PandasObject
-from .charts import bar_chart_race, line_chart_race
+import typing
+import matplotlib
+from .charts import BarChart, bar_chart_race
+
 # from .settings import OUTPUT_TYPE, OUTPUT_FILENAME
 from . import config
+
 # import config
 
+
 def get_allowed_kinds():
-    return ["barh","line"]
+    return ["barh", "line"]
 
 
-def plot(input_df: pd.DataFrame, x: str = None, y:str = None, kind: str = "barh", **kwargs):
-
+def plot(
+    input_df: pd.DataFrame,
+    x: str = None,
+    y: str = None,
+    kind: str = "barh",
+    use_index: bool = True,
+    steps_per_period: int = 10,
+    period_length: int = 500,
+    figsize: typing.Tuple[float, float] = (6.5, 3.5),
+    title: str = None,
+    fig: matplotlib.pyplot.figure = None,
+    orientation: str = "h",
+    sort: str = "desc",
+    n_bars: int = None,
+    label_bars: bool = None,
+    cmap: typing.Union[str, matplotlib.colors.Colormap, typing.List[str]] = "dark24",
+    bar_label_size: typing.Union[int, float] = 7,
+    tick_label_size: typing.Union[int, float] = 7,
+    period_label_size: typing.Union[int, float] = 16,
+    **kwargs,
+):
     df = input_df.copy()
     if isinstance(df, pd.Series):
         df = pd.DataFrame(df)
@@ -24,23 +47,34 @@ def plot(input_df: pd.DataFrame, x: str = None, y:str = None, kind: str = "barh"
 
     if kind == "barh":
         if config.OUTPUT_TYPE == "file":
-            bcr = bar_chart_race(
+            bcr = BarChart(
                 df,
+                orientation=orientation,
+                sort=sort,
+                n_bars=n_bars,
+                label_bars=label_bars,
+                use_index=True,
+                steps_per_period=steps_per_period,
+                period_length=period_length,
+                figsize=figsize,
+                cmap=cmap,
+                title=title,
+                bar_label_size=bar_label_size,
+                tick_label_size=tick_label_size,
+                period_label_size=period_label_size,
+                fig=fig,
+                kwargs=kwargs
             )
             bcr.make_animation(config.OUTPUT_FILENAME)
             return bcr
         elif config.OUTPUT_TYPE == "html":
-            return bar_chart_race(
-                df
-            )
+            return bar_chart_race(df)
         else:
             raise NotImplementedError(f"{config.OUTPUT_TYPE} is not implemented yet")
 
     elif kind == "line":
         if config.OUTPUT_TYPE == "file":
-            line_race = line_chart_race(
-                df,
-            )
+            line_race = line_chart_race(df,)
             line_race.make_animation(config.OUTPUT_FILENAME)
             return line_race
 
