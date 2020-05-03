@@ -19,6 +19,7 @@ def plot(
     x: str = None,
     y: str = None,
     kind: str = "barh",
+    write_to_file:bool=True,
     use_index: bool = True,
     steps_per_period: int = 10,
     period_length: int = 500,
@@ -65,7 +66,8 @@ def plot(
                 fig=fig,
                 kwargs=kwargs
             )
-            bcr.make_animation(config.OUTPUT_FILENAME)
+            if write_to_file:
+                bcr.make_animation(config.OUTPUT_FILENAME)
             return bcr
         elif config.OUTPUT_TYPE == "html":
             return bar_chart_race(df)

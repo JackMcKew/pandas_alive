@@ -68,6 +68,23 @@ class BaseChart:
             self.fig, self.anim_func, frames, init_func, interval=interval,
         )
 
+    def get_data_cols(self) -> List[str]:
+        data_cols = []
+        for i, col in enumerate(self.df.columns):
+            if col not in self.df.columns:
+                raise Exception(
+                    "Could not find '%s' in the columns of the provided DataFrame/Series. Please provide for the <y> parameter either a column name of the DataFrame/Series or an array of the same length."
+                    % col
+                )
+            if np.issubdtype(self.df[col].dtype, np.number):
+                data_cols.append(col)
+        if not data_cols:
+            raise Exception("No numeric data columns found for plotting.")
+        
+        data_cols = [str(col) for col in data_cols]
+
+        return data_cols
+
     def get_colors(self, cmap):
         if isinstance(cmap, str):
             cmap = DARK24 if cmap == "dark24" else plt.cm.get_cmap(cmap)
@@ -326,82 +343,49 @@ class BarChart(BaseChart):
 @attr.s
 class LineChart(BaseChart):
     line_width: int = attr.ib()
+    _xdata: List = attr.ib(default=[])
+    _ydata: List = attr.ib(default=[])
+    
+    def __attrs_post_init__(self):
+        self.data_cols = self.get_data_cols()
+        if self.fig is not None:
+            self.fig, self.ax = self.fig, self.fig.axes[0]
+            self.figsize = self.fig.get_size_inches()
+            self.dpi = self.fig.dpi
+        else:
+            self.fig = plt.figure()
+            self.ax = plt.axes()
 
-# class _LineChartRace(_BaseChart):
-#     def __init__(
-#         self,
-#         series: pd.Series,
-#         filename: str,
-#         line_width: int,
-#         use_index: bool,
-#         steps_per_period: int,
-#         period_length: int,
-#         title: str,
-#         figsize: Tuple,
-#         dpi: int,
-#         tick_label_size: int,
-#         bar_label_size: int,
-#         period_label_size: int,
-#         fig: plt.Figure,
-#         kwargs,
-#     ) -> None:
-#         super().__init__(
-#             series,
-#             use_index,
-#             steps_per_period,
-#             period_length,
-#             title,
-#             figsize,
-#             144,
-#             tick_label_size,
-#             bar_label_size,
-#             period_label_size,
-#             fig,
-#             kwargs,
-#         )
-#         self.series = series.iloc[:, 0]
-#         self.filename = filename
-#         self.line_width = line_width
-#         self.xdata = []
-#         self.ydata = []
-#         if self.fig is not None:
-#             self.fig, self.ax = fig, fig.axes[0]
-#             self.figsize = fig.get_size_inches()
-#             self.dpi = fig.dpi
-#         else:
-#             self.fig = plt.figure()
-#             self.ax = plt.axes()
+    def plot_line(self, i):
+        self.ax.set_xlim(self.series.index.min(), self.series.index.max())
+        self.ax.set_ylim((self.series.min(), self.series.max()))
+        self.xdata.append(self.series.index[i])
+        self.ydata.append(self.series.iloc[i])
+        self.ax.plot(self.xdata, self.ydata, self.line_width)
+        # return self.line
 
-#     def plot_line(self, i):
-#         self.ax.set_xlim(self.series.index.min(), self.series.index.max())
-#         self.ax.set_ylim((self.series.min(), self.series.max()))
-#         self.xdata.append(self.series.index[i])
-#         self.ydata.append(self.series.iloc[i])
-#         self.ax.plot(self.xdata, self.ydata, self.line_width)
-#         # return self.line
+    def anim_func(self, i):
+        for line in self.ax.lines:
+            line.remove()
+        self.plot_line(i)
 
-#     def anim_func(self, i):
-#         for line in self.ax.lines:
-#             line.remove()
-#         self.plot_line(i)
+    def init_func(self) -> None:
+        self.ax.plot([], [], self.line_width)
 
-#     def init_func(self) -> None:
-#         self.ax.plot([], [], self.line_width)
+    def get_frames(self):
+        return range(len(self.series))
 
-#     def get_frames(self):
-#         return range(len(self.series))
+    def make_animation(self):
 
-#     def make_animation(self):
+        # self.line.set_data([],[])
 
-#         # self.line.set_data([],[])
+        anim = super().make_animation(self.get_frames(), self.init_func)
 
-#         anim = super().make_animation(self.get_frames(), self.init_func)
-
-#         extension = self.filename.split(".")[-1]
-#         if extension == "gif":
-#             anim.save(self.filename, fps=self.fps, writer="imagemagick")
-#         else:
-#             anim.save(self.filename, fps=self.fps)
+        extension = self.filename.split(".")[-1]
+        if extension == "gif":
+            anim.save(self.filename, fps=self.fps, writer="imagemagick")
+        else:
+            anim.save(self.filename, fps=self.fps)
 
 
 
@@ -437,3 +421,14 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart]]):
         anim.save(filename, fps=plots[0].fps, writer="imagemagick")
     else:
         anim.save(filename, fps=plots[0].fps)
+
+# if __name__ == "__main__":
+#     # import pandas as pd
+#     # df = pd.read_csv(
+#     #     f"data/covid19.csv",
+#     #     index_col="date",
+#     #     parse_dates=["date"],
+#     # )
+
+#     # print(df.plot)
+
