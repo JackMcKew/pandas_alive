@@ -68,7 +68,7 @@ class BaseChart:
             self.fig, self.anim_func, frames, init_func, interval=interval,
         )
 
-    def get_colors(self,cmap):
+    def get_colors(self, cmap):
         if isinstance(cmap, str):
             cmap = DARK24 if cmap == "dark24" else plt.cm.get_cmap(cmap)
         if isinstance(cmap, colors.Colormap):
@@ -86,17 +86,27 @@ class BaseChart:
         return chart_colors
 
 
-
 @attr.s
 class BarChart(BaseChart):
     orientation: str = attr.ib(default="h")
     sort: str = attr.ib(default="desc")
     n_bars: int = attr.ib(default=None)
     label_bars: bool = attr.ib(default=None)
-    cmap: Union[str,colors.Colormap,List[str]] = attr.ib(default='dark24')
-    bar_label_size: Union[int,float] = attr.ib(default=7)
-    tick_label_size: Union[int,float] = attr.ib(default=7)
-    period_label_size: Union[int,float] = attr.ib(default=16)
+    cmap: Union[str, colors.Colormap, List[str]] = attr.ib(default="dark24")
+    bar_label_size: Union[int, float] = attr.ib(default=7)
+    tick_label_size: Union[int, float] = attr.ib(default=7)
+    period_label_size: Union[int, float] = attr.ib(default=16)
+
+    def __attrs_post_init__(self):
+        self.n_bars = self.n_bars or self.df.shape[1]
+        self.df_values, self.df_rank = self.prepare_data()
+        self.orig_index = self.df.index.astype("str")
+        self.dpi = 144
+        self.fps = 1000 / self.period_length * self.steps_per_period
+        if self.fig is None:
+            self.fig, self.ax = self.create_figure()
+        self.x_label, self.y_label = self.get_label_position()
+        self.bar_colors = self.get_colors(self.cmap)
 
     def validate_params(self):
         super().validate_params()
@@ -165,9 +175,11 @@ class BarChart(BaseChart):
     def calculate_new_figsize(self, real_fig):
         import io
 
+        # df_values = self.prepare_data()
         fig = plt.Figure(tight_layout=True, figsize=self.figsize)
         ax = fig.add_subplot()
         fake_cols = [chr(i + 70) for i in range(self.df.shape[1])]
+
         max_val = self.df_values.max().max()
         if self.orientation == "h":
             ax.barh(fake_cols, [1] * self.df.shape[1])
@@ -225,7 +237,7 @@ class BarChart(BaseChart):
                 ec="white",
                 tick_label=cols,
                 color=colors,
-                **self.kwargs,
+                # **self.kwargs,
             )
             self.ax.set_xlim(self.ax.get_xlim()[0], bar_length.max() * 1.1)
         else:
@@ -235,7 +247,7 @@ class BarChart(BaseChart):
                 ec="white",
                 tick_label=cols,
                 color=colors,
-                **self.kwargs,
+                # **self.kwargs,
             )
             self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
 
@@ -297,26 +309,25 @@ class BarChart(BaseChart):
     def get_frames(self):
         return range(len(self.df_values))
 
-    def make_animation(self):
+    def make_animation(self,filename):
 
         anim = super().make_animation(self.get_frames(), self.init_func)
 
-        if self.html:
-            return anim.to_html5_video()
-
-        extension = self.filename.split(".")[-1]
+        # if self.html:
+        #     return anim.to_html5_video()
+        
+        extension = filename.split(".")[-1]
         if extension == "gif":
-            anim.save(self.filename, fps=self.fps, writer="imagemagick")
+            anim.save(filename, fps=self.fps, writer="imagemagick")
         else:
-            anim.save(self.filename, fps=self.fps)
-    
+            anim.save(filename, fps=self.fps)
 
 
 if __name__ == "__main__":
     import pandas as pd
 
     df = pd.read_csv("data\covid19.csv")
-    bc = BarChart(df,orientation='v')
+    bc = BarChart(df, orientation="v")
     print(bc)
 
 
@@ -899,29 +910,27 @@ def bar_chart_race(
     return BarChart(
         df,
         # filename,
-        orientation,
-        sort,
-        n_bars,
-        label_bars,
-        use_index,
-        steps_per_period,
-        period_length,
-        figsize,
-        cmap,
-        title,
-        bar_label_size,
-        tick_label_size,
-        period_label_size,
-        fig,
+        orientation=orientation,
+        sort=sort,
+        n_bars=n_bars,
+        label_bars=label_bars,
+        use_index=use_index,
+        steps_per_period=steps_per_period,
+        period_length=period_length,
+        figsize=figsize,
+        cmap=cmap,
+        title=title,
+        bar_label_size=bar_label_size,
+        tick_label_size=tick_label_size,
+        period_label_size=period_label_size,
+        fig=fig,
         # kwargs,
     )
 
     # return bcr.make_animation()
 
 
-def animate_multiple_plots(
-    filename: str, plots: List[Union[BarChart, _LineChartRace]]
-):
+def animate_multiple_plots(filename: str, plots: List[Union[BarChart, _LineChartRace]]):
     """ Plot multiple animated plots
 
     Args:

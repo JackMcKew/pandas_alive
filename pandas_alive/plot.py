@@ -26,9 +26,8 @@ def plot(input_df: pd.DataFrame, x: str = None, y:str = None, kind: str = "barh"
         if config.OUTPUT_TYPE == "file":
             bcr = bar_chart_race(
                 df,
-                config.OUTPUT_FILENAME
             )
-            bcr.make_animation()
+            bcr.make_animation(config.OUTPUT_FILENAME)
             return bcr
         elif config.OUTPUT_TYPE == "html":
             return bar_chart_race(
@@ -41,9 +40,8 @@ def plot(input_df: pd.DataFrame, x: str = None, y:str = None, kind: str = "barh"
         if config.OUTPUT_TYPE == "file":
             line_race = line_chart_race(
                 df,
-                config.OUTPUT_FILENAME
             )
-            line_race.make_animation()
+            line_race.make_animation(config.OUTPUT_FILENAME)
             return line_race
 
 
