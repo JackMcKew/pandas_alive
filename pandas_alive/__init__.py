@@ -1,5 +1,6 @@
 from .plot import plot,AnimatedAccessor
-from .base import load_dataset, output_file,output_html
+from .base import load_dataset
+from .config import output_file, output_html
 
 # Register animated_plot accessor for Pandas DataFrames and Series:
 import pandas as pd
