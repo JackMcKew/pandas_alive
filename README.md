@@ -10,6 +10,115 @@ With **Pandas-Alive**, creating stunning, animated visualisations is as easy as 
 df.plot_animated()
 ```
 
+![Example Bar Chart](example-bar-chart.gif)
+
+## Installation
+
+Install with `pip install pandas-alive`
+
+## Usage
+
+As this package builds upon [`bar_chart_race`](https://github.com/dexplo/bar_chart_race), the example data set is sourced from there.
+
+Must begin with a pandas DataFrame containing 'wide' data where:
+
+- Every row represents a single period of time
+- Each column holds the value for a particular category
+- The index contains the time component (optional)
+
+The data below is an example of properly formatted data. It shows total deaths from COVID-19 for the highest 20 countries by date.
+
+![Example Data Table](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png)
+
+To produce the above visualisation:
+
+- Set `output_file` for the visualisations to write to, or use `output_html` to return a HTML5 video
+- Call `plot_animated()` on the DataFrame
+- Done!
+
+``` python
+import pandas_alive
+
+df = pandas_alive.load_dataset()
+
+pandas_alive.output_file('example-barh-chart.gif')
+
+df.plot_animated()
+
+```
+
+### Currently Supported Chart Types
+
+`pandas-alive` current supports:
+
+- [Horizontal Bar Charts](#horizontal-bar-charts)
+- [Vertical Bar Charts](#vertical-bar-charts)
+- [Line Charts](#line-charts)
+
+#### Horizontal Bar Charts
+
+``` python
+import pandas_alive
+
+df = pandas_alive.load_dataset()
+
+pandas_alive.output_file('example-barh-chart.gif')
+
+df.plot_animated()
+```
+
+![Example Barh Chart](example-barh-chart.gif)
+
+#### Vertical Bar Charts
+
+``` python
+import pandas_alive
+
+df = pandas_alive.load_dataset()
+
+pandas_alive.output_file('example-barv-chart.gif')
+
+df.plot_animated(orientation='v')
+```
+
+![Example Barv Chart](example-barv-chart.gif)
+
+#### Line Charts
+
+With as many lines as data columns in DataFrame.
+
+``` python
+import pandas_alive
+
+df = pandas_alive.load_dataset()
+
+pandas_alive.output_file('example-line-chart.gif')
+
+df.diff().plot_animated(kind='line')
+```
+
+![Example Line Chart](example-line-chart.gif)
+
+### Multiple Charts
+
+`pandas-alive` supports multiple animated charts in a single visualisation.
+
+- Create each chart type
+
+``` python
+import pandas_alive
+
+df = pandas_alive.load_dataset()
+
+animated_line_chart = df.diff().plot_animated(kind='line',write_to_file=False,period_length=200)
+
+animated_bar_chart = df.plot_animated(kind='barh',write_to_file=False,period_length=200)
+
+pandas_alive.animate_multiple_plots('example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart]
+```
+
+![Example Bar & Line Chart](example-bar-and-line-chart.gif)
+
 ## Inspiration
 
 The inspiration for this project comes from:
