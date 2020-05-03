@@ -124,6 +124,7 @@ class BarChart(BaseChart):
         self.fps = 1000 / self.period_length * self.steps_per_period
         if self.fig is None:
             self.fig, self.ax = self.create_figure()
+        self.ax.set_title(self.title)
         self.x_label, self.y_label = self.get_label_position()
         self.bar_colors = self.get_colors(self.cmap)
 
@@ -352,6 +353,7 @@ class LineChart(BaseChart):
         else:
             self.fig = plt.figure()
             self.ax = plt.axes()
+        self.ax.set_title(self.title)
         self.line_colors = self.get_colors(self.cmap)
         self._lines: Dict = {}
         for name in self.data_cols:
@@ -359,6 +361,24 @@ class LineChart(BaseChart):
             self._lines[name]["x"] = []
             self._lines[name]["y"] = []
         self.fps = 1000 / self.period_length * self.steps_per_period
+        self.prepare_data()
+
+    def prepare_data(self):
+        # TODO Rename to interpolate and add settings
+        # Period interpolated to match bar chart for multiple plotting
+        # https://stackoverflow.com/questions/30056399/interpolate-and-fill-pandas-dataframe-with-datetime-index
+        
+        self.df = self.df.reindex(pd.date_range(start=self.df.index.min(),
+                                                  end=self.df.index.max(),
+                                                  periods=((len(self.df.index) - 1) * self.steps_per_period) + 1))   
+        # self.df = self.df.reset_index(drop=True)
+        # self.df.index = self.df.index * self.steps_per_period
+        # new_index = range(self.df.index.max() + 1)
+        self.df = self.df.interpolate(method='time')
+        # self.df = self.df.reindex(pd.date_range(start=orig_index.min(),
+        #                                           end=orig_index.max(),
+        #                                           periods=len(self.df.index)))   
+        
 
     def plot_line(self, i):
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
@@ -402,41 +422,3 @@ class LineChart(BaseChart):
             anim.save(filename, fps=self.fps, writer="imagemagick")
         else:
             anim.save(filename, fps=self.fps)
-
-
-def animate_multiple_plots(filename: str, plots: List[Union[BarChart,LineChart]]):
-    """ Plot multiple animated plots
-
-    Args:
-        plots (List[Union[_BarChartRace,_LineChartRace]]): List of plots to animate
-    """
-
-    def update_all_graphs(frame):
-        for plot in plots:
-            try:
-                plot.anim_func(frame)
-            except:
-                pass
-
-    fig, axes = plt.subplots(len(plots))
-    for num, plot in enumerate(plots):
-        plot.ax = axes[num]
-
-        plot.init_func()
-
-    interval = plots[0].period_length / plots[0].steps_per_period
-    anim = FuncAnimation(
-        fig,
-        update_all_graphs,
-        min([max(plot.get_frames()) for plot in plots]),
-        # plots[0].get_frames(),
-        # init_func,
-        interval=interval,
-    )
-
-    extension = filename.split(".")[-1]
-    if extension == "gif":
-        anim.save(filename, fps=plots[0].fps, writer="imagemagick")
-    else:
-        anim.save(filename, fps=plots[0].fps)
-
