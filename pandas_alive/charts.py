@@ -70,9 +70,9 @@ class BaseChart:
     def get_frames(self):
         raise NotImplementedError("Get frames method not yet implemented")
 
-    def preview(self,number_of_frames=5):
-        anim = self.make_animation(number_of_frames, self.init_func)
-        plt.show()
+    # def preview(self,number_of_frames=5):
+    #     anim = self.make_animation(number_of_frames, self.init_func)
+    #     plt.show()
 
     def make_animation(self, frames, init_func) -> FuncAnimation:
 
