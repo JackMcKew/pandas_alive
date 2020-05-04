@@ -1,4 +1,4 @@
-from pandas_alive.charts import BarChart, LineChart
+from pandas_alive.charts import BarChart, BaseChart, LineChart
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import pandas as pd
@@ -29,6 +29,8 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart, LineChart]
         plots (List[Union[_BarChartRace,_LineChartRace]]): List of plots to animate
     """
 
+    # TODO Maybe add multichart class?
+
     def update_all_graphs(frame):
         for plot in plots:
             try:
@@ -37,26 +39,27 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart, LineChart]
                 pass
 
     fig, axes = plt.subplots(len(plots))
+
     for num, plot in enumerate(plots):
+        axes[num].set_title(plot.title)
         plot.ax = axes[num]
 
         plot.init_func()
 
+    fps = 1000 / plots[0].period_length * plots[0].steps_per_period
     interval = plots[0].period_length / plots[0].steps_per_period
     anim = FuncAnimation(
         fig,
         update_all_graphs,
         min([max(plot.get_frames()) for plot in plots]),
-        # plots[0].get_frames(),
-        # init_func,
         interval=interval,
     )
 
     extension = filename.split(".")[-1]
     if extension == "gif":
-        anim.save(filename, fps=plots[0].fps, writer="imagemagick")
+        anim.save(filename, fps=fps, writer="imagemagick")
     else:
-        anim.save(filename, fps=plots[0].fps)
+        anim.save(filename, fps=fps)
 
 
 # def plot_animated_grid(children_plots: List):

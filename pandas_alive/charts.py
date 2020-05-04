@@ -60,8 +60,14 @@ class BaseChart:
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
             raise TypeError("`fig` must be a matplotlib Figure instance")
 
+    def init_func(self):
+        raise NotImplementedError("Initializing method not yet implemented")
+
     def anim_func(self, frame):
-        raise NotImplementedError("Animation function not yet implemented")
+        raise NotImplementedError("Animation method not yet implemented")
+
+    def get_frames(self):
+        raise NotImplementedError("Get frames method not yet implemented")
 
     def make_animation(self, frames, init_func) -> FuncAnimation:
 
@@ -69,6 +75,19 @@ class BaseChart:
         return FuncAnimation(
             self.fig, self.anim_func, frames, init_func, interval=interval,
         )
+
+    def save(self,filename):
+        # Inspiration for design pattern https://github.com/altair-viz/altair/blob/c55707730935159e4e2d2c789a6dd2bc3f1ec0f2/altair/utils/save.py
+        # https://altair-viz.github.io/user_guide/saving_charts.html
+
+        anim = self.make_animation(self.get_frames(), self.init_func)
+        self.fps = 1000 / self.period_length * self.steps_per_period
+        extension = filename.split(".")[-1]
+        if extension == "gif":
+            anim.save(filename, fps=self.fps, writer="imagemagick")
+        else:
+            anim.save(filename, fps=self.fps)
+
 
     def get_data_cols(self) -> List[str]:
         data_cols = []
@@ -121,9 +140,10 @@ class BarChart(BaseChart):
         self.df_values, self.df_rank = self.prepare_data()
         self.orig_index = self.df.index.astype("str")
         self.dpi = 144
-        self.fps = 1000 / self.period_length * self.steps_per_period
         if self.fig is None:
             self.fig, self.ax = self.create_figure()
+        else:
+            self.ax = self.fig.axes[0]
         self.ax.set_title(self.title)
         self.x_label, self.y_label = self.get_label_position()
         self.bar_colors = self.get_colors(self.cmap)
@@ -139,6 +159,7 @@ class BarChart(BaseChart):
 
     def get_colors(self, cmap):
         bar_colors = super().get_colors(cmap)
+
         # bar_colors is now a list
         n = len(bar_colors)
         if self.df.shape[1] > n:
@@ -329,17 +350,6 @@ class BarChart(BaseChart):
     def get_frames(self):
         return range(len(self.df_values))
 
-    def make_animation(self, filename):
-
-        anim = super().make_animation(self.get_frames(), self.init_func)
-
-        extension = filename.split(".")[-1]
-        if extension == "gif":
-            anim.save(filename, fps=self.fps, writer="imagemagick")
-        else:
-            anim.save(filename, fps=self.fps)
-
-
 @attr.s
 class LineChart(BaseChart):
     line_width: int = attr.ib()
@@ -360,7 +370,6 @@ class LineChart(BaseChart):
             self._lines[name] = {}
             self._lines[name]["x"] = []
             self._lines[name]["y"] = []
-        self.fps = 1000 / self.period_length * self.steps_per_period
         self.prepare_data()
 
     def prepare_data(self):
@@ -384,6 +393,7 @@ class LineChart(BaseChart):
         #                                           periods=len(self.df.index)))
 
     def plot_line(self, i):
+        # TODO Make ylim dynamic changing?
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         self.ax.set_ylim(
             self.df.select_dtypes(include=[pd.np.number]).min().min(),
@@ -413,14 +423,3 @@ class LineChart(BaseChart):
 
     # def get_frames(self):
     #     return range(len(self.df.index))
-
-    def make_animation(
-        self, filename,
-    ):
-        anim = super().make_animation(self.get_frames(), self.init_func)
-
-        extension = filename.split(".")[-1]
-        if extension == "gif":
-            anim.save(filename, fps=self.fps, writer="imagemagick")
-        else:
-            anim.save(filename, fps=self.fps)
