@@ -15,7 +15,7 @@ df = pandas_alive.load_dataset()
 # pandas_alive.output_file('example-line-chart.gif')
 # df.diff().plot_animated(kind='line')
 
-animated_bar_chart = df.head(5).plot_animated(kind='barh',title='Bar',write_to_file=False,period_length=200)
+animated_bar_chart = df.head(5).plot_animated(kind='barh',title='Bar',write_to_file=False,period_length=200,x_period_label_location=0,y_period_label_location=0)
 
 animated_line_chart = df.diff().head(5).plot_animated(kind='line',title='Line',write_to_file=False,period_length=200)
 

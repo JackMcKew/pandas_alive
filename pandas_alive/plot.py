@@ -35,6 +35,8 @@ def plot(
     bar_label_size: typing.Union[int, float] = 7,
     tick_label_size: typing.Union[int, float] = 7,
     period_label_size: typing.Union[int, float] = 16,
+    x_period_label_location: typing.Union[int, float] = None,
+    y_period_label_location: typing.Union[int, float] = None,
     **kwargs,
 ):
     df = input_df.copy()
@@ -64,6 +66,8 @@ def plot(
                 bar_label_size=bar_label_size,
                 tick_label_size=tick_label_size,
                 period_label_size=period_label_size,
+                x_period_label_location=x_period_label_location,
+                y_period_label_location=y_period_label_location,
                 fig=fig,
                 kwargs=kwargs,
             )
