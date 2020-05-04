@@ -6,9 +6,9 @@ df = pandas_alive.load_dataset()
 with open("examples/example_dataset_table.md", "w") as md_file:
     md_file.write(df.dropna().head(5).to_markdown())
 
-# df.plot_animated(filename='examples/example-barh-chart.gif')
+df.plot_animated(filename='examples/example-barh-chart.gif')
 
-# df.plot_animated(filename='examples/example-barv-chart.gif',orientation='v')
+df.plot_animated(filename='examples/example-barv-chart.gif',orientation='v')
 
 df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line')
 
