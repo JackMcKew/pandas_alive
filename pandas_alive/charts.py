@@ -243,7 +243,8 @@ class BarChart(BaseChart):
 
         # df_values = self.prepare_data()
         fig = plt.Figure(figsize=self.figsize)
-        fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
+        if self.title:
+            fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
         ax = fig.add_subplot()
         fake_cols = [chr(i + 70) for i in range(self.df.shape[1])]
 
