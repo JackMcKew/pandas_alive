@@ -396,8 +396,8 @@ class LineChart(BaseChart):
         # TODO Make ylim dynamic changing?
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         self.ax.set_ylim(
-            self.df.select_dtypes(include=[pd.np.number]).min().min(),
-            self.df.select_dtypes(include=[pd.np.number]).max().max(),
+            self.df.select_dtypes(include=[np.number]).min().min(),
+            self.df.select_dtypes(include=[np.number]).max().max(),
         )
         for name, color in zip(self.data_cols, self.line_colors):
 

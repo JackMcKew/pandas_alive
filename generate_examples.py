@@ -19,7 +19,7 @@ animated_bar_chart = df.head(5).plot_animated(kind='barh',title='Bar',write_to_f
 
 animated_line_chart = df.diff().head(5).plot_animated(kind='line',title='Line',write_to_file=False,period_length=200)
 
-pandas_alive.animate_multiple_plots('test.mp4',[animated_bar_chart,animated_line_chart])
+pandas_alive.animate_multiple_plots('test.mp4',[animated_bar_chart,animated_line_chart],title='Both Charts')
 
 
 
