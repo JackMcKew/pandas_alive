@@ -37,6 +37,7 @@ def plot(
     period_label_size: typing.Union[int, float] = 16,
     x_period_label_location: typing.Union[int, float] = None,
     y_period_label_location: typing.Union[int, float] = None,
+    append_period_to_title: bool = None,
     **kwargs,
 ):
     df = input_df.copy()
@@ -68,6 +69,7 @@ def plot(
                 period_label_size=period_label_size,
                 x_period_label_location=x_period_label_location,
                 y_period_label_location=y_period_label_location,
+                append_period_to_title=append_period_to_title,
                 fig=fig,
                 kwargs=kwargs,
             )

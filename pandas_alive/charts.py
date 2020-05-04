@@ -44,7 +44,7 @@ DARK24 = [
 #             anim.save(chart.filename, fps=chart.fps)
 
 
-@attr.s
+@attr.s()
 class BaseChart:
     df: pd.DataFrame = attr.ib()
     use_index: bool = attr.ib()
@@ -55,6 +55,7 @@ class BaseChart:
     fig: plt.Figure = attr.ib()
     cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
     kwargs = attr.ib()
+    append_period_to_title: bool = attr.ib()
 
     def validate_params(self) -> None:
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
@@ -114,7 +115,9 @@ class BaseChart:
                 # Try setting a list of repeating colours if no cmap found (for single colours)
                 cmap = [colors.to_rgba(cmap)] * len(self.get_data_cols())
             except:
-                raise ValueError("Provide a suitable color name or color map as per matplotlib")
+                raise ValueError(
+                    "Provide a suitable color name or color map as per matplotlib"
+                )
         if isinstance(cmap, colors.Colormap):
             chart_colors = cmap(range(cmap.N)).tolist()
         elif isinstance(cmap, list):
@@ -130,7 +133,7 @@ class BaseChart:
         return chart_colors
 
 
-@attr.s
+@attr.s()
 class BarChart(BaseChart):
     orientation: str = attr.ib()
     sort: str = attr.ib()
@@ -239,7 +242,8 @@ class BarChart(BaseChart):
         import io
 
         # df_values = self.prepare_data()
-        fig = plt.Figure(tight_layout=True, figsize=self.figsize)
+        fig = plt.Figure(figsize=self.figsize)
+        fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
         ax = fig.add_subplot()
         fake_cols = [chr(i + 70) for i in range(self.df.shape[1])]
 
@@ -316,6 +320,10 @@ class BarChart(BaseChart):
 
         if self.use_index:
             val = self.orig_index[i // self.steps_per_period]
+            if self.append_period_to_title:
+                self.ax.set_title(
+                    f"{'' if self.title is None else self.title}{':' if self.title is not None else ''}{val}"
+                )
             num_texts = len(self.ax.texts)
             if num_texts == 0:
                 self.ax.text(
