@@ -70,7 +70,7 @@ class BaseChart:
     def get_frames(self):
         raise NotImplementedError("Get frames method not yet implemented")
 
-    def preview(self,number_of_frames=2):
+    def preview(self,number_of_frames=5):
         anim = self.make_animation(number_of_frames, self.init_func)
         plt.show()
 
@@ -80,6 +80,53 @@ class BaseChart:
         return FuncAnimation(
             self.fig, self.anim_func, frames, init_func, interval=interval,
         )
+
+    ## TODO Implement standard figure layouts
+
+    # def create_figure(self):
+    #     fig = plt.Figure(figsize=self.figsize, dpi=self.dpi)
+    #     limit = (0.2, self.n_bars + 0.8)
+    #     rect = self.calculate_new_figsize(fig)
+    #     ax = fig.add_axes(rect)
+    #     if self.orientation == "h":
+    #         ax.set_ylim(limit)
+    #         ax.grid(True, axis="x", color="white")
+    #         ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
+    #     else:
+    #         ax.set_xlim(limit)
+    #         ax.grid(True, axis="y", color="white")
+    #         ax.set_xticklabels(ax.get_xticklabels(), ha="right", rotation=30)
+    #         ax.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
+
+    #     ax.set_axisbelow(True)
+    #     ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
+    #     ax.set_facecolor(".9")
+    #     ax.set_title(self.title)
+    #     for spine in ax.spines.values():
+    #         spine.set_visible(False)
+    #     return fig, ax
+
+
+    # def show_period(self,i):
+    #     if self.use_index:
+    #         self.orig_index = self.df.index.astype("str")
+    #         val = self.orig_index[i // self.steps_per_period]
+    #         if self.append_period_to_title:
+    #             self.ax.set_title(
+    #                 f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
+    #             )
+    #         else:
+    #             num_texts = len(self.ax.texts)
+    #             if num_texts == 0:
+    #                 self.ax.text(
+    #                     self.x_label,
+    #                     self.y_label,
+    #                     val,
+    #                     transform=self.ax.transAxes,
+    #                     fontsize=self.period_label_size,
+    #                 )
+    #             else:
+    #                 self.ax.texts[0].set_text(val)
 
     def save(self, filename):
         # Inspiration for design pattern https://github.com/altair-viz/altair/blob/c55707730935159e4e2d2c789a6dd2bc3f1ec0f2/altair/utils/save.py
