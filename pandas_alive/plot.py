@@ -2,6 +2,7 @@ import pandas as pd
 from pandas.core.base import PandasObject
 import typing
 import matplotlib.pyplot as plt
+import matplotlib.colors
 from matplotlib.animation import FuncAnimation
 from .charts import BarChart, LineChart
 
@@ -40,6 +41,7 @@ def plot(
     figsize: typing.Tuple[float, float] = (6.5, 3.5),
     title: str = None,
     fig: plt.figure = None,
+    enable_legend: bool = False,
     orientation: str = "h",
     sort: str = "desc",
     n_bars: int = None,
@@ -94,6 +96,7 @@ def plot(
         line_race = LineChart(
             df,
             line_width=line_width,
+            enable_legend=enable_legend,
             use_index=True,
             steps_per_period=steps_per_period,
             period_length=period_length,

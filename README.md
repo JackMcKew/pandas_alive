@@ -33,8 +33,9 @@ The data below is an example of properly formatted data. It shows total deaths f
 
 To produce the above visualisation:
 
-- Set `output_file` for the visualisations to write to, or use `output_html` to return a HTML5 video
+- Check [Requirements](#requirements) first to ensure you have the tooling installed!
 - Call `plot_animated()` on the DataFrame
+    - Either specify a file name to write to with `df.plot_animated(filename='example.mp4')` or use `df.plot_animated().get_html5_video` to return a HTML5 video
 - Done!
 
 ``` python
@@ -42,9 +43,7 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-pandas_alive.output_file('example-barh-chart.gif')
-
-df.plot_animated()
+df.plot_animated(filename='example-barh-chart.gif')
 
 ```
 
@@ -63,9 +62,7 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-pandas_alive.output_file('example-barh-chart.gif')
-
-df.plot_animated()
+df.plot_animated(filename='example-barh-chart.gif')
 ```
 
 ![Example Barh Chart](examples/example-barh-chart.gif)
@@ -77,9 +74,7 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-pandas_alive.output_file('example-barv-chart.gif')
-
-df.plot_animated(orientation='v')
+df.plot_animated(filename='example-barv-chart.gif',orientation='v')
 ```
 
 ![Example Barv Chart](examples/example-barv-chart.gif)
@@ -93,9 +88,7 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-pandas_alive.output_file('example-line-chart.gif')
-
-df.diff().plot_animated(kind='line')
+df.diff().fillna(0).plot_animated(filename='example-line-chart.gif',kind='line')
 ```
 
 ![Example Line Chart](examples/example-line-chart.gif)
@@ -114,7 +107,7 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-animated_line_chart = df.diff().plot_animated(kind='line',write_to_file=False,period_length=200)
+animated_line_chart = df.diff().fillna(0).plot_animated(kind='line',write_to_file=False,period_length=200)
 
 animated_bar_chart = df.plot_animated(kind='barh',write_to_file=False,period_length=200)
 
@@ -130,10 +123,6 @@ The inspiration for this project comes from:
 - [bar_chart_race](https://github.com/dexplo/bar_chart_race) by [Ted Petrou](https://github.com/tdpetrou)
 - [Pandas-Bokeh](https://github.com/PatrikHlobil/Pandas-Bokeh) by [Patrik Hlobil](https://github.com/PatrikHlobil)
 
-## Contributing
-
-Pull requests are welcome! Please help cover more and more chart types!
-
 ## Requirements
 
 If you get an error such as `TypeError: 'MovieWriterRegistry' object is not an iterator`, this signals there isn't a writer library installed on your machine.
@@ -146,3 +135,7 @@ Ensure to have one of the supported tooling software installed prior to use!
 - [ImageMagick](https://imagemagick.org/index.php)
 - [Pillow](https://pillow.readthedocs.io/en/stable/)
 - See more at <https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes>
+
+## Contributing
+
+Pull requests are welcome! Please help to cover more and more chart types!
