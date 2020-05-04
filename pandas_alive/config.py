@@ -1,26 +1,28 @@
-OUTPUT_TYPE: str = "file"
-OUTPUT_FILENAME: str = ""
+from dataclasses import dataclass
+import typing
 
+@dataclass
+class OutputConfig:
+    output_filename: str = ''
+    output_type: str = 'file'
 
-def output_file(filename: str) -> None:
+    def get_output_type_filename(self) -> typing.Tuple[str, str]:
+        return self.output_type,self.output_filename
 
-    if len(filename) <= 0:
-        raise ValueError("Specify filename")
+    def set_output_type_filename(self,target_type:str,target_filename:str):
+        self.verify_filename(target_filename)
+        self.output_filename = target_filename
+        self.output_type = target_type
 
-    if (
-        isinstance(filename, str)
-        and "." not in filename
-        or len(filename.split(".")[1]) <= 0
-    ):
-        raise ValueError("`filename` must be provided & have an extension")
+    def verify_filename(self,target_filename:str) -> bool:
+        if len(target_filename) <= 0:
+            raise ValueError("Specify filename")
 
-    global OUTPUT_TYPE
-    global OUTPUT_FILENAME
-    OUTPUT_TYPE = "file"
-    OUTPUT_FILENAME = filename
+        if (
+            isinstance(target_filename, str)
+            and "." not in target_filename
+            or len(target_filename.split(".")[1]) <= 0
+        ):
+            raise ValueError("`filename` must be provided & have an extension")
 
-
-def output_html():
-
-    global OUTPUT_TYPE
-    OUTPUT_TYPE = "html"
+        return True

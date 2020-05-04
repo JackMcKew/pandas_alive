@@ -54,10 +54,11 @@ class BaseChart:
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
     cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
-    kwargs = attr.ib()
     append_period_to_title: bool = attr.ib()
-
-    def validate_params(self) -> None:
+    kwargs = attr.ib()
+    
+    @fig.validator
+    def validate_params(self,attribute,value) -> None:
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
             raise TypeError("`fig` must be a matplotlib Figure instance")
 
@@ -83,11 +84,16 @@ class BaseChart:
 
         anim = self.make_animation(self.get_frames(), self.init_func)
         self.fps = 1000 / self.period_length * self.steps_per_period
+
         extension = filename.split(".")[-1]
         if extension == "gif":
             anim.save(filename, fps=self.fps, writer="imagemagick")
         else:
             anim.save(filename, fps=self.fps)
+
+    def get_html5_video(self):
+        anim = self.make_animation(self.get_frames(), self.init_func)
+        return anim.to_html5_video()
 
     def get_data_cols(self) -> List[str]:
         data_cols = []
