@@ -22,7 +22,7 @@ def load_dataset(name: str = "covid19") -> pd.DataFrame:
     )
 
 
-def animate_multiple_plots(filename: str, plots: List[Union[BarChart, LineChart]]):
+def animate_multiple_plots(filename: str, plots: List[Union[BarChart, LineChart]],title:str=None,title_fontsize:Union[int,float]=16):
     """ Plot multiple animated plots
 
     Args:
@@ -36,9 +36,19 @@ def animate_multiple_plots(filename: str, plots: List[Union[BarChart, LineChart]
             try:
                 plot.anim_func(frame)
             except:
-                pass
+                raise UserWarning(f"{type(plot)} {plot.title} error plotting on frame {frame}, ensure all plots share index")
 
+
+    # Current just number of columns for number of plots
+    # TODO add option for number of rows/columns
     fig, axes = plt.subplots(len(plots))
+
+    # Used for overlapping titles, supplot not considered so move down by 10%
+    # https://stackoverflow.com/questions/8248467/matplotlib-tight-layout-doesnt-take-into-account-figure-suptitle
+    fig.tight_layout(rect=[0,0,1,0.9])
+
+    if title is not None:
+        fig.suptitle(title)
 
     for num, plot in enumerate(plots):
         axes[num].set_title(plot.title)
