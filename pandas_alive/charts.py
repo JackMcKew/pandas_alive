@@ -108,7 +108,13 @@ class BaseChart:
 
     def get_colors(self, cmap):
         if isinstance(cmap, str):
-            cmap = DARK24 if cmap == "dark24" else plt.cm.get_cmap(cmap)
+            try:
+                cmap = DARK24 if cmap == "dark24" else plt.cm.get_cmap(cmap)
+            except ValueError:
+                # Try setting a list of repeating colours if no cmap found (for single colours)
+                cmap = [colors.to_rgba(cmap)] * len(self.get_data_cols())
+            except:
+                raise ValueError("Provide a suitable color name or color map as per matplotlib")
         if isinstance(cmap, colors.Colormap):
             chart_colors = cmap(range(cmap.N)).tolist()
         elif isinstance(cmap, list):
