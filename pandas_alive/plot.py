@@ -14,6 +14,18 @@ from . import config
 def get_allowed_kinds():
     return ["barh", "line"]
 
+def verify_filename(filename:str) -> str:
+    if len(filename) <= 0:
+            raise ValueError("Specify filename")
+
+    if (
+        isinstance(filename, str)
+        and "." not in filename
+        or len(filename.split(".")[1]) <= 0
+    ):
+        raise ValueError("`filename` must be provided & have an extension")
+
+    return filename
 
 def plot(
     input_df: pd.DataFrame,
@@ -22,7 +34,6 @@ def plot(
     y: str = None,
     kind: str = "barh",
     line_width: int = 3,
-    write_to_file: bool = True,
     use_index: bool = True,
     steps_per_period: int = 10,
     period_length: int = 500,
@@ -53,50 +64,48 @@ def plot(
         raise ValueError("Allowed plot kinds are '%s'." % allowed_kinds)
 
     if kind == "barh":
+        bcr = BarChart(
+            df,
+            orientation=orientation,
+            sort=sort,
+            n_bars=n_bars,
+            label_bars=label_bars,
+            use_index=True,
+            steps_per_period=steps_per_period,
+            period_length=period_length,
+            figsize=figsize,
+            cmap=cmap,
+            title=title,
+            bar_label_size=bar_label_size,
+            tick_label_size=tick_label_size,
+            period_label_size=period_label_size,
+            x_period_label_location=x_period_label_location,
+            y_period_label_location=y_period_label_location,
+            append_period_to_title=append_period_to_title,
+            fig=fig,
+            kwargs=kwargs,
+        )
         if filename:
-            bcr = BarChart(
-                df,
-                orientation=orientation,
-                sort=sort,
-                n_bars=n_bars,
-                label_bars=label_bars,
-                use_index=True,
-                steps_per_period=steps_per_period,
-                period_length=period_length,
-                figsize=figsize,
-                cmap=cmap,
-                title=title,
-                bar_label_size=bar_label_size,
-                tick_label_size=tick_label_size,
-                period_label_size=period_label_size,
-                x_period_label_location=x_period_label_location,
-                y_period_label_location=y_period_label_location,
-                append_period_to_title=append_period_to_title,
-                fig=fig,
-                kwargs=kwargs,
-            )
-            if write_to_file:
-                bcr.save(filename)
-                # bcr.make_animation(config.OUTPUT_FILENAME)
-            return bcr
+            bcr.save(verify_filename(filename))
+            # bcr.make_animation(config.OUTPUT_FILENAME)
+        return bcr
 
     elif kind == "line":
+        line_race = LineChart(
+            df,
+            line_width=line_width,
+            use_index=True,
+            steps_per_period=steps_per_period,
+            period_length=period_length,
+            figsize=figsize,
+            cmap=cmap,
+            title=title,
+            fig=fig,
+            kwargs=kwargs,
+        )
         if filename:
-            line_race = LineChart(
-                df,
-                line_width=line_width,
-                use_index=True,
-                steps_per_period=steps_per_period,
-                period_length=period_length,
-                figsize=figsize,
-                cmap=cmap,
-                title=title,
-                fig=fig,
-                kwargs=kwargs,
-            )
-            if write_to_file:
-                line_race.save(filename)
-            return line_race
+            line_race.save(verify_filename(filename))
+        return line_race
 
 
 def animate_multiple_plots(
