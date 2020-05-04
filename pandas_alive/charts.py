@@ -76,7 +76,7 @@ class BaseChart:
             self.fig, self.anim_func, frames, init_func, interval=interval,
         )
 
-    def save(self,filename):
+    def save(self, filename):
         # Inspiration for design pattern https://github.com/altair-viz/altair/blob/c55707730935159e4e2d2c789a6dd2bc3f1ec0f2/altair/utils/save.py
         # https://altair-viz.github.io/user_guide/saving_charts.html
 
@@ -87,7 +87,6 @@ class BaseChart:
             anim.save(filename, fps=self.fps, writer="imagemagick")
         else:
             anim.save(filename, fps=self.fps)
-
 
     def get_data_cols(self) -> List[str]:
         data_cols = []
@@ -134,6 +133,8 @@ class BarChart(BaseChart):
     bar_label_size: Union[int, float] = attr.ib()
     tick_label_size: Union[int, float] = attr.ib()
     period_label_size: Union[int, float] = attr.ib()
+    x_period_label_location: Union[int, float] = attr.ib()
+    y_period_label_location: Union[int, float] = attr.ib()
 
     def __attrs_post_init__(self):
         self.n_bars = self.n_bars or self.df.shape[1]
@@ -145,7 +146,22 @@ class BarChart(BaseChart):
         else:
             self.ax = self.fig.axes[0]
         self.ax.set_title(self.title)
-        self.x_label, self.y_label = self.get_label_position()
+        if self.x_period_label_location is None or self.y_period_label_location is None:
+            self.x_label, self.y_label = self.get_label_position()
+        else:
+            if self.x_period_label_location is not None:
+                self.x_label = self.x_period_label_location
+            else:
+                raise ValueError(
+                    f"Provide x_period_label_location, current value: {self.x_period_label_location}"
+                )
+            if self.y_period_label_location is not None:
+                self.y_label = self.y_period_label_location
+            else:
+                raise ValueError(
+                    f"Provide y_period_label_location, current value: {self.y_period_label_location}"
+                )
+
         self.bar_colors = self.get_colors(self.cmap)
 
     def validate_params(self):
@@ -349,6 +365,7 @@ class BarChart(BaseChart):
 
     def get_frames(self):
         return range(len(self.df_values))
+
 
 @attr.s
 class LineChart(BaseChart):
