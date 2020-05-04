@@ -68,7 +68,8 @@ def plot(
                 kwargs=kwargs,
             )
             if write_to_file:
-                bcr.make_animation(config.OUTPUT_FILENAME)
+                bcr.save(config.OUTPUT_FILENAME)
+                # bcr.make_animation(config.OUTPUT_FILENAME)
             return bcr
         elif config.OUTPUT_TYPE == "html":
             return bar_chart_race(df)
@@ -91,7 +92,7 @@ def plot(
                 kwargs=kwargs,
             )
             if write_to_file:
-                line_race.make_animation(config.OUTPUT_FILENAME)
+                line_race.save(config.OUTPUT_FILENAME)
             return line_race
 
 
