@@ -324,17 +324,18 @@ class BarChart(BaseChart):
                 self.ax.set_title(
                     f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
                 )
-            num_texts = len(self.ax.texts)
-            if num_texts == 0:
-                self.ax.text(
-                    self.x_label,
-                    self.y_label,
-                    val,
-                    transform=self.ax.transAxes,
-                    fontsize=self.period_label_size,
-                )
             else:
-                self.ax.texts[0].set_text(val)
+                num_texts = len(self.ax.texts)
+                if num_texts == 0:
+                    self.ax.text(
+                        self.x_label,
+                        self.y_label,
+                        val,
+                        transform=self.ax.transAxes,
+                        fontsize=self.period_label_size,
+                    )
+                else:
+                    self.ax.texts[0].set_text(val)
 
         if self.label_bars:
             for text in self.ax.texts[int(self.use_index) :]:
