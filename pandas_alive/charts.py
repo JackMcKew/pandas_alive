@@ -322,7 +322,7 @@ class BarChart(BaseChart):
             val = self.orig_index[i // self.steps_per_period]
             if self.append_period_to_title:
                 self.ax.set_title(
-                    f"{'' if self.title is None else self.title}{':' if self.title is not None else ''}{val}"
+                    f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
                 )
             num_texts = len(self.ax.texts)
             if num_texts == 0:
