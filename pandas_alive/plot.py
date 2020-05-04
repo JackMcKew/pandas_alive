@@ -1,7 +1,8 @@
 import pandas as pd
 from pandas.core.base import PandasObject
 import typing
-import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 from .charts import BarChart, LineChart
 
 # from .settings import OUTPUT_TYPE, OUTPUT_FILENAME
@@ -16,7 +17,7 @@ def get_allowed_kinds():
 
 def plot(
     input_df: pd.DataFrame,
-    filename:str = None,
+    filename: str = None,
     x: str = None,
     y: str = None,
     kind: str = "barh",
@@ -27,7 +28,7 @@ def plot(
     period_length: int = 500,
     figsize: typing.Tuple[float, float] = (6.5, 3.5),
     title: str = None,
-    fig: matplotlib.pyplot.figure = None,
+    fig: plt.figure = None,
     orientation: str = "h",
     sort: str = "desc",
     n_bars: int = None,
@@ -78,10 +79,6 @@ def plot(
                 bcr.save(filename)
                 # bcr.make_animation(config.OUTPUT_FILENAME)
             return bcr
-        elif config.OUTPUT_TYPE == "html":
-            return bar_chart_race(df)
-        else:
-            raise NotImplementedError(f"{config.OUTPUT_TYPE} is not implemented yet")
 
     elif kind == "line":
         if filename:
@@ -157,7 +154,6 @@ def animate_multiple_plots(
         anim.save(filename, fps=fps, writer="imagemagick")
     else:
         anim.save(filename, fps=fps)
-
 
 
 ##############################################################################

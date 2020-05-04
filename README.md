@@ -136,6 +136,8 @@ Pull requests are welcome! Please help cover more and more chart types!
 
 ## Requirements
 
+If you get an error such as `TypeError: 'MovieWriterRegistry' object is not an iterator`, this signals there isn't a writer library installed on your machine.
+
 This package utilises the [matplotlib.animation function](https://matplotlib.org/3.2.1/api/animation_api.html), thus requiring a writer library.
 
 Ensure to have one of the supported tooling software installed prior to use!

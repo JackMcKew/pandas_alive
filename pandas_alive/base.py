@@ -1,8 +1,4 @@
-from pandas_alive.charts import BarChart, BaseChart, LineChart
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 import pandas as pd
-from typing import List, Union
 
 
 def load_dataset(name: str = "covid19") -> pd.DataFrame:
@@ -20,4 +16,3 @@ def load_dataset(name: str = "covid19") -> pd.DataFrame:
         index_col=0,
         parse_dates=[0],
     )
-

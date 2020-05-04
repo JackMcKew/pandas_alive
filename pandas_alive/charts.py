@@ -56,9 +56,9 @@ class BaseChart:
     cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
     append_period_to_title: bool = attr.ib()
     kwargs = attr.ib()
-    
+
     @fig.validator
-    def validate_params(self,attribute,value) -> None:
+    def validate_params(self, attribute, value) -> None:
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
             raise TypeError("`fig` must be a matplotlib Figure instance")
 
