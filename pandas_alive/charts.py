@@ -54,7 +54,6 @@ class BaseChart:
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
     cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
-    append_period_to_title: bool = attr.ib()
     kwargs = attr.ib()
 
     @fig.validator
@@ -150,6 +149,7 @@ class BarChart(BaseChart):
     period_label_size: Union[int, float] = attr.ib()
     x_period_label_location: Union[int, float] = attr.ib()
     y_period_label_location: Union[int, float] = attr.ib()
+    append_period_to_title: bool = attr.ib()
 
     def __attrs_post_init__(self):
         self.n_bars = self.n_bars or self.df.shape[1]
@@ -392,6 +392,7 @@ class BarChart(BaseChart):
 @attr.s
 class LineChart(BaseChart):
     line_width: int = attr.ib()
+    enable_legend: bool = attr.ib()
 
     def __attrs_post_init__(self):
         self.data_cols = self.get_data_cols()
@@ -435,8 +436,8 @@ class LineChart(BaseChart):
         # TODO Make ylim dynamic changing?
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         self.ax.set_ylim(
-            self.df.select_dtypes(include=[np.number]).min().min(),
-            self.df.select_dtypes(include=[np.number]).max().max(),
+            self.df.iloc[:i+1].select_dtypes(include=[np.number]).min().min(skipna=True),
+            self.df.iloc[:i+1].select_dtypes(include=[np.number]).max().max(skipna=True),
         )
         for name, color in zip(self.data_cols, self.line_colors):
 
@@ -453,6 +454,8 @@ class LineChart(BaseChart):
         for line in self.ax.lines:
             line.remove()
         self.plot_line(i)
+        if self.enable_legend:
+            self.ax.legend(self.ax.lines,self._lines.keys(),**self.kwargs)
 
     def init_func(self) -> None:
         self.ax.plot([], [], self.line_width)
