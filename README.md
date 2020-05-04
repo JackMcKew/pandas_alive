@@ -10,7 +10,7 @@ With **Pandas-Alive**, creating stunning, animated visualisations is as easy as 
 df.plot_animated()
 ```
 
-![Example Bar Chart](example-barh-chart.gif)
+![Example Bar Chart](examples/example-barh-chart.gif)
 
 ## Installation
 
@@ -29,7 +29,7 @@ Must begin with a pandas DataFrame containing 'wide' data where:
 The data below is an example of properly formatted data. It shows total deaths from COVID-19 for the highest 20 countries by date.
 
 ![Example Data Table](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png)
-[Example Table](example_dataset_table.md)
+[Example Table](examples/example_dataset_table.md)
 
 To produce the above visualisation:
 
@@ -68,7 +68,7 @@ pandas_alive.output_file('example-barh-chart.gif')
 df.plot_animated()
 ```
 
-![Example Barh Chart](example-barh-chart.gif)
+![Example Barh Chart](examples/example-barh-chart.gif)
 
 #### Vertical Bar Charts
 
@@ -82,7 +82,7 @@ pandas_alive.output_file('example-barv-chart.gif')
 df.plot_animated(orientation='v')
 ```
 
-![Example Barv Chart](example-barv-chart.gif)
+![Example Barv Chart](examples/example-barv-chart.gif)
 
 #### Line Charts
 
@@ -98,7 +98,7 @@ pandas_alive.output_file('example-line-chart.gif')
 df.diff().plot_animated(kind='line')
 ```
 
-![Example Line Chart](example-line-chart.gif)
+![Example Line Chart](examples/example-line-chart.gif)
 
 ### Multiple Charts
 
@@ -121,7 +121,7 @@ animated_bar_chart = df.plot_animated(kind='barh',write_to_file=False,period_len
 pandas_alive.animate_multiple_plots('example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart]
 ```
 
-![Example Bar & Line Chart](example-bar-and-line-chart.gif)
+![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
 ## Inspiration
 
