@@ -70,6 +70,10 @@ class BaseChart:
     def get_frames(self):
         raise NotImplementedError("Get frames method not yet implemented")
 
+    def preview(self,number_of_frames=2):
+        anim = self.make_animation(number_of_frames, self.init_func)
+        plt.show()
+
     def make_animation(self, frames, init_func) -> FuncAnimation:
 
         interval = self.period_length / self.steps_per_period
