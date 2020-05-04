@@ -16,6 +16,7 @@ def get_allowed_kinds():
 
 def plot(
     input_df: pd.DataFrame,
+    filename:str = None,
     x: str = None,
     y: str = None,
     kind: str = "barh",
@@ -51,7 +52,7 @@ def plot(
         raise ValueError("Allowed plot kinds are '%s'." % allowed_kinds)
 
     if kind == "barh":
-        if config.OUTPUT_TYPE == "file":
+        if filename:
             bcr = BarChart(
                 df,
                 orientation=orientation,
@@ -74,7 +75,7 @@ def plot(
                 kwargs=kwargs,
             )
             if write_to_file:
-                bcr.save(config.OUTPUT_FILENAME)
+                bcr.save(filename)
                 # bcr.make_animation(config.OUTPUT_FILENAME)
             return bcr
         elif config.OUTPUT_TYPE == "html":
@@ -83,8 +84,7 @@ def plot(
             raise NotImplementedError(f"{config.OUTPUT_TYPE} is not implemented yet")
 
     elif kind == "line":
-        if config.OUTPUT_TYPE == "file":
-            # line_race =
+        if filename:
             line_race = LineChart(
                 df,
                 line_width=line_width,
@@ -98,15 +98,15 @@ def plot(
                 kwargs=kwargs,
             )
             if write_to_file:
-                line_race.save(config.OUTPUT_FILENAME)
+                line_race.save(filename)
             return line_race
 
 
 def animate_multiple_plots(
     filename: str,
-    plots: List[Union[BarChart, LineChart]],
+    plots: typing.List[typing.Union[BarChart, LineChart]],
     title: str = None,
-    title_fontsize: Union[int, float] = 16,
+    title_fontsize: typing.Union[int, float] = 16,
 ):
     """ Plot multiple animated plots
 
