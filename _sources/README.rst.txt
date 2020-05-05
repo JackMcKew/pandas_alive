@@ -200,6 +200,11 @@ Ensure to have one of the supported tooling software installed prior to use!
 * `Pillow <https://pillow.readthedocs.io/en/stable/>`_
 * See more at https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes
 
+Documentation
+-------------
+
+Documentation is provided at https://jackmckew.github.io/pandas-alive/
+
 Contributing
 ------------
 
