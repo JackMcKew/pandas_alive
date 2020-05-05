@@ -6,12 +6,6 @@ import matplotlib.colors
 from matplotlib.animation import FuncAnimation
 from .charts import BarChart, LineChart
 
-# from .settings import OUTPUT_TYPE, OUTPUT_FILENAME
-from . import config
-
-# import config
-
-
 def get_allowed_kinds():
     return ["barh", "line"]
 
@@ -96,7 +90,6 @@ def plot(
         )
         if filename:
             bcr.save(verify_filename(filename))
-            # bcr.make_animation(config.OUTPUT_FILENAME)
         return bcr
 
     elif kind == "line":
