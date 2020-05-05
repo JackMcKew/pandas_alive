@@ -5,6 +5,7 @@ from matplotlib.animation import FuncAnimation
 import matplotlib.dates as mdates
 import matplotlib.units as munits
 import datetime
+
 converter = mdates.ConciseDateConverter()
 munits.registry[np.datetime64] = converter
 munits.registry[datetime.date] = converter
@@ -62,12 +63,12 @@ class BaseChart:
     fig: plt.Figure = attr.ib()
     cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
     n_visible: int = attr.ib()
-    tick_label_size: Union[int,float] = attr.ib()
+    tick_label_size: Union[int, float] = attr.ib()
     append_period_to_title: bool = attr.ib()
     x_period_label_location: Union[int, float] = attr.ib()
     y_period_label_location: Union[int, float] = attr.ib()
     period_label_size: Union[int, float] = attr.ib()
-    hide_period: bool = attr.ib()
+    show_period_annotation: bool = attr.ib()
     dpi: float = attr.ib()
     kwargs = attr.ib()
 
@@ -162,7 +163,7 @@ class BaseChart:
         y_label = 0.75
         return x_label, y_label
 
-    def show_period(self,i):
+    def show_period(self, i):
         if self.x_period_label_location is None or self.y_period_label_location is None:
             self.x_label, self.y_label = self.get_label_position()
         else:
@@ -370,7 +371,7 @@ class BarChart(BaseChart):
         # df_values = self.prepare_data()
         fig = plt.Figure(figsize=self.figsize)
         # if self.title:
-            # fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
+        # fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
         ax = fig.add_subplot()
         fake_cols = [chr(i + 70) for i in range(self.df.shape[1])]
 
@@ -445,7 +446,7 @@ class BarChart(BaseChart):
             )
             self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
 
-        if self.use_index and not self.hide_period:
+        if self.use_index and self.show_period_annotation:
             val = self.orig_index[i // self.steps_per_period]
             if self.append_period_to_title:
                 self.ax.set_title(
@@ -515,7 +516,7 @@ class LineChart(BaseChart):
     enable_legend: bool = attr.ib()
 
     def __attrs_post_init__(self):
-        
+
         self.data_cols = self.get_data_cols()
         self.n_visible = self.n_visible or len(self.data_cols)
         if self.fig is None:
@@ -536,30 +537,33 @@ class LineChart(BaseChart):
 
     def prepare_data(self):
         # TODO Rename to interpolate and add settings
-        # Period interpolated to match bar chart for multiple plotting
-        # https://stackoverflow.com/questions/30056399/interpolate-and-fill-pandas-dataframe-with-datetime-index1
-        desired_index =pd.date_range(
-                start=self.df.index.min(),
-                end=self.df.index.max(),
-                periods=((len(self.df.index) - 1) * self.steps_per_period) + 1,
-            )
-        
-        self.df = (self.df.reindex(self.df.index.union(desired_index)).interpolate(method='time').reindex(desired_index)
+        # Period interpolated to match other charts for multiple plotting
+        # https://stackoverflow.com/questions/52701330/pandas-reindex-and-interpolate-time-series-efficiently-reindex-drops-data
+
+        desired_index = pd.date_range(
+            start=self.df.index.min(),
+            end=self.df.index.max(),
+            periods=((len(self.df.index) - 1) * self.steps_per_period) + 1,
         )
-        # self.df = self.df.reset_index(drop=True)
-        # self.df.index = self.df.index * self.steps_per_period
-        # new_index = range(self.df.index.max() + 1)
-        #self.df = self.df.interpolate(method="time")
-        # self.df = self.df.reindex(pd.date_range(start=orig_index.min(),
-        #                                           end=orig_index.max(),
-        #                                           periods=len(self.df.index)))
+
+        self.df = (
+            self.df.reindex(self.df.index.union(desired_index))
+            .interpolate(method="time")
+            .reindex(desired_index)
+        )
 
     def plot_line(self, i):
         # TODO Somehow implement n visible lines?
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         self.ax.set_ylim(
-            self.df.iloc[:i+1].select_dtypes(include=[np.number]).min().min(skipna=True),
-            self.df.iloc[:i+1].select_dtypes(include=[np.number]).max().max(skipna=True),
+            self.df.iloc[: i + 1]
+            .select_dtypes(include=[np.number])
+            .min()
+            .min(skipna=True),
+            self.df.iloc[: i + 1]
+            .select_dtypes(include=[np.number])
+            .max()
+            .max(skipna=True),
         )
         for name, color in zip(self.data_cols, self.line_colors):
 
@@ -576,12 +580,11 @@ class LineChart(BaseChart):
         for line in self.ax.lines:
             line.remove()
         self.plot_line(i)
-        if not self.hide_period:
+        if self.show_period_annotation:
             self.show_period(i)
         if self.enable_legend:
             # labels: List[str] = self._lines.keys()
-            self.ax.legend(self.ax.lines,self._lines.keys(),**self.kwargs)
-        
+            self.ax.legend(self.ax.lines, self._lines.keys(), **self.kwargs)
 
     def init_func(self) -> None:
         self.ax.plot([], [], self.line_width)
