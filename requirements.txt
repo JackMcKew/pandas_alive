@@ -1,5 +1,6 @@
 alabaster==0.7.12
 appdirs==1.4.3
+atomicwrites==1.4.0
 attrs==19.3.0
 Babel==2.8.0
 black==19.10b0
@@ -18,12 +19,16 @@ m2r==0.2.1
 MarkupSafe==1.1.1
 matplotlib==3.2.1
 mistune==0.8.4
+more-itertools==8.2.0
 numpy==1.18.3
 packaging==20.3
 pandas==1.0.3
 pathspec==0.8.0
+pluggy==0.13.1
+py==1.8.1
 Pygments==2.6.1
 pyparsing==2.4.7
+pytest==5.4.1
 python-dateutil==2.8.1
 pytz==2020.1
 recommonmark==0.6.0
@@ -43,3 +48,4 @@ tabulate==0.8.7
 toml==0.10.0
 typed-ast==1.4.1
 urllib3==1.25.9
+wcwidth==0.1.9
