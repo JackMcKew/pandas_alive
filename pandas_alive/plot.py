@@ -70,7 +70,7 @@ def plot(
     show_period_annotation: bool = True,
     dpi: float = 144,
     **kwargs,
-) -> typing.Union[BarChart,LineChart]:
+) -> typing.Union[BarChart, LineChart]:
     """ Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.
 
     Args:
@@ -179,7 +179,7 @@ def animate_multiple_plots(
     title: str = None,
     title_fontsize: typing.Union[int, float] = 16,
     dpi: int = 144,
-    **kwargs
+    **kwargs,
 ):
     """ Plot multiple animated plots
 
@@ -241,9 +241,9 @@ def animate_multiple_plots(
 
     extension = filename.split(".")[-1]
     if extension == "gif":
-        anim.save(filename, fps=fps,dpi=dpi, writer="imagemagick", **kwargs)
+        anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick", **kwargs)
     else:
-        anim.save(filename, fps=fps,dpi=dpi, **kwargs)
+        anim.save(filename, fps=fps, dpi=dpi, **kwargs)
 
 
 ##############################################################################
@@ -258,6 +258,7 @@ class BasePlotMethods(PandasObject):
     Args:
         PandasObject (PandasObject): Base Pandas Object
     """
+
     def __init__(self, data):
         self._parent = data  # can be Series or DataFrame
 
@@ -271,6 +272,7 @@ class AnimatedAccessor(BasePlotMethods):
     Args:
         BasePlotMethods ([type]): BasePlotMethods within pandas
     """
+
     def __call__(self, *args, **kwargs):
         return plot(self.df, *args, **kwargs)
 
