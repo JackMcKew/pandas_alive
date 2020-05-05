@@ -16,11 +16,13 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name Convert README and Move
+
+    - name: Convert README and Move
       run: |
         m2r README.md
         sed -i 's/.. image:: examples/.. image:: ../../examples/g' README.rst
