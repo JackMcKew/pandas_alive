@@ -61,6 +61,7 @@ class BaseChart:
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
     cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
+    n_visible: int = attr.ib()
     tick_label_size: Union[int,float] = attr.ib()
     append_period_to_title: bool = attr.ib()
     x_period_label_location: Union[int, float] = attr.ib()
@@ -262,7 +263,7 @@ class BaseChart:
 class BarChart(BaseChart):
     orientation: str = attr.ib()
     sort: str = attr.ib()
-    n_bars: int = attr.ib()
+    # n_bars: int = attr.ib()
     label_bars: bool = attr.ib()
     bar_label_size: Union[int, float] = attr.ib()
     # tick_label_size: Union[int, float] = attr.ib()
@@ -272,7 +273,7 @@ class BarChart(BaseChart):
     # append_period_to_title: bool = attr.ib()
 
     def __attrs_post_init__(self):
-        self.n_bars = self.n_bars or self.df.shape[1]
+        self.n_visible = self.n_visible or self.df.shape[1]
         self.df_values, self.df_rank = self.prepare_data()
         self.orig_index = self.df.index.astype("str")
         if self.fig is None:
@@ -329,12 +330,12 @@ class BarChart(BaseChart):
         df_values = self.df.reset_index(drop=True)
         df_values.index = df_values.index * self.steps_per_period
         df_rank = df_values.rank(axis=1, method="first", ascending=False).clip(
-            upper=self.n_bars + 1
+            upper=self.n_visible + 1
         )
         if (self.sort == "desc" and self.orientation == "h") or (
             self.sort == "asc" and self.orientation == "v"
         ):
-            df_rank = self.n_bars + 1 - df_rank
+            df_rank = self.n_visible + 1 - df_rank
         new_index = range(df_values.index.max() + 1)
         df_values = df_values.reindex(new_index).interpolate()
         df_rank = df_rank.reindex(new_index).interpolate()
@@ -342,7 +343,7 @@ class BarChart(BaseChart):
 
     def create_figure(self):
         fig = plt.Figure(figsize=self.figsize, dpi=self.dpi)
-        limit = (0.2, self.n_bars + 0.8)
+        limit = (0.2, self.n_visible + 0.8)
         rect = self.calculate_new_figsize(fig)
         ax = fig.add_axes(rect)
         if self.orientation == "h":
@@ -368,8 +369,8 @@ class BarChart(BaseChart):
 
         # df_values = self.prepare_data()
         fig = plt.Figure(figsize=self.figsize)
-        if self.title:
-            fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
+        # if self.title:
+            # fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
         ax = fig.add_subplot()
         fake_cols = [chr(i + 70) for i in range(self.df.shape[1])]
 
@@ -418,7 +419,7 @@ class BarChart(BaseChart):
 
     def plot_bars(self, i):
         bar_location = self.df_rank.iloc[i].values
-        top_filt = (bar_location > 0) & (bar_location < self.n_bars + 1)
+        top_filt = (bar_location > 0) & (bar_location < self.n_visible + 1)
         bar_location = bar_location[top_filt]
         bar_length = self.df_values.iloc[i].values[top_filt]
         cols = self.df.columns[top_filt]
@@ -514,7 +515,9 @@ class LineChart(BaseChart):
     enable_legend: bool = attr.ib()
 
     def __attrs_post_init__(self):
+        
         self.data_cols = self.get_data_cols()
+        self.n_visible = self.n_visible or len(self.data_cols)
         if self.fig is None:
             self.fig, self.ax = self.create_figure()
             self.figsize = self.fig.get_size_inches()
@@ -552,7 +555,7 @@ class LineChart(BaseChart):
         #                                           periods=len(self.df.index)))
 
     def plot_line(self, i):
-        # TODO Make ylim dynamic changing?
+        # TODO Somehow implement n visible lines?
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         self.ax.set_ylim(
             self.df.iloc[:i+1].select_dtypes(include=[np.number]).min().min(skipna=True),
@@ -576,6 +579,7 @@ class LineChart(BaseChart):
         if not self.hide_period:
             self.show_period(i)
         if self.enable_legend:
+            # labels: List[str] = self._lines.keys()
             self.ax.legend(self.ax.lines,self._lines.keys(),**self.kwargs)
         
 

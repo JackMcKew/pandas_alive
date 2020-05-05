@@ -34,6 +34,7 @@ def plot(
     x: str = None,
     y: str = None,
     kind: str = "barh",
+    n_visible: int = None,
     line_width: int = 3,
     use_index: bool = True,
     steps_per_period: int = 10,
@@ -44,7 +45,6 @@ def plot(
     enable_legend: bool = False,
     orientation: str = "h",
     sort: str = "desc",
-    n_bars: int = None,
     label_bars: bool = None,
     cmap: typing.Union[str, matplotlib.colors.Colormap, typing.List[str]] = "dark24",
     bar_label_size: typing.Union[int, float] = 7,
@@ -72,7 +72,8 @@ def plot(
             df,
             orientation=orientation,
             sort=sort,
-            n_bars=n_bars,
+            n_visible=n_visible,
+            # n_bars=n_bars,
             label_bars=label_bars,
             use_index=True,
             steps_per_period=steps_per_period,
@@ -102,6 +103,7 @@ def plot(
             line_width=line_width,
             enable_legend=enable_legend,
             use_index=True,
+            n_visible=n_visible,
             steps_per_period=steps_per_period,
             period_length=period_length,
             figsize=figsize,
@@ -149,15 +151,29 @@ def animate_multiple_plots(
     # TODO add option for number of rows/columns
     # TODO Use gridspec?
     fig, axes = plt.subplots(len(plots))
-
+    # fig = plt.figure()
+    # spec = fig.add_gridspec()
+    # fig.add_subplot(spec[0, 1])
     # Used for overlapping titles, supplot not considered so move down by 10%
     # https://stackoverflow.com/questions/8248467/matplotlib-tight-layout-doesnt-take-into-account-figure-suptitle
-    fig.tight_layout(rect=[0, 0, 1, 0.9])
+    # fig.tight_layout(rect=[0, 0, 1, 0.9])
+    # fig.constrained_layout()
+    # plt.rcParams["figure.constrained_layout.use"] = True
+    # plt.subplots_adjust(top=0.85)
+    # plt.subplots_adjust()
+    # plt.rcParams.update({'figure.autolayout': True})
 
     if title is not None:
         fig.suptitle(title)
 
     for num, plot in enumerate(plots):
+        # plot.ax = fig.add_subplot(spec[num:,0])[0]
+        axes[num].grid(True, axis="x", color="white")
+        axes[num].set_axisbelow(True)
+        axes[num].tick_params(length=0, labelsize=plot.tick_label_size, pad=2)
+        axes[num].set_facecolor(".9")
+        for spine in axes[num].spines.values():
+            spine.set_visible(False)
         axes[num].set_title(plot.title)
         plot.ax = axes[num]
 
