@@ -1,12 +1,12 @@
 
-Pandas-Alive
+Pandas_alive
 ============
 
 Animated plotting extension for Pandas with Matplotlib
 
-**Pandas-Alive** is intended to provide a plotting backend for animated `matplotlib <https://matplotlib.org/>`_ charts for `Pandas <https://pandas.pydata.org/>`_ DataFrames, similar to the already `existing Visualization feature of Pandas <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_.
+**Pandas_alive** is intended to provide a plotting backend for animated `matplotlib <https://matplotlib.org/>`_ charts for `Pandas <https://pandas.pydata.org/>`_ DataFrames, similar to the already `existing Visualization feature of Pandas <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_.
 
-With **Pandas-Alive**\ , creating stunning, animated visualisations is as easy as calling:
+With **Pandas_alive**\ , creating stunning, animated visualisations is as easy as calling:
 
 .. code-block:: python
 
@@ -21,7 +21,7 @@ With **Pandas-Alive**\ , creating stunning, animated visualisations is as easy a
 Installation
 ------------
 
-Install with ``pip install pandas-alive``
+Install with ``pip install pandas_alive``
 
 Usage
 -----
@@ -65,7 +65,7 @@ To produce the above visualisation:
 Currently Supported Chart Types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``pandas-alive`` current supports:
+``pandas_alive`` current supports:
 
 
 * `Horizontal Bar Charts <#horizontal-bar-charts>`_
@@ -128,7 +128,7 @@ With as many lines as data columns in DataFrame.
 Multiple Charts
 ^^^^^^^^^^^^^^^
 
-``pandas-alive`` supports multiple animated charts in a single visualisation.
+``pandas_alive`` supports multiple animated charts in a single visualisation.
 
 
 * Create a list of all charts to include in animation
@@ -203,7 +203,7 @@ Ensure to have one of the supported tooling software installed prior to use!
 Documentation
 -------------
 
-Documentation is provided at https://jackmckew.github.io/pandas-alive/
+Documentation is provided at https://jackmckew.github.io/pandas_alive/
 
 Contributing
 ------------
