@@ -13,6 +13,7 @@ munits.registry[datetime.date] = converter
 munits.registry[datetime.datetime] = converter
 from matplotlib import ticker, colors
 import typing
+
 # from typing import Tuple, Union, List, Optional, Dict
 import attr
 
@@ -43,6 +44,7 @@ DARK24 = [
     "#AF0038",
 ]
 
+
 @attr.s()
 class BaseChart:
     """ BaseChart for shared methods & properties for all chart types
@@ -50,6 +52,7 @@ class BaseChart:
     Returns:
         BaseChart: Fundamentals of all chart types
     """
+
     df: pd.DataFrame = attr.ib()
     use_index: bool = attr.ib()
     steps_per_period: int = attr.ib()
@@ -68,7 +71,6 @@ class BaseChart:
     dpi: float = attr.ib()
     kwargs = attr.ib()
 
-    
     def __attrs_post_init__(self):
         self.data_cols = self.get_data_cols()
         self.n_visible = self.n_visible or len(self.data_cols)
@@ -98,7 +100,7 @@ class BaseChart:
         """
         raise NotImplementedError("Initializing method not yet implemented")
 
-    def anim_func(self, frame:int) -> None:
+    def anim_func(self, frame: int) -> None:
         """ Animation method, to be overridden by extended chart class
 
         Args:
@@ -120,7 +122,7 @@ class BaseChart:
         """
         raise NotImplementedError("Get frames method not yet implemented")
 
-    def make_animation(self, frames:int, init_func:typing.Callable) -> FuncAnimation:
+    def make_animation(self, frames: int, init_func: typing.Callable) -> FuncAnimation:
         """ Method for creating animation
 
         Args:
@@ -130,7 +132,6 @@ class BaseChart:
         Returns:
             FuncAnimation: FuncAnimation instance for extending with save, etc
         """
-
 
         interval = self.period_length / self.steps_per_period
         return FuncAnimation(
@@ -149,7 +150,7 @@ class BaseChart:
         import io
 
         fig = plt.Figure(figsize=self.figsize)
-        
+
         ax = fig.add_subplot()
 
         max_val = self.df.values.max().max()
@@ -185,7 +186,7 @@ class BaseChart:
         height = orig_pos.y1 - bottom
         return [left, bottom, width, height]
 
-    def create_figure(self) -> typing.Tuple[plt.figure,plt.axes]:
+    def create_figure(self) -> typing.Tuple[plt.figure, plt.axes]:
         """ Create base figure with styling, can be overridden if styling unwanted
 
         Returns:
@@ -206,7 +207,7 @@ class BaseChart:
             spine.set_visible(False)
         return fig, ax
 
-    def get_label_position(self) -> typing.Tuple[float,float]:
+    def get_label_position(self) -> typing.Tuple[float, float]:
         """ Retrieve period label annotation position, can be overridden for further extensability
 
         Returns:
@@ -265,7 +266,7 @@ class BaseChart:
                 else:
                     self.ax.texts[0].set_text(val)
 
-    def save(self, filename:str) -> None:
+    def save(self, filename: str) -> None:
         """ Save method for FuncAnimation
 
         Args:
@@ -323,7 +324,9 @@ class BaseChart:
 
         return data_cols
 
-    def get_colors(self, cmap:typing.Union[colors.Colormap,str,typing.List[str]]) -> typing.List[str]:
+    def get_colors(
+        self, cmap: typing.Union[colors.Colormap, str, typing.List[str]]
+    ) -> typing.List[str]:
         """ Get colours for plotting categorical data
 
         Args:
@@ -371,16 +374,17 @@ class BarChart(BaseChart):
     Returns:
         BarChart: Instance of BarChart allowing for inclusion in subplot charts or animating with .save()
     """
+
     orientation: str = attr.ib()
     sort: str = attr.ib()
     label_bars: bool = attr.ib()
     bar_label_size: typing.Union[int, float] = attr.ib()
-    
+
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
         """
         self.n_visible = self.n_visible if self.n_visible else self.df.shape[1]
-        
+
         self.df_values, self.df_rank = self.prepare_data()
 
         self.orig_index = self.df.index.astype("str")
@@ -401,7 +405,7 @@ class BarChart(BaseChart):
             ValueError: If sort value is not provided (either 'asc' or 'desc')
             ValueError: Orientation must be 'h' (horizontal) or 'v' (vertical)
         """
-        super().validate_params(None,self.fig)
+        super().validate_params(None, self.fig)
 
         if self.sort not in ("asc", "desc"):
             raise ValueError('`sort` must be "asc" or "desc"')
@@ -409,7 +413,17 @@ class BarChart(BaseChart):
         if self.orientation not in ("h", "v"):
             raise ValueError('`orientation` must be "h" or "v"')
 
-    def get_colors(self, cmap):
+    def get_colors(
+        self, cmap: typing.Union[str, colors.Colormap, typing.List[str]]
+    ) -> np.array:
+        """ Get array of colours from BaseChart.get_colors and shorten to nummber of bars
+
+        Args:
+            cmap (typing.Union[str, colors.Colormap, typing.List[str]]): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html
+
+        Returns:
+            np.array: Numpy Array of colors as strings
+        """
         bar_colors = super().get_colors(cmap)
 
         # bar_colors is now a list
@@ -418,7 +432,12 @@ class BarChart(BaseChart):
             bar_colors = bar_colors * (self.df.shape[1] // n + 1)
         return np.array(bar_colors[: self.df.shape[1]])
 
-    def get_label_position(self):
+    def get_label_position(self) -> typing.Tuple[float, float]:
+        """ Get label position for period annotation
+
+        Returns:
+            typing.Tuple[float,float]: x,y of label
+        """
         if self.orientation == "h":
             x_label = 0.6
             y_label = 0.25 if self.sort == "desc" else 0.8
@@ -427,7 +446,12 @@ class BarChart(BaseChart):
             y_label = 0.8
         return x_label, y_label
 
-    def prepare_data(self):
+    def prepare_data(self) -> typing.Tuple[pd.DataFrame, pd.DataFrame]:
+        """ Calculate expanded dataframe to match length of animation
+
+        Returns:
+            typing.Tuple[pd.DataFrame,pd.DataFrame]: df_values contains interpolated values, df_rank contains interpolated rank
+        """
         df_values = self.df.reset_index(drop=True)
         df_values.index = df_values.index * self.steps_per_period
         df_rank = df_values.rank(axis=1, method="first", ascending=False).clip(
@@ -442,7 +466,12 @@ class BarChart(BaseChart):
         df_rank = df_rank.reindex(new_index).interpolate()
         return df_values, df_rank
 
-    def create_figure(self):
+    def create_figure(self) -> typing.Tuple[plt.figure, plt.axes]:
+        """ Create Bar chart figure
+
+        Returns:
+            typing.Tuple[plt.figure,plt.axes]: Figure & axes instance
+        """
         fig = plt.Figure(figsize=self.figsize, dpi=self.dpi)
         limit = (0.2, self.n_visible + 0.8)
         rect = self.calculate_new_figsize(fig)
@@ -465,7 +494,15 @@ class BarChart(BaseChart):
             spine.set_visible(False)
         return fig, ax
 
-    def calculate_new_figsize(self, real_fig):
+    def calculate_new_figsize(self, real_fig: plt.figure) -> typing.List[float]:
+        """ Calculate figure size to allow for labels, etc
+
+        Args:
+            real_fig (plt.figure): Figure before calculation
+
+        Returns:
+            typing.List[float]: The dimensions [left, bottom, width, height] of the new axes. All quantities are in fractions of figure width and height.
+        """
         import io
 
         # df_values = self.prepare_data()
@@ -518,7 +555,12 @@ class BarChart(BaseChart):
         height = orig_pos.y1 - bottom
         return [left, bottom, width, height]
 
-    def plot_bars(self, i):
+    def plot_bars(self, i: int) -> None:
+        """ Plot bars in bar chart race on axes
+
+        Args:
+            i (int): index of current frame in animation
+        """
         bar_location = self.df_rank.iloc[i].values
         top_filt = (bar_location > 0) & (bar_location < self.n_visible + 1)
         bar_location = bar_location[top_filt]
@@ -598,24 +640,47 @@ class BarChart(BaseChart):
                     va=va,
                 )
 
-    def anim_func(self, i):
+    def anim_func(self, i: int) -> None:
+        """ Animation function for plot bars
+
+        Args:
+            i (int): Frame index for animation
+        """
         for bar in self.ax.containers:
             bar.remove()
         self.plot_bars(i)
 
     def init_func(self):
+        """ Initialization function for animation
+        """
         self.plot_bars(0)
 
     def get_frames(self):
+        """ Get number of frames to animate
+
+        Returns:
+            range(int): Get range of length of dataframe
+        """
         return range(len(self.df_values))
 
 
 @attr.s
 class LineChart(BaseChart):
+    """ Aninmated Line Chart implementation
+
+    Args:
+        BaseChart (BaseChart): Shared Base Chart class inherit to all charts
+
+    Returns:
+        LineChart: Animated Line Chart class for use with multiple plots or save
+    """
+
     line_width: int = attr.ib()
     enable_legend: bool = attr.ib()
 
     def __attrs_post_init__(self):
+        """ Property initialization
+        """
 
         self.data_cols = self.get_data_cols()
         self.n_visible = self.n_visible or len(self.data_cols)
@@ -636,6 +701,8 @@ class LineChart(BaseChart):
         self.prepare_data()
 
     def prepare_data(self):
+        """ Reindex dataframe and interpolate for length of animation
+        """
         # TODO Rename to interpolate and add settings
         # Period interpolated to match other charts for multiple plotting
         # https://stackoverflow.com/questions/52701330/pandas-reindex-and-interpolate-time-series-efficiently-reindex-drops-data
@@ -652,7 +719,12 @@ class LineChart(BaseChart):
             .reindex(desired_index)
         )
 
-    def plot_line(self, i):
+    def plot_line(self, i: int) -> None:
+        """ Function for plotting all lines in dataframe
+
+        Args:
+            i (int): Index of frame for animation
+        """
         # TODO Somehow implement n visible lines?
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         self.ax.set_ylim(
@@ -676,7 +748,12 @@ class LineChart(BaseChart):
                 color=color,
             )
 
-    def anim_func(self, i):
+    def anim_func(self, i: int) -> None:
+        """ Animation function, removes all lines and updates legend/period annotation
+
+        Args:
+            i (int): Index of frame of animation
+        """
         for line in self.ax.lines:
             line.remove()
         self.plot_line(i)
@@ -687,10 +764,15 @@ class LineChart(BaseChart):
             self.ax.legend(self.ax.lines, self._lines.keys(), **self.kwargs)
 
     def init_func(self) -> None:
+        """ Initialization function for animation
+        """
         self.ax.plot([], [], self.line_width)
 
-    def get_frames(self):
-        return range(len(self.df.index))
+    def get_frames(self) -> typing.List[int]:
+        """ Get number of frames required for animation
 
-    # def get_frames(self):
-    #     return range(len(self.df.index))
+        Returns:
+            typing.List[int]: Range of length of dataframe index
+        """
+
+        return range(len(self.df.index))
