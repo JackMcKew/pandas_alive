@@ -66,6 +66,7 @@ class BaseChart:
     x_period_label_location: Union[int, float] = attr.ib()
     y_period_label_location: Union[int, float] = attr.ib()
     period_label_size: Union[int, float] = attr.ib()
+    hide_period: bool = attr.ib()
     dpi: float = attr.ib()
     kwargs = attr.ib()
 
@@ -443,7 +444,7 @@ class BarChart(BaseChart):
             )
             self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
 
-        if self.use_index:
+        if self.use_index and not self.hide_period:
             val = self.orig_index[i // self.steps_per_period]
             if self.append_period_to_title:
                 self.ax.set_title(
@@ -572,7 +573,8 @@ class LineChart(BaseChart):
         for line in self.ax.lines:
             line.remove()
         self.plot_line(i)
-        self.show_period(i)
+        if not self.hide_period:
+            self.show_period(i)
         if self.enable_legend:
             self.ax.legend(self.ax.lines,self._lines.keys(),**self.kwargs)
         
