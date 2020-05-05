@@ -1,12 +1,12 @@
 
-Pandas_alive
+Pandas_Alive
 ============
 
 Animated plotting extension for Pandas with Matplotlib
 
-**Pandas_alive** is intended to provide a plotting backend for animated `matplotlib <https://matplotlib.org/>`_ charts for `Pandas <https://pandas.pydata.org/>`_ DataFrames, similar to the already `existing Visualization feature of Pandas <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_.
+**Pandas_Alive** is intended to provide a plotting backend for animated `matplotlib <https://matplotlib.org/>`_ charts for `Pandas <https://pandas.pydata.org/>`_ DataFrames, similar to the already `existing Visualization feature of Pandas <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_.
 
-With **Pandas_alive**\ , creating stunning, animated visualisations is as easy as calling:
+With **Pandas_Alive**\ , creating stunning, animated visualisations is as easy as calling:
 
 .. code-block:: python
 
