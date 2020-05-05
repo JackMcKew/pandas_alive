@@ -187,12 +187,24 @@ def animate_multiple_plots(
     adjust_subplot_hspace: float = 0.2,
     **kwargs
 ):
-    """ Plot multiple animated plots
+    """ Plot multiple animated subplots with plt.subplots()
 
     Args:
-        plots (List[Union[_BarChartRace,_LineChartRace]]): List of plots to animate
-    """
+        filename (str): Output file name with extension to rite to
+        plots (typing.List[typing.Union[BarChart, LineChart]]): List of chart instances
+        title (str, optional): Overall title for plots (suptitle). Defaults to None.
+        title_fontsize (typing.Union[int, float], optional): Font size for suptitle. Defaults to 16.
+        dpi (int, optional): Custom DPI to increase resolution. Defaults to 144.
+        adjust_subplot_left (float, optional): the left side of the subplots of the figure. Defaults to 0.125.
+        adjust_subplot_right (float, optional): the right side of the subplots of the figure. Defaults to 0.9.
+        adjust_subplot_bottom (float, optional): the bottom of the subplots of the figure. Defaults to 0.1.
+        adjust_subplot_top (float, optional): the top of the subplots of the figure. Defaults to 0.9.
+        adjust_subplot_wspace (float, optional): the amount of width reserved for space between subplots, expressed as a fraction of the average axis width. Defaults to 0.2.
+        adjust_subplot_hspace (float, optional): the amount of height reserved for space between subplots, expressed as a fraction of the average axis height. Defaults to 0.2.
 
+    Raises:
+        UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length
+    """
     # TODO Maybe add multichart class?
 
     def update_all_graphs(frame):

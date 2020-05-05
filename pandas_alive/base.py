@@ -13,7 +13,7 @@ import pandas as pd
 
 
 def load_dataset(name: str = "covid19") -> pd.DataFrame:
-    """ Returns a pandas DataFrame suitable for immediate use in `pandas-alive`
+    """ Returns a pandas DataFrame suitable for immediate use in `pandas_alive`
 
     
     Example:
@@ -27,7 +27,7 @@ def load_dataset(name: str = "covid19") -> pd.DataFrame:
     """
 
     return pd.read_csv(
-        f"https://raw.githubusercontent.com/JackMcKew/pandas-alive/master/data/{name}.csv",
+        f"https://raw.githubusercontent.com/JackMcKew/pandas_alive/master/data/{name}.csv",
         index_col=0,
         parse_dates=[0],
     )
