@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas-Alive &mdash; Pandas_Alive 0.1.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="plot" href="generated/pandas_alive.plot.html" />
+    <link rel="prev" title="Pandas_Alive" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pandas_Alive
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#currently-supported-chart-types">Currently Supported Chart Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Horizontal Bar Charts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Vertical Bar Charts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Line Charts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-charts">Multiple Charts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#inspiration">Inspiration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated/pandas_alive.plot.html">plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/pandas_alive.base.html">pandas_alive.base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/pandas_alive.base.load_dataset.html">load_dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generated/pandas_alive.charts.html">pandas_alive.charts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.html">BarChart</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.__init__.html">BarChart.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.anim_func.html">BarChart.anim_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.calculate_new_figsize.html">BarChart.calculate_new_figsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.create_figure.html">BarChart.create_figure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.get_colors.html">BarChart.get_colors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.get_data_cols.html">BarChart.get_data_cols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.get_frames.html">BarChart.get_frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.get_html5_video.html">BarChart.get_html5_video</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.get_label_position.html">BarChart.get_label_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.init_func.html">BarChart.init_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.make_animation.html">BarChart.make_animation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.plot_bars.html">BarChart.plot_bars</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.prepare_data.html">BarChart.prepare_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.save.html">BarChart.save</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.show_period.html">BarChart.show_period</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BarChart.validate_params.html">BarChart.validate_params</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.html">BaseChart</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.__init__.html">BaseChart.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.anim_func.html">BaseChart.anim_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.calculate_new_figsize.html">BaseChart.calculate_new_figsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.create_figure.html">BaseChart.create_figure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.get_colors.html">BaseChart.get_colors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.get_data_cols.html">BaseChart.get_data_cols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.get_frames.html">BaseChart.get_frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.get_html5_video.html">BaseChart.get_html5_video</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.get_label_position.html">BaseChart.get_label_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.init_func.html">BaseChart.init_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.make_animation.html">BaseChart.make_animation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.save.html">BaseChart.save</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.show_period.html">BaseChart.show_period</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.BaseChart.validate_params.html">BaseChart.validate_params</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.html">LineChart</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.__init__.html">LineChart.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.anim_func.html">LineChart.anim_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.calculate_new_figsize.html">LineChart.calculate_new_figsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.create_figure.html">LineChart.create_figure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.get_colors.html">LineChart.get_colors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.get_data_cols.html">LineChart.get_data_cols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.get_frames.html">LineChart.get_frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.get_html5_video.html">LineChart.get_html5_video</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.get_label_position.html">LineChart.get_label_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.init_func.html">LineChart.init_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.make_animation.html">LineChart.make_animation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.plot_line.html">LineChart.plot_line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.prepare_data.html">LineChart.prepare_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.save.html">LineChart.save</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.show_period.html">LineChart.show_period</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pandas_alive.charts.LineChart.validate_params.html">LineChart.validate_params</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generated/pandas_alive.__init__.html">__init__</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pandas_Alive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Pandas-Alive</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pandas-alive">
+<h1>Pandas-Alive<a class="headerlink" href="#pandas-alive" title="Permalink to this headline">¶</a></h1>
+<p>Animated plotting extension for Pandas with Matplotlib</p>
+<p><strong>Pandas-Alive</strong> is intended to provide a plotting backend for animated <a class="reference external" href="https://matplotlib.org/">matplotlib</a> charts for <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> DataFrames, similar to the already <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/visualization.html">existing Visualization feature of Pandas</a>.</p>
+<p>With <strong>Pandas-Alive</strong>, creating stunning, animated visualisations is as easy as calling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-barh-chart.gif"><img alt="Example Bar Chart" src="_images/example-barh-chart.gif" /></a>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandas-alive</span></code></p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>As this package builds upon <cite>``bar_chart_race`</cite> &lt;<a class="reference external" href="https://github.com/dexplo/bar_chart_race">https://github.com/dexplo/bar_chart_race</a>&gt;`_, the example data set is sourced from there.</p>
+<p>Must begin with a pandas DataFrame containing ‘wide’ data where:</p>
+<ul class="simple">
+<li><p>Every row represents a single period of time</p></li>
+<li><p>Each column holds the value for a particular category</p></li>
+<li><p>The index contains the time component (optional)</p></li>
+</ul>
+<p>The data below is an example of properly formatted data. It shows total deaths from COVID-19 for the highest 20 countries by date.</p>
+<a class="reference external image-reference" href="https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png"><img alt="Example Data Table" src="https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png" /></a>
+<p><a class="reference external" href="examples/example_dataset_table.md">Example Table</a></p>
+<p>To produce the above visualisation:</p>
+<ul class="simple">
+<li><p>Check <a class="reference external" href="#requirements">Requirements</a> first to ensure you have the tooling installed!</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">plot_animated()</span></code> on the DataFrame</p>
+<ul>
+<li><p>Either specify a file name to write to with <code class="docutils literal notranslate"><span class="pre">df.plot_animated(filename='example.mp4')</span></code> or use <code class="docutils literal notranslate"><span class="pre">df.plot_animated().get_html5_video</span></code> to return a HTML5 video</p></li>
+</ul>
+</li>
+<li><p>Done!</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-barh-chart.gif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="currently-supported-chart-types">
+<h3>Currently Supported Chart Types<a class="headerlink" href="#currently-supported-chart-types" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pandas-alive</span></code> current supports:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#horizontal-bar-charts">Horizontal Bar Charts</a></p></li>
+<li><p><a class="reference external" href="#vertical-bar-charts">Vertical Bar Charts</a></p></li>
+<li><p><a class="reference external" href="#line-charts">Line Charts</a></p></li>
+</ul>
+<div class="section" id="id1">
+<h4>Horizontal Bar Charts<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-barh-chart.gif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-barh-chart.gif"><img alt="Example Barh Chart" src="_images/example-barh-chart.gif" /></a>
+</div>
+<div class="section" id="id2">
+<h4>Vertical Bar Charts<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-barv-chart.gif&#39;</span><span class="p">,</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-barv-chart.gif"><img alt="Example Barv Chart" src="_images/example-barv-chart.gif" /></a>
+</div>
+<div class="section" id="id3">
+<h4>Line Charts<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>With as many lines as data columns in DataFrame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-line-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-line-chart.gif"><img alt="Example Line Chart" src="_images/example-line-chart.gif" /></a>
+</div>
+</div>
+<div class="section" id="multiple-charts">
+<h3>Multiple Charts<a class="headerlink" href="#multiple-charts" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pandas-alive</span></code> supports multiple animated charts in a single visualisation.</p>
+<ul class="simple">
+<li><p>Create a list of all charts to include in animation</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">animate_multiple_plots</span></code> with a <code class="docutils literal notranslate"><span class="pre">filename</span></code> and the list of charts (this will use <code class="docutils literal notranslate"><span class="pre">matplotlib.subplots</span></code>)</p></li>
+<li><p>Done!</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="n">animated_line_chart</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">period_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span><span class="n">period_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;example-bar-and-line-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">]</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-bar-and-line-chart.gif"><img alt="Example Bar &amp; Line Chart" src="_images/example-bar-and-line-chart.gif" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">urban_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;urban_pop&quot;</span><span class="p">)</span>
+
+<span class="n">animated_line_chart</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">urban_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total % Change in Population&quot;</span><span class="p">,</span><span class="n">show_period_annotation</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">urban_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Top 10 Populous Countries&#39;</span><span class="p">)</span>
+
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-urban-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">],</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Urban Population 1977 - 2018&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-bar-and-line-urban-chart.gif"><img alt="Urban Population Bar &amp; Line Chart" src="_images/example-bar-and-line-urban-chart.gif" /></a>
+</div>
+</div>
+<div class="section" id="inspiration">
+<h2>Inspiration<a class="headerlink" href="#inspiration" title="Permalink to this headline">¶</a></h2>
+<p>The inspiration for this project comes from:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/dexplo/bar_chart_race">bar_chart_race</a> by <a class="reference external" href="https://github.com/tdpetrou">Ted Petrou</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PatrikHlobil/Pandas-Bokeh">Pandas-Bokeh</a> by <a class="reference external" href="https://github.com/PatrikHlobil">Patrik Hlobil</a></p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>Requirements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>If you get an error such as <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'MovieWriterRegistry'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">an</span> <span class="pre">iterator</span></code>, this signals there isn’t a writer library installed on your machine.</p>
+<p>This package utilises the <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html">matplotlib.animation function</a>, thus requiring a writer library.</p>
+<p>Ensure to have one of the supported tooling software installed prior to use!</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ffmpeg.org/">ffmpeg</a></p></li>
+<li><p><a class="reference external" href="https://imagemagick.org/index.php">ImageMagick</a></p></li>
+<li><p><a class="reference external" href="https://pillow.readthedocs.io/en/stable/">Pillow</a></p></li>
+<li><p>See more at <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes">https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes</a></p></li>
+</ul>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>Pull requests are welcome! Please help to cover more and more chart types!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/pandas_alive.plot.html" class="btn btn-neutral float-right" title="plot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Pandas_Alive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jack McKew
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
