@@ -179,6 +179,12 @@ def animate_multiple_plots(
     title: str = None,
     title_fontsize: typing.Union[int, float] = 16,
     dpi: int = 144,
+    adjust_subplot_left: float = 0.125,
+    adjust_subplot_right: float = 0.9,
+    adjust_subplot_bottom: float = 0.1,
+    adjust_subplot_top: float = 0.9,
+    adjust_subplot_wspace: float = 0.2,
+    adjust_subplot_hspace: float = 0.2,
     **kwargs
 ):
     """ Plot multiple animated plots
@@ -202,6 +208,8 @@ def animate_multiple_plots(
     # TODO add option for number of rows/columns
     # TODO Use gridspec?
     fig, axes = plt.subplots(len(plots))
+    # Defaults from https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.subplots_adjust.html
+    fig.subplots_adjust(left=adjust_subplot_left,right=adjust_subplot_right,bottom=adjust_subplot_bottom,top=adjust_subplot_top,wspace=adjust_subplot_wspace,hspace=adjust_subplot_hspace)
     # plt.tight_layout()
     # fig = plt.figure()
     # spec = fig.add_gridspec()
