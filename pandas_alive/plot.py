@@ -185,7 +185,6 @@ def animate_multiple_plots(
     adjust_subplot_top: float = 0.9,
     adjust_subplot_wspace: float = 0.2,
     adjust_subplot_hspace: float = 0.2,
-    **kwargs
 ):
     """ Plot multiple animated subplots with plt.subplots()
 
@@ -262,9 +261,9 @@ def animate_multiple_plots(
 
     extension = filename.split(".")[-1]
     if extension == "gif":
-        anim.save(filename, fps=fps,dpi=dpi, writer="imagemagick", **kwargs)
+        anim.save(filename, fps=fps,dpi=dpi, writer="imagemagick")
     else:
-        anim.save(filename, fps=fps,dpi=dpi, **kwargs)
+        anim.save(filename, fps=fps,dpi=dpi)
 
 
 ##############################################################################
