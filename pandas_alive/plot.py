@@ -6,6 +6,7 @@ import matplotlib.colors
 from matplotlib.animation import FuncAnimation
 from .charts import BarChart, LineChart
 
+
 def get_allowed_kinds():
     return ["barh", "line"]
 
