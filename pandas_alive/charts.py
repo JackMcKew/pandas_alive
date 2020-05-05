@@ -281,9 +281,9 @@ class BaseChart:
 
         extension = filename.split(".")[-1]
         if extension == "gif":
-            anim.save(filename, fps=self.fps, writer="imagemagick")
+            anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
         else:
-            anim.save(filename, fps=self.fps)
+            anim.save(filename, fps=self.fps, dpi=self.dpi)
 
     def get_html5_video(self):
         """ Convert the animation to an HTML5 <video> tag.

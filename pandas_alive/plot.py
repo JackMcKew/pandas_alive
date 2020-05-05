@@ -178,6 +178,8 @@ def animate_multiple_plots(
     plots: typing.List[typing.Union[BarChart, LineChart]],
     title: str = None,
     title_fontsize: typing.Union[int, float] = 16,
+    dpi: int = 144,
+    **kwargs
 ):
     """ Plot multiple animated plots
 
@@ -239,9 +241,9 @@ def animate_multiple_plots(
 
     extension = filename.split(".")[-1]
     if extension == "gif":
-        anim.save(filename, fps=fps, writer="imagemagick")
+        anim.save(filename, fps=fps,dpi=dpi, writer="imagemagick", **kwargs)
     else:
-        anim.save(filename, fps=fps)
+        anim.save(filename, fps=fps,dpi=dpi, **kwargs)
 
 
 ##############################################################################
