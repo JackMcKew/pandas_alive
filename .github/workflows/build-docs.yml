@@ -25,7 +25,7 @@ jobs:
     - name: Convert README and Move
       run: |
         m2r README.md
-        sed -i 's/.. image:: examples/.. image:: ../../examples/g' README.rst
+        sed -i 's/\.\. image:: examples/\.\. image:: \.\./\.\./examples/g' README.rst
         mv README.rst docs/source
 
     - name: Build sphinx documentation
