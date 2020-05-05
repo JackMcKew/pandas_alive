@@ -116,6 +116,20 @@ pandas_alive.animate_multiple_plots('example-bar-and-line-chart.gif',[animated_b
 
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
+``` python
+import pandas_alive
+
+urban_df = pandas_alive.load_dataset("urban_pop")
+
+animated_line_chart = urban_df.sum(axis=1).pct_change().dropna().plot_animated(kind='line',title='Total % Change in Population')
+
+animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries', hide_period=False)
+
+pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018')
+```
+
+![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
+
 ## Inspiration
 
 The inspiration for this project comes from:
