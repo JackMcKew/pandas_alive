@@ -59,7 +59,7 @@ def plot(
     enable_legend: bool = False,
     orientation: str = "h",
     sort: str = "desc",
-    label_bars: bool = None,
+    label_bars: bool = True,
     cmap: typing.Union[str, matplotlib.colors.Colormap, typing.List[str]] = "dark24",
     bar_label_size: typing.Union[int, float] = 7,
     tick_label_size: typing.Union[int, float] = 7,
@@ -202,6 +202,7 @@ def animate_multiple_plots(
     # TODO add option for number of rows/columns
     # TODO Use gridspec?
     fig, axes = plt.subplots(len(plots))
+    # plt.tight_layout()
     # fig = plt.figure()
     # spec = fig.add_gridspec()
     # fig.add_subplot(spec[0, 1])
