@@ -15,9 +15,10 @@ from . import config
 def get_allowed_kinds():
     return ["barh", "line"]
 
-def verify_filename(filename:str) -> str:
+
+def verify_filename(filename: str) -> str:
     if len(filename) <= 0:
-            raise ValueError("Specify filename")
+        raise ValueError("Specify filename")
 
     if (
         isinstance(filename, str)
@@ -27,6 +28,7 @@ def verify_filename(filename:str) -> str:
         raise ValueError("`filename` must be provided & have an extension")
 
     return filename
+
 
 def plot(
     input_df: pd.DataFrame,
@@ -53,7 +55,7 @@ def plot(
     x_period_label_location: typing.Union[int, float] = None,
     y_period_label_location: typing.Union[int, float] = None,
     append_period_to_title: bool = None,
-    hide_period: bool = True,
+    show_period_annotation: bool = True,
     dpi: float = 144,
     **kwargs,
 ):
@@ -88,7 +90,7 @@ def plot(
             y_period_label_location=y_period_label_location,
             append_period_to_title=append_period_to_title,
             dpi=dpi,
-            hide_period=hide_period,
+            show_period_annotation=show_period_annotation,
             fig=fig,
             kwargs=kwargs,
         )
@@ -114,7 +116,7 @@ def plot(
             y_period_label_location=y_period_label_location,
             append_period_to_title=append_period_to_title,
             dpi=dpi,
-            hide_period=hide_period,
+            show_period_annotation=show_period_annotation,
             title=title,
             fig=fig,
             kwargs=kwargs,
