@@ -1,0 +1,6 @@
+# Installation
+
+Pandas-Alive depends on a series of packages:
+
+- [pandas](https://pandas.pydata.org/)
+- [matplotlib](https://matplotlib.org/)

@@ -1,0 +1,20 @@
+pandas\_alive.charts
+====================
+
+.. rubric:: Description
+.. automodule:: pandas_alive.charts
+.. currentmodule:: pandas_alive.charts
+
+
+.. rubric:: Classes
+.. autosummary::
+    :toctree:
+    
+    BarChart
+    
+    BaseChart
+    
+    LineChart
+    
+
+
