@@ -61,6 +61,12 @@ class BaseChart:
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
     cmap: Union[str, colors.Colormap, List[str]] = attr.ib()
+    tick_label_size: Union[int,float] = attr.ib()
+    append_period_to_title: bool = attr.ib()
+    x_period_label_location: Union[int, float] = attr.ib()
+    y_period_label_location: Union[int, float] = attr.ib()
+    period_label_size: Union[int, float] = attr.ib()
+    dpi: float = attr.ib()
     kwargs = attr.ib()
 
     @fig.validator
@@ -77,9 +83,9 @@ class BaseChart:
     def get_frames(self):
         raise NotImplementedError("Get frames method not yet implemented")
 
-    def preview(self,number_of_frames=10):
-        anim = self.make_animation(number_of_frames, self.init_func)
-        plt.show()
+    # def preview(self,number_of_frames=10):
+    #     anim = self.make_animation(number_of_frames, self.init_func)
+    #     plt.show()
 
     def make_animation(self, frames, init_func) -> FuncAnimation:
 
@@ -88,52 +94,107 @@ class BaseChart:
             self.fig, self.anim_func, frames, init_func, interval=interval,
         )
 
-    ## TODO Implement standard figure layouts
+    # TODO Implement standard figure layouts
 
-    # def create_figure(self):
-    #     fig = plt.Figure(figsize=self.figsize, dpi=self.dpi)
-    #     limit = (0.2, self.n_bars + 0.8)
-    #     rect = self.calculate_new_figsize(fig)
-    #     ax = fig.add_axes(rect)
-    #     if self.orientation == "h":
-    #         ax.set_ylim(limit)
-    #         ax.grid(True, axis="x", color="white")
-    #         ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
-    #     else:
-    #         ax.set_xlim(limit)
-    #         ax.grid(True, axis="y", color="white")
-    #         ax.set_xticklabels(ax.get_xticklabels(), ha="right", rotation=30)
-    #         ax.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
+    def calculate_new_figsize(self, real_fig):
+        import io
 
-    #     ax.set_axisbelow(True)
-    #     ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
-    #     ax.set_facecolor(".9")
-    #     ax.set_title(self.title)
-    #     for spine in ax.spines.values():
-    #         spine.set_visible(False)
-    #     return fig, ax
+        # df_values = self.prepare_data()
+        fig = plt.Figure(figsize=self.figsize)
+        if self.title:
+            fig.tight_layout(rect=[0, 0, 1, 0.9])  # To include title
+        ax = fig.add_subplot()
+        fake_cols = [chr(i + 70) for i in range(self.df.shape[1])]
 
+        max_val = self.df.values.max().max()
+        ax.tick_params(labelrotation=0, axis="y", labelsize=self.tick_label_size)
+        ax.set_title(self.title)
+        fig.canvas.print_figure(io.BytesIO())
+        orig_pos = ax.get_position()
+        ax.set_yticklabels(self.df.columns)
+        ax.set_xticklabels([max_val] * len(ax.get_xticks()))
 
-    # def show_period(self,i):
-    #     if self.use_index:
-    #         self.orig_index = self.df.index.astype("str")
-    #         val = self.orig_index[i // self.steps_per_period]
-    #         if self.append_period_to_title:
-    #             self.ax.set_title(
-    #                 f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
-    #             )
-    #         else:
-    #             num_texts = len(self.ax.texts)
-    #             if num_texts == 0:
-    #                 self.ax.text(
-    #                     self.x_label,
-    #                     self.y_label,
-    #                     val,
-    #                     transform=self.ax.transAxes,
-    #                     fontsize=self.period_label_size,
-    #                 )
-    #             else:
-    #                 self.ax.texts[0].set_text(val)
+        fig.canvas.print_figure(io.BytesIO(), format="png")
+        new_pos = ax.get_position()
+
+        coordx, prev_coordx = new_pos.x0, orig_pos.x0
+        coordy, prev_coordy = new_pos.y0, orig_pos.y0
+        old_w, old_h = self.figsize
+
+        # if coordx > prev_coordx or coordy > prev_coordy:
+        prev_w_inches = prev_coordx * old_w
+        total_w_inches = coordx * old_w
+        extra_w_inches = total_w_inches - prev_w_inches
+        new_w_inches = extra_w_inches + old_w
+
+        prev_h_inches = prev_coordy * old_h
+        total_h_inches = coordy * old_h
+        extra_h_inches = total_h_inches - prev_h_inches
+        new_h_inches = extra_h_inches + old_h
+
+        real_fig.set_size_inches(new_w_inches, new_h_inches)
+        left = total_w_inches / new_w_inches
+        bottom = total_h_inches / new_h_inches
+        width = orig_pos.x1 - left
+        height = orig_pos.y1 - bottom
+        return [left, bottom, width, height]
+
+    def create_figure(self):
+        fig = plt.Figure(figsize=self.figsize, dpi=self.dpi)
+        # limit = (0.2, self.n_bars + 0.8)
+        rect = self.calculate_new_figsize(fig)
+        ax = fig.add_axes(rect)
+        # ax = fig.axes[0]
+        ax.grid(True, axis="x", color="white")
+        ax.set_axisbelow(True)
+        ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
+        ax.set_facecolor(".9")
+        ax.set_title(self.title)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+        return fig, ax
+
+    def get_label_position(self):
+        # TOP LEFT BY default, override in charts for changes
+        x_label = 0.25
+        y_label = 0.75
+        return x_label, y_label
+
+    def show_period(self,i):
+        if self.x_period_label_location is None or self.y_period_label_location is None:
+            self.x_label, self.y_label = self.get_label_position()
+        else:
+            if self.x_period_label_location is not None:
+                self.x_label = self.x_period_label_location
+            else:
+                raise ValueError(
+                    f"Provide x_period_label_location, current value: {self.x_period_label_location}"
+                )
+            if self.y_period_label_location is not None:
+                self.y_label = self.y_period_label_location
+            else:
+                raise ValueError(
+                    f"Provide y_period_label_location, current value: {self.y_period_label_location}"
+                )
+        if self.use_index:
+            self.orig_index = self.df.index.astype("str")
+            val = self.orig_index[i // self.steps_per_period]
+            if self.append_period_to_title:
+                self.ax.set_title(
+                    f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
+                )
+            else:
+                num_texts = len(self.ax.texts)
+                if num_texts == 0:
+                    self.ax.text(
+                        self.x_label,
+                        self.y_label,
+                        val,
+                        transform=self.ax.transAxes,
+                        fontsize=self.period_label_size,
+                    )
+                else:
+                    self.ax.texts[0].set_text(val)
 
     def save(self, filename):
         # Inspiration for design pattern https://github.com/altair-viz/altair/blob/c55707730935159e4e2d2c789a6dd2bc3f1ec0f2/altair/utils/save.py
@@ -203,17 +264,16 @@ class BarChart(BaseChart):
     n_bars: int = attr.ib()
     label_bars: bool = attr.ib()
     bar_label_size: Union[int, float] = attr.ib()
-    tick_label_size: Union[int, float] = attr.ib()
-    period_label_size: Union[int, float] = attr.ib()
-    x_period_label_location: Union[int, float] = attr.ib()
-    y_period_label_location: Union[int, float] = attr.ib()
-    append_period_to_title: bool = attr.ib()
+    # tick_label_size: Union[int, float] = attr.ib()
+    # period_label_size: Union[int, float] = attr.ib()
+    # x_period_label_location: Union[int, float] = attr.ib()
+    # y_period_label_location: Union[int, float] = attr.ib()
+    # append_period_to_title: bool = attr.ib()
 
     def __attrs_post_init__(self):
         self.n_bars = self.n_bars or self.df.shape[1]
         self.df_values, self.df_rank = self.prepare_data()
         self.orig_index = self.df.index.astype("str")
-        self.dpi = 144
         if self.fig is None:
             self.fig, self.ax = self.create_figure()
         else:
@@ -454,8 +514,8 @@ class LineChart(BaseChart):
 
     def __attrs_post_init__(self):
         self.data_cols = self.get_data_cols()
-        if self.fig is not None:
-            self.fig, self.ax = self.fig, self.fig.axes[0]
+        if self.fig is None:
+            self.fig, self.ax = self.create_figure()
             self.figsize = self.fig.get_size_inches()
             self.dpi = self.fig.dpi
         else:
@@ -512,8 +572,10 @@ class LineChart(BaseChart):
         for line in self.ax.lines:
             line.remove()
         self.plot_line(i)
+        self.show_period(i)
         if self.enable_legend:
             self.ax.legend(self.ax.lines,self._lines.keys(),**self.kwargs)
+        
 
     def init_func(self) -> None:
         self.ax.plot([], [], self.line_width)

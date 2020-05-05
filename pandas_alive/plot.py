@@ -53,6 +53,7 @@ def plot(
     x_period_label_location: typing.Union[int, float] = None,
     y_period_label_location: typing.Union[int, float] = None,
     append_period_to_title: bool = None,
+    dpi: float = 144,
     **kwargs,
 ):
     df = input_df.copy()
@@ -84,6 +85,7 @@ def plot(
             x_period_label_location=x_period_label_location,
             y_period_label_location=y_period_label_location,
             append_period_to_title=append_period_to_title,
+            dpi=dpi,
             fig=fig,
             kwargs=kwargs,
         )
@@ -102,6 +104,12 @@ def plot(
             period_length=period_length,
             figsize=figsize,
             cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_label_size=period_label_size,
+            x_period_label_location=x_period_label_location,
+            y_period_label_location=y_period_label_location,
+            append_period_to_title=append_period_to_title,
+            dpi=dpi,
             title=title,
             fig=fig,
             kwargs=kwargs,
