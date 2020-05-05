@@ -62,7 +62,7 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-df.plot_animated(filename='example-barh-chart.gif',hide_period=False)
+df.plot_animated(filename='example-barh-chart.gif')
 ```
 
 ![Example Barh Chart](examples/example-barh-chart.gif)
@@ -74,7 +74,7 @@ import pandas_alive
 
 df = pandas_alive.load_dataset()
 
-df.plot_animated(filename='example-barv-chart.gif',orientation='v',hide_period=False)
+df.plot_animated(filename='example-barv-chart.gif',orientation='v')
 ```
 
 ![Example Barv Chart](examples/example-barv-chart.gif)
@@ -108,7 +108,7 @@ df = pandas_alive.load_dataset()
 
 animated_line_chart = df.diff().fillna(0).plot_animated(kind='line',period_length=200)
 
-animated_bar_chart = df.plot_animated(kind='barh',period_length=200,n_visible=10,hide_period=False)
+animated_bar_chart = df.plot_animated(kind='barh',period_length=200,n_visible=10)
 
 pandas_alive.animate_multiple_plots('example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart]
 ```
@@ -120,9 +120,14 @@ import pandas_alive
 
 urban_df = pandas_alive.load_dataset("urban_pop")
 
-animated_line_chart = urban_df.sum(axis=1).pct_change().dropna().plot_animated(kind='line',title='Total % Change in Population')
+animated_line_chart = (
+    urban_df.sum(axis=1)
+    .pct_change()
+    .dropna()
+    .plot_animated(kind="line", title="Total % Change in Population",show_period_annotation=False)
+)
 
-animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries', hide_period=False)
+animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries')
 
 pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018')
 ```
