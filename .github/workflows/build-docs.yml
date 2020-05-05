@@ -35,10 +35,10 @@ jobs:
         mv README.rst docs/source
         cd docs
         make html
-
-    - name: Push to gh-pages
-      uses: ad-m/github-push-action@master
+        
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        branch: gh-pages
-        directory: docs/build/html
-        github_token: ${{ secrets.ACCESS_TOKEN }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: docs/build/html # The folder the action should deploy.
