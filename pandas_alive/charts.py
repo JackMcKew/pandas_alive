@@ -2,6 +2,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+import matplotlib.dates as mdates
+import matplotlib.units as munits
+import datetime
+converter = mdates.ConciseDateConverter()
+munits.registry[np.datetime64] = converter
+munits.registry[datetime.date] = converter
+munits.registry[datetime.datetime] = converter
 from matplotlib import ticker, colors
 from typing import Tuple, Union, List, Optional, Dict
 import attr
@@ -70,9 +77,9 @@ class BaseChart:
     def get_frames(self):
         raise NotImplementedError("Get frames method not yet implemented")
 
-    # def preview(self,number_of_frames=5):
-    #     anim = self.make_animation(number_of_frames, self.init_func)
-    #     plt.show()
+    def preview(self,number_of_frames=10):
+        anim = self.make_animation(number_of_frames, self.init_func)
+        plt.show()
 
     def make_animation(self, frames, init_func) -> FuncAnimation:
 
