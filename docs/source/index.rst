@@ -8,9 +8,9 @@ Pandas_Alive |version|
 
 Animated plotting extension for Pandas with Matplotlib
 
-Pandas-Alive is intended to provide a plotting backend for animated matplotlib charts for Pandas DataFrames, similar to the already existing Visualization feature of Pandas.
+Pandas_alive is intended to provide a plotting backend for animated matplotlib charts for Pandas DataFrames, similar to the already existing Visualization feature of Pandas.
 
-With Pandas-Alive, creating stunning, animated visualisations is as easy as calling:
+With Pandas_alive, creating stunning, animated visualisations is as easy as calling:
 
 ``df.plot_animated()``
 

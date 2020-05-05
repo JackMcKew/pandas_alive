@@ -1,10 +1,10 @@
-# Pandas-Alive
+# Pandas_alive
 
 Animated plotting extension for Pandas with Matplotlib
 
-**Pandas-Alive** is intended to provide a plotting backend for animated [matplotlib](https://matplotlib.org/) charts for [Pandas](https://pandas.pydata.org/) DataFrames, similar to the already [existing Visualization feature of Pandas](https://pandas.pydata.org/pandas-docs/stable/visualization.html).
+**Pandas_alive** is intended to provide a plotting backend for animated [matplotlib](https://matplotlib.org/) charts for [Pandas](https://pandas.pydata.org/) DataFrames, similar to the already [existing Visualization feature of Pandas](https://pandas.pydata.org/pandas-docs/stable/visualization.html).
 
-With **Pandas-Alive**, creating stunning, animated visualisations is as easy as calling:
+With **Pandas_alive**, creating stunning, animated visualisations is as easy as calling:
 
 ``` python
 df.plot_animated()
@@ -14,7 +14,7 @@ df.plot_animated()
 
 ## Installation
 
-Install with `pip install pandas-alive`
+Install with `pip install pandas_alive`
 
 ## Usage
 
@@ -49,7 +49,7 @@ df.plot_animated(filename='example-barh-chart.gif')
 
 ### Currently Supported Chart Types
 
-`pandas-alive` current supports:
+`pandas_alive` current supports:
 
 - [Horizontal Bar Charts](#horizontal-bar-charts)
 - [Vertical Bar Charts](#vertical-bar-charts)
@@ -95,7 +95,7 @@ df.diff().fillna(0).plot_animated(filename='example-line-chart.gif',kind='line')
 
 ### Multiple Charts
 
-`pandas-alive` supports multiple animated charts in a single visualisation.
+`pandas_alive` supports multiple animated charts in a single visualisation.
 
 - Create a list of all charts to include in animation
 - Use `animate_multiple_plots` with a `filename` and the list of charts (this will use `matplotlib.subplots`)
@@ -156,7 +156,7 @@ Ensure to have one of the supported tooling software installed prior to use!
 
 ## Documentation
 
-Documentation is provided at <https://jackmckew.github.io/pandas-alive/>
+Documentation is provided at <https://jackmckew.github.io/pandas_alive/>
 
 ## Contributing
 
