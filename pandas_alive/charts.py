@@ -537,19 +537,19 @@ class LineChart(BaseChart):
     def prepare_data(self):
         # TODO Rename to interpolate and add settings
         # Period interpolated to match bar chart for multiple plotting
-        # https://stackoverflow.com/questions/30056399/interpolate-and-fill-pandas-dataframe-with-datetime-index
-
-        self.df = self.df.reindex(
-            pd.date_range(
+        # https://stackoverflow.com/questions/30056399/interpolate-and-fill-pandas-dataframe-with-datetime-index1
+        desired_index =pd.date_range(
                 start=self.df.index.min(),
                 end=self.df.index.max(),
                 periods=((len(self.df.index) - 1) * self.steps_per_period) + 1,
             )
+        
+        self.df = (self.df.reindex(self.df.index.union(desired_index)).interpolate(method='time').reindex(desired_index)
         )
         # self.df = self.df.reset_index(drop=True)
         # self.df.index = self.df.index * self.steps_per_period
         # new_index = range(self.df.index.max() + 1)
-        self.df = self.df.interpolate(method="time")
+        #self.df = self.df.interpolate(method="time")
         # self.df = self.df.reindex(pd.date_range(start=orig_index.min(),
         #                                           end=orig_index.max(),
         #                                           periods=len(self.df.index)))
