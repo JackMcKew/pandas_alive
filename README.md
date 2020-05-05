@@ -109,7 +109,7 @@ df = pandas_alive.load_dataset()
 
 animated_line_chart = df.diff().fillna(0).plot_animated(kind='line',write_to_file=False,period_length=200)
 
-animated_bar_chart = df.plot_animated(kind='barh',write_to_file=False,period_length=200)
+animated_bar_chart = df.plot_animated(kind='barh',write_to_file=False,period_length=200,n_visible=10)
 
 pandas_alive.animate_multiple_plots('example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart]
 ```
