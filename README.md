@@ -97,7 +97,6 @@ df.diff().fillna(0).plot_animated(filename='example-line-chart.gif',kind='line')
 
 `pandas-alive` supports multiple animated charts in a single visualisation.
 
-- Create each chart type ensure to disable writing to file with `write_to_file=False`
 - Create a list of all charts to include in animation
 - Use `animate_multiple_plots` with a `filename` and the list of charts (this will use `matplotlib.subplots`)
 - Done!
