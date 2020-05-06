@@ -222,12 +222,12 @@
     <span class="n">cmap</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Colormap</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;dark24&quot;</span><span class="p">,</span>
     <span class="n">bar_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
     <span class="n">tick_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
-    <span class="n">period_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-    <span class="n">x_period_label_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">y_period_label_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">period_annotation_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">x_period_annotation_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">y_period_annotation_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">append_period_to_title</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_period_annotation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">period_annotation_formatter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%y&quot;</span><span class="p">,</span>
+    <span class="n">period_annotation_formatter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChart</span><span class="p">,</span><span class="n">LineChart</span><span class="p">]:</span>
@@ -254,9 +254,9 @@
 <span class="sd">        cmap (typing.Union[str, matplotlib.colors.Colormap, typing.List[str]], optional): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html. Defaults to &quot;dark24&quot;.</span>
 <span class="sd">        bar_label_size (typing.Union[int, float], optional): Size in points of numeric labels just outside of bars. Defaults to 7.</span>
 <span class="sd">        tick_label_size (typing.Union[int, float], optional): Size in points of tick labels. Defaults to 7.</span>
-<span class="sd">        period_label_size (typing.Union[int, float], optional): Size in points of period annotation on chart. Defaults to 16.</span>
-<span class="sd">        x_period_label_location (typing.Union[int, float], optional): Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.</span>
-<span class="sd">        y_period_label_location (typing.Union[int, float], optional): Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.</span>
+<span class="sd">        period_annotation_size (typing.Union[int, float], optional): Size in points of period annotation on chart. Defaults to 16.</span>
+<span class="sd">        x_period_annotation_location (typing.Union[int, float], optional): Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.</span>
+<span class="sd">        y_period_annotation_location (typing.Union[int, float], optional): Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.</span>
 <span class="sd">        append_period_to_title (bool, optional): Append period annotation to title, this disables period annotation on chart. Defaults to None.</span>
 <span class="sd">        show_period_annotation (bool, optional): Show period annotation on chart. Useful to hide when plotting multiple charts. Defaults to True.</span>
 <span class="sd">        dpi (float, optional): It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly.. Defaults to 144.</span>
@@ -293,9 +293,9 @@
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="n">bar_label_size</span><span class="o">=</span><span class="n">bar_label_size</span><span class="p">,</span>
             <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
-            <span class="n">period_label_size</span><span class="o">=</span><span class="n">period_label_size</span><span class="p">,</span>
-            <span class="n">x_period_label_location</span><span class="o">=</span><span class="n">x_period_label_location</span><span class="p">,</span>
-            <span class="n">y_period_label_location</span><span class="o">=</span><span class="n">y_period_label_location</span><span class="p">,</span>
+            <span class="n">period_annotation_size</span><span class="o">=</span><span class="n">period_annotation_size</span><span class="p">,</span>
+            <span class="n">x_period_annotation_location</span><span class="o">=</span><span class="n">x_period_annotation_location</span><span class="p">,</span>
+            <span class="n">y_period_annotation_location</span><span class="o">=</span><span class="n">y_period_annotation_location</span><span class="p">,</span>
             <span class="n">append_period_to_title</span><span class="o">=</span><span class="n">append_period_to_title</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
             <span class="n">show_period_annotation</span><span class="o">=</span><span class="n">show_period_annotation</span><span class="p">,</span>
@@ -319,9 +319,9 @@
             <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
             <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
             <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
-            <span class="n">period_label_size</span><span class="o">=</span><span class="n">period_label_size</span><span class="p">,</span>
-            <span class="n">x_period_label_location</span><span class="o">=</span><span class="n">x_period_label_location</span><span class="p">,</span>
-            <span class="n">y_period_label_location</span><span class="o">=</span><span class="n">y_period_label_location</span><span class="p">,</span>
+            <span class="n">period_annotation_size</span><span class="o">=</span><span class="n">period_annotation_size</span><span class="p">,</span>
+            <span class="n">x_period_annotation_location</span><span class="o">=</span><span class="n">x_period_annotation_location</span><span class="p">,</span>
+            <span class="n">y_period_annotation_location</span><span class="o">=</span><span class="n">y_period_annotation_location</span><span class="p">,</span>
             <span class="n">append_period_to_title</span><span class="o">=</span><span class="n">append_period_to_title</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
             <span class="n">show_period_annotation</span><span class="o">=</span><span class="n">show_period_annotation</span><span class="p">,</span>
