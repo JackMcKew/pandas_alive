@@ -71,9 +71,9 @@ class BaseChart:
     n_visible: int = attr.ib()
     tick_label_size: typing.Union[int, float] = attr.ib()
     append_period_to_title: bool = attr.ib()
-    x_period_label_location: typing.Union[int, float] = attr.ib()
-    y_period_label_location: typing.Union[int, float] = attr.ib()
-    period_label_size: typing.Union[int, float] = attr.ib()
+    x_period_annotation_location: typing.Union[int, float] = attr.ib()
+    y_period_annotation_location: typing.Union[int, float] = attr.ib()
+    period_annotation_size: typing.Union[int, float] = attr.ib()
     show_period_annotation: bool = attr.ib()
     period_annotation_formatter: str = attr.ib()
     dpi: float = attr.ib()
@@ -236,20 +236,20 @@ class BaseChart:
             ValueError: If custom x label provided but not y
             ValueError: If custom y label provided by not x
         """
-        if self.x_period_label_location is None or self.y_period_label_location is None:
+        if self.x_period_annotation_location is None or self.y_period_annotation_location is None:
             self.x_label, self.y_label = self.get_label_position()
         else:
-            if self.x_period_label_location is not None:
-                self.x_label = self.x_period_label_location
+            if self.x_period_annotation_location is not None:
+                self.x_label = self.x_period_annotation_location
             else:
                 raise ValueError(
-                    f"Provide x_period_label_location, current value: {self.x_period_label_location}"
+                    f"Provide x_period_annotation_location, current value: {self.x_period_annotation_location}"
                 )
-            if self.y_period_label_location is not None:
-                self.y_label = self.y_period_label_location
+            if self.y_period_annotation_location is not None:
+                self.y_label = self.y_period_annotation_location
             else:
                 raise ValueError(
-                    f"Provide y_period_label_location, current value: {self.y_period_label_location}"
+                    f"Provide y_period_annotation_location, current value: {self.y_period_annotation_location}"
                 )
 
         if self.use_index and self.show_period_annotation:
@@ -275,7 +275,7 @@ class BaseChart:
                         self.y_label,
                         val,
                         transform=self.ax.transAxes,
-                        fontsize=self.period_label_size,
+                        fontsize=self.period_annotation_size,
                     )
                 else:
                     self.ax.texts[0].set_text(val)
@@ -618,7 +618,7 @@ class BarChart(BaseChart):
         #                 self.y_label,
         #                 val,
         #                 transform=self.ax.transAxes,
-        #                 fontsize=self.period_label_size,
+        #                 fontsize=self.period_annotation_size,
         #             )
         #         else:
         #             self.ax.texts[0].set_text(val)

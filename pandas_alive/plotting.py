@@ -72,9 +72,9 @@ def plot(
     cmap: typing.Union[str, matplotlib.colors.Colormap, typing.List[str]] = "dark24",
     bar_label_size: typing.Union[int, float] = 7,
     tick_label_size: typing.Union[int, float] = 7,
-    period_label_size: typing.Union[int, float] = 16,
-    x_period_label_location: typing.Union[int, float] = None,
-    y_period_label_location: typing.Union[int, float] = None,
+    period_annotation_size: typing.Union[int, float] = 16,
+    x_period_annotation_location: typing.Union[int, float] = None,
+    y_period_annotation_location: typing.Union[int, float] = None,
     append_period_to_title: bool = None,
     show_period_annotation: bool = True,
     period_annotation_formatter: str = "%d/%m/%Y",
@@ -104,9 +104,9 @@ def plot(
         cmap (typing.Union[str, matplotlib.colors.Colormap, typing.List[str]], optional): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html. Defaults to "dark24".
         bar_label_size (typing.Union[int, float], optional): Size in points of numeric labels just outside of bars. Defaults to 7.
         tick_label_size (typing.Union[int, float], optional): Size in points of tick labels. Defaults to 7.
-        period_label_size (typing.Union[int, float], optional): Size in points of period annotation on chart. Defaults to 16.
-        x_period_label_location (typing.Union[int, float], optional): Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.
-        y_period_label_location (typing.Union[int, float], optional): Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.
+        period_annotation_size (typing.Union[int, float], optional): Size in points of period annotation on chart. Defaults to 16.
+        x_period_annotation_location (typing.Union[int, float], optional): Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.
+        y_period_annotation_location (typing.Union[int, float], optional): Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.
         append_period_to_title (bool, optional): Append period annotation to title, this disables period annotation on chart. Defaults to None.
         show_period_annotation (bool, optional): Show period annotation on chart. Useful to hide when plotting multiple charts. Defaults to True.
         dpi (float, optional): It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly.. Defaults to 144.
@@ -143,9 +143,9 @@ def plot(
             title=title,
             bar_label_size=bar_label_size,
             tick_label_size=tick_label_size,
-            period_label_size=period_label_size,
-            x_period_label_location=x_period_label_location,
-            y_period_label_location=y_period_label_location,
+            period_annotation_size=period_annotation_size,
+            x_period_annotation_location=x_period_annotation_location,
+            y_period_annotation_location=y_period_annotation_location,
             append_period_to_title=append_period_to_title,
             dpi=dpi,
             show_period_annotation=show_period_annotation,
@@ -169,9 +169,9 @@ def plot(
             figsize=figsize,
             cmap=cmap,
             tick_label_size=tick_label_size,
-            period_label_size=period_label_size,
-            x_period_label_location=x_period_label_location,
-            y_period_label_location=y_period_label_location,
+            period_annotation_size=period_annotation_size,
+            x_period_annotation_location=x_period_annotation_location,
+            y_period_annotation_location=y_period_annotation_location,
             append_period_to_title=append_period_to_title,
             dpi=dpi,
             show_period_annotation=show_period_annotation,
