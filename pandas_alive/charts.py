@@ -1,3 +1,10 @@
+""" Implementations of support chart types
+
+This module contains functions for chart types.
+
+"""
+
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -68,6 +75,7 @@ class BaseChart:
     y_period_label_location: typing.Union[int, float] = attr.ib()
     period_label_size: typing.Union[int, float] = attr.ib()
     show_period_annotation: bool = attr.ib()
+    period_annotation_formatter: str = attr.ib()
     dpi: float = attr.ib()
     kwargs = attr.ib()
 
@@ -244,10 +252,14 @@ class BaseChart:
                     f"Provide y_period_label_location, current value: {self.y_period_label_location}"
                 )
 
-        if self.use_index:
+        if self.use_index and self.show_period_annotation:
+            # print(self.df.index.strftime(self.period_annotation_formatter))
+            # if self.period_annotation_formatter:
+                # self.df.index = self.df.index.strftime(self.period_annotation_formatter)
             self.orig_index = self.df.index.astype("str")
             val = self.orig_index[i // self.steps_per_period]
-
+            # val = val.strftime(self.period_annotation_formatter)
+            # datetime.datetime.strptime("2013-1-25", '%Y-%m-%d').strftime(self.period_annotation_formatter)
             # Either put period annotation in title or on chart
             if self.append_period_to_title:
                 self.ax.set_title(
@@ -588,27 +600,29 @@ class BarChart(BaseChart):
             )
             self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
 
-        if self.use_index and self.show_period_annotation:
-            val = self.orig_index[i // self.steps_per_period]
-            if self.append_period_to_title:
-                self.ax.set_title(
-                    f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
-                )
-            else:
-                num_texts = len(self.ax.texts)
-                if num_texts == 0:
-                    self.ax.text(
-                        self.x_label,
-                        self.y_label,
-                        val,
-                        transform=self.ax.transAxes,
-                        fontsize=self.period_label_size,
-                    )
-                else:
-                    self.ax.texts[0].set_text(val)
+        super().show_period(i)
+
+        # if self.use_index and self.show_period_annotation:
+        #     val = self.orig_index[i // self.steps_per_period]
+        #     if self.append_period_to_title:
+        #         self.ax.set_title(
+        #             f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
+        #         )
+        #     else:
+        #         num_texts = len(self.ax.texts)
+        #         if num_texts == 0:
+        #             self.ax.text(
+        #                 self.x_label,
+        #                 self.y_label,
+        #                 val,
+        #                 transform=self.ax.transAxes,
+        #                 fontsize=self.period_label_size,
+        #             )
+        #         else:
+        #             self.ax.texts[0].set_text(val)
 
         if self.label_bars:
-            for text in self.ax.texts[int(self.use_index) :]:
+            for text in self.ax.texts[int(self.use_index):]:
                 text.remove()
             if self.orientation == "h":
                 zipped = zip(bar_length, bar_location)

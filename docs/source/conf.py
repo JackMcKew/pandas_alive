@@ -35,6 +35,7 @@ release = '0.1.5'
 extensions = [
     'recommonmark',
     'sphinx.ext.autodoc',
+    # 'sphinxcontrib.fulltoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
@@ -70,7 +71,7 @@ html_theme_options = {
     # 'vcs_pageview_mode': '',
     # 'style_nav_header_background': 'blue',
     # Toc options
-    'collapse_navigation': False,
+    'collapse_navigation': True,
     'sticky_navigation': True,
     'navigation_depth': 4,
     'includehidden': True,
