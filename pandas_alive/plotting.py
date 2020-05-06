@@ -77,7 +77,7 @@ def plot(
     y_period_label_location: typing.Union[int, float] = None,
     append_period_to_title: bool = None,
     show_period_annotation: bool = True,
-    period_annotation_formatter: str = "%d/%m/%y",
+    period_annotation_formatter: str = "%d/%m/%Y",
     dpi: float = 144,
     **kwargs,
 ) -> typing.Union[BarChart,LineChart]:
