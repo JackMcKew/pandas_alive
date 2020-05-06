@@ -255,22 +255,14 @@ class BaseChart:
         if self.use_index and self.show_period_annotation:
             str_index = self.df.index.astype("str")
             if self.period_annotation_formatter:
-                idx_val = self.df.index[i // self.steps_per_period]
+                idx_val = self.df.index[i]
                 if self.df.index.dtype.kind == 'M': #Datetime
                     val = idx_val.strftime(self.period_annotation_formatter)
                 else:
                     val = self.period_annotation_formatter.format(x=idx_val)
             else:
-                val = str_index[i // self.steps_per_period]
+                val = str_index[i]
 
-            # print(self.df.index.strftime(self.period_annotation_formatter))
-            # if self.period_annotation_formatter:
-            #     self.df.index = self.df.index.strftime(self.period_annotation_formatter)
-            # self.orig_index = self.df.index.astype("str")
-            # val = self.orig_index[i // self.steps_per_period]
-            # val = val.strftime(self.period_annotation_formatter)
-            # datetime.datetime.strptime("2013-1-25", '%Y-%m-%d').strftime(self.period_annotation_formatter)
-            # Either put period annotation in title or on chart
             if self.append_period_to_title:
                 self.ax.set_title(
                     f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
@@ -802,7 +794,8 @@ class LineChart(BaseChart):
         return range(len(self.df.index))
 
 
-@attr.s
-class ScatterChart(BaseChart):
-    marker_size: int = attr.ib()
-    enable_legend: bool = attr.ib()
+# @attr.s
+# class ScatterChart(BaseChart):
+#     marker_size: typing.Union[int,str] = attr.ib()
+#     enable_legend: bool = attr.ib()
+#     kwargs = attr.ib()
