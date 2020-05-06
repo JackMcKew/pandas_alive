@@ -21,7 +21,6 @@ munits.registry[datetime.datetime] = converter
 from matplotlib import ticker, colors
 import typing
 
-# from typing import Tuple, Union, List, Optional, Dict
 import attr
 
 DARK24 = [
@@ -595,25 +594,6 @@ class BarChart(BaseChart):
 
         super().show_period(i)
 
-        # if self.use_index and self.show_period_annotation:
-        #     val = self.orig_index[i // self.steps_per_period]
-        #     if self.append_period_to_title:
-        #         self.ax.set_title(
-        #             f"{'' if self.title is None else self.title}{' : ' if self.title is not None else ''}{val}"
-        #         )
-        #     else:
-        #         num_texts = len(self.ax.texts)
-        #         if num_texts == 0:
-        #             self.ax.text(
-        #                 self.x_label,
-        #                 self.y_label,
-        #                 val,
-        #                 transform=self.ax.transAxes,
-        #                 fontsize=self.period_annotation_size,
-        #             )
-        #         else:
-        #             self.ax.texts[0].set_text(val)
-
         if self.label_bars:
             for text in self.ax.texts[int(self.use_index):]:
                 text.remove()
@@ -775,11 +755,11 @@ class LineChart(BaseChart):
         """
         self.ax.plot([], [], self.line_width)
 
-    def get_frames(self) -> typing.List[int]:
+    def get_frames(self) -> typing.Iterable:
         """ Get number of frames required for animation
 
         Returns:
-            typing.List[int]: Range of length of dataframe index
+            typing.Iterable: Range of length of dataframe index
         """
 
         return range(len(self.df.index))
