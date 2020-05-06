@@ -1,0 +1,6 @@
+AnimatedAccessor.\_\_init\_\_
+=============================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. automethod:: AnimatedAccessor.__init__

@@ -1,0 +1,6 @@
+AnimatedAccessor.barh
+=====================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. automethod:: AnimatedAccessor.barh

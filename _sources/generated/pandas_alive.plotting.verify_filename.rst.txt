@@ -1,0 +1,6 @@
+verify\_filename
+================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. autofunction:: verify_filename

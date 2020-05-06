@@ -1,0 +1,30 @@
+AnimatedAccessor
+================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. autoclass:: AnimatedAccessor
+
+   
+   
+   .. rubric:: Attributes
+   .. autosummary::
+      :toctree:
+   
+      AnimatedAccessor.df
+   
+   
+   
+
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+      :toctree:
+   
+      AnimatedAccessor.__init__
+   
+      AnimatedAccessor.barh
+   
+   
+   

@@ -1,0 +1,6 @@
+plot
+====
+
+.. currentmodule:: pandas_alive.plotting
+
+.. autofunction:: plot

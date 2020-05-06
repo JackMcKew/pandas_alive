@@ -1,0 +1,6 @@
+get\_allowed\_kinds
+===================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. autofunction:: get_allowed_kinds

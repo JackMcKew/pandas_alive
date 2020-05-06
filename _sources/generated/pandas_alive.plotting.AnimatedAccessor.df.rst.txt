@@ -1,0 +1,6 @@
+AnimatedAccessor.df
+===================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. autoproperty:: AnimatedAccessor.df

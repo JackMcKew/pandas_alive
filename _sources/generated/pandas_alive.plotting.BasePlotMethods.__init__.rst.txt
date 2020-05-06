@@ -1,0 +1,6 @@
+BasePlotMethods.\_\_init\_\_
+============================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. automethod:: BasePlotMethods.__init__

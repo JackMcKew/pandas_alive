@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>plot &mdash; Pandas_Alive 0.1.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pandas_alive.plotting" href="pandas_alive.plotting.html" />
+    <link rel="prev" title="API Reference" href="../developer.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pandas_Alive
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Installation &amp; Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../developer.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">plot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pandas_alive.plotting.html">pandas_alive.plotting</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.plotting.AnimatedAccessor.html">AnimatedAccessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.plotting.BasePlotMethods.html">BasePlotMethods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.plotting.animate_multiple_plots.html">animate_multiple_plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.plotting.get_allowed_kinds.html">get_allowed_kinds</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.plotting.verify_filename.html">verify_filename</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.base.html">pandas_alive.base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.charts.html">pandas_alive.charts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.__init__.html">__init__</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandas_Alive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../developer.html">API Reference</a> &raquo;</li>
+        
+      <li>plot</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pandas_alive.plotting.plot.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="plot">
+<h1>plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="pandas_alive.plotting.plot">
+<code class="sig-prename descclassname">pandas_alive.plotting.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kind</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'barh'</span></em>, <em class="sig-param"><span class="n">n_visible</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">line_width</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">use_index</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">steps_per_period</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em>, <em class="sig-param"><span class="n">period_length</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">500</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">6.5, 3.5</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fig</span><span class="p">:</span> <span class="n">matplotlib.pyplot.figure</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">enable_legend</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">orientation</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'h'</span></em>, <em class="sig-param"><span class="n">sort</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'desc'</span></em>, <em class="sig-param"><span class="n">label_bars</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">cmap</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>matplotlib.colors.Colormap<span class="p">, </span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">'dark24'</span></em>, <em class="sig-param"><span class="n">bar_label_size</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">tick_label_size</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">period_label_size</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">16</span></em>, <em class="sig-param"><span class="n">x_period_label_location</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_period_label_location</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">append_period_to_title</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">show_period_annotation</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">period_annotation_formatter</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'%d/%m/%y'</span></em>, <em class="sig-param"><span class="n">dpi</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">144</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span><a class="reference internal" href="pandas_alive.charts.BarChart.html#pandas_alive.charts.BarChart" title="pandas_alive.charts.BarChart">pandas_alive.charts.BarChart</a><span class="p">, </span><a class="reference internal" href="pandas_alive.charts.LineChart.html#pandas_alive.charts.LineChart" title="pandas_alive.charts.LineChart">pandas_alive.charts.LineChart</a><span class="p">]</span><a class="reference internal" href="../_modules/pandas_alive/plotting.html#plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandas_alive.plotting.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_df</strong> (<em>pd.DataFrame</em>) – Input dataframe containing data to be plotted. Function will attempt to plot as many columns of data as possible.</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – If None returns instance of chart to be used later with <cite>.save()</cite> or <cite>.get_html5_video()</cite>. Defaults to None.</p></li>
+<li><p><strong>x</strong> (<em>str</em><em>, </em><em>optional</em>) – Intended for future use, currently does nothing. Defaults to None.</p></li>
+<li><p><strong>y</strong> (<em>str</em><em>, </em><em>optional</em>) – Intended for future use, currently does nothing.. Defaults to None.</p></li>
+<li><p><strong>kind</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of chart to use, see get_allowed_kinds for possible options. Defaults to “barh”.</p></li>
+<li><p><strong>n_visible</strong> (<em>int</em><em>, </em><em>optional</em>) – Show top/bottom N values in bar chart, not implemented for line chart currently. Defaults to None.</p></li>
+<li><p><strong>line_width</strong> (<em>int</em><em>, </em><em>optional</em>) – Line width for Line charts, applies to all lines. Defaults to 3.</p></li>
+<li><p><strong>use_index</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use index for time axis. Defaults to True.</p></li>
+<li><p><strong>steps_per_period</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of steps to go from one time period to the next. Animation will interpolate between time periods. Defaults to 10.</p></li>
+<li><p><strong>period_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of milliseconds to animate each period (row). Defaults to 500.</p></li>
+<li><p><strong>figsize</strong> (<em>typing.Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Matplotlib figure size in inches, will be overridden if fig supplied. Defaults to (6.5, 3.5).</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Title of plot, will become subplot title if used in multiple. Defaults to None.</p></li>
+<li><p><strong>fig</strong> (<em>plt.figure</em><em>, </em><em>optional</em>) – For specifying figure outside of this function. Defaults to None.</p></li>
+<li><p><strong>enable_legend</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show legend on line charts, will run off screen for two many lines. Defaults to False.</p></li>
+<li><p><strong>orientation</strong> (<em>str</em><em>, </em><em>optional</em>) – Orientation of bar chart, horizontal (‘h’) or vertical (‘v’). Defaults to “h”.</p></li>
+<li><p><strong>sort</strong> (<em>str</em><em>, </em><em>optional</em>) – Choose how to sort the bar chart. Use ‘desc’ to put the largest bars on top, and ‘asc’ for the largest bars on bottom. Defaults to “desc”.</p></li>
+<li><p><strong>label_bars</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to label the bars with their value to the right. Defaults to None.</p></li>
+<li><p><strong>cmap</strong> (<em>typing.Union</em><em>[</em><em>str</em><em>, </em><em>matplotlib.colors.Colormap</em><em>, </em><em>typing.List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Provide string of colormap name, colormap instance, single color instance or list of colors as supported by <a class="reference external" href="https://matplotlib.org/2.0.2/api/colors_api.html">https://matplotlib.org/2.0.2/api/colors_api.html</a>. Defaults to “dark24”.</p></li>
+<li><p><strong>bar_label_size</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Size in points of numeric labels just outside of bars. Defaults to 7.</p></li>
+<li><p><strong>tick_label_size</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Size in points of tick labels. Defaults to 7.</p></li>
+<li><p><strong>period_label_size</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Size in points of period annotation on chart. Defaults to 16.</p></li>
+<li><p><strong>x_period_label_location</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.</p></li>
+<li><p><strong>y_period_label_location</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.</p></li>
+<li><p><strong>append_period_to_title</strong> (<em>bool</em><em>, </em><em>optional</em>) – Append period annotation to title, this disables period annotation on chart. Defaults to None.</p></li>
+<li><p><strong>show_period_annotation</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show period annotation on chart. Useful to hide when plotting multiple charts. Defaults to True.</p></li>
+<li><p><strong>dpi</strong> (<em>float</em><em>, </em><em>optional</em>) – It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly.. Defaults to 144.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If supplied kind is not supported</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns Chart instance to be used with animate_multiple or .save()</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>typing.Union[<a class="reference internal" href="pandas_alive.charts.BarChart.html#pandas_alive.charts.BarChart" title="pandas_alive.charts.BarChart">BarChart</a>,<a class="reference internal" href="pandas_alive.charts.LineChart.html#pandas_alive.charts.LineChart" title="pandas_alive.charts.LineChart">LineChart</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pandas_alive.plotting.html" class="btn btn-neutral float-right" title="pandas_alive.plotting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../developer.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jack McKew
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

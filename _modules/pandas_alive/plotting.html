@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandas_alive.plotting &mdash; Pandas_Alive 0.1.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pandas_Alive
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Installation &amp; Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pandas_Alive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pandas_alive.plotting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandas_alive.plotting</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Plotting implementations for accessor to Pandas.DataFrame &amp; multiple animated plots</span>
+
+<span class="sd">This module contains functions for plotting functionality.</span>
+
+
+<span class="sd">Example:</span>
+<span class="sd">    ``df.plot_animated()``</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.core.base</span> <span class="kn">import</span> <span class="n">PandasObject</span>
+<span class="kn">import</span> <span class="nn">typing</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.colors</span>
+<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
+<span class="kn">from</span> <span class="nn">.charts</span> <span class="kn">import</span> <span class="n">BarChart</span><span class="p">,</span> <span class="n">LineChart</span>
+
+
+<div class="viewcode-block" id="get_allowed_kinds"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.get_allowed_kinds.html#pandas_alive.plotting.get_allowed_kinds">[docs]</a><span class="k">def</span> <span class="nf">get_allowed_kinds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot; Get list of implemented charts</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        typing.List[str]: List of implemented chart types</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;barh&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="verify_filename"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.verify_filename.html#pandas_alive.plotting.verify_filename">[docs]</a><span class="k">def</span> <span class="nf">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Check file name is accurate</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): String for file name with extension</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: Provide filename with extensions</span>
+<span class="sd">        ValueError: Specify a length &gt; 0</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Verified file name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specify filename&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="s2">&quot;.&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filename</span>
+        <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`filename` must be provided &amp; have an extension&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">filename</span></div>
+
+
+<div class="viewcode-block" id="plot"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.plot.html#pandas_alive.plotting.plot">[docs]</a><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span>
+    <span class="n">input_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;barh&quot;</span><span class="p">,</span>
+    <span class="n">n_visible</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">use_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">steps_per_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">period_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">6.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">enable_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span>
+    <span class="n">sort</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;desc&quot;</span><span class="p">,</span>
+    <span class="n">label_bars</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Colormap</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;dark24&quot;</span><span class="p">,</span>
+    <span class="n">bar_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="n">tick_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="n">period_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">x_period_label_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">y_period_label_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">append_period_to_title</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_period_annotation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">period_annotation_formatter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%y&quot;</span><span class="p">,</span>
+    <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChart</span><span class="p">,</span><span class="n">LineChart</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot; Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input_df (pd.DataFrame): Input dataframe containing data to be plotted. Function will attempt to plot as many columns of data as possible.</span>
+<span class="sd">        filename (str, optional): If None returns instance of chart to be used later with `.save()` or `.get_html5_video()`. Defaults to None.</span>
+<span class="sd">        x (str, optional): Intended for future use, currently does nothing. Defaults to None.</span>
+<span class="sd">        y (str, optional): Intended for future use, currently does nothing.. Defaults to None.</span>
+<span class="sd">        kind (str, optional): Type of chart to use, see get_allowed_kinds for possible options. Defaults to &quot;barh&quot;.</span>
+<span class="sd">        n_visible (int, optional): Show top/bottom N values in bar chart, not implemented for line chart currently. Defaults to None.</span>
+<span class="sd">        line_width (int, optional): Line width for Line charts, applies to all lines. Defaults to 3.</span>
+<span class="sd">        use_index (bool, optional): Use index for time axis. Defaults to True.</span>
+<span class="sd">        steps_per_period (int, optional): The number of steps to go from one time period to the next. Animation will interpolate between time periods. Defaults to 10.</span>
+<span class="sd">        period_length (int, optional): Number of milliseconds to animate each period (row). Defaults to 500.</span>
+<span class="sd">        figsize (typing.Tuple[float, float], optional): Matplotlib figure size in inches, will be overridden if fig supplied. Defaults to (6.5, 3.5).</span>
+<span class="sd">        title (str, optional): Title of plot, will become subplot title if used in multiple. Defaults to None.</span>
+<span class="sd">        fig (plt.figure, optional): For specifying figure outside of this function. Defaults to None.</span>
+<span class="sd">        enable_legend (bool, optional): Show legend on line charts, will run off screen for two many lines. Defaults to False.</span>
+<span class="sd">        orientation (str, optional): Orientation of bar chart, horizontal (&#39;h&#39;) or vertical (&#39;v&#39;). Defaults to &quot;h&quot;.</span>
+<span class="sd">        sort (str, optional): Choose how to sort the bar chart. Use &#39;desc&#39; to put the largest bars on top, and &#39;asc&#39; for the largest bars on bottom. Defaults to &quot;desc&quot;.</span>
+<span class="sd">        label_bars (bool, optional): Whether to label the bars with their value to the right. Defaults to None.</span>
+<span class="sd">        cmap (typing.Union[str, matplotlib.colors.Colormap, typing.List[str]], optional): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html. Defaults to &quot;dark24&quot;.</span>
+<span class="sd">        bar_label_size (typing.Union[int, float], optional): Size in points of numeric labels just outside of bars. Defaults to 7.</span>
+<span class="sd">        tick_label_size (typing.Union[int, float], optional): Size in points of tick labels. Defaults to 7.</span>
+<span class="sd">        period_label_size (typing.Union[int, float], optional): Size in points of period annotation on chart. Defaults to 16.</span>
+<span class="sd">        x_period_label_location (typing.Union[int, float], optional): Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.</span>
+<span class="sd">        y_period_label_location (typing.Union[int, float], optional): Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.</span>
+<span class="sd">        append_period_to_title (bool, optional): Append period annotation to title, this disables period annotation on chart. Defaults to None.</span>
+<span class="sd">        show_period_annotation (bool, optional): Show period annotation on chart. Useful to hide when plotting multiple charts. Defaults to True.</span>
+<span class="sd">        dpi (float, optional): It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly.. Defaults to 144.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If supplied kind is not supported</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        typing.Union[BarChart,LineChart]: Returns Chart instance to be used with animate_multiple or .save()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">input_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="n">allowed_kinds</span> <span class="o">=</span> <span class="n">get_allowed_kinds</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_kinds</span><span class="p">:</span>
+        <span class="n">allowed_kinds</span> <span class="o">=</span> <span class="s2">&quot;&#39;, &#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">allowed_kinds</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Allowed plot kinds are &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span> <span class="o">%</span> <span class="n">allowed_kinds</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;barh&quot;</span><span class="p">:</span>
+        <span class="n">bcr</span> <span class="o">=</span> <span class="n">BarChart</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">,</span>
+            <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+            <span class="n">n_visible</span><span class="o">=</span><span class="n">n_visible</span><span class="p">,</span>
+            <span class="c1"># n_bars=n_bars,</span>
+            <span class="n">label_bars</span><span class="o">=</span><span class="n">label_bars</span><span class="p">,</span>
+            <span class="n">use_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">steps_per_period</span><span class="o">=</span><span class="n">steps_per_period</span><span class="p">,</span>
+            <span class="n">period_length</span><span class="o">=</span><span class="n">period_length</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">bar_label_size</span><span class="o">=</span><span class="n">bar_label_size</span><span class="p">,</span>
+            <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
+            <span class="n">period_label_size</span><span class="o">=</span><span class="n">period_label_size</span><span class="p">,</span>
+            <span class="n">x_period_label_location</span><span class="o">=</span><span class="n">x_period_label_location</span><span class="p">,</span>
+            <span class="n">y_period_label_location</span><span class="o">=</span><span class="n">y_period_label_location</span><span class="p">,</span>
+            <span class="n">append_period_to_title</span><span class="o">=</span><span class="n">append_period_to_title</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">show_period_annotation</span><span class="o">=</span><span class="n">show_period_annotation</span><span class="p">,</span>
+            <span class="n">period_annotation_formatter</span><span class="o">=</span><span class="n">period_annotation_formatter</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">bcr</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">bcr</span>
+
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;line&quot;</span><span class="p">:</span>
+        <span class="n">line_race</span> <span class="o">=</span> <span class="n">LineChart</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span>
+            <span class="n">line_width</span><span class="o">=</span><span class="n">line_width</span><span class="p">,</span>
+            <span class="n">enable_legend</span><span class="o">=</span><span class="n">enable_legend</span><span class="p">,</span>
+            <span class="n">use_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">n_visible</span><span class="o">=</span><span class="n">n_visible</span><span class="p">,</span>
+            <span class="n">steps_per_period</span><span class="o">=</span><span class="n">steps_per_period</span><span class="p">,</span>
+            <span class="n">period_length</span><span class="o">=</span><span class="n">period_length</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
+            <span class="n">period_label_size</span><span class="o">=</span><span class="n">period_label_size</span><span class="p">,</span>
+            <span class="n">x_period_label_location</span><span class="o">=</span><span class="n">x_period_label_location</span><span class="p">,</span>
+            <span class="n">y_period_label_location</span><span class="o">=</span><span class="n">y_period_label_location</span><span class="p">,</span>
+            <span class="n">append_period_to_title</span><span class="o">=</span><span class="n">append_period_to_title</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">show_period_annotation</span><span class="o">=</span><span class="n">show_period_annotation</span><span class="p">,</span>
+            <span class="n">period_annotation_formatter</span><span class="o">=</span><span class="n">period_annotation_formatter</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">line_race</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">line_race</span></div>
+
+
+<div class="viewcode-block" id="animate_multiple_plots"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.animate_multiple_plots.html#pandas_alive.plotting.animate_multiple_plots">[docs]</a><span class="k">def</span> <span class="nf">animate_multiple_plots</span><span class="p">(</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">plots</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChart</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">]],</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title_fontsize</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
+    <span class="n">adjust_subplot_left</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.125</span><span class="p">,</span>
+    <span class="n">adjust_subplot_right</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">adjust_subplot_bottom</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">adjust_subplot_top</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">adjust_subplot_wspace</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">adjust_subplot_hspace</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Plot multiple animated subplots with plt.subplots()</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Output file name with extension to rite to</span>
+<span class="sd">        plots (typing.List[typing.Union[BarChart, LineChart]]): List of chart instances</span>
+<span class="sd">        title (str, optional): Overall title for plots (suptitle). Defaults to None.</span>
+<span class="sd">        title_fontsize (typing.Union[int, float], optional): Font size for suptitle. Defaults to 16.</span>
+<span class="sd">        dpi (int, optional): Custom DPI to increase resolution. Defaults to 144.</span>
+<span class="sd">        adjust_subplot_left (float, optional): the left side of the subplots of the figure. Defaults to 0.125.</span>
+<span class="sd">        adjust_subplot_right (float, optional): the right side of the subplots of the figure. Defaults to 0.9.</span>
+<span class="sd">        adjust_subplot_bottom (float, optional): the bottom of the subplots of the figure. Defaults to 0.1.</span>
+<span class="sd">        adjust_subplot_top (float, optional): the top of the subplots of the figure. Defaults to 0.9.</span>
+<span class="sd">        adjust_subplot_wspace (float, optional): the amount of width reserved for space between subplots, expressed as a fraction of the average axis width. Defaults to 0.2.</span>
+<span class="sd">        adjust_subplot_hspace (float, optional): the amount of height reserved for space between subplots, expressed as a fraction of the average axis height. Defaults to 0.2.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO Maybe add multichart class?</span>
+
+    <span class="k">def</span> <span class="nf">update_all_graphs</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">anim_func</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">UserWarning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">plot</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2"> error plotting on frame </span><span class="si">{</span><span class="n">frame</span><span class="si">}</span><span class="s2">, ensure all plots share index&quot;</span>
+                <span class="p">)</span>
+
+    <span class="c1"># Current just number of columns for number of plots</span>
+    <span class="c1"># TODO add option for number of rows/columns</span>
+    <span class="c1"># TODO Use gridspec?</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">))</span>
+    <span class="c1"># Defaults from https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.subplots_adjust.html</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">adjust_subplot_left</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="n">adjust_subplot_right</span><span class="p">,</span><span class="n">bottom</span><span class="o">=</span><span class="n">adjust_subplot_bottom</span><span class="p">,</span><span class="n">top</span><span class="o">=</span><span class="n">adjust_subplot_top</span><span class="p">,</span><span class="n">wspace</span><span class="o">=</span><span class="n">adjust_subplot_wspace</span><span class="p">,</span><span class="n">hspace</span><span class="o">=</span><span class="n">adjust_subplot_hspace</span><span class="p">)</span>
+    <span class="c1"># plt.tight_layout()</span>
+    <span class="c1"># fig = plt.figure()</span>
+    <span class="c1"># spec = fig.add_gridspec()</span>
+    <span class="c1"># fig.add_subplot(spec[0, 1])</span>
+    <span class="c1"># Used for overlapping titles, supplot not considered so move down by 10%</span>
+    <span class="c1"># https://stackoverflow.com/questions/8248467/matplotlib-tight-layout-doesnt-take-into-account-figure-suptitle</span>
+    <span class="c1"># fig.tight_layout(rect=[0, 0, 1, 0.9])</span>
+    <span class="c1"># fig.constrained_layout()</span>
+    <span class="c1"># plt.rcParams[&quot;figure.constrained_layout.use&quot;] = True</span>
+    <span class="c1"># plt.subplots_adjust(top=0.85)</span>
+    <span class="c1"># plt.subplots_adjust()</span>
+    <span class="c1"># plt.rcParams.update({&#39;figure.autolayout&#39;: True})</span>
+
+    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">plot</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
+        <span class="c1"># plot.ax = fig.add_subplot(spec[num:,0])[0]</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">plot</span><span class="o">.</span><span class="n">tick_label_size</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s2">&quot;.9&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">spine</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span>
+
+        <span class="n">plot</span><span class="o">.</span><span class="n">init_func</span><span class="p">()</span>
+
+    <span class="n">fps</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">/</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">period_length</span> <span class="o">*</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps_per_period</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">period_length</span> <span class="o">/</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps_per_period</span>
+    <span class="n">anim</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span>
+        <span class="n">fig</span><span class="p">,</span>
+        <span class="n">update_all_graphs</span><span class="p">,</span>
+        <span class="nb">min</span><span class="p">([</span><span class="nb">max</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">get_frames</span><span class="p">())</span> <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]),</span>
+        <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;gif&quot;</span><span class="p">:</span>
+        <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;imagemagick&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span></div>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1">########### Class to add Animated plotting methods to Pandas DataFrame</span>
+<span class="c1">##############################################################################</span>
+<span class="c1"># Inspiration: https://github.com/PatrikHlobil/Pandas-Bokeh/blob/cb241ea570a0a2ea3d0c7055fbe79bbdd06cc712/pandas_bokeh/plot.py#L1759</span>
+
+
+<div class="viewcode-block" id="BasePlotMethods"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.BasePlotMethods.html#pandas_alive.plotting.BasePlotMethods">[docs]</a><span class="k">class</span> <span class="nc">BasePlotMethods</span><span class="p">(</span><span class="n">PandasObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; For extending accessor to pandas DataFrame</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        PandasObject (PandasObject): Base Pandas Object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BasePlotMethods.__init__"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.BasePlotMethods.__init__.html#pandas_alive.plotting.BasePlotMethods.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">data</span>  <span class="c1"># can be Series or DataFrame</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="AnimatedAccessor"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.AnimatedAccessor.html#pandas_alive.plotting.AnimatedAccessor">[docs]</a><span class="k">class</span> <span class="nc">AnimatedAccessor</span><span class="p">(</span><span class="n">BasePlotMethods</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; For including accessor on df, to enable `df.plot_animated()`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        BasePlotMethods ([type]): BasePlotMethods within pandas</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
+
+<div class="viewcode-block" id="AnimatedAccessor.barh"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.AnimatedAccessor.barh.html#pandas_alive.plotting.AnimatedAccessor.barh">[docs]</a>    <span class="k">def</span> <span class="nf">barh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Make an animated horizontal bar plot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (str, optional): label or position. Defaults to DataFrame.index. Column to be used on categories.</span>
+<span class="sd">            y (str, optional): label or position. Defaults to All numeric columns in DataFrame. Column to be plotted from the DataFrame</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            BarChart: BarChart instance for use with multiple plots or .save()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;barh&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jack McKew
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

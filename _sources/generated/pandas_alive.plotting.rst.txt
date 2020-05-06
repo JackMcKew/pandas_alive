@@ -1,0 +1,31 @@
+pandas\_alive.plotting
+======================
+
+.. rubric:: Description
+.. automodule:: pandas_alive.plotting
+.. currentmodule:: pandas_alive.plotting
+
+
+.. rubric:: Classes
+.. autosummary::
+    :toctree:
+    
+    AnimatedAccessor
+    
+    BasePlotMethods
+    
+
+
+
+.. rubric:: Functions
+.. autosummary::
+    :toctree:
+    
+    animate_multiple_plots
+    
+    get_allowed_kinds
+    
+    plot
+    
+    verify_filename
+    

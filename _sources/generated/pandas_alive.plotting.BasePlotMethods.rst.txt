@@ -1,0 +1,21 @@
+BasePlotMethods
+===============
+
+.. currentmodule:: pandas_alive.plotting
+
+.. autoclass:: BasePlotMethods
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+      :toctree:
+   
+      BasePlotMethods.__init__
+   
+   
+   

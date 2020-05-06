@@ -1,0 +1,6 @@
+animate\_multiple\_plots
+========================
+
+.. currentmodule:: pandas_alive.plotting
+
+.. autofunction:: animate_multiple_plots
