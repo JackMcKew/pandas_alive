@@ -17,7 +17,6 @@ With **Pandas_alive**\ , creating stunning, animated visualisations is as easy a
    :target: examples/example-barh-chart.gif
    :alt: Example Bar Chart
 
-
 Installation
 ------------
 
