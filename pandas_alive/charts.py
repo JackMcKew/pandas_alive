@@ -236,21 +236,12 @@ class BaseChart:
             ValueError: If custom x label provided but not y
             ValueError: If custom y label provided by not x
         """
-        if self.x_period_annotation_location is None or self.y_period_annotation_location is None:
-            self.x_label, self.y_label = self.get_label_position()
+        self.x_label, self.y_label = self.get_label_position()
+        if self.x_period_annotation_location is not None and self.y_period_annotation_location is not None:
+            self.x_label = self.x_period_annotation_location
+            self.y_label = self.y_period_annotation_location
         else:
-            if self.x_period_annotation_location is not None:
-                self.x_label = self.x_period_annotation_location
-            else:
-                raise ValueError(
-                    f"Provide x_period_annotation_location, current value: {self.x_period_annotation_location}"
-                )
-            if self.y_period_annotation_location is not None:
-                self.y_label = self.y_period_annotation_location
-            else:
-                raise ValueError(
-                    f"Provide y_period_annotation_location, current value: {self.y_period_annotation_location}"
-                )
+            raise ValueError("Must provide both x and y custom period location")
 
         if self.use_index and self.show_period_annotation:
             str_index = self.df.index.astype("str")
@@ -430,7 +421,7 @@ class BarChart(BaseChart):
     def get_colors(
         self, cmap: typing.Union[str, colors.Colormap, typing.List[str]]
     ) -> np.array:
-        """ Get array of colours from BaseChart.get_colors and shorten to nummber of bars
+        """ Get array of colours from BaseChart.get_colors and shorten to number of bars
 
         Args:
             cmap (typing.Union[str, colors.Colormap, typing.List[str]]): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html
@@ -709,7 +700,7 @@ class LineChart(BaseChart):
             self.ax = plt.axes()
         self.ax.set_title(self.title)
         self.line_colors = self.get_colors(self.cmap)
-        self._lines: Dict = {}
+        self._lines: typing.Dict = {}
         for name in self.data_cols:
             self._lines[name] = {}
             self._lines[name]["x"] = []
