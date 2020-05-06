@@ -1,0 +1,6 @@
+ScatterChart.create\_figure
+===========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.create_figure

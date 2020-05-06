@@ -1,0 +1,6 @@
+ScatterChart.get\_colors
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.get_colors

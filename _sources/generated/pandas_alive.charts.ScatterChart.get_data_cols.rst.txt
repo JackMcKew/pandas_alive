@@ -1,0 +1,6 @@
+ScatterChart.get\_data\_cols
+============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.get_data_cols

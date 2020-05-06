@@ -1,0 +1,6 @@
+ScatterChart.calculate\_new\_figsize
+====================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.calculate_new_figsize

@@ -1,0 +1,6 @@
+ScatterChart.init\_func
+=======================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.init_func

@@ -1,0 +1,6 @@
+ScatterChart.get\_html5\_video
+==============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.get_html5_video

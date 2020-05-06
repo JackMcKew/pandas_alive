@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ScatterChart.get_html5_video &mdash; Pandas_Alive 0.1.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ScatterChart.get_label_position" href="pandas_alive.charts.ScatterChart.get_label_position.html" />
+    <link rel="prev" title="ScatterChart.get_frames" href="pandas_alive.charts.ScatterChart.get_frames.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pandas_Alive
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Installation &amp; Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../developer.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.plotting.plot.html">plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.plotting.html">pandas_alive.plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.base.html">pandas_alive.base</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pandas_alive.charts.html">pandas_alive.charts</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChart.html">BarChart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BaseChart.html">BaseChart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="pandas_alive.charts.ScatterChart.html">ScatterChart</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.__init__.html">ScatterChart.__init__</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.anim_func.html">ScatterChart.anim_func</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.calculate_new_figsize.html">ScatterChart.calculate_new_figsize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.create_figure.html">ScatterChart.create_figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_colors.html">ScatterChart.get_colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_data_cols.html">ScatterChart.get_data_cols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_frames.html">ScatterChart.get_frames</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">ScatterChart.get_html5_video</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_label_position.html">ScatterChart.get_label_position</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.init_func.html">ScatterChart.init_func</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.make_animation.html">ScatterChart.make_animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.plot_point.html">ScatterChart.plot_point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.save.html">ScatterChart.save</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.show_period.html">ScatterChart.show_period</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.validate_params.html">ScatterChart.validate_params</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.__init__.html">__init__</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandas_Alive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../developer.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="pandas_alive.charts.html">pandas_alive.charts</a> &raquo;</li>
+        
+          <li><a href="pandas_alive.charts.ScatterChart.html">ScatterChart</a> &raquo;</li>
+        
+      <li>ScatterChart.get_html5_video</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pandas_alive.charts.ScatterChart.get_html5_video.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scatterchart-get-html5-video">
+<h1>ScatterChart.get_html5_video<a class="headerlink" href="#scatterchart-get-html5-video" title="Permalink to this headline">¶</a></h1>
+<dl class="py method">
+<dt id="pandas_alive.charts.ScatterChart.get_html5_video">
+<code class="sig-prename descclassname">ScatterChart.</code><code class="sig-name descname">get_html5_video</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_alive.charts.ScatterChart.get_html5_video" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the animation to an HTML5 &lt;video&gt; tag.</p>
+<p>This saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Encoded h264 video</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>HTML5 &lt;video&gt; tag</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pandas_alive.charts.ScatterChart.get_label_position.html" class="btn btn-neutral float-right" title="ScatterChart.get_label_position" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pandas_alive.charts.ScatterChart.get_frames.html" class="btn btn-neutral float-left" title="ScatterChart.get_frames" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jack McKew
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

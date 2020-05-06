@@ -1,0 +1,6 @@
+ScatterChart.plot\_point
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.plot_point

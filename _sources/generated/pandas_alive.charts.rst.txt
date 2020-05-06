@@ -16,5 +16,7 @@ pandas\_alive.charts
     
     LineChart
     
+    ScatterChart
+    
 
 

@@ -1,0 +1,49 @@
+ScatterChart
+============
+
+.. currentmodule:: pandas_alive.charts
+
+.. autoclass:: ScatterChart
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+      :toctree:
+   
+      ScatterChart.__init__
+   
+      ScatterChart.anim_func
+   
+      ScatterChart.calculate_new_figsize
+   
+      ScatterChart.create_figure
+   
+      ScatterChart.get_colors
+   
+      ScatterChart.get_data_cols
+   
+      ScatterChart.get_frames
+   
+      ScatterChart.get_html5_video
+   
+      ScatterChart.get_label_position
+   
+      ScatterChart.init_func
+   
+      ScatterChart.make_animation
+   
+      ScatterChart.plot_point
+   
+      ScatterChart.save
+   
+      ScatterChart.show_period
+   
+      ScatterChart.validate_params
+   
+   
+   

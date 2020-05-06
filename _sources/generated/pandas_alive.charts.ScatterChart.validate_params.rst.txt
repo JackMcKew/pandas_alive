@@ -1,0 +1,6 @@
+ScatterChart.validate\_params
+=============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.validate_params

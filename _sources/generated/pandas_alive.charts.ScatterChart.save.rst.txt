@@ -1,0 +1,6 @@
+ScatterChart.save
+=================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.save

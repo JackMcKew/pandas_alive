@@ -1,0 +1,6 @@
+ScatterChart.make\_animation
+============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.make_animation

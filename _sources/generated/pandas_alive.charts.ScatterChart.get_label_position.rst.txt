@@ -1,0 +1,6 @@
+ScatterChart.get\_label\_position
+=================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.get_label_position

@@ -1,0 +1,6 @@
+ScatterChart.get\_frames
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.get_frames

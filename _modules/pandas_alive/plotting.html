@@ -163,7 +163,7 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.colors</span>
 <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
-<span class="kn">from</span> <span class="nn">.charts</span> <span class="kn">import</span> <span class="n">BarChart</span><span class="p">,</span> <span class="n">LineChart</span>
+<span class="kn">from</span> <span class="nn">.charts</span> <span class="kn">import</span> <span class="n">BarChart</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">ScatterChart</span>
 
 
 <div class="viewcode-block" id="get_allowed_kinds"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.get_allowed_kinds.html#pandas_alive.plotting.get_allowed_kinds">[docs]</a><span class="k">def</span> <span class="nf">get_allowed_kinds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
@@ -172,7 +172,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        typing.List[str]: List of implemented chart types</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;barh&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;barh&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span><span class="s2">&quot;scatter&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="verify_filename"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.verify_filename.html#pandas_alive.plotting.verify_filename">[docs]</a><span class="k">def</span> <span class="nf">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -229,6 +229,7 @@
     <span class="n">show_period_annotation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">period_annotation_formatter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
+    <span class="n">point_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChart</span><span class="p">,</span><span class="n">LineChart</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot; Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.</span>
@@ -332,7 +333,32 @@
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
             <span class="n">line_race</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">line_race</span></div>
+        <span class="k">return</span> <span class="n">line_race</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;scatter&quot;</span><span class="p">:</span>
+        <span class="n">animated_scatter</span> <span class="o">=</span> <span class="n">ScatterChart</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span>
+            <span class="n">use_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">n_visible</span><span class="o">=</span><span class="n">n_visible</span><span class="p">,</span>
+            <span class="n">steps_per_period</span><span class="o">=</span><span class="n">steps_per_period</span><span class="p">,</span>
+            <span class="n">period_length</span><span class="o">=</span><span class="n">period_length</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
+            <span class="n">period_annotation_size</span><span class="o">=</span><span class="n">period_annotation_size</span><span class="p">,</span>
+            <span class="n">x_period_annotation_location</span><span class="o">=</span><span class="n">x_period_annotation_location</span><span class="p">,</span>
+            <span class="n">y_period_annotation_location</span><span class="o">=</span><span class="n">y_period_annotation_location</span><span class="p">,</span>
+            <span class="n">append_period_to_title</span><span class="o">=</span><span class="n">append_period_to_title</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">show_period_annotation</span><span class="o">=</span><span class="n">show_period_annotation</span><span class="p">,</span>
+            <span class="n">period_annotation_formatter</span><span class="o">=</span><span class="n">period_annotation_formatter</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">point_size</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">animated_scatter</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">animated_scatter</span></div>
 
 
 <div class="viewcode-block" id="animate_multiple_plots"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.animate_multiple_plots.html#pandas_alive.plotting.animate_multiple_plots">[docs]</a><span class="k">def</span> <span class="nf">animate_multiple_plots</span><span class="p">(</span>
