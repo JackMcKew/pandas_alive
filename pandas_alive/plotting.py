@@ -13,7 +13,7 @@ import typing
 import matplotlib.pyplot as plt
 import matplotlib.colors
 from matplotlib.animation import FuncAnimation
-from .charts import BarChart, LineChart
+from .charts import BarChart, LineChart, ScatterChart
 
 
 def get_allowed_kinds() -> typing.List[str]:
@@ -22,7 +22,7 @@ def get_allowed_kinds() -> typing.List[str]:
     Returns:
         typing.List[str]: List of implemented chart types
     """
-    return ["barh", "line"]
+    return ["barh", "line","scatter"]
 
 
 def verify_filename(filename: str) -> str:
@@ -79,6 +79,7 @@ def plot(
     show_period_annotation: bool = True,
     period_annotation_formatter: str = "%d/%m/%Y",
     dpi: float = 144,
+    point_size: typing.Union[int,float] = 2,
     **kwargs,
 ) -> typing.Union[BarChart,LineChart]:
     """ Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.
@@ -183,6 +184,31 @@ def plot(
         if filename:
             line_race.save(verify_filename(filename))
         return line_race
+    elif kind == "scatter":
+        animated_scatter = ScatterChart(
+            df,
+            use_index=True,
+            n_visible=n_visible,
+            steps_per_period=steps_per_period,
+            period_length=period_length,
+            figsize=figsize,
+            cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_annotation_size=period_annotation_size,
+            x_period_annotation_location=x_period_annotation_location,
+            y_period_annotation_location=y_period_annotation_location,
+            append_period_to_title=append_period_to_title,
+            dpi=dpi,
+            show_period_annotation=show_period_annotation,
+            period_annotation_formatter=period_annotation_formatter,
+            title=title,
+            fig=fig,
+            size = point_size,
+            kwargs=kwargs,
+        )
+        if filename:
+            animated_scatter.save(verify_filename(filename))
+        return animated_scatter
 
 
 def animate_multiple_plots(

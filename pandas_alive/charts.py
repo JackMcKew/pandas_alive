@@ -653,7 +653,7 @@ class BarChart(BaseChart):
 
 @attr.s
 class LineChart(BaseChart):
-    """ Aninmated Line Chart implementation
+    """ Animated Line Chart implementation
 
     Args:
         BaseChart (BaseChart): Shared Base Chart class inherit to all charts
@@ -764,9 +764,76 @@ class LineChart(BaseChart):
 
         return range(len(self.df.index))
 
+@attr.s
+class ScatterChart(BaseChart):
+    size: typing.Union[int,str] = attr.ib()
 
-# @attr.s
-# class ScatterChart(BaseChart):
-#     marker_size: typing.Union[int,str] = attr.ib()
-#     enable_legend: bool = attr.ib()
-#     kwargs = attr.ib()
+    def __attrs_post_init__(self):
+        if self.fig is None:
+            self.fig, self.ax = self.create_figure()
+            self.figsize = self.fig.get_size_inches()
+            self.dpi = self.fig.dpi
+        else:
+            self.fig = plt.figure()
+            self.ax = plt.axes()
+        super().__attrs_post_init__()
+        self.colors = self.get_colors(self.cmap)
+        self._points: typing.Dict = {}
+        for name in self.data_cols:
+            self._points[name] = {}
+            self._points[name]["x"] = []
+            self._points[name]["y"] = []
+
+    def plot_point(self, i: int) -> None:
+        self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
+        self.ax.set_ylim(
+            self.df.iloc[: i + 1]
+            .select_dtypes(include=[np.number])
+            .min()
+            .min(skipna=True),
+            self.df.iloc[: i + 1]
+            .select_dtypes(include=[np.number])
+            .max()
+            .max(skipna=True),
+        )
+        for name, color in zip(self.data_cols, self.colors):
+            self._points[name]["x"].append(self.df[name].index[i])
+            self._points[name]["y"].append(self.df[name].iloc[i])
+            if isinstance(self.size,str):
+                self._points[name]["size"] = self.df[self.size].iloc[i]
+            else:
+                self._points[name]["size"] = self.size
+            self.ax.scatter(
+                self._points[name]["x"],
+                self._points[name]["y"],
+                s=self._points[name]["size"],
+                color=color,
+            )
+
+    def anim_func(self, i: int) -> None:
+        """ Animation function, removes all lines and updates legend/period annotation
+
+        Args:
+            i (int): Index of frame of animation
+        """
+        # for points in self.ax.:
+        #     line.remove()
+        self.plot_point(i)
+        if self.show_period_annotation:
+            self.show_period(i)
+
+    def init_func(self) -> None:
+        """ Initialization function for animation
+        """
+        self.ax.scatter([], [])
+
+    
+    def get_frames(self) -> typing.Iterable:
+        """ Get number of frames required for animation
+
+        Returns:
+            typing.Iterable: Range of length of dataframe index
+        """
+
+        return range(len(self.df.index))
+
