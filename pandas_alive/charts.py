@@ -733,6 +733,7 @@ class LineChart(BaseChart):
                 self._lines[name]["y"],
                 self.line_width,
                 color=color,
+                **self.kwargs
             )
 
     def anim_func(self, i: int) -> None:
@@ -748,7 +749,7 @@ class LineChart(BaseChart):
             self.show_period(i)
         if self.enable_legend:
             # labels: List[str] = self._lines.keys()
-            self.ax.legend(self.ax.lines, self._lines.keys(), **self.kwargs)
+            self.ax.legend(self.ax.lines, self._lines.keys())
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -808,6 +809,7 @@ class ScatterChart(BaseChart):
                 self._points[name]["y"],
                 s=self._points[name]["size"],
                 color=color,
+                **self.kwargs,
             )
 
     def anim_func(self, i: int) -> None:
