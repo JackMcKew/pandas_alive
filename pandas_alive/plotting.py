@@ -11,7 +11,7 @@ import pandas as pd
 from pandas.core.base import PandasObject
 import typing
 import matplotlib.pyplot as plt
-import matplotlib.colors
+from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation
 from .charts import BarChart, LineChart, ScatterChart
 
@@ -52,36 +52,35 @@ def verify_filename(filename: str) -> str:
 
 
 def plot(
+    # Base constructor
     input_df: pd.DataFrame,
     filename: str = None,
-    x: str = None,
-    y: str = None,
     kind: str = "barh",
-    n_visible: int = None,
-    line_width: int = 3,
-    use_index: bool = True,
+    interpolate_period: bool = False,
     steps_per_period: int = 10,
     period_length: int = 500,
+    period_fmt: str = None,
     figsize: typing.Tuple[float, float] = (6.5, 3.5),
     title: str = None,
     fig: plt.figure = None,
-    # enable_legend: bool = False,
+    cmap: typing.Union[str, Colormap, typing.List[str]] = "dark24",
+    tick_label_size: typing.Union[int, float] = 7,
+    period_label: typing.Union[
+        bool, typing.Dict[str, typing.Union[int, float, str]]
+    ] = True,
+    dpi: float = 144,
+    # Bar chart
     orientation: str = "h",
     sort: str = "desc",
     label_bars: bool = True,
-    cmap: typing.Union[str, matplotlib.colors.Colormap, typing.List[str]] = "dark24",
     bar_label_size: typing.Union[int, float] = 7,
-    tick_label_size: typing.Union[int, float] = 7,
-    period_annotation_size: typing.Union[int, float] = 16,
-    x_period_annotation_location: typing.Union[int, float] = None,
-    y_period_annotation_location: typing.Union[int, float] = None,
-    append_period_to_title: bool = None,
-    show_period_annotation: bool = True,
-    period_annotation_formatter: str = "%d/%m/%Y",
-    dpi: float = 144,
-    point_size: typing.Union[int, float] = 2,
+    n_visible: int = None,
+    # Line Chart
+    line_width: int = 2,
+    # Scatter Chart
+    size: int = 2,
     **kwargs,
-) -> typing.Union[BarChart, LineChart]:
+) -> typing.Union[ScatterChart, BarChart, LineChart]:
     """ Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.
 
     Args:
@@ -131,28 +130,23 @@ def plot(
     if kind == "barh":
         bcr = BarChart(
             df,
-            orientation=orientation,
-            sort=sort,
-            n_visible=n_visible,
-            # n_bars=n_bars,
-            label_bars=label_bars,
-            use_index=True,
+            interpolate_period=interpolate_period,
             steps_per_period=steps_per_period,
             period_length=period_length,
+            period_fmt=period_fmt,
             figsize=figsize,
-            cmap=cmap,
             title=title,
-            bar_label_size=bar_label_size,
-            tick_label_size=tick_label_size,
-            period_annotation_size=period_annotation_size,
-            x_period_annotation_location=x_period_annotation_location,
-            y_period_annotation_location=y_period_annotation_location,
-            append_period_to_title=append_period_to_title,
-            dpi=dpi,
-            # enable_legend=enable_legend,
-            show_period_annotation=show_period_annotation,
-            period_annotation_formatter=period_annotation_formatter,
             fig=fig,
+            cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_label=period_label,
+            dpi=dpi,
+            # Bar chart
+            orientation=orientation,
+            sort=sort,
+            label_bars=label_bars,
+            bar_label_size=bar_label_size,
+            n_visible=n_visible,
             kwargs=kwargs,
         )
         if filename:
@@ -162,24 +156,18 @@ def plot(
     elif kind == "line":
         line_race = LineChart(
             df,
-            line_width=line_width,
-            # enable_legend=enable_legend,
-            use_index=True,
-            n_visible=n_visible,
+            interpolate_period=interpolate_period,
             steps_per_period=steps_per_period,
             period_length=period_length,
+            period_fmt=period_fmt,
             figsize=figsize,
-            cmap=cmap,
-            tick_label_size=tick_label_size,
-            period_annotation_size=period_annotation_size,
-            x_period_annotation_location=x_period_annotation_location,
-            y_period_annotation_location=y_period_annotation_location,
-            append_period_to_title=append_period_to_title,
-            dpi=dpi,
-            show_period_annotation=show_period_annotation,
-            period_annotation_formatter=period_annotation_formatter,
             title=title,
             fig=fig,
+            cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_label=period_label,
+            dpi=dpi,
+            line_width=line_width,
             kwargs=kwargs,
         )
         if filename:
@@ -188,24 +176,19 @@ def plot(
     elif kind == "scatter":
         animated_scatter = ScatterChart(
             df,
-            use_index=True,
-            n_visible=n_visible,
-            # enable_legend=enable_legend,
+            df,
+            interpolate_period=interpolate_period,
             steps_per_period=steps_per_period,
             period_length=period_length,
+            period_fmt=period_fmt,
             figsize=figsize,
-            cmap=cmap,
-            tick_label_size=tick_label_size,
-            period_annotation_size=period_annotation_size,
-            x_period_annotation_location=x_period_annotation_location,
-            y_period_annotation_location=y_period_annotation_location,
-            append_period_to_title=append_period_to_title,
-            dpi=dpi,
-            show_period_annotation=show_period_annotation,
-            period_annotation_formatter=period_annotation_formatter,
             title=title,
             fig=fig,
-            size=point_size,
+            cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_label=period_label,
+            dpi=dpi,
+            size=size,
             kwargs=kwargs,
         )
         if filename:
