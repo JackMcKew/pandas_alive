@@ -5,6 +5,8 @@ This module contains functions for chart types.
 """
 
 
+# TODO Refactor cleanly
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -92,7 +94,6 @@ class BaseChart:
             self.ax.set_title(self.title)
         self.colors = self.get_colors(self.cmap)
 
-    @fig.validator
     def validate_params(self, attribute, value: plt.figure) -> None:
         """ Validate figure is a matplotlib Figure instance
 
@@ -118,7 +119,7 @@ class BaseChart:
         ):
             raise ValueError("Must provide x custom period location if y provided")
 
-    def interpolate_period(self,df):
+    def interpolate_period(self, df):
         """ Reindex dataframe and interpolate for length of animation
         """
         # TODO Rename to interpolate and add settings
