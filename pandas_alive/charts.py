@@ -25,35 +25,6 @@ munits.registry[np.datetime64] = converter
 munits.registry[datetime.date] = converter
 munits.registry[datetime.datetime] = converter
 
-
-DARK24 = [
-    "#2E91E5",
-    "#E15F99",
-    "#1CA71C",
-    "#FB0D0D",
-    "#DA16FF",
-    "#222A2A",
-    "#B68100",
-    "#750D86",
-    "#EB663B",
-    "#511CFB",
-    "#00A08B",
-    "#FB00D1",
-    "#FC0080",
-    "#B2828D",
-    "#6C7C32",
-    "#778AAE",
-    "#862A16",
-    "#A777F1",
-    "#620042",
-    "#1616A7",
-    "#DA60CA",
-    "#6C4516",
-    "#0D2A63",
-    "#AF0038",
-]
-
-
 @attr.s()
 class BarChart(_BaseChart):
     """ BarChart implementation for bar chart races
@@ -138,10 +109,7 @@ class BarChart(_BaseChart):
         Returns:
             typing.Tuple[pd.DataFrame,pd.DataFrame]: df_values contains interpolated values, df_rank contains interpolated rank
         """
-        # df_values = self.interpolate_period(self.df)
-        # interpolated_time_index = df_values.index
-        # df_values = self.df.reset_index(drop=True)
-        # df_values.index = df_values.index * self.steps_per_period
+        
         df_rank = df.rank(axis=1, method="first", ascending=False).clip(
             upper=self.n_visible + 1
         )
@@ -281,7 +249,7 @@ class BarChart(_BaseChart):
                 ec="white",
                 tick_label=cols,
                 color=colors,
-                # **self.kwargs,
+                **self.kwargs,
             )
             self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
 
@@ -368,7 +336,7 @@ class ScatterChart(_BaseChart):
                 self._points[name]["y"],
                 s=self._points[name]["size"],
                 color=color,
-                # **self.kwargs,
+                **self.kwargs,
             )
 
     def anim_func(self, i: int) -> None:
@@ -426,7 +394,7 @@ class LineChart(_BaseChart):
                 self._lines[name]["y"],
                 self.line_width,
                 color=color,
-                # **self.kwargs,
+                **self.kwargs,
             )
 
     def anim_func(self, i: int) -> None:

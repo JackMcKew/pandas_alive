@@ -1,14 +1,15 @@
-import attr
-import pandas as pd
-import numpy as np
-import typing
-from matplotlib.colors import Colormap, to_rgba
-from matplotlib.animation import FuncAnimation
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import matplotlib.units as munits
 import datetime
+import typing
+
+import attr
 from matplotlib import ticker
+from matplotlib.animation import FuncAnimation
+from matplotlib.colors import Colormap, to_rgba
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.units as munits
+import numpy as np
+import pandas as pd
 
 # For conciseDateFormatter for all plots https://matplotlib.org/3.1.0/gallery/ticks_and_spines/date_concise_formatter.html
 converter = mdates.ConciseDateConverter()
@@ -79,6 +80,8 @@ class _BaseChart:
         self.df = self.rename_data_columns(
             self.df
         )  # Force data column names to be string
+
+        # Careful to use self.df in later calculations (eg, df_rank), use orig_df if needed
         self.df = self.get_interpolated_df(
             self.df, self.steps_per_period, self.interpolate_period
         )
@@ -191,8 +194,9 @@ class _BaseChart:
         )
 
     def rename_data_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        data_cols = self.get_data_cols(df)
-        return df.rename(columns={col: str(col) for col in data_cols})
+        # data_cols = self.get_data_cols(df)
+        df.columns = df.columns.astype(str)
+        return df
 
     def get_data_cols(self, df: pd.DataFrame) -> typing.List[str]:
         """ Get list of columns containing plottable numeric data to plot
