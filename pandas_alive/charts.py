@@ -74,6 +74,7 @@ class BaseChart:
     y_period_annotation_location: typing.Union[int, float] = attr.ib()
     period_annotation_size: typing.Union[int, float] = attr.ib()
     show_period_annotation: bool = attr.ib()
+    # enable_legend: bool = attr.ib()
     period_annotation_formatter: str = attr.ib()
     dpi: float = attr.ib()
     kwargs = attr.ib()
@@ -81,6 +82,12 @@ class BaseChart:
     def __attrs_post_init__(self):
         self.data_cols = self.get_data_cols()
         self.n_visible = self.n_visible or len(self.data_cols)
+        if self.fig is None:
+            self.fig, self.ax = self.create_figure()
+            self.figsize = self.fig.get_size_inches()
+        else:
+            self.fig = plt.figure()
+            self.ax = plt.axes()
         if self.title:
             self.ax.set_title(self.title)
         self.colors = self.get_colors(self.cmap)
@@ -98,6 +105,39 @@ class BaseChart:
         """
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
             raise TypeError("`fig` must be a matplotlib Figure instance")
+
+        if (
+            self.x_period_annotation_location is not None
+            and self.y_period_annotation_location is None
+        ):
+            raise ValueError("Must provide y custom period location if x provided")
+
+        if (
+            self.x_period_annotation_location is None
+            and self.y_period_annotation_location is not None
+        ):
+            raise ValueError("Must provide x custom period location if y provided")
+
+    def interpolate_period(self,df):
+        """ Reindex dataframe and interpolate for length of animation
+        """
+        # TODO Rename to interpolate and add settings
+        # Period interpolated to match other charts for multiple plotting
+        # https://stackoverflow.com/questions/52701330/pandas-reindex-and-interpolate-time-series-efficiently-reindex-drops-data
+
+        desired_index = pd.date_range(
+            start=self.df.index.min(),
+            end=self.df.index.max(),
+            periods=((len(self.df.index) - 1) * self.steps_per_period) + 1,
+        )
+
+        interpolated_df = (
+            self.df.reindex(self.df.index.union(desired_index))
+            .interpolate(method="time")
+            .reindex(desired_index)
+        )
+
+        return interpolated_df
 
     def init_func(self) -> None:
         """ Initializing method for animation, to be overridden by extended classes
@@ -142,7 +182,7 @@ class BaseChart:
 
         interval = self.period_length / self.steps_per_period
         return FuncAnimation(
-            self.fig, self.anim_func, frames, init_func, interval=interval,blit=True
+            self.fig, self.anim_func, frames, init_func, interval=interval, blit=True
         )
 
     def calculate_new_figsize(self, real_fig: plt.figure) -> typing.List[float]:
@@ -236,17 +276,19 @@ class BaseChart:
             ValueError: If custom y label provided by not x
         """
         self.x_label, self.y_label = self.get_label_position()
-        if self.x_period_annotation_location is not None and self.y_period_annotation_location is not None:
+
+        if (
+            self.x_period_annotation_location is not None
+            and self.y_period_annotation_location is not None
+        ):
             self.x_label = self.x_period_annotation_location
             self.y_label = self.y_period_annotation_location
-        else:
-            raise ValueError("Must provide both x and y custom period location")
 
         if self.use_index and self.show_period_annotation:
             str_index = self.df.index.astype("str")
             if self.period_annotation_formatter:
                 idx_val = self.df.index[i]
-                if self.df.index.dtype.kind == 'M': #Datetime
+                if self.df.index.dtype.kind == "M":  # Datetime
                     val = idx_val.strftime(self.period_annotation_formatter)
                 else:
                     val = self.period_annotation_formatter.format(x=idx_val)
@@ -389,18 +431,15 @@ class BarChart(BaseChart):
         """
         self.n_visible = self.n_visible if self.n_visible else self.df.shape[1]
 
-        self.df_values, self.df_rank = self.prepare_data()
+        self.df, self.df_rank = self.prepare_data()
 
         self.orig_index = self.df.index.astype("str")
-        if self.fig is None:
-            self.fig, self.ax = self.create_figure()
-        else:
-            self.ax = self.fig.axes[0]
-        self.ax.set_title(self.title)
+
         self.x_label, self.y_label = self.get_label_position()
         self.bar_colors = self.get_colors(self.cmap)
-        super().__attrs_post_init__()
+
         self.validate_params()
+        super().__attrs_post_init__()
 
     def validate_params(self):
         """ Validate parameters provided to chart instance
@@ -456,6 +495,8 @@ class BarChart(BaseChart):
         Returns:
             typing.Tuple[pd.DataFrame,pd.DataFrame]: df_values contains interpolated values, df_rank contains interpolated rank
         """
+        df_values = self.interpolate_period(self.df)
+        interpolated_time_index = df_values.index
         df_values = self.df.reset_index(drop=True)
         df_values.index = df_values.index * self.steps_per_period
         df_rank = df_values.rank(axis=1, method="first", ascending=False).clip(
@@ -467,6 +508,7 @@ class BarChart(BaseChart):
             df_rank = self.n_visible + 1 - df_rank
         new_index = range(df_values.index.max() + 1)
         df_values = df_values.reindex(new_index).interpolate()
+        df_values.index = interpolated_time_index
         df_rank = df_rank.reindex(new_index).interpolate()
         return df_values, df_rank
 
@@ -516,7 +558,7 @@ class BarChart(BaseChart):
         ax = fig.add_subplot()
         fake_cols = [chr(i + 70) for i in range(self.df.shape[1])]
 
-        max_val = self.df_values.max().max()
+        max_val = self.df.max().max()
         if self.orientation == "h":
             ax.barh(fake_cols, [1] * self.df.shape[1])
             ax.tick_params(labelrotation=0, axis="y", labelsize=self.tick_label_size)
@@ -568,7 +610,7 @@ class BarChart(BaseChart):
         bar_location = self.df_rank.iloc[i].values
         top_filt = (bar_location > 0) & (bar_location < self.n_visible + 1)
         bar_location = bar_location[top_filt]
-        bar_length = self.df_values.iloc[i].values[top_filt]
+        bar_length = self.df.iloc[i].values[top_filt]
         cols = self.df.columns[top_filt]
         colors = self.bar_colors[top_filt]
         if self.orientation == "h":
@@ -595,7 +637,7 @@ class BarChart(BaseChart):
         super().show_period(i)
 
         if self.label_bars:
-            for text in self.ax.texts[int(self.use_index):]:
+            for text in self.ax.texts[int(self.use_index) :]:
                 text.remove()
             if self.orientation == "h":
                 zipped = zip(bar_length, bar_location)
@@ -636,6 +678,7 @@ class BarChart(BaseChart):
         for bar in self.ax.containers:
             bar.remove()
         self.plot_bars(i)
+        self.show_period(i)
 
     def init_func(self):
         """ Initialization function for animation
@@ -648,7 +691,7 @@ class BarChart(BaseChart):
         Returns:
             range(int): Get range of length of dataframe
         """
-        return range(len(self.df_values))
+        return range(len(self.df.index))
 
 
 @attr.s
@@ -663,48 +706,30 @@ class LineChart(BaseChart):
     """
 
     line_width: int = attr.ib()
-    enable_legend: bool = attr.ib()
+    # enable_legend: bool = attr.ib()
 
     def __attrs_post_init__(self):
         """ Property initialization
         """
 
-        self.data_cols = self.get_data_cols()
-        self.n_visible = self.n_visible or len(self.data_cols)
-        if self.fig is None:
-            self.fig, self.ax = self.create_figure()
-            self.figsize = self.fig.get_size_inches()
-            self.dpi = self.fig.dpi
-        else:
-            self.fig = plt.figure()
-            self.ax = plt.axes()
-        self.ax.set_title(self.title)
+        # self.data_cols = self.get_data_cols()
+        # self.n_visible = self.n_visible or len(self.data_cols)
+        super().__attrs_post_init__()
+        # if self.fig is None:
+        #     self.fig, self.ax = self.create_figure()
+        #     self.figsize = self.fig.get_size_inches()
+        #     self.dpi = self.fig.dpi
+        # else:
+        #     self.fig = plt.figure()
+        #     self.ax = plt.axes()
+        # self.ax.set_title(self.title)
         self.line_colors = self.get_colors(self.cmap)
         self._lines: typing.Dict = {}
         for name in self.data_cols:
             self._lines[name] = {}
             self._lines[name]["x"] = []
             self._lines[name]["y"] = []
-        self.prepare_data()
-
-    def prepare_data(self):
-        """ Reindex dataframe and interpolate for length of animation
-        """
-        # TODO Rename to interpolate and add settings
-        # Period interpolated to match other charts for multiple plotting
-        # https://stackoverflow.com/questions/52701330/pandas-reindex-and-interpolate-time-series-efficiently-reindex-drops-data
-
-        desired_index = pd.date_range(
-            start=self.df.index.min(),
-            end=self.df.index.max(),
-            periods=((len(self.df.index) - 1) * self.steps_per_period) + 1,
-        )
-
-        self.df = (
-            self.df.reindex(self.df.index.union(desired_index))
-            .interpolate(method="time")
-            .reindex(desired_index)
-        )
+        self.df = self.interpolate_period(self.df)
 
     def plot_line(self, i: int) -> None:
         """ Function for plotting all lines in dataframe
@@ -733,7 +758,7 @@ class LineChart(BaseChart):
                 self._lines[name]["y"],
                 self.line_width,
                 color=color,
-                **self.kwargs
+                **self.kwargs,
             )
 
     def anim_func(self, i: int) -> None:
@@ -747,9 +772,9 @@ class LineChart(BaseChart):
         self.plot_line(i)
         if self.show_period_annotation:
             self.show_period(i)
-        if self.enable_legend:
-            # labels: List[str] = self._lines.keys()
-            self.ax.legend(self.ax.lines, self._lines.keys())
+        # if self.enable_legend:
+        #     # labels: List[str] = self._lines.keys()
+        #     self.ax.legend(self.ax.lines, self._lines.keys())
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -765,18 +790,19 @@ class LineChart(BaseChart):
 
         return range(len(self.df.index))
 
+
 @attr.s
 class ScatterChart(BaseChart):
-    size: typing.Union[int,str] = attr.ib()
+    size: typing.Union[int, str] = attr.ib()
 
     def __attrs_post_init__(self):
-        if self.fig is None:
-            self.fig, self.ax = self.create_figure()
-            self.figsize = self.fig.get_size_inches()
-            self.dpi = self.fig.dpi
-        else:
-            self.fig = plt.figure()
-            self.ax = plt.axes()
+        # if self.fig is None:
+        #     self.fig, self.ax = self.create_figure()
+        #     self.figsize = self.fig.get_size_inches()
+        #     self.dpi = self.fig.dpi
+        # else:
+        #     self.fig = plt.figure()
+        #     self.ax = plt.axes()
         super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
         self._points: typing.Dict = {}
@@ -800,7 +826,7 @@ class ScatterChart(BaseChart):
         for name, color in zip(self.data_cols, self.colors):
             self._points[name]["x"].append(self.df[name].index[i])
             self._points[name]["y"].append(self.df[name].iloc[i])
-            if isinstance(self.size,str):
+            if isinstance(self.size, str):
                 self._points[name]["size"] = self.df[self.size].iloc[i]
             else:
                 self._points[name]["size"] = self.size
@@ -829,7 +855,6 @@ class ScatterChart(BaseChart):
         """
         self.ax.scatter([], [])
 
-    
     def get_frames(self) -> typing.Iterable:
         """ Get number of frames required for animation
 
@@ -838,4 +863,3 @@ class ScatterChart(BaseChart):
         """
 
         return range(len(self.df.index))
-
