@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.units as munits
 import datetime
+from matplotlib import ticker
 
 # For conciseDateFormatter for all plots https://matplotlib.org/3.1.0/gallery/ticks_and_spines/date_concise_formatter.html
 converter = mdates.ConciseDateConverter()
@@ -69,9 +70,10 @@ class _BaseChart:
     # enable_legend: bool = attr.ib()
     # period_annotation_formatter: str = attr.ib()
     dpi: float = attr.ib()
-    # kwargs = attr.ib()
+    kwargs = attr.ib()
 
     def __attrs_post_init__(self):
+        self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting
         self.data_cols = self.get_data_cols(self.df)  # Get column names with valid data
         self.df = self.rename_data_columns(
@@ -88,7 +90,19 @@ class _BaseChart:
             self.ax = plt.axes()
         if self.title:
             self.ax.set_title(self.title)
-        
+
+    def validate_params(self):
+        """ Validate figure is a matplotlib Figure instance
+
+        Args:
+            attribute ([type]): Unused as required by attrs decorator
+            value (plt.figure): Figure instance for chart
+
+        Raises:
+            TypeError: Figure provided is not matplotlib figure
+        """
+        if self.fig is not None and not isinstance(self.fig, plt.Figure):
+            raise TypeError("`fig` must be a matplotlib Figure instance")
 
     def get_period_label(
         self,
@@ -158,12 +172,12 @@ class _BaseChart:
 
         return chart_colors
 
-    def set_x_y_limits(self,df:pd.DataFrame,i: int):
+    def set_x_y_limits(self, df: pd.DataFrame, i: int):
 
         xlim_start = self.df.index[: i + 1].min()
         # For avoiding UserWarning on first frame with identical start and end limits
         xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
-        self.ax.set_xlim(xlim_start,xlim_end)
+        self.ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         self.ax.set_ylim(
             self.df.iloc[: i + 1]
@@ -175,7 +189,6 @@ class _BaseChart:
             .max()
             .max(skipna=True),
         )
-
 
     def rename_data_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         data_cols = self.get_data_cols(df)
@@ -231,7 +244,7 @@ class _BaseChart:
         if interpolate_period:
             if interpolated_df.iloc[:, 0].dtype.kind == "M":
                 first, last = interpolated_df.iloc[[0, -1], 0]
-                dr = pd.date_range(first, last, periods=len(interpolated_df))
+                dr = pd.date_range(first, last, periods=len(interpolated_df.index))
                 interpolated_df.iloc[:, 0] = dr
             else:
                 interpolated_df.iloc[:, 0] = interpolated_df.iloc[:, 0].interpolate()
@@ -269,17 +282,16 @@ class _BaseChart:
         raise NotImplementedError("Animation method not yet implemented")
 
     def get_frames(self) -> typing.Iterable:
-        """ Method for determining how many frames to animate, to be overridden by extended chart class
-
-        Raises:
-            NotImplementedError: Not yet implemented in extended chart class
+        """ Method for determining how many frames to animate
 
         Returns:
             int: Number of frames to animate
         """
         return range(len(self.df.index))
 
-    def make_animation(self, frames: int, init_func: typing.Callable) -> FuncAnimation:
+    def make_animation(
+        self, frames: typing.Union[typing.Iterable, int], init_func: typing.Callable
+    ) -> FuncAnimation:
         """ Method for creating animation
 
         Args:
@@ -294,8 +306,6 @@ class _BaseChart:
         return FuncAnimation(
             self.fig, self.anim_func, frames, init_func, interval=interval, blit=True
         )
-
-    
 
     def calculate_new_figsize(self, real_fig: plt.figure) -> typing.List[float]:
         """ Calculate figure size to allow for labels, etc
@@ -314,7 +324,7 @@ class _BaseChart:
 
         max_val = self.df.values.max().max()
         ax.tick_params(labelrotation=0, axis="y", labelsize=self.tick_label_size)
-        
+
         fig.canvas.print_figure(io.BytesIO())
         orig_pos = ax.get_position()
         ax.set_yticklabels(self.df.columns)
@@ -356,7 +366,7 @@ class _BaseChart:
         # limit = (0.2, self.n_bars + 0.8)
         rect = self.calculate_new_figsize(fig)
         ax = fig.add_axes(rect)
-        
+
         ax.grid(True, axis="x", color="white")
         ax.set_axisbelow(True)
         ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
@@ -364,12 +374,12 @@ class _BaseChart:
         for spine in ax.spines.values():
             spine.set_visible(False)
         return fig, ax
-    
+
     def show_period(self, i: int) -> None:
         if self.period_label:
             if self.period_fmt:
                 idx_val = self.df.index[i]
-                if self.df.index.dtype.kind == 'M': # Date time
+                if self.df.index.dtype.kind == "M":  # Date time
                     s = idx_val.strftime(self.period_fmt)
                 else:
                     s = self.period_fmt.format(x=idx_val)
@@ -378,10 +388,13 @@ class _BaseChart:
             num_texts = len(self.ax.texts)
             if num_texts == 0:
                 # first frame
-                self.ax.text(s=s, transform=self.ax.transAxes, **self.get_period_label(self.period_label))
+                self.ax.text(
+                    s=s,
+                    transform=self.ax.transAxes,
+                    **self.get_period_label(self.period_label)
+                )
             else:
                 self.ax.texts[0].set_text(s)
-
 
     def save(self, filename: str) -> None:
         """ Save method for FuncAnimation
@@ -413,137 +426,3 @@ class _BaseChart:
 
         anim = self.make_animation(self.get_frames(), self.init_func)
         return anim.to_html5_video()
-
-@attr.s
-class ScatterChart(_BaseChart):
-    size: typing.Union[int, str] = attr.ib()
-
-    def __attrs_post_init__(self):
-        super().__attrs_post_init__()
-        self.colors = self.get_colors(self.cmap)
-        self._points: typing.Dict = {}
-        for name in self.data_cols:
-            self._points[name] = {}
-            self._points[name]["x"] = []
-            self._points[name]["y"] = []
-
-    def plot_point(self, i: int) -> None:
-        super().set_x_y_limits(self.df,i)
-        for name, color in zip(self.data_cols, self.colors):
-            self._points[name]["x"].append(self.df[name].index[i])
-            self._points[name]["y"].append(self.df[name].iloc[i])
-            if isinstance(self.size, str):
-                if self.size not in self.data_cols:
-                    raise ValueError(f"Size provided as string: {self.size}, not present in dataframe columns")
-                self._points[name]["size"] = self.df[self.size].iloc[i]
-            else:
-                self._points[name]["size"] = self.size
-            self.ax.scatter(
-                self._points[name]["x"],
-                self._points[name]["y"],
-                s=self._points[name]["size"],
-                color=color,
-                # **self.kwargs,
-            )
-
-    def anim_func(self, i: int) -> None:
-        """ Animation function, removes all lines and updates legend/period annotation
-
-        Args:
-            i (int): Index of frame of animation
-        """
-        self.plot_point(i)
-        if self.period_fmt:
-            self.show_period(i)
-
-    def init_func(self) -> None:
-        """ Initialization function for animation
-        """
-        self.ax.scatter([], [])
-
-
-@attr.s
-class LineChart(_BaseChart):
-    """ Animated Line Chart implementation
-
-    Args:
-        BaseChart (BaseChart): Shared Base Chart class inherit to all charts
-
-    Returns:
-        LineChart: Animated Line Chart class for use with multiple plots or save
-    """
-
-    line_width: int = attr.ib()
-
-    def __attrs_post_init__(self):
-        super().__attrs_post_init__()
-        self.line_colors = self.get_colors(self.cmap)
-        self._lines: typing.Dict = {}
-        for name in self.data_cols:
-            self._lines[name] = {}
-            self._lines[name]["x"] = []
-            self._lines[name]["y"] = []
-        
-    def plot_line(self, i: int) -> None:
-        """ Function for plotting all lines in dataframe
-
-        Args:
-            i (int): Index of frame for animation
-        """
-        # TODO Somehow implement n visible lines?
-        super().set_x_y_limits(self.df,i)
-        for name, color in zip(self.data_cols, self.line_colors):
-
-            self._lines[name]["x"].append(self.df[name].index[i])
-            self._lines[name]["y"].append(self.df[name].iloc[i])
-            self.ax.plot(
-                self._lines[name]["x"],
-                self._lines[name]["y"],
-                self.line_width,
-                color=color,
-                # **self.kwargs,
-            )
-
-    def anim_func(self, i: int) -> None:
-        """ Animation function, removes all lines and updates legend/period annotation
-
-        Args:
-            i (int): Index of frame of animation
-        """
-        for line in self.ax.lines:
-            line.remove()
-        self.plot_line(i)
-        if self.period_fmt:
-            self.show_period(i)
-
-    def init_func(self) -> None:
-        """ Initialization function for animation
-        """
-        self.ax.plot([], [], self.line_width)
-
-
-
-
-if __name__ == "__main__":
-    import pandas as pd
-    import numpy as np
-    import matplotlib.pyplot as plt
-
-    df = pd.read_csv("data/global_temps.csv", index_col=0, parse_dates=[0]).dropna()
-
-    LineChart(
-        df,
-        interpolate_period=True,
-        steps_per_period=10,
-        period_length=500,
-        period_fmt="%Y",
-        figsize=(6.5,3.5),
-        title='Test',
-        fig=None,
-        cmap=DARK24,
-        tick_label_size=7,
-        period_label=True,
-        dpi=144,
-        line_width=2,
-        # kwargs=None
-    ).save('test.mp4')
