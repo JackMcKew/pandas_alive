@@ -22,7 +22,7 @@ def get_allowed_kinds() -> typing.List[str]:
     Returns:
         typing.List[str]: List of implemented chart types
     """
-    return ["barh", "line","scatter"]
+    return ["barh", "line", "scatter"]
 
 
 def verify_filename(filename: str) -> str:
@@ -65,7 +65,7 @@ def plot(
     figsize: typing.Tuple[float, float] = (6.5, 3.5),
     title: str = None,
     fig: plt.figure = None,
-    enable_legend: bool = False,
+    # enable_legend: bool = False,
     orientation: str = "h",
     sort: str = "desc",
     label_bars: bool = True,
@@ -79,9 +79,9 @@ def plot(
     show_period_annotation: bool = True,
     period_annotation_formatter: str = "%d/%m/%Y",
     dpi: float = 144,
-    point_size: typing.Union[int,float] = 2,
+    point_size: typing.Union[int, float] = 2,
     **kwargs,
-) -> typing.Union[BarChart,LineChart]:
+) -> typing.Union[BarChart, LineChart]:
     """ Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.
 
     Args:
@@ -149,6 +149,7 @@ def plot(
             y_period_annotation_location=y_period_annotation_location,
             append_period_to_title=append_period_to_title,
             dpi=dpi,
+            # enable_legend=enable_legend,
             show_period_annotation=show_period_annotation,
             period_annotation_formatter=period_annotation_formatter,
             fig=fig,
@@ -162,7 +163,7 @@ def plot(
         line_race = LineChart(
             df,
             line_width=line_width,
-            enable_legend=enable_legend,
+            # enable_legend=enable_legend,
             use_index=True,
             n_visible=n_visible,
             steps_per_period=steps_per_period,
@@ -189,6 +190,7 @@ def plot(
             df,
             use_index=True,
             n_visible=n_visible,
+            # enable_legend=enable_legend,
             steps_per_period=steps_per_period,
             period_length=period_length,
             figsize=figsize,
@@ -203,7 +205,7 @@ def plot(
             period_annotation_formatter=period_annotation_formatter,
             title=title,
             fig=fig,
-            size = point_size,
+            size=point_size,
             kwargs=kwargs,
         )
         if filename:
@@ -258,7 +260,14 @@ def animate_multiple_plots(
     # TODO Use gridspec?
     fig, axes = plt.subplots(len(plots))
     # Defaults from https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.subplots_adjust.html
-    fig.subplots_adjust(left=adjust_subplot_left,right=adjust_subplot_right,bottom=adjust_subplot_bottom,top=adjust_subplot_top,wspace=adjust_subplot_wspace,hspace=adjust_subplot_hspace)
+    fig.subplots_adjust(
+        left=adjust_subplot_left,
+        right=adjust_subplot_right,
+        bottom=adjust_subplot_bottom,
+        top=adjust_subplot_top,
+        wspace=adjust_subplot_wspace,
+        hspace=adjust_subplot_hspace,
+    )
     # plt.tight_layout()
     # fig = plt.figure()
     # spec = fig.add_gridspec()
@@ -299,9 +308,9 @@ def animate_multiple_plots(
 
     extension = filename.split(".")[-1]
     if extension == "gif":
-        anim.save(filename, fps=fps,dpi=dpi, writer="imagemagick")
+        anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
     else:
-        anim.save(filename, fps=fps,dpi=dpi)
+        anim.save(filename, fps=fps, dpi=dpi)
 
 
 ##############################################################################
@@ -316,6 +325,7 @@ class BasePlotMethods(PandasObject):
     Args:
         PandasObject (PandasObject): Base Pandas Object
     """
+
     def __init__(self, data):
         self._parent = data  # can be Series or DataFrame
 
@@ -329,6 +339,7 @@ class AnimatedAccessor(BasePlotMethods):
     Args:
         BasePlotMethods ([type]): BasePlotMethods within pandas
     """
+
     def __call__(self, *args, **kwargs):
         return plot(self.df, *args, **kwargs)
 
