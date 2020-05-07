@@ -176,7 +176,6 @@ def plot(
     elif kind == "scatter":
         animated_scatter = ScatterChart(
             df,
-            df,
             interpolate_period=interpolate_period,
             steps_per_period=steps_per_period,
             period_length=period_length,
@@ -234,9 +233,10 @@ def animate_multiple_plots(
             try:
                 plot.anim_func(frame)
             except:
-                raise UserWarning(
-                    f"{type(plot)} {plot.title} error plotting on frame {frame}, ensure all plots share index"
-                )
+                raise UserWarning(f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}")
+                # raise UserWarning(
+                #     f"{type(plot)} {plot.title} error plotting on frame {frame}, ensure all plots share index"
+                # )
 
     # Current just number of columns for number of plots
     # TODO add option for number of rows/columns

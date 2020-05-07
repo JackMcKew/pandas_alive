@@ -14,7 +14,7 @@ df.diff().fillna(0).plot_animated(
     filename="examples/example-line-chart.gif", kind="line"
 )
 
-animated_line_chart = df.diff().fillna(0).plot_animated(kind="line",show_period_annotation=False)
+animated_line_chart = df.diff().fillna(0).plot_animated(kind="line",period_label=False)
 
 animated_bar_chart = df.plot_animated(kind="barh", n_visible=10)
 
@@ -30,12 +30,12 @@ animated_line_chart = (
     .dropna()
     .mul(100)
     .plot_animated(
-        kind="line", title="Total % Change in Population", show_period_annotation=False
+        kind="line", title="Total % Change in Population", 
     )
 )
 
 animated_bar_chart = urban_df.plot_animated(
-    kind="barh", n_visible=10, title="Top 10 Populous Countries"
+    kind="barh", n_visible=10, title="Top 10 Populous Countries",period_label=False
 )
 
 pandas_alive.animate_multiple_plots(
