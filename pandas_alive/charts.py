@@ -810,6 +810,7 @@ class ScatterChart(BaseChart):
             self._points[name] = {}
             self._points[name]["x"] = []
             self._points[name]["y"] = []
+        self.df = self.interpolate_period(self.df)
 
     def plot_point(self, i: int) -> None:
         self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
