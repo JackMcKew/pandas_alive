@@ -198,6 +198,84 @@ covid_df.plot_animated(filename='example-barh-chart.gif')
 
 ![Example Barh Chart](examples/example-barh-chart.gif)
 
+
+```
+import pandas as pd
+import pandas_alive
+
+elec_df = pd.read_csv("data/Aus_Elec_Gen_1980_2018.csv",index_col=0,parse_dates=[0],thousands=',')
+
+elec_df.fillna(0).plot_animated('examples/example-electricity-generated-australia.gif',period_fmt="%Y",title='Australian Electricity Generation Sources 1980-2018')
+```
+
+    Generating BarChart, plotting ['  Black coal', '  Brown coal', '  Natural gas', '  Oil products', '  Other a', '  Biomass', '  Wind', '  Hydro', 'Large-scale solar PV', '  Small-scale solar PV', '  Geothermal']
+
+
+
+
+
+    BarChart(df=                       Black coal    Brown coal    Natural gas  \
+    index                                                            
+    1989-01-01 00:00:00      87573.00     33594.000      14359.000   
+    1989-02-06 12:36:00      87766.80     33839.400      14000.300   
+    1989-03-15 01:12:00      87960.60     34084.800      13641.600   
+    1989-04-20 13:48:00      88154.40     34330.200      13282.900   
+    1989-05-27 02:24:00      88348.20     34575.600      12924.200   
+    ...                           ...           ...            ...   
+    2016-08-07 21:36:00     120264.48     39063.304      52487.534   
+    2016-09-13 10:12:00     120596.51     38314.228      52825.498   
+    2016-10-19 22:48:00     120928.54     37565.152      53163.462   
+    2016-11-25 11:24:00     121260.57     36816.076      53501.426   
+    2017-01-01 00:00:00     121592.60     36067.000      53839.390   
+    
+                           Oil products    Other a    Biomass       Wind  \
+    index                                                                  
+    1989-01-01 00:00:00        3552.000        0.0    750.000      0.000   
+    1989-02-06 12:36:00        3536.400        0.0    751.900      0.000   
+    1989-03-15 01:12:00        3520.800        0.0    753.800      0.000   
+    1989-04-20 13:48:00        3505.200        0.0    755.700      0.000   
+    1989-05-27 02:24:00        3489.600        0.0    757.600      0.000   
+    ...                             ...        ...        ...        ...   
+    2016-08-07 21:36:00        5266.596        0.0   3520.674  14032.448   
+    2016-09-13 10:12:00        5265.597        0.0   3524.028  14271.691   
+    2016-10-19 22:48:00        5264.598        0.0   3527.382  14510.934   
+    2016-11-25 11:24:00        5263.599        0.0   3530.736  14750.177   
+    2017-01-01 00:00:00        5262.600        0.0   3534.090  14989.420   
+    
+                             Hydro  Large-scale solar PV    Small-scale solar PV  \
+    index                                                                          
+    1989-01-01 00:00:00  14880.000                 0.000                    0.00   
+    1989-02-06 12:36:00  15002.300                 0.000                    0.00   
+    1989-03-15 01:12:00  15124.600                 0.000                    0.00   
+    1989-04-20 13:48:00  15246.900                 0.000                    0.00   
+    1989-05-27 02:24:00  15369.200                 0.000                    0.00   
+    ...                        ...                   ...                     ...   
+    2016-08-07 21:36:00  16017.248               873.508                 8313.12   
+    2016-09-13 10:12:00  15972.641               907.026                 8465.43   
+    2016-10-19 22:48:00  15928.034               940.544                 8617.74   
+    2016-11-25 11:24:00  15883.427               974.062                 8770.05   
+    2017-01-01 00:00:00  15838.820              1007.580                 8922.36   
+    
+                           Geothermal  
+    index                              
+    1989-01-01 00:00:00          0.00  
+    1989-02-06 12:36:00          0.00  
+    1989-03-15 01:12:00          0.00  
+    1989-04-20 13:48:00          0.00  
+    1989-05-27 02:24:00          0.00  
+    ...                           ...  
+    2016-08-07 21:36:00          0.20  
+    2016-09-13 10:12:00          0.15  
+    2016-10-19 22:48:00          0.10  
+    2016-11-25 11:24:00          0.05  
+    2017-01-01 00:00:00          0.00  
+    
+    [281 rows x 11 columns], interpolate_period=True, steps_per_period=10, period_length=500, period_fmt='%Y', figsize=array([7.45486111, 3.5       ]), title='Australian Electricity Generation Sources 1980-2018', fig=<Figure size 1072x504 with 1 Axes>, cmap='dark24', tick_label_size=7, period_label=True, dpi=144, kwargs={}, orientation='h', sort='desc', label_bars=True, bar_label_size=7, n_visible=11)
+
+
+
+![Electricity Example Line Chart](examples/example-electricity-generated-australia.gif)
+
 #### Vertical Bar Charts
 
 
@@ -287,7 +365,7 @@ import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
 
-covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line')
+covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line',period_label={'x':0.1,'y':0.9})
 ```
 
     Generating LineChart, plotting ['Belgium', 'Brazil', 'Canada', 'China', 'France', 'Germany', 'India', 'Indonesia', 'Iran', 'Ireland', 'Italy', 'Mexico', 'Netherlands', 'Portugal', 'Spain', 'Sweden', 'Switzerland', 'Turkey', 'USA', 'United Kingdom']
@@ -352,11 +430,78 @@ covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gi
     2020-04-21 21:36:00           778.5  
     2020-04-22 00:00:00           773.0  
     
-    [561 rows x 20 columns], interpolate_period=True, steps_per_period=10, period_length=500, period_fmt='%d/%m/%Y', figsize=array([6.78819444, 3.5       ]), title=None, fig=<Figure size 976x504 with 1 Axes>, cmap='dark24', tick_label_size=7, period_label=True, dpi=144, kwargs={}, line_width=2)
+    [561 rows x 20 columns], interpolate_period=True, steps_per_period=10, period_length=500, period_fmt='%d/%m/%Y', figsize=array([6.78819444, 3.5       ]), title=None, fig=<Figure size 976x504 with 1 Axes>, cmap='dark24', tick_label_size=7, period_label={'x': 0.1, 'y': 0.9}, dpi=144, kwargs={}, line_width=2)
 
 
 
 ![Example Line Chart](examples/example-line-chart.gif)
+
+
+#### Scatter Charts
+
+
+```
+import pandas as pd
+import pandas_alive
+
+max_temp_df = pd.read_csv(
+    "data/Newcastle_Australia_Max_Temps.csv",
+    parse_dates={"Timestamp": ["Year", "Month", "Day"]},
+)
+min_temp_df = pd.read_csv(
+    "data/Newcastle_Australia_Min_Temps.csv",
+    parse_dates={"Timestamp": ["Year", "Month", "Day"]},
+)
+
+merged_temp_df = pd.merge_asof(max_temp_df, min_temp_df, on="Timestamp")
+
+merged_temp_df.index = pd.to_datetime(merged_temp_df["Timestamp"].dt.strftime('%Y/%m/%d'))
+
+keep_columns = ["Minimum temperature (Degree C)", "Maximum temperature (Degree C)"]
+
+merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='examples/example-scatter-chart.gif',kind="scatter",title='Max & Min Temperature Newcastle, Australia')
+
+```
+
+    Generating ScatterChart, plotting ['Minimum temperature (Degree C)', 'Maximum temperature (Degree C)']
+
+
+
+
+
+    ScatterChart(df=                               Minimum temperature (Degree C)  \
+    Timestamp                                                       
+    1957-12-31 00:00:00.000000000                       14.502727   
+    1958-02-05 12:36:34.285714285                       14.565650   
+    1958-03-14 01:13:08.571428571                       14.628573   
+    1958-04-19 13:49:42.857142856                       14.691496   
+    1958-05-26 02:26:17.142857142                       14.754419   
+    ...                                                       ...   
+    2020-08-06 21:33:42.857142784                       17.474473   
+    2020-09-12 10:10:17.142856960                       17.803689   
+    2020-10-18 22:46:51.428571392                       18.132906   
+    2020-11-24 11:23:25.714285568                       18.462122   
+    2020-12-31 00:00:00.000000000                       18.791339   
+    
+                                   Maximum temperature (Degree C)  
+    Timestamp                                                      
+    1957-12-31 00:00:00.000000000                       21.561212  
+    1958-02-05 12:36:34.285714285                       21.543603  
+    1958-03-14 01:13:08.571428571                       21.525994  
+    1958-04-19 13:49:42.857142856                       21.508386  
+    1958-05-26 02:26:17.142857142                       21.490777  
+    ...                                                       ...  
+    2020-08-06 21:33:42.857142784                       24.253680  
+    2020-09-12 10:10:17.142856960                       24.437879  
+    2020-10-18 22:46:51.428571392                       24.622078  
+    2020-11-24 11:23:25.714285568                       24.806277  
+    2020-12-31 00:00:00.000000000                       24.990476  
+    
+    [631 rows x 2 columns], interpolate_period=True, steps_per_period=10, period_length=500, period_fmt='%d/%m/%Y', figsize=array([8.01388889, 3.5       ]), title='Max & Min Temperature Newcastle, Australia', fig=<Figure size 1154x504 with 1 Axes>, cmap='dark24', tick_label_size=7, period_label=True, dpi=144, kwargs={}, size=2)
+
+
+
+![Example Scatter Chart](examples/example-scatter-chart.gif)
 
 ### Multiple Charts
 
@@ -379,6 +524,14 @@ animated_bar_chart = covid_df.plot_animated(kind='barh',n_visible=10)
 pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart])
 ```
 
+    Generating LineChart, plotting ['Belgium', 'Brazil', 'Canada', 'China', 'France', 'Germany', 'India', 'Indonesia', 'Iran', 'Ireland', 'Italy', 'Mexico', 'Netherlands', 'Portugal', 'Spain', 'Sweden', 'Switzerland', 'Turkey', 'USA', 'United Kingdom']
+    Generating BarChart, plotting ['Belgium', 'Brazil', 'Canada', 'China', 'France', 'Germany', 'India', 'Indonesia', 'Iran', 'Ireland', 'Italy', 'Mexico', 'Netherlands', 'Portugal', 'Spain', 'Sweden', 'Switzerland', 'Turkey', 'USA', 'United Kingdom']
+
+
+
+![svg](README_files/README_18_1.svg)
+
+
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
 
@@ -395,16 +548,21 @@ animated_line_chart = (
     .plot_animated(kind="line", title="Total % Change in Population",period_label=False)
 )
 
-animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries')
+animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries',period_fmt="%Y")
 
-pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018')
+pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018',adjust_subplot_top=0.85)
 ```
 
     Generating LineChart, plotting ['0']
     Generating BarChart, plotting ['United States', 'India', 'China', 'Ethiopia', 'Poland', 'Malaysia', 'Peru', 'Venezuela', 'Iraq', 'Saudi Arabia', 'Canada', 'Algeria', 'Ukraine', 'Vietnam', 'Thailand', 'Congo, Dem. Rep.', 'Spain', 'South Africa', 'Colombia', 'Argentina', 'Egypt', 'South Korea', 'Italy', 'Philippines', 'France', 'United Kingdom', 'Bangladesh', 'Iran', 'Turkey', 'Germany', 'Pakistan', 'Nigeria', 'Mexico', 'Russia', 'Japan', 'Indonesia', 'Brazil']
 
 
+
+![svg](README_files/README_20_1.svg)
+
+
 ![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
+
 
 ## Inspiration
 
@@ -433,3 +591,8 @@ Documentation is provided at <https://jackmckew.github.io/pandas_alive/>
 ## Contributing
 
 Pull requests are welcome! Please help to cover more and more chart types!
+
+
+```
+
+```
