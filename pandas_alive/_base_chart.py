@@ -74,6 +74,11 @@ class _BaseChart:
     kwargs = attr.ib()
 
     def __attrs_post_init__(self):
+        if isinstance(self.df,pd.Series):
+            self.df = pd.DataFrame(self.df)
+        from matplotlib import rcParams
+        rcParams.update({'figure.autolayout':True})
+        # rcParams.update({'figure.autolayout': True})
         self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting
         self.data_cols = self.get_data_cols(self.df)  # Get column names with valid data
@@ -91,8 +96,11 @@ class _BaseChart:
         else:
             self.fig = plt.figure()
             self.ax = plt.axes()
+        self.fig.set_tight_layout(False)
         if self.title:
             self.ax.set_title(self.title)
+
+        print(f"Generating {self.__class__.__name__}, plotting {self.data_cols}")
 
     def validate_params(self):
         """ Validate figure is a matplotlib Figure instance
@@ -247,7 +255,6 @@ class _BaseChart:
         interpolated_df = interpolated_df.reindex(new_index)
         if interpolate_period:
             if interpolated_df.iloc[:, 0].dtype.kind == "M":
-                
                 first, last = interpolated_df.iloc[[0, -1], 0]
                 dr = pd.date_range(first, last, periods=len(interpolated_df.index))
                 interpolated_df.iloc[:, 0] = dr
@@ -260,11 +267,11 @@ class _BaseChart:
 
         interpolated_df = interpolated_df.set_index(interpolated_df.columns[0])
 
-        if interpolate_period:
+        if interpolate_period:            
             interpolated_df = interpolated_df.interpolate(method="time")
         else:
             interpolated_df = interpolated_df.interpolate()
-
+        
         return interpolated_df
 
     def init_func(self) -> None:
