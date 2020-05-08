@@ -247,6 +247,7 @@ class _BaseChart:
         interpolated_df = interpolated_df.reindex(new_index)
         if interpolate_period:
             if interpolated_df.iloc[:, 0].dtype.kind == "M":
+                
                 first, last = interpolated_df.iloc[[0, -1], 0]
                 dr = pd.date_range(first, last, periods=len(interpolated_df.index))
                 interpolated_df.iloc[:, 0] = dr
