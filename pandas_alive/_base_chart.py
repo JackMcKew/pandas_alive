@@ -308,7 +308,7 @@ class _BaseChart:
 
         interval = self.period_length / self.steps_per_period
         return FuncAnimation(
-            self.fig, self.anim_func, frames, init_func, interval=interval, blit=True
+            self.fig, self.anim_func, frames, init_func, interval=interval
         )
 
     def calculate_new_figsize(self, real_fig: plt.figure) -> typing.List[float]:
