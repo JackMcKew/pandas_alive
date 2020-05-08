@@ -12,8 +12,6 @@ pandas\_alive.charts
     
     BarChart
     
-    BaseChart
-    
     LineChart
     
     ScatterChart

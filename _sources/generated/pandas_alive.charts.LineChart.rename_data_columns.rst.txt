@@ -1,0 +1,6 @@
+LineChart.rename\_data\_columns
+===============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.rename_data_columns

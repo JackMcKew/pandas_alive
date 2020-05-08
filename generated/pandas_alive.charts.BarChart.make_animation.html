@@ -95,22 +95,25 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.__init__.html">BarChart.__init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.anim_func.html">BarChart.anim_func</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.calculate_new_figsize.html">BarChart.calculate_new_figsize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.calculate_ranks.html">BarChart.calculate_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.create_figure.html">BarChart.create_figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_colors.html">BarChart.get_colors</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_data_cols.html">BarChart.get_data_cols</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_frames.html">BarChart.get_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_html5_video.html">BarChart.get_html5_video</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_interpolated_df.html">BarChart.get_interpolated_df</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_label_position.html">BarChart.get_label_position</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_period_label.html">BarChart.get_period_label</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.init_func.html">BarChart.init_func</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">BarChart.make_animation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.plot_bars.html">BarChart.plot_bars</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.prepare_data.html">BarChart.prepare_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.rename_data_columns.html">BarChart.rename_data_columns</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.save.html">BarChart.save</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.set_x_y_limits.html">BarChart.set_x_y_limits</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.show_period.html">BarChart.show_period</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.validate_params.html">BarChart.validate_params</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BaseChart.html">BaseChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.ScatterChart.html">ScatterChart</a></li>
 </ul>
@@ -192,7 +195,7 @@
 <h1>BarChart.make_animation<a class="headerlink" href="#barchart-make-animation" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt id="pandas_alive.charts.BarChart.make_animation">
-<code class="sig-prename descclassname">BarChart.</code><code class="sig-name descname">make_animation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">frames</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">init_func</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span> &#x2192; matplotlib.animation.FuncAnimation<a class="headerlink" href="#pandas_alive.charts.BarChart.make_animation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BarChart.</code><code class="sig-name descname">make_animation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">frames</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>Iterable<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">init_func</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span> &#x2192; matplotlib.animation.FuncAnimation<a class="headerlink" href="#pandas_alive.charts.BarChart.make_animation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for creating animation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

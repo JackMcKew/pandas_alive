@@ -1,0 +1,6 @@
+LineChart.get\_period\_label
+============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.get_period_label

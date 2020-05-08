@@ -31,7 +31,9 @@ ScatterChart
    
       ScatterChart.get_html5_video
    
-      ScatterChart.get_label_position
+      ScatterChart.get_interpolated_df
+   
+      ScatterChart.get_period_label
    
       ScatterChart.init_func
    
@@ -39,7 +41,11 @@ ScatterChart
    
       ScatterChart.plot_point
    
+      ScatterChart.rename_data_columns
+   
       ScatterChart.save
+   
+      ScatterChart.set_x_y_limits
    
       ScatterChart.show_period
    

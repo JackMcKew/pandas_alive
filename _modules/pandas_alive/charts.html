@@ -154,372 +154,29 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">attr</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">Colormap</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span><span class="p">,</span> <span class="n">ticker</span>
 <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
 <span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.units</span> <span class="k">as</span> <span class="nn">munits</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">._base_chart</span> <span class="kn">import</span> <span class="n">_BaseChart</span>
 
 <span class="c1"># For conciseDateFormatter for all plots https://matplotlib.org/3.1.0/gallery/ticks_and_spines/date_concise_formatter.html</span>
 <span class="n">converter</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">ConciseDateConverter</span><span class="p">()</span>
 <span class="n">munits</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">]</span> <span class="o">=</span> <span class="n">converter</span>
 <span class="n">munits</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="n">converter</span>
 <span class="n">munits</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">converter</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">colors</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-
-<span class="kn">import</span> <span class="nn">attr</span>
-
-<span class="n">DARK24</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;#2E91E5&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#E15F99&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#1CA71C&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#FB0D0D&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#DA16FF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#222A2A&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#B68100&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#750D86&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#EB663B&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#511CFB&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#00A08B&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#FB00D1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#FC0080&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#B2828D&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#6C7C32&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#778AAE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#862A16&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#A777F1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#620042&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#1616A7&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#DA60CA&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#6C4516&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#0D2A63&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;#AF0038&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-
-
-<div class="viewcode-block" id="BaseChart"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.html#pandas_alive.charts.BaseChart">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">()</span>
-<span class="k">class</span> <span class="nc">BaseChart</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; BaseChart for shared methods &amp; properties for all chart types</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        BaseChart: Fundamentals of all chart types</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">use_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">steps_per_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">period_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">figsize</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">cmap</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">Colormap</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">n_visible</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">tick_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">append_period_to_title</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">x_period_annotation_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">y_period_annotation_location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">period_annotation_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">show_period_annotation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">period_annotation_formatter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_cols</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
-
-<div class="viewcode-block" id="BaseChart.validate_params"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.validate_params.html#pandas_alive.charts.BaseChart.validate_params">[docs]</a>    <span class="nd">@fig</span><span class="o">.</span><span class="n">validator</span>
-    <span class="k">def</span> <span class="nf">validate_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Validate figure is a matplotlib Figure instance</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            attribute ([type]): Unused as required by attrs decorator</span>
-<span class="sd">            value (plt.figure): Figure instance for chart</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            TypeError: Figure provided is not matplotlib figure</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;`fig` must be a matplotlib Figure instance&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseChart.init_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.init_func.html#pandas_alive.charts.BaseChart.init_func">[docs]</a>    <span class="k">def</span> <span class="nf">init_func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Initializing method for animation, to be overridden by extended classes</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            NotImplementedError: Method to be overridden has not been implemented</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Initializing method not yet implemented&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseChart.anim_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.anim_func.html#pandas_alive.charts.BaseChart.anim_func">[docs]</a>    <span class="k">def</span> <span class="nf">anim_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Animation method, to be overridden by extended chart class</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            frame (int): Frame to be animated</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            NotImplementedError: Animation method not yet implemented in extended chart class</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Animation method not yet implemented&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseChart.get_frames"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.get_frames.html#pandas_alive.charts.BaseChart.get_frames">[docs]</a>    <span class="k">def</span> <span class="nf">get_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Method for determining how many frames to animate, to be overridden by extended chart class</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            NotImplementedError: Not yet implemented in extended chart class</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            int: Number of frames to animate</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Get frames method not yet implemented&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseChart.make_animation"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.make_animation.html#pandas_alive.charts.BaseChart.make_animation">[docs]</a>    <span class="k">def</span> <span class="nf">make_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">init_func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Method for creating animation</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            frames (int): Number of frames to animate</span>
-<span class="sd">            init_func (function): Initialization function for chart</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            FuncAnimation: FuncAnimation instance for extending with save, etc</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_length</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps_per_period</span>
-        <span class="k">return</span> <span class="n">FuncAnimation</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anim_func</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">init_func</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">,</span><span class="n">blit</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseChart.calculate_new_figsize"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.calculate_new_figsize.html#pandas_alive.charts.BaseChart.calculate_new_figsize">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_new_figsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">real_fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot; Calculate figure size to allow for labels, etc</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            real_fig (plt.figure): Figure before calculation</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            typing.List[float]: The dimensions [left, bottom, width, height] of the new axes. All quantities are in fractions of figure width and height.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">io</span>
-
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
-
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>
-
-        <span class="n">max_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelrotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tick_label_size</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">print_figure</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">())</span>
-        <span class="n">orig_pos</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="n">max_val</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xticks</span><span class="p">()))</span>
-
-        <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">print_figure</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">)</span>
-        <span class="n">new_pos</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
-
-        <span class="n">coordx</span><span class="p">,</span> <span class="n">prev_coordx</span> <span class="o">=</span> <span class="n">new_pos</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="n">orig_pos</span><span class="o">.</span><span class="n">x0</span>
-        <span class="n">coordy</span><span class="p">,</span> <span class="n">prev_coordy</span> <span class="o">=</span> <span class="n">new_pos</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="n">orig_pos</span><span class="o">.</span><span class="n">y0</span>
-        <span class="n">old_w</span><span class="p">,</span> <span class="n">old_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figsize</span>
-
-        <span class="c1"># if coordx &gt; prev_coordx or coordy &gt; prev_coordy:</span>
-        <span class="n">prev_w_inches</span> <span class="o">=</span> <span class="n">prev_coordx</span> <span class="o">*</span> <span class="n">old_w</span>
-        <span class="n">total_w_inches</span> <span class="o">=</span> <span class="n">coordx</span> <span class="o">*</span> <span class="n">old_w</span>
-        <span class="n">extra_w_inches</span> <span class="o">=</span> <span class="n">total_w_inches</span> <span class="o">-</span> <span class="n">prev_w_inches</span>
-        <span class="n">new_w_inches</span> <span class="o">=</span> <span class="n">extra_w_inches</span> <span class="o">+</span> <span class="n">old_w</span>
-
-        <span class="n">prev_h_inches</span> <span class="o">=</span> <span class="n">prev_coordy</span> <span class="o">*</span> <span class="n">old_h</span>
-        <span class="n">total_h_inches</span> <span class="o">=</span> <span class="n">coordy</span> <span class="o">*</span> <span class="n">old_h</span>
-        <span class="n">extra_h_inches</span> <span class="o">=</span> <span class="n">total_h_inches</span> <span class="o">-</span> <span class="n">prev_h_inches</span>
-        <span class="n">new_h_inches</span> <span class="o">=</span> <span class="n">extra_h_inches</span> <span class="o">+</span> <span class="n">old_h</span>
-
-        <span class="n">real_fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">new_w_inches</span><span class="p">,</span> <span class="n">new_h_inches</span><span class="p">)</span>
-        <span class="n">left</span> <span class="o">=</span> <span class="n">total_w_inches</span> <span class="o">/</span> <span class="n">new_w_inches</span>
-        <span class="n">bottom</span> <span class="o">=</span> <span class="n">total_h_inches</span> <span class="o">/</span> <span class="n">new_h_inches</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">orig_pos</span><span class="o">.</span><span class="n">x1</span> <span class="o">-</span> <span class="n">left</span>
-        <span class="n">height</span> <span class="o">=</span> <span class="n">orig_pos</span><span class="o">.</span><span class="n">y1</span> <span class="o">-</span> <span class="n">bottom</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">left</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="BaseChart.create_figure"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.create_figure.html#pandas_alive.charts.BaseChart.create_figure">[docs]</a>    <span class="k">def</span> <span class="nf">create_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot; Create base figure with styling, can be overridden if styling unwanted</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            typing.Tuple[plt.figure,plt.figure.axes]: Returns Figure instance and the axes initialized within</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dpi</span><span class="p">)</span>
-        <span class="c1"># limit = (0.2, self.n_bars + 0.8)</span>
-        <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_new_figsize</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
-        <span class="c1"># ax = fig.axes[0]</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tick_label_size</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s2">&quot;.9&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">spine</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
-
-<div class="viewcode-block" id="BaseChart.get_label_position"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.get_label_position.html#pandas_alive.charts.BaseChart.get_label_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_label_position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot; Retrieve period label annotation position, can be overridden for further extensability</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            typing.Tuple[float,float]: x,y location for label</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># TOP LEFT BY default, override in charts for changes</span>
-        <span class="n">x_label</span> <span class="o">=</span> <span class="mf">0.25</span>
-        <span class="n">y_label</span> <span class="o">=</span> <span class="mf">0.75</span>
-        <span class="k">return</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span></div>
-
-<div class="viewcode-block" id="BaseChart.show_period"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.show_period.html#pandas_alive.charts.BaseChart.show_period">[docs]</a>    <span class="k">def</span> <span class="nf">show_period</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Show period annotation label on chart</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            i (int): Frame of animation to plot label on</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If custom x label provided but not y</span>
-<span class="sd">            ValueError: If custom y label provided by not x</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x_label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_label_position</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_period_annotation_location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_period_annotation_location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">x_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_period_annotation_location</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">y_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_period_annotation_location</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must provide both x and y custom period location&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_index</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_period_annotation</span><span class="p">:</span>
-            <span class="n">str_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_annotation_formatter</span><span class="p">:</span>
-                <span class="n">idx_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="c1">#Datetime</span>
-                    <span class="n">val</span> <span class="o">=</span> <span class="n">idx_val</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">period_annotation_formatter</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_annotation_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">idx_val</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="n">str_index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">append_period_to_title</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="si">}{</span><span class="s1">&#39; : &#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="si">}{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">num_texts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">texts</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">num_texts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">x_label</span><span class="p">,</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">y_label</span><span class="p">,</span>
-                        <span class="n">val</span><span class="p">,</span>
-                        <span class="n">transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
-                        <span class="n">fontsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">period_annotation_size</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">texts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">val</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseChart.save"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.save.html#pandas_alive.charts.BaseChart.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Save method for FuncAnimation</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            filename (str): File name with extension to save animation to, supported formats at https://matplotlib.org/3.1.1/api/animation_api.html</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Inspiration for design pattern https://github.com/altair-viz/altair/blob/c55707730935159e4e2d2c789a6dd2bc3f1ec0f2/altair/utils/save.py</span>
-        <span class="c1"># https://altair-viz.github.io/user_guide/saving_charts.html</span>
-
-        <span class="n">anim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_animation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_frames</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_func</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fps</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_length</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps_per_period</span>
-
-        <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;gif&quot;</span><span class="p">:</span>
-            <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fps</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dpi</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;imagemagick&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fps</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dpi</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseChart.get_html5_video"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.get_html5_video.html#pandas_alive.charts.BaseChart.get_html5_video">[docs]</a>    <span class="k">def</span> <span class="nf">get_html5_video</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Convert the animation to an HTML5 &lt;video&gt; tag.</span>
-
-<span class="sd">        This saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            HTML5 &lt;video&gt; tag: Encoded h264 video</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">anim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_animation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_frames</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_func</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">anim</span><span class="o">.</span><span class="n">to_html5_video</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="BaseChart.get_data_cols"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.get_data_cols.html#pandas_alive.charts.BaseChart.get_data_cols">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_cols</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot; Get list of columns containing plottable numeric data to plot</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            Exception: If column name is missing or changed during calculation</span>
-<span class="sd">            Exception: If no numeric data was found to be plotted</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            typing.List[str]: List of column names containing numeric data</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data_cols</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s2">&quot;Could not find &#39;</span><span class="si">%s</span><span class="s2">&#39; in the columns of the provided DataFrame/Series. Please provide for the &lt;y&gt; parameter either a column name of the DataFrame/Series or an array of the same length.&quot;</span>
-                    <span class="o">%</span> <span class="n">col</span>
-                <span class="p">)</span>
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">):</span>
-                <span class="n">data_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_cols</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No numeric data columns found for plotting.&quot;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data_cols</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">data_cols</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data_cols</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">data_cols</span></div>
-
-<div class="viewcode-block" id="BaseChart.get_colors"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BaseChart.get_colors.html#pandas_alive.charts.BaseChart.get_colors">[docs]</a>    <span class="k">def</span> <span class="nf">get_colors</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">colors</span><span class="o">.</span><span class="n">Colormap</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot; Get colours for plotting categorical data</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            cmap (typing.Union[colors.Colormap,str]): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If no supported colors are found</span>
-<span class="sd">            TypeError: Type of colors is not supported</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            typing.List[str]: Returns list of RGB values for colors as strings</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">cmap</span> <span class="o">=</span> <span class="n">DARK24</span> <span class="k">if</span> <span class="n">cmap</span> <span class="o">==</span> <span class="s2">&quot;dark24&quot;</span> <span class="k">else</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="c1"># Try setting a list of repeating colours if no cmap found (for single colours)</span>
-                <span class="n">cmap</span> <span class="o">=</span> <span class="p">[</span><span class="n">colors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">cmap</span><span class="p">)]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_cols</span><span class="p">())</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Provide a suitable color name or color map as per matplotlib&quot;</span>
-                <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">Colormap</span><span class="p">):</span>
-            <span class="n">chart_colors</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cmap</span><span class="o">.</span><span class="n">N</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="n">chart_colors</span> <span class="o">=</span> <span class="n">cmap</span>
-        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="s2">&quot;tolist&quot;</span><span class="p">):</span>
-            <span class="n">chart_colors</span> <span class="o">=</span> <span class="n">cmap</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s2">&quot;`cmap` must be a string name of a colormap, a matplotlib colormap instance&quot;</span>
-                <span class="s2">&quot;or a list of colors&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">chart_colors</span></div></div>
-
 
 <div class="viewcode-block" id="BarChart"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.html#pandas_alive.charts.BarChart">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">()</span>
-<span class="k">class</span> <span class="nc">BarChart</span><span class="p">(</span><span class="n">BaseChart</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">BarChart</span><span class="p">(</span><span class="n">_BaseChart</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; BarChart implementation for bar chart races</span>
 
 <span class="sd">    Args:</span>
@@ -533,24 +190,20 @@
     <span class="n">sort</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">label_bars</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">bar_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">n_visible</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Properties to be determined after initialization</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">df_values</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">orig_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_figure</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x_label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_label_position</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bar_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">validate_params</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">df_rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_ranks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orig_df</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BarChart.validate_params"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.validate_params.html#pandas_alive.charts.BarChart.validate_params">[docs]</a>    <span class="k">def</span> <span class="nf">validate_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Validate parameters provided to chart instance</span>
@@ -559,7 +212,7 @@
 <span class="sd">            ValueError: If sort value is not provided (either &#39;asc&#39; or &#39;desc&#39;)</span>
 <span class="sd">            ValueError: Orientation must be &#39;h&#39; (horizontal) or &#39;v&#39; (vertical)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validate_params</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validate_params</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;asc&quot;</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`sort` must be &quot;asc&quot; or &quot;desc&quot;&#39;</span><span class="p">)</span>
@@ -568,7 +221,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`orientation` must be &quot;h&quot; or &quot;v&quot;&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BarChart.get_colors"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.get_colors.html#pandas_alive.charts.BarChart.get_colors">[docs]</a>    <span class="k">def</span> <span class="nf">get_colors</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">Colormap</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Colormap</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Get array of colours from BaseChart.get_colors and shorten to number of bars</span>
 
@@ -600,25 +253,28 @@
             <span class="n">y_label</span> <span class="o">=</span> <span class="mf">0.8</span>
         <span class="k">return</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span></div>
 
-<div class="viewcode-block" id="BarChart.prepare_data"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.prepare_data.html#pandas_alive.charts.BarChart.prepare_data">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<div class="viewcode-block" id="BarChart.calculate_ranks"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.calculate_ranks.html#pandas_alive.charts.BarChart.calculate_ranks">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_ranks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Calculate expanded dataframe to match length of animation</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            typing.Tuple[pd.DataFrame,pd.DataFrame]: df_values contains interpolated values, df_rank contains interpolated rank</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">df_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">df_values</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df_values</span><span class="o">.</span><span class="n">index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps_per_period</span>
-        <span class="n">df_rank</span> <span class="o">=</span> <span class="n">df_values</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+        
+        <span class="n">df_rank</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
             <span class="n">upper</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="o">==</span> <span class="s2">&quot;desc&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;h&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="o">==</span> <span class="s2">&quot;asc&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;v&quot;</span>
         <span class="p">):</span>
+            <span class="c1"># This flips all rankings, eg if n_visible = 5 then score 1 in table becomes (6-1 = 5)</span>
             <span class="n">df_rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">df_rank</span>
-        <span class="n">new_index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">df_values</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">df_values</span> <span class="o">=</span> <span class="n">df_values</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span><span class="o">.</span><span class="n">interpolate</span><span class="p">()</span>
-        <span class="n">df_rank</span> <span class="o">=</span> <span class="n">df_rank</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span><span class="o">.</span><span class="n">interpolate</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">df_values</span><span class="p">,</span> <span class="n">df_rank</span></div>
+
+        <span class="n">df_rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_interpolated_df</span><span class="p">(</span>
+            <span class="n">df_rank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps_per_period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpolate_period</span>
+        <span class="p">)</span>
+        <span class="c1"># new_index = range(df.index.max() + 1)</span>
+        <span class="c1"># df_rank = df_rank.reindex(new_index).interpolate()</span>
+        <span class="k">return</span> <span class="n">df_rank</span></div>
 
 <div class="viewcode-block" id="BarChart.create_figure"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.create_figure.html#pandas_alive.charts.BarChart.create_figure">[docs]</a>    <span class="k">def</span> <span class="nf">create_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot; Create Bar chart figure</span>
@@ -666,7 +322,7 @@
         <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>
         <span class="n">fake_cols</span> <span class="o">=</span> <span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">70</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
 
-        <span class="n">max_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">fake_cols</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelrotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tick_label_size</span><span class="p">)</span>
@@ -716,11 +372,16 @@
 <span class="sd">            i (int): index of current frame in animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bar_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_rank</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="n">bar_location</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">bar_location</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+
         <span class="n">top_filt</span> <span class="o">=</span> <span class="p">(</span><span class="n">bar_location</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">bar_location</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">bar_location</span> <span class="o">=</span> <span class="n">bar_location</span><span class="p">[</span><span class="n">top_filt</span><span class="p">]</span>
-        <span class="n">bar_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_values</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">top_filt</span><span class="p">]</span>
+
+        <span class="n">bar_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">top_filt</span><span class="p">]</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">top_filt</span><span class="p">]</span>
         <span class="n">colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_colors</span><span class="p">[</span><span class="n">top_filt</span><span class="p">]</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span>
                 <span class="n">bar_location</span><span class="p">,</span>
@@ -728,7 +389,7 @@
                 <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
                 <span class="n">tick_label</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span>
-                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
+                <span class="c1"># **self.kwargs,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bar_length</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -745,7 +406,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">show_period</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_bars</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">texts</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">use_index</span><span class="p">):]:</span>
+            <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">texts</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">period_label</span><span class="p">))</span> <span class="p">:]:</span>
                 <span class="n">text</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span>
                 <span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bar_length</span><span class="p">,</span> <span class="n">bar_location</span><span class="p">)</span>
@@ -785,24 +446,67 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">containers</span><span class="p">:</span>
             <span class="n">bar</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_bars</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_bars</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_period</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BarChart.init_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.init_func.html#pandas_alive.charts.BarChart.init_func">[docs]</a>    <span class="k">def</span> <span class="nf">init_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Initialization function for animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_bars</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_bars</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div></div>
 
-<div class="viewcode-block" id="BarChart.get_frames"><a class="viewcode-back" href="../../generated/pandas_alive.charts.BarChart.get_frames.html#pandas_alive.charts.BarChart.get_frames">[docs]</a>    <span class="k">def</span> <span class="nf">get_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Get number of frames to animate</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            range(int): Get range of length of dataframe</span>
+<div class="viewcode-block" id="ScatterChart"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.html#pandas_alive.charts.ScatterChart">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">ScatterChart</span><span class="p">(</span><span class="n">_BaseChart</span><span class="p">):</span>
+    <span class="n">size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="ScatterChart.plot_point"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.plot_point.html#pandas_alive.charts.ScatterChart.plot_point">[docs]</a>    <span class="k">def</span> <span class="nf">plot_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_x_y_limits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Size provided as string: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">, not present in dataframe columns&quot;</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">],</span>
+                <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">],</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ScatterChart.anim_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.anim_func.html#pandas_alive.charts.ScatterChart.anim_func">[docs]</a>    <span class="k">def</span> <span class="nf">anim_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Animation function, removes all lines and updates legend/period annotation</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            i (int): Index of frame of animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df_values</span><span class="p">))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_point</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_fmt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_period</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ScatterChart.init_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.init_func.html#pandas_alive.charts.ScatterChart.init_func">[docs]</a>    <span class="k">def</span> <span class="nf">init_func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Initialization function for animation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([],</span> <span class="p">[])</span></div></div>
 
 
 <div class="viewcode-block" id="LineChart"><a class="viewcode-back" href="../../generated/pandas_alive.charts.LineChart.html#pandas_alive.charts.LineChart">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">LineChart</span><span class="p">(</span><span class="n">BaseChart</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LineChart</span><span class="p">(</span><span class="n">_BaseChart</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Animated Line Chart implementation</span>
 
 <span class="sd">    Args:</span>
@@ -813,48 +517,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-    <span class="n">enable_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Property initialization</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_cols</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_visible</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_figure</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">figsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dpi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">dpi</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">()</span>
-
-<div class="viewcode-block" id="LineChart.prepare_data"><a class="viewcode-back" href="../../generated/pandas_alive.charts.LineChart.prepare_data.html#pandas_alive.charts.LineChart.prepare_data">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Reindex dataframe and interpolate for length of animation</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># TODO Rename to interpolate and add settings</span>
-        <span class="c1"># Period interpolated to match other charts for multiple plotting</span>
-        <span class="c1"># https://stackoverflow.com/questions/52701330/pandas-reindex-and-interpolate-time-series-efficiently-reindex-drops-data</span>
-
-        <span class="n">desired_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
-            <span class="n">start</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
-            <span class="n">end</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
-            <span class="n">periods</span><span class="o">=</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps_per_period</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">desired_index</span><span class="p">))</span>
-            <span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">desired_index</span><span class="p">)</span>
-        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LineChart.plot_line"><a class="viewcode-back" href="../../generated/pandas_alive.charts.LineChart.plot_line.html#pandas_alive.charts.LineChart.plot_line">[docs]</a>    <span class="k">def</span> <span class="nf">plot_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Function for plotting all lines in dataframe</span>
@@ -863,17 +534,7 @@
 <span class="sd">            i (int): Index of frame for animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO Somehow implement n visible lines?</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span>
-            <span class="o">.</span><span class="n">min</span><span class="p">()</span>
-            <span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span>
-            <span class="o">.</span><span class="n">max</span><span class="p">()</span>
-            <span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_x_y_limits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_colors</span><span class="p">):</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -883,6 +544,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">],</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">line_width</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LineChart.anim_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.LineChart.anim_func.html#pandas_alive.charts.LineChart.anim_func">[docs]</a>    <span class="k">def</span> <span class="nf">anim_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -894,99 +556,13 @@
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
             <span class="n">line</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_line</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_period_annotation</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">show_period</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_legend</span><span class="p">:</span>
-            <span class="c1"># labels: List[str] = self._lines.keys()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_fmt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_period</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LineChart.init_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.LineChart.init_func.html#pandas_alive.charts.LineChart.init_func">[docs]</a>    <span class="k">def</span> <span class="nf">init_func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Initialization function for animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_width</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="LineChart.get_frames"><a class="viewcode-back" href="../../generated/pandas_alive.charts.LineChart.get_frames.html#pandas_alive.charts.LineChart.get_frames">[docs]</a>    <span class="k">def</span> <span class="nf">get_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Get number of frames required for animation</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            typing.Iterable: Range of length of dataframe index</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))</span></div></div>
-
-<div class="viewcode-block" id="ScatterChart"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.html#pandas_alive.charts.ScatterChart">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">ScatterChart</span><span class="p">(</span><span class="n">BaseChart</span><span class="p">):</span>
-    <span class="n">size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_figure</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">figsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dpi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">dpi</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-
-<div class="viewcode-block" id="ScatterChart.plot_point"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.plot_point.html#pandas_alive.charts.ScatterChart.plot_point">[docs]</a>    <span class="k">def</span> <span class="nf">plot_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span>
-            <span class="o">.</span><span class="n">min</span><span class="p">()</span>
-            <span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span>
-            <span class="o">.</span><span class="n">max</span><span class="p">()</span>
-            <span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">],</span>
-                <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">],</span>
-                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-            <span class="p">)</span></div>
-
-<div class="viewcode-block" id="ScatterChart.anim_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.anim_func.html#pandas_alive.charts.ScatterChart.anim_func">[docs]</a>    <span class="k">def</span> <span class="nf">anim_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Animation function, removes all lines and updates legend/period annotation</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            i (int): Index of frame of animation</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># for points in self.ax.:</span>
-        <span class="c1">#     line.remove()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_point</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_period_annotation</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">show_period</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="ScatterChart.init_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.init_func.html#pandas_alive.charts.ScatterChart.init_func">[docs]</a>    <span class="k">def</span> <span class="nf">init_func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Initialization function for animation</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([],</span> <span class="p">[])</span></div>
-
-    
-<div class="viewcode-block" id="ScatterChart.get_frames"><a class="viewcode-back" href="../../generated/pandas_alive.charts.ScatterChart.get_frames.html#pandas_alive.charts.ScatterChart.get_frames">[docs]</a>    <span class="k">def</span> <span class="nf">get_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Get number of frames required for animation</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            typing.Iterable: Range of length of dataframe index</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))</span></div></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_width</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

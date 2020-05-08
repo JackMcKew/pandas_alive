@@ -1,0 +1,6 @@
+ScatterChart.rename\_data\_columns
+==================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.rename_data_columns

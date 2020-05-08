@@ -21,6 +21,8 @@ BarChart
    
       BarChart.calculate_new_figsize
    
+      BarChart.calculate_ranks
+   
       BarChart.create_figure
    
       BarChart.get_colors
@@ -31,7 +33,11 @@ BarChart
    
       BarChart.get_html5_video
    
+      BarChart.get_interpolated_df
+   
       BarChart.get_label_position
+   
+      BarChart.get_period_label
    
       BarChart.init_func
    
@@ -39,9 +45,11 @@ BarChart
    
       BarChart.plot_bars
    
-      BarChart.prepare_data
+      BarChart.rename_data_columns
    
       BarChart.save
+   
+      BarChart.set_x_y_limits
    
       BarChart.show_period
    

@@ -31,7 +31,9 @@ LineChart
    
       LineChart.get_html5_video
    
-      LineChart.get_label_position
+      LineChart.get_interpolated_df
+   
+      LineChart.get_period_label
    
       LineChart.init_func
    
@@ -39,9 +41,11 @@ LineChart
    
       LineChart.plot_line
    
-      LineChart.prepare_data
+      LineChart.rename_data_columns
    
       LineChart.save
+   
+      LineChart.set_x_y_limits
    
       LineChart.show_period
    

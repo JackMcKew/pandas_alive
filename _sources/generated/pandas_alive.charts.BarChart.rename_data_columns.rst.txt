@@ -1,0 +1,6 @@
+BarChart.rename\_data\_columns
+==============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChart.rename_data_columns

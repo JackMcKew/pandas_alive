@@ -1,0 +1,6 @@
+BarChart.calculate\_ranks
+=========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChart.calculate_ranks

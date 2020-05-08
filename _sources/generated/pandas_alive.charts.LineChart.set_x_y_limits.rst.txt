@@ -1,0 +1,6 @@
+LineChart.set\_x\_y\_limits
+===========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.set_x_y_limits

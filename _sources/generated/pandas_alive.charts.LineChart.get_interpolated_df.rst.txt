@@ -1,0 +1,6 @@
+LineChart.get\_interpolated\_df
+===============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.get_interpolated_df

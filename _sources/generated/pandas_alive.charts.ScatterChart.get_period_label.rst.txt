@@ -1,0 +1,6 @@
+ScatterChart.get\_period\_label
+===============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.get_period_label

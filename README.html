@@ -89,13 +89,14 @@
 <li class="toctree-l4"><a class="reference internal" href="#id1">Horizontal Bar Charts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id2">Vertical Bar Charts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id3">Line Charts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Scatter Charts</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#multiple-charts">Multiple Charts</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#inspiration">Inspiration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
 </ul>
@@ -173,9 +174,7 @@
 <p>Animated plotting extension for Pandas with Matplotlib</p>
 <p><strong>Pandas_Alive</strong> is intended to provide a plotting backend for animated <a class="reference external" href="https://matplotlib.org/">matplotlib</a> charts for <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> DataFrames, similar to the already <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/visualization.html">existing Visualization feature of Pandas</a>.</p>
 <p>With <strong>Pandas_Alive</strong>, creating stunning, animated visualisations is as easy as calling:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">()</span>
-</pre></div>
-</div>
+<p><code class="docutils literal notranslate"><span class="pre">df.plot_animated()</span></code></p>
 <a class="reference external image-reference" href="examples/example-barh-chart.gif"><img alt="Example Bar Chart" src="_images/example-barh-chart.gif" /></a>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
@@ -205,9 +204,9 @@
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+<span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-barh-chart.gif&#39;</span><span class="p">)</span>
+<span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-barh-chart.gif&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="currently-supported-chart-types">
@@ -217,40 +216,75 @@
 <li><p><a class="reference external" href="#horizontal-bar-charts">Horizontal Bar Charts</a></p></li>
 <li><p><a class="reference external" href="#vertical-bar-charts">Vertical Bar Charts</a></p></li>
 <li><p><a class="reference external" href="#line-charts">Line Charts</a></p></li>
+<li><p><a class="reference external" href="#scatter-charts">Scatter Charts</a></p></li>
 </ul>
 <div class="section" id="id1">
 <h4>Horizontal Bar Charts<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+<span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-barh-chart.gif&#39;</span><span class="p">)</span>
+<span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-barh-chart.gif&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-barh-chart.gif"><img alt="Example Barh Chart" src="_images/example-barh-chart.gif" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">elec_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/Aus_Elec_Gen_1980_2018.csv&quot;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">thousands</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+<span class="n">elec_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="s1">&#39;examples/example-electricity-generated-australia.gif&#39;</span><span class="p">,</span><span class="n">period_fmt</span><span class="o">=</span><span class="s2">&quot;%Y&quot;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Australian Electricity Generation Sources 1980-2018&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-electricity-generated-australia.gif"><img alt="Electricity Example Line Chart" src="_images/example-electricity-generated-australia.gif" /></a>
 </div>
 <div class="section" id="id2">
 <h4>Vertical Bar Charts<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+<span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-barv-chart.gif&#39;</span><span class="p">,</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+<span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-barv-chart.gif&#39;</span><span class="p">,</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-barv-chart.gif"><img alt="Example Barv Chart" src="_images/example-barv-chart.gif" /></a>
 </div>
 <div class="section" id="id3">
 <h4>Line Charts<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
-<p>With as many lines as data columns in DataFrame.</p>
+<p>With as many lines as data columns in the DataFrame.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+<span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example-line-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+<span class="n">covid_df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-line-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.9</span><span class="p">})</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-line-chart.gif"><img alt="Example Line Chart" src="_images/example-line-chart.gif" /></a>
+</div>
+<div class="section" id="id4">
+<h4>Scatter Charts<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">max_temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;data/Newcastle_Australia_Max_Temps.csv&quot;</span><span class="p">,</span>
+    <span class="n">parse_dates</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Timestamp&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span> <span class="s2">&quot;Month&quot;</span><span class="p">,</span> <span class="s2">&quot;Day&quot;</span><span class="p">]},</span>
+<span class="p">)</span>
+<span class="n">min_temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;data/Newcastle_Australia_Min_Temps.csv&quot;</span><span class="p">,</span>
+    <span class="n">parse_dates</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Timestamp&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span> <span class="s2">&quot;Month&quot;</span><span class="p">,</span> <span class="s2">&quot;Day&quot;</span><span class="p">]},</span>
+<span class="p">)</span>
+
+<span class="n">merged_temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">max_temp_df</span><span class="p">,</span> <span class="n">min_temp_df</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;Timestamp&quot;</span><span class="p">)</span>
+
+<span class="n">merged_temp_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">merged_temp_df</span><span class="p">[</span><span class="s2">&quot;Timestamp&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+
+<span class="n">keep_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Minimum temperature (Degree C)&quot;</span><span class="p">,</span> <span class="s2">&quot;Maximum temperature (Degree C)&quot;</span><span class="p">]</span>
+
+<span class="n">merged_temp_df</span><span class="p">[</span><span class="n">keep_columns</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-scatter-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Max &amp; Min Temperature Newcastle, Australia&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-scatter-chart.gif"><img alt="Example Scatter Chart" src="_images/example-scatter-chart.gif" /></a>
 </div>
 </div>
 <div class="section" id="multiple-charts">
@@ -263,13 +297,13 @@
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+<span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">animated_line_chart</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">show_period_annotation</span><span class="o">-</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">animated_line_chart</span> <span class="o">=</span> <span class="n">covid_df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;example-bar-and-line-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">]</span>
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">])</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-bar-and-line-chart.gif"><img alt="Example Bar &amp; Line Chart" src="_images/example-bar-and-line-chart.gif" /></a>
@@ -282,12 +316,12 @@
     <span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
     <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
     <span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total % Change in Population&quot;</span><span class="p">,</span><span class="n">show_period_annotation</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total % Change in Population&quot;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">urban_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Top 10 Populous Countries&#39;</span><span class="p">)</span>
+<span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">urban_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Top 10 Populous Countries&#39;</span><span class="p">,</span><span class="n">period_fmt</span><span class="o">=</span><span class="s2">&quot;%Y&quot;</span><span class="p">)</span>
 
-<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-urban-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">],</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Urban Population 1977 - 2018&#39;</span><span class="p">)</span>
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-urban-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">],</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Urban Population 1977 - 2018&#39;</span><span class="p">,</span><span class="n">adjust_subplot_top</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-bar-and-line-urban-chart.gif"><img alt="Urban Population Bar &amp; Line Chart" src="_images/example-bar-and-line-urban-chart.gif" /></a>
@@ -301,8 +335,8 @@
 <li><p><a class="reference external" href="https://github.com/PatrikHlobil/Pandas-Bokeh">Pandas-Bokeh</a> by <a class="reference external" href="https://github.com/PatrikHlobil">Patrik Hlobil</a></p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>Requirements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>Requirements<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>If you get an error such as <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'MovieWriterRegistry'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">an</span> <span class="pre">iterator</span></code>, this signals there isn’t a writer library installed on your machine.</p>
 <p>This package utilises the <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html">matplotlib.animation function</a>, thus requiring a writer library.</p>
 <p>Ensure to have one of the supported tooling software installed prior to use!</p>
@@ -320,6 +354,9 @@
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
 <p>Pull requests are welcome! Please help to cover more and more chart types!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </div>
 
