@@ -1,9 +1,9 @@
 name: Build & Publish Docs with Sphinx
 
 on:
-  push:
-    branches:
-    - master
+  release:
+    types: [published]
+
 
 jobs:
   release:
