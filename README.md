@@ -36,8 +36,7 @@ To produce the above visualisation:
     - Either specify a file name to write to with `df.plot_animated(filename='example.mp4')` or use `df.plot_animated().get_html5_video` to return a HTML5 video
 - Done!
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -56,8 +55,7 @@ covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 
 #### Horizontal Bar Charts
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -67,8 +65,7 @@ covid_df.plot_animated(filename='example-barh-chart.gif')
 
 ![Example Barh Chart](examples/example-barh-chart.gif)
 
-
-```
+``` python
 import pandas as pd
 import pandas_alive
 
@@ -81,8 +78,7 @@ elec_df.fillna(0).plot_animated('examples/example-electricity-generated-australi
 
 #### Vertical Bar Charts
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -96,8 +92,7 @@ covid_df.plot_animated(filename='examples/example-barv-chart.gif',orientation='v
 
 With as many lines as data columns in the DataFrame.
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -110,8 +105,7 @@ covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gi
 
 #### Scatter Charts
 
-
-```
+``` python
 import pandas as pd
 import pandas_alive
 
@@ -144,8 +138,7 @@ merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='exampl
 - Use `animate_multiple_plots` with a `filename` and the list of charts (this will use `matplotlib.subplots`)
 - Done!
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -159,8 +152,7 @@ pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[a
 
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
-
-```
+``` python
 import pandas_alive
 
 urban_df = pandas_alive.load_dataset("urban_pop")
@@ -209,7 +201,6 @@ Documentation is provided at <https://jackmckew.github.io/pandas_alive/>
 
 Pull requests are welcome! Please help to cover more and more chart types!
 
-
-```
+``` python
 
 ```
