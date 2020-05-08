@@ -201,12 +201,12 @@ def animate_multiple_plots(
     title: str = None,
     title_fontsize: typing.Union[int, float] = 16,
     dpi: int = 144,
-    adjust_subplot_left: float = 0.125,
+    adjust_subplot_left: float = 0.15,
     adjust_subplot_right: float = 0.9,
     adjust_subplot_bottom: float = 0.1,
     adjust_subplot_top: float = 0.9,
     adjust_subplot_wspace: float = 0.2,
-    adjust_subplot_hspace: float = 0.2,
+    adjust_subplot_hspace: float = 0.25,
 ):
     """ Plot multiple animated subplots with plt.subplots()
 
@@ -241,7 +241,15 @@ def animate_multiple_plots(
     # Current just number of columns for number of plots
     # TODO add option for number of rows/columns
     # TODO Use gridspec?
+
+    # Otherwise titles overlap and adjust_subplot does nothing
+    from matplotlib import rcParams
+    rcParams.update({'figure.autolayout':False})
     fig, axes = plt.subplots(len(plots))
+
+    if title is not None:
+        fig.suptitle(title)
+    # fig.set_tight_layout(True)
     # Defaults from https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.subplots_adjust.html
     fig.subplots_adjust(
         left=adjust_subplot_left,
@@ -251,7 +259,7 @@ def animate_multiple_plots(
         wspace=adjust_subplot_wspace,
         hspace=adjust_subplot_hspace,
     )
-    # plt.tight_layout()
+    
     # fig = plt.figure()
     # spec = fig.add_gridspec()
     # fig.add_subplot(spec[0, 1])
@@ -264,8 +272,7 @@ def animate_multiple_plots(
     # plt.subplots_adjust()
     # plt.rcParams.update({'figure.autolayout': True})
 
-    if title is not None:
-        fig.suptitle(title)
+    
 
     for num, plot in enumerate(plots):
         # plot.ax = fig.add_subplot(spec[num:,0])[0]
@@ -279,6 +286,8 @@ def animate_multiple_plots(
         plot.ax = axes[num]
 
         plot.init_func()
+
+    # fig.tight_layout()
 
     fps = 1000 / plots[0].period_length * plots[0].steps_per_period
     interval = plots[0].period_length / plots[0].steps_per_period
