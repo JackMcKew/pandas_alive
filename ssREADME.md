@@ -6,7 +6,9 @@ Animated plotting extension for Pandas with Matplotlib
 
 With **Pandas_Alive**, creating stunning, animated visualisations is as easy as calling:
 
-`df.plot_animated()`
+``` python
+df.plot_animated()
+```
 
 ![Example Bar Chart](examples/example-barh-chart.gif)
 
@@ -36,13 +38,13 @@ To produce the above visualisation:
     - Either specify a file name to write to with `df.plot_animated(filename='example.mp4')` or use `df.plot_animated().get_html5_video` to return a HTML5 video
 - Done!
 
-
-```
+``` python
 import pandas_alive
 
-covid_df = pandas_alive.load_dataset()
+df = pandas_alive.load_dataset()
 
-covid_df.plot_animated(filename='examples/example-barh-chart.gif')
+df.plot_animated(filename='example-barh-chart.gif')
+
 ```
 
 ### Currently Supported Chart Types
@@ -55,41 +57,38 @@ covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 
 #### Horizontal Bar Charts
 
-
-```
+``` python
 import pandas_alive
 
-covid_df = pandas_alive.load_dataset()
+df = pandas_alive.load_dataset()
 
-covid_df.plot_animated(filename='example-barh-chart.gif')
+df.plot_animated(filename='example-barh-chart.gif')
 ```
 
 ![Example Barh Chart](examples/example-barh-chart.gif)
 
 #### Vertical Bar Charts
 
-
-```
+``` python
 import pandas_alive
 
-covid_df = pandas_alive.load_dataset()
+df = pandas_alive.load_dataset()
 
-covid_df.plot_animated(filename='examples/example-barv-chart.gif',orientation='v')
+df.plot_animated(filename='example-barv-chart.gif',orientation='v')
 ```
 
 ![Example Barv Chart](examples/example-barv-chart.gif)
 
 #### Line Charts
 
-With as many lines as data columns in the DataFrame.
+With as many lines as data columns in DataFrame.
 
-
-```
+``` python
 import pandas_alive
 
-covid_df = pandas_alive.load_dataset()
+df = pandas_alive.load_dataset()
 
-covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line')
+df.diff().fillna(0).plot_animated(filename='example-line-chart.gif',kind='line')
 ```
 
 ![Example Line Chart](examples/example-line-chart.gif)
@@ -102,23 +101,21 @@ covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gi
 - Use `animate_multiple_plots` with a `filename` and the list of charts (this will use `matplotlib.subplots`)
 - Done!
 
-
-```
+``` python
 import pandas_alive
 
-covid_df = pandas_alive.load_dataset()
+df = pandas_alive.load_dataset()
 
-animated_line_chart = covid_df.diff().fillna(0).plot_animated(kind='line',period_label=False)
+animated_line_chart = df.diff().fillna(0).plot_animated(kind='line',show_period_annotation-False)
 
-animated_bar_chart = covid_df.plot_animated(kind='barh',n_visible=10)
+animated_bar_chart = df.plot_animated(kind='barh',n_visible=10)
 
 pandas_alive.animate_multiple_plots('example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart]
 ```
 
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
-
-```
+``` python
 import pandas_alive
 
 urban_df = pandas_alive.load_dataset("urban_pop")
@@ -128,7 +125,7 @@ animated_line_chart = (
     .pct_change()
     .dropna()
     .mul(100)
-    .plot_animated(kind="line", title="Total % Change in Population",period_label=False)
+    .plot_animated(kind="line", title="Total % Change in Population",show_period_annotation=False)
 )
 
 animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries')
