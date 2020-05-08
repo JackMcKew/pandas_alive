@@ -52,6 +52,7 @@ covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 - [Horizontal Bar Charts](#horizontal-bar-charts)
 - [Vertical Bar Charts](#vertical-bar-charts)
 - [Line Charts](#line-charts)
+- [Scatter Charts](#scatter-charts)
 
 #### Horizontal Bar Charts
 
