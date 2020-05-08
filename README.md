@@ -36,8 +36,7 @@ To produce the above visualisation:
     - Either specify a file name to write to with `df.plot_animated(filename='example.mp4')` or use `df.plot_animated().get_html5_video` to return a HTML5 video
 - Done!
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -52,11 +51,11 @@ covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 - [Horizontal Bar Charts](#horizontal-bar-charts)
 - [Vertical Bar Charts](#vertical-bar-charts)
 - [Line Charts](#line-charts)
+- [Scatter Charts](#scatter-charts)
 
 #### Horizontal Bar Charts
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -66,10 +65,20 @@ covid_df.plot_animated(filename='example-barh-chart.gif')
 
 ![Example Barh Chart](examples/example-barh-chart.gif)
 
+``` python
+import pandas as pd
+import pandas_alive
+
+elec_df = pd.read_csv("data/Aus_Elec_Gen_1980_2018.csv",index_col=0,parse_dates=[0],thousands=',')
+
+elec_df.fillna(0).plot_animated('examples/example-electricity-generated-australia.gif',period_fmt="%Y",title='Australian Electricity Generation Sources 1980-2018')
+```
+
+![Electricity Example Line Chart](examples/example-electricity-generated-australia.gif)
+
 #### Vertical Bar Charts
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -83,16 +92,43 @@ covid_df.plot_animated(filename='examples/example-barv-chart.gif',orientation='v
 
 With as many lines as data columns in the DataFrame.
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
 
-covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line')
+covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line',period_label={'x':0.1,'y':0.9})
 ```
 
 ![Example Line Chart](examples/example-line-chart.gif)
+
+
+#### Scatter Charts
+
+``` python
+import pandas as pd
+import pandas_alive
+
+max_temp_df = pd.read_csv(
+    "data/Newcastle_Australia_Max_Temps.csv",
+    parse_dates={"Timestamp": ["Year", "Month", "Day"]},
+)
+min_temp_df = pd.read_csv(
+    "data/Newcastle_Australia_Min_Temps.csv",
+    parse_dates={"Timestamp": ["Year", "Month", "Day"]},
+)
+
+merged_temp_df = pd.merge_asof(max_temp_df, min_temp_df, on="Timestamp")
+
+merged_temp_df.index = pd.to_datetime(merged_temp_df["Timestamp"].dt.strftime('%Y/%m/%d'))
+
+keep_columns = ["Minimum temperature (Degree C)", "Maximum temperature (Degree C)"]
+
+merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='examples/example-scatter-chart.gif',kind="scatter",title='Max & Min Temperature Newcastle, Australia')
+
+```
+
+![Example Scatter Chart](examples/example-scatter-chart.gif)
 
 ### Multiple Charts
 
@@ -102,8 +138,7 @@ covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gi
 - Use `animate_multiple_plots` with a `filename` and the list of charts (this will use `matplotlib.subplots`)
 - Done!
 
-
-```
+``` python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -112,13 +147,12 @@ animated_line_chart = covid_df.diff().fillna(0).plot_animated(kind='line',period
 
 animated_bar_chart = covid_df.plot_animated(kind='barh',n_visible=10)
 
-pandas_alive.animate_multiple_plots('example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart]
+pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart])
 ```
 
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
-
-```
+``` python
 import pandas_alive
 
 urban_df = pandas_alive.load_dataset("urban_pop")
@@ -131,12 +165,13 @@ animated_line_chart = (
     .plot_animated(kind="line", title="Total % Change in Population",period_label=False)
 )
 
-animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries')
+animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries',period_fmt="%Y")
 
-pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018')
+pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018',adjust_subplot_top=0.85)
 ```
 
 ![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
+
 
 ## Inspiration
 
@@ -165,3 +200,7 @@ Documentation is provided at <https://jackmckew.github.io/pandas_alive/>
 ## Contributing
 
 Pull requests are welcome! Please help to cover more and more chart types!
+
+``` python
+
+```
