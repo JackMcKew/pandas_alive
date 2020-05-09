@@ -13,7 +13,7 @@ import typing
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation
-from .charts import BarChartRace, LineChart, ScatterChart, PieChart
+from .charts import BarChartRace, LineChart, ScatterChart, PieChart, BarChart
 from typing import Sequence
 
 
@@ -23,7 +23,7 @@ def get_allowed_kinds() -> typing.List[str]:
     Returns:
         typing.List[str]: List of implemented chart types
     """
-    return ["race", "line", "scatter","pie"]
+    return ["race", "line", "scatter","pie","bar"]
 
 
 def verify_filename(filename: str) -> str:
@@ -319,6 +319,27 @@ def plot(
         if filename:
             animated_pie.save(verify_filename(filename))
         return animated_pie
+    elif kind == "bar":
+        animated_bar = BarChart(
+            df,
+            interpolate_period=interpolate_period,
+            steps_per_period=steps_per_period,
+            period_length=period_length,
+            period_fmt=period_fmt,
+            figsize=figsize,
+            title=title,
+            fig=fig,
+            cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_label=period_label,
+            period_summary_func=period_summary_func,
+            fixed_max=fixed_max,
+            dpi=dpi,
+            kwargs=kwargs,
+        )
+        if filename:
+            animated_bar.save(verify_filename(filename))
+        return animated_bar
 
 
 
