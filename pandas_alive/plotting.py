@@ -207,10 +207,10 @@ def plot(
             
 
     Raises:
-        ValueError: [description]
+        ValueError: If chart type is not supported, raise error
 
     Returns:
-        typing.Union[ScatterChart, BarChart, LineChart]: [description]
+        typing.Union[ScatterChart, BarChart, LineChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.
     """
     df = input_df.copy()
     if isinstance(df, pd.Series):
