@@ -319,6 +319,26 @@ class BarChart(_BaseChart):
                     va=va,
                 )
 
+        if self.perpendicular_bar_func:
+            if isinstance(self.perpendicular_bar_func, str):
+                val = pd.Series(bar_length).agg(self.perpendicular_bar_func)
+            else:
+                values = self.df.iloc[i]
+                ranks = self.df_rank.iloc[i]
+                val = self.perpendicular_bar_func(values, ranks)
+
+            if not self.ax.lines:
+                if self.orientation == 'h':
+                    self.ax.axvline(val, lw=10, color='.5', zorder=.5)
+                else:
+                    self.ax.axhline(val, lw=10, color='.5', zorder=.5)
+            else:
+                line = self.ax.lines[0]
+                if self.orientation == 'h':
+                    line.set_xdata([val] * 2)
+                else:
+                    line.set_ydata([val] * 2)
+
     def anim_func(self, i: int) -> None:
         """ Animation function for plot bars
 
