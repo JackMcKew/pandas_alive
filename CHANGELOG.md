@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.11] - 2020-05-09
+
+- `period_summary_func` provided for charts to display overall period calculations on plot
+- Bar chart functionality extended
+    - `fixed_order` can be used to disable bars moving on bar chart
+    - `fixed_max` set limits of axis on charts to be total maximum of dataframe rather than dynamic
+    - `perpendicular_bar_func` Plot perpendicular black bar on plot to demonstrate different stats, eg, max, min, median, etc. Use with Series.agg()
+
 ## [0.1.10] - 2020-05-08
 
 - Complete overhaul of backend with `_base_plot.py`, refactored all arguments
