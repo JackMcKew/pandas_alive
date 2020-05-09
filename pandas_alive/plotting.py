@@ -68,6 +68,7 @@ def plot(
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = True,
+    period_summary_func: typing.Callable = None,
     dpi: float = 144,
     # Bar chart
     orientation: str = "h",
@@ -75,47 +76,141 @@ def plot(
     label_bars: bool = True,
     bar_label_size: typing.Union[int, float] = 7,
     n_visible: int = None,
+    fixed_order: typing.Union[bool, list] = False,
+    fixed_max: bool = False,
+    perpendicular_bar_func: typing.Union[typing.Callable, str] = None,
     # Line Chart
     line_width: int = 2,
     # Scatter Chart
     size: int = 2,
     **kwargs,
 ) -> typing.Union[ScatterChart, BarChart, LineChart]:
-    """ Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.
+    """
+    Create animated charts with matplotlib and pandas
+
+    Data must be in 'wide' format where each row represents a single time period and each 
+    column represents a distinct category. Optionally, the index can label the time period.
+    Bar height and location change linearly from one time period to the next.
+    This is resource intensive - Start with just a few rows of data to test.
 
     Args:
-        input_df (pd.DataFrame): Input dataframe containing data to be plotted. Function will attempt to plot as many columns of data as possible.
-        filename (str, optional): If None returns instance of chart to be used later with `.save()` or `.get_html5_video()`. Defaults to None.
-        x (str, optional): Intended for future use, currently does nothing. Defaults to None.
-        y (str, optional): Intended for future use, currently does nothing.. Defaults to None.
-        kind (str, optional): Type of chart to use, see get_allowed_kinds for possible options. Defaults to "barh".
-        n_visible (int, optional): Show top/bottom N values in bar chart, not implemented for line chart currently. Defaults to None.
-        line_width (int, optional): Line width for Line charts, applies to all lines. Defaults to 3.
-        use_index (bool, optional): Use index for time axis. Defaults to True.
+        filename (str, optional): If a string, save animation to that filename location. Defaults to None.
+
+        kind (str, optional): Type of chart to use. Defaults to "barh".
+
+        interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaullts to `True`.
+            When set to `True`, for example, the two consecutive periods 2020-03-29 and 2020-03-30 would yield a new index of
+                >>> df.plot_animated(interpolate_period=True,steps_per_period=4)
+                    2020-03-29 00:00:00
+                    2020-03-29 06:00:00
+                    2020-03-29 12:00:00
+                    2020-03-29 18:00:00
+                    2020-03-30 00:00:00
+
         steps_per_period (int, optional): The number of steps to go from one time period to the next. Animation will interpolate between time periods. Defaults to 10.
+
         period_length (int, optional): Number of milliseconds to animate each period (row). Defaults to 500.
-        figsize (typing.Tuple[float, float], optional): Matplotlib figure size in inches, will be overridden if fig supplied. Defaults to (6.5, 3.5).
-        title (str, optional): Title of plot, will become subplot title if used in multiple. Defaults to None.
-        fig (plt.figure, optional): For specifying figure outside of this function. Defaults to None.
-        enable_legend (bool, optional): Show legend on line charts, will run off screen for two many lines. Defaults to False.
-        orientation (str, optional): Orientation of bar chart, horizontal ('h') or vertical ('v'). Defaults to "h".
-        sort (str, optional): Choose how to sort the bar chart. Use 'desc' to put the largest bars on top, and 'asc' for the largest bars on bottom. Defaults to "desc".
-        label_bars (bool, optional): Whether to label the bars with their value to the right. Defaults to None.
-        cmap (typing.Union[str, matplotlib.colors.Colormap, typing.List[str]], optional): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html. Defaults to "dark24".
-        bar_label_size (typing.Union[int, float], optional): Size in points of numeric labels just outside of bars. Defaults to 7.
+
+        period_fmt (str, optional):  Either a string with date directives or a new-style (Python 3.6+) formatted string.
+            For a string with a date directive, find the complete list here https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+
+            String with date directives
+            .. code-block::
+                df.plot_animated(period_fmt='%B %d, %Y')
+            Will change 2020/03/29 to March 29, 2020
+        
+            For new-style formatted string. Use curly braces and the variable `x`, 
+            which will be passed the current period's index value.
+            .. code-block::
+                'Period {x:10.2f}'
+
+            Date directives will only be used for datetime indexes. Defaults to "%d/%m/%Y".
+
+        figsize (typing.Tuple[float, float], optional): matplotlib figure size in inches. Will be overridden if figure supplied to `fig`. Defaults to (6.5, 3.5).
+
+        title (str, optional): Title of plot. Defaults to None.
+
+        fig (plt.figure, optional): For greater control over the aesthetics, supply your own figure. Defaults to None.
+
+        cmap (typing.Union[str, Colormap, typing.List[str]], optional): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html. Defaults to "dark24".
+
         tick_label_size (typing.Union[int, float], optional): Size in points of tick labels. Defaults to 7.
-        period_annotation_size (typing.Union[int, float], optional): Size in points of period annotation on chart. Defaults to 16.
-        x_period_annotation_location (typing.Union[int, float], optional): Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.
-        y_period_annotation_location (typing.Union[int, float], optional): Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.
-        append_period_to_title (bool, optional): Append period annotation to title, this disables period annotation on chart. Defaults to None.
-        show_period_annotation (bool, optional): Show period annotation on chart. Useful to hide when plotting multiple charts. Defaults to True.
-        dpi (float, optional): It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly.. Defaults to 144.
+
+        period_label (typing.Union[bool, typing.Dict[str, typing.Union[int, float, str]]], optional): If `True` or dict, use the index as a large text label on the axes whose value changes.
+            Use a dictionary to supply the exact position of the period along with any valid parameters of the matplotlib `text` method.
+            At a minimum, you must supply both 'x' and 'y' in axes coordinates
+            .. code-block::
+                custom_period_location = {
+                    'x': .99,
+                    'y': .8,
+                    'ha': 'right',
+                    'va': 'center'
+                    }
+
+                df.plot_animated(period_label=custom_period_location)
+                
+            If `False` - don't place label on axes. Defaults to True.
+
+        period_summary_func (typing.Callable, optional):  Custom text added to the axes each period.
+            Create a user-defined function that accepts two pandas Series of the current time period's values and ranks. It must return a dictionary containing at a minimum the keys "x", "y", and "s" which will be passed to the matplotlib `text` method. Defaults to None.
+            .. code-block::
+                def func(values):
+                    total = values.sum()
+                    s = f'Total Generation: {total}'
+                    return {'x': .85, 'y': .2, 's': s, 'ha': 'right', 'size': 11}
+
+                df.plot_animated(period_summary_func=func)
+
+        dpi (float, optional): It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly. Defaults to 144.
+
+        sort (str, optional): 'asc' or 'desc'. Choose how to sort the bars. Use 'desc' to put largest bars on top and 'asc' to place largest bars on bottom. Defaults to "desc".
+
+        label_bars (bool, optional): Whether to label the bars with their value on their right. Defaults to True.
+
+        bar_label_size (typing.Union[int, float], optional): Size in points or relative size str of numeric labels just outside of the bars. Defaults to 7.
+
+        n_visible (int, optional): Choose the maximum number of bars to display on the graph. By default, use all bars. New bars entering the race will appear from the edge of the axes. Defaults to None.
+
+        fixed_order (typing.Union[bool, list], optional): When `False`, bar order changes every time period to correspond 
+            with `sort`. When `True`, bars remained fixed according to their 
+            final value corresponding with `sort`. Otherwise, provide a list 
+            of the exact order of the categories for the entire duration. Defaults to False.
+
+        fixed_max (bool, optional): Whether to fix the maximum value of the axis containing the values.
+            When `False`, the axis for the values will have its maximum (xlim/ylim)
+            just after the largest bar of the current time period. 
+            The axis maximum will change along with the data.
+            When True, the maximum axis value will remain constant for the 
+            duration of the animation. For example, in a horizontal bar chart, 
+            if the largest bar has a value of 100 for the first time period and 
+            10,000 for the last time period. The xlim maximum will be 10,000 
+            for each frame. Defaults to False.
+
+        perpendicular_bar_func (typing.Union[typing.Callable, str], optional): Creates a single bar perpendicular to the main bars that spans the length of the axis. 
+    
+            Use either a string that the DataFrame `agg` method understands or a 
+            user-defined function.
+                
+            DataFrame strings - 'mean', 'median', 'max', 'min', etc..
+
+            The function is passed two pandas Series of the current time period's
+            data and ranks. It must return a single value.
+            .. code-block::
+                def func(values):
+                    return values.quantile(.75).
+            
+            Defaults to None.
+
+        line_width (int, optional): Line width provided on line charts. Defaults to 2.
+    
+        size (int, optional): Size of scatter points on scatter charts. Defaults to 2.
+            
 
     Raises:
-        ValueError: If supplied kind is not supported
+        ValueError: If chart type is not supported, raise error
 
     Returns:
-        typing.Union[BarChart,LineChart]: Returns Chart instance to be used with animate_multiple or .save()
+        typing.Union[ScatterChart, BarChart, LineChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.
     """
     df = input_df.copy()
     if isinstance(df, pd.Series):
@@ -140,6 +235,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             # Bar chart
             orientation=orientation,
@@ -147,6 +243,9 @@ def plot(
             label_bars=label_bars,
             bar_label_size=bar_label_size,
             n_visible=n_visible,
+            fixed_order=fixed_order,
+            fixed_max=fixed_max,
+            perpendicular_bar_func=perpendicular_bar_func,
             kwargs=kwargs,
         )
         if filename:
@@ -166,6 +265,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             line_width=line_width,
             kwargs=kwargs,
@@ -186,6 +286,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             size=size,
             kwargs=kwargs,
@@ -233,7 +334,9 @@ def animate_multiple_plots(
             try:
                 plot.anim_func(frame)
             except:
-                raise UserWarning(f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}")
+                raise UserWarning(
+                    f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}"
+                )
                 # raise UserWarning(
                 #     f"{type(plot)} {plot.title} error plotting on frame {frame}, ensure all plots share index"
                 # )
@@ -244,7 +347,8 @@ def animate_multiple_plots(
 
     # Otherwise titles overlap and adjust_subplot does nothing
     from matplotlib import rcParams
-    rcParams.update({'figure.autolayout':False})
+
+    rcParams.update({"figure.autolayout": False})
     fig, axes = plt.subplots(len(plots))
 
     if title is not None:
@@ -259,7 +363,7 @@ def animate_multiple_plots(
         wspace=adjust_subplot_wspace,
         hspace=adjust_subplot_hspace,
     )
-    
+
     # fig = plt.figure()
     # spec = fig.add_gridspec()
     # fig.add_subplot(spec[0, 1])
@@ -271,8 +375,6 @@ def animate_multiple_plots(
     # plt.subplots_adjust(top=0.85)
     # plt.subplots_adjust()
     # plt.rcParams.update({'figure.autolayout': True})
-
-    
 
     for num, plot in enumerate(plots):
         # plot.ax = fig.add_subplot(spec[num:,0])[0]

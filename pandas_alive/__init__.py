@@ -1,7 +1,7 @@
 from .plotting import plot, AnimatedAccessor, animate_multiple_plots
 from .base import load_dataset
 
-version = "0.1.10"
+version = "0.1.11"
 
 # Register animated_plot accessor for Pandas DataFrames and Series:
 import pandas as pd
