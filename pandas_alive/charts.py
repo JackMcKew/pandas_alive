@@ -464,3 +464,84 @@ class LineChart(_BaseChart):
         """ Initialization function for animation
         """
         self.ax.plot([], [], self.line_width)
+
+
+@attr.s
+class PieChart(_BaseChart):
+    """ Animated Pie Chart implementation
+
+    Args:
+        BaseChart (BaseChart): Shared Base Chart class inherit to all charts
+
+    Returns:
+        PieChart: Animated Pie Chart class for use with multiple plots or save
+    """
+
+    def __attrs_post_init__(self):
+        super().__attrs_post_init__()
+        self.wedge_colors = self.get_colors(self.cmap)
+
+        self.wedge_colors = dict(zip(self.data_cols,self.wedge_colors))
+
+        self._wedges: typing.Dict = {}
+        for name in self.data_cols:
+            self._wedges[name] = {}
+            self._wedges[name]["size"] = []
+
+    def plot_wedge(self, i: int) -> None:
+        """ Function for plotting all lines in dataframe
+
+        Args:
+            i (int): Index of frame for animation
+        """
+
+        for text in self.ax.texts[int(bool(self.period_fmt)):]:
+            text.remove()
+        
+        # super().set_x_y_limits(self.df, i)
+        # print(self.df[self.data_cols].notnull())
+        filt_nan = self.df[self.data_cols].iloc[i].notnull()
+
+        # print(self.df[self.data_cols].iloc[i][filt_nan])
+
+        wedges = self.df[self.data_cols].iloc[i][filt_nan]
+
+        wedge_color_list = []
+        for label in wedges.index:
+            wedge_color_list.append(self.wedge_colors[label])
+
+        self.ax.pie(
+            wedges.values,
+            labels=wedges.index,
+            colors=wedge_color_list,
+            **self.kwargs
+        )
+
+        # for name, color in zip(self.data_cols, self.wedge_colors):
+
+        #     self._wedges[name]["size"].append(self.df[name].index[i])
+        #     # self._lines[name]["y"].append(self.df[name].iloc[i])
+        #     self.ax.pie(
+        #         self._wedges[name]["size"],
+        #         label=name,
+        #         color=color,
+        #         **self.kwargs,
+        #     )
+
+    def anim_func(self, i: int) -> None:
+        """ Animation function, removes all lines and updates legend/period annotation
+
+        Args:
+            i (int): Index of frame of animation
+        """
+        for wedge in self.ax.patches:
+            wedge.remove()
+        if self.period_fmt:
+            self.show_period(i)
+        self.plot_wedge(i)
+        
+
+    def init_func(self) -> None:
+        """ Initialization function for animation
+        """
+        self.ax.pie([])
