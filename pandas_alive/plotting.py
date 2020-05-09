@@ -68,6 +68,7 @@ def plot(
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = True,
+    period_summary_func: typing.Callable = None,
     dpi: float = 144,
     # Bar chart
     orientation: str = "h",
@@ -144,6 +145,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             # Bar chart
             orientation=orientation,
@@ -173,6 +175,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             line_width=line_width,
             kwargs=kwargs,
@@ -193,6 +196,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             size=size,
             kwargs=kwargs,
