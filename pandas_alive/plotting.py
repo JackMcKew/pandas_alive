@@ -68,6 +68,7 @@ def plot(
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = True,
+    period_summary_func: typing.Callable = None,
     dpi: float = 144,
     # Bar chart
     orientation: str = "h",
@@ -75,6 +76,10 @@ def plot(
     label_bars: bool = True,
     bar_label_size: typing.Union[int, float] = 7,
     n_visible: int = None,
+    fixed_order: typing.Union[bool,list] = False,
+    fixed_max: bool = False,
+    perpendicular_bar_func: typing.Union[typing.Callable,str] = None,
+
     # Line Chart
     line_width: int = 2,
     # Scatter Chart
@@ -140,6 +145,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             # Bar chart
             orientation=orientation,
@@ -147,6 +153,9 @@ def plot(
             label_bars=label_bars,
             bar_label_size=bar_label_size,
             n_visible=n_visible,
+            fixed_order=fixed_order,
+            fixed_max=fixed_max,
+            perpendicular_bar_func=perpendicular_bar_func,
             kwargs=kwargs,
         )
         if filename:
@@ -166,6 +175,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             line_width=line_width,
             kwargs=kwargs,
@@ -186,6 +196,7 @@ def plot(
             cmap=cmap,
             tick_label_size=tick_label_size,
             period_label=period_label,
+            period_summary_func=period_summary_func,
             dpi=dpi,
             size=size,
             kwargs=kwargs,

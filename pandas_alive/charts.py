@@ -41,15 +41,40 @@ class BarChart(_BaseChart):
     label_bars: bool = attr.ib()
     bar_label_size: typing.Union[int, float] = attr.ib()
     n_visible: int = attr.ib()
+    fixed_order: typing.Union[list,bool] = attr.ib()
+    fixed_max: bool = attr.ib()
+    perpendicular_bar_func: typing.Callable = attr.ib()
 
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
         """
         self.n_visible = self.n_visible if self.n_visible else self.df.shape[1]
+
+        if self.fixed_order is True:
+            last_values = self.df.iloc[-1].sort_values(ascending=False)
+            cols = last_values.iloc[:self.n_visible].index
+            self.df = self.df[cols]
+        elif isinstance(self.fixed_order, list):
+            cols = self.fixed_order
+            self.df = self.df[cols]
+        
         super().__attrs_post_init__()
         self.validate_params()
 
         self.df_rank = self.calculate_ranks(self.orig_df)
+
+        if self.fixed_order:
+            
+            n = self.df.shape[1] + 1
+            m = self.df.shape[0]
+            rank_row = np.arange(1, n)
+            if (self.sort == 'desc' and self.orientation == 'h') or \
+                (self.sort == 'asc' and self.orientation == 'v'):
+                rank_row = rank_row[::-1]
+            
+            ranks_arr = np.repeat(rank_row.reshape(1, -1), m, axis=0)
+            self.df_rank = pd.DataFrame(data=ranks_arr, columns=cols)
+            
 
         self.orig_index = self.df.index.astype("str")
 
@@ -138,10 +163,14 @@ class BarChart(_BaseChart):
         ax = fig.add_axes(rect)
         if self.orientation == "h":
             ax.set_ylim(limit)
+            if self.fixed_max:
+                ax.set_xlim(0, self.df.values.max().max() * 1.05 * 1.11)
             ax.grid(True, axis="x", color="white")
             ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
         else:
             ax.set_xlim(limit)
+            if self.fixed_max:
+                ax.set_ylim(0, self.df.values.max().max() * 1.05 * 1.11)
             ax.grid(True, axis="y", color="white")
             ax.set_xticklabels(ax.get_xticklabels(), ha="right", rotation=30)
             ax.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
@@ -241,7 +270,8 @@ class BarChart(_BaseChart):
                 color=colors,
                 # **self.kwargs,
             )
-            self.ax.set_xlim(self.ax.get_xlim()[0], bar_length.max() * 1.1)
+            if not self.fixed_max:
+                self.ax.set_xlim(self.ax.get_xlim()[0], bar_length.max() * 1.1)
         else:
             self.ax.bar(
                 bar_location,
@@ -251,7 +281,8 @@ class BarChart(_BaseChart):
                 color=colors,
                 **self.kwargs,
             )
-            self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
+            if not self.fixed_max:
+                self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
 
         super().show_period(i)
 
@@ -287,6 +318,26 @@ class BarChart(_BaseChart):
                     fontsize=self.bar_label_size,
                     va=va,
                 )
+
+        if self.perpendicular_bar_func:
+            if isinstance(self.perpendicular_bar_func, str):
+                val = pd.Series(bar_length).agg(self.perpendicular_bar_func)
+            else:
+                values = self.df.iloc[i]
+                ranks = self.df_rank.iloc[i]
+                val = self.perpendicular_bar_func(values, ranks)
+
+            if not self.ax.lines:
+                if self.orientation == 'h':
+                    self.ax.axvline(val, lw=10, color='.5', zorder=.5)
+                else:
+                    self.ax.axhline(val, lw=10, color='.5', zorder=.5)
+            else:
+                line = self.ax.lines[0]
+                if self.orientation == 'h':
+                    line.set_xdata([val] * 2)
+                else:
+                    line.set_ydata([val] * 2)
 
     def anim_func(self, i: int) -> None:
         """ Animation function for plot bars
