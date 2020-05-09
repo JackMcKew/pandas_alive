@@ -42,7 +42,7 @@ class BarChart(_BaseChart):
     bar_label_size: typing.Union[int, float] = attr.ib()
     n_visible: int = attr.ib()
     fixed_order: typing.Union[list,bool] = attr.ib()
-    fixed_max: bool = attr.ib()
+    
     perpendicular_bar_func: typing.Callable = attr.ib()
 
     def __attrs_post_init__(self):

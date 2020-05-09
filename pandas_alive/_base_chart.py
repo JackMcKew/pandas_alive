@@ -64,6 +64,7 @@ class _BaseChart:
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = attr.ib()
     period_summary_func: typing.Callable = attr.ib()
+    fixed_max: bool = attr.ib()
     # append_period_to_title: bool = attr.ib()
     # x_period_annotation_location: typing.Union[int, float] = attr.ib()
     # y_period_annotation_location: typing.Union[int, float] = attr.ib()
@@ -191,16 +192,26 @@ class _BaseChart:
         xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
         self.ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
-        self.ax.set_ylim(
-            self.df.iloc[: i + 1]
-            .select_dtypes(include=[np.number])
-            .min()
-            .min(skipna=True),
-            self.df.iloc[: i + 1]
-            .select_dtypes(include=[np.number])
-            .max()
-            .max(skipna=True),
-        )
+        if self.fixed_max:
+            self.ax.set_ylim(
+                self.df
+                .min()
+                .min(skipna=True),
+                self.df
+                .max()
+                .max(skipna=True),
+            )
+        else:
+            self.ax.set_ylim(
+                self.df.iloc[: i + 1]
+                .select_dtypes(include=[np.number])
+                .min()
+                .min(skipna=True),
+                self.df.iloc[: i + 1]
+                .select_dtypes(include=[np.number])
+                .max()
+                .max(skipna=True),
+            )
 
     def rename_data_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         # data_cols = self.get_data_cols(df)
@@ -416,7 +427,10 @@ class _BaseChart:
                 name = self.period_summary_func.__name__
                 raise ValueError(f'The dictionary returned from `{name}` must contain '
                                 '"x", "y", and "s"')
-            self.ax.text(transform=self.ax.transAxes, **text_dict)
+            if len(self.ax.texts) != 2:
+                self.ax.text(transform=self.ax.transAxes, **text_dict)
+            else:
+                self.ax.texts[1].set_text(text_dict['s'])
 
     def save(self, filename: str) -> None:
         """ Save method for FuncAnimation

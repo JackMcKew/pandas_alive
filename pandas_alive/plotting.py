@@ -69,6 +69,7 @@ def plot(
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = True,
     period_summary_func: typing.Callable = None,
+    fixed_max: bool = False,
     dpi: float = 144,
     # Bar chart
     orientation: str = "h",
@@ -77,7 +78,6 @@ def plot(
     bar_label_size: typing.Union[int, float] = 7,
     n_visible: int = None,
     fixed_order: typing.Union[bool, list] = False,
-    fixed_max: bool = False,
     perpendicular_bar_func: typing.Union[typing.Callable, str] = None,
     # Line Chart
     line_width: int = 2,
@@ -236,6 +236,7 @@ def plot(
             tick_label_size=tick_label_size,
             period_label=period_label,
             period_summary_func=period_summary_func,
+            fixed_max=fixed_max,
             dpi=dpi,
             # Bar chart
             orientation=orientation,
@@ -244,7 +245,7 @@ def plot(
             bar_label_size=bar_label_size,
             n_visible=n_visible,
             fixed_order=fixed_order,
-            fixed_max=fixed_max,
+            
             perpendicular_bar_func=perpendicular_bar_func,
             kwargs=kwargs,
         )
@@ -266,6 +267,7 @@ def plot(
             tick_label_size=tick_label_size,
             period_label=period_label,
             period_summary_func=period_summary_func,
+            fixed_max=fixed_max,
             dpi=dpi,
             line_width=line_width,
             kwargs=kwargs,
@@ -287,6 +289,7 @@ def plot(
             tick_label_size=tick_label_size,
             period_label=period_label,
             period_summary_func=period_summary_func,
+            fixed_max=fixed_max,
             dpi=dpi,
             size=size,
             kwargs=kwargs,
