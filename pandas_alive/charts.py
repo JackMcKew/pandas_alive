@@ -49,10 +49,32 @@ class BarChart(_BaseChart):
         """ Properties to be determined after initialization
         """
         self.n_visible = self.n_visible if self.n_visible else self.df.shape[1]
+
+        if self.fixed_order is True:
+            last_values = self.df.iloc[-1].sort_values(ascending=False)
+            cols = last_values.iloc[:self.n_visible].index
+            self.df = self.df[cols]
+        elif isinstance(self.fixed_order, list):
+            cols = self.fixed_order
+            self.df = self.df[cols]
+        
         super().__attrs_post_init__()
         self.validate_params()
 
         self.df_rank = self.calculate_ranks(self.orig_df)
+
+        if self.fixed_order:
+            
+            n = self.df.shape[1] + 1
+            m = self.df.shape[0]
+            rank_row = np.arange(1, n)
+            if (self.sort == 'desc' and self.orientation == 'h') or \
+                (self.sort == 'asc' and self.orientation == 'v'):
+                rank_row = rank_row[::-1]
+            
+            ranks_arr = np.repeat(rank_row.reshape(1, -1), m, axis=0)
+            self.df_rank = pd.DataFrame(data=ranks_arr, columns=cols)
+            
 
         self.orig_index = self.df.index.astype("str")
 
