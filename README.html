@@ -98,7 +98,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#inspiration">Inspiration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id5">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Changelog</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -237,6 +240,36 @@
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-electricity-generated-australia.gif"><img alt="Electricity Example Line Chart" src="_images/example-electricity-generated-australia.gif" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">current_total</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Total : </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">total</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">85</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+
+<span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/summary-func-example.gif&#39;</span><span class="p">,</span><span class="n">period_summary_func</span><span class="o">=</span><span class="n">current_total</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/summary-func-example.gif"><img alt="Summary Func Example" src="_images/summary-func-example.gif" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">elec_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/Aus_Elec_Gen_1980_2018.csv&quot;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">thousands</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+<span class="n">elec_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="s1">&#39;examples/fixed-example.gif&#39;</span><span class="p">,</span><span class="n">period_fmt</span><span class="o">=</span><span class="s2">&quot;%Y&quot;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Australian Electricity Generation Sources 1980-2018&#39;</span><span class="p">,</span><span class="n">fixed_max</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">fixed_order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/fixed-example.gif"><img alt="Fixed Example" src="_images/fixed-example.gif" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
+
+<span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/perpendicular-example.gif&#39;</span><span class="p">,</span><span class="n">perpendicular_bar_func</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/perpendicular-example.gif"><img alt="Perpendicular Example" src="_images/perpendicular-example.gif" /></a>
 </div>
 <div class="section" id="id2">
 <h4>Vertical Bar Charts<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
@@ -354,8 +387,12 @@
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
 <p>Pull requests are welcome! Please help to cover more and more chart types!</p>
+<div class="section" id="id6">
+<h3><a class="reference external" href="CHANGELOG.md">Changelog</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="CHANGELOG.md">Changelog</a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

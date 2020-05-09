@@ -98,6 +98,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pandas_alive.base.html">pandas_alive.base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive._base_chart.html">pandas_alive._base_chart</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas_alive.charts.html">pandas_alive.charts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas_alive.__init__.html">__init__</a></li>
 </ul>
@@ -172,47 +173,122 @@
 <h1>plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="pandas_alive.plotting.plot">
-<code class="sig-prename descclassname">pandas_alive.plotting.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kind</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'barh'</span></em>, <em class="sig-param"><span class="n">interpolate_period</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">steps_per_period</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em>, <em class="sig-param"><span class="n">period_length</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">500</span></em>, <em class="sig-param"><span class="n">period_fmt</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'%d/%m/%Y'</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">6.5, 3.5</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fig</span><span class="p">:</span> <span class="n">matplotlib.pyplot.figure</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cmap</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>matplotlib.colors.Colormap<span class="p">, </span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">'dark24'</span></em>, <em class="sig-param"><span class="n">tick_label_size</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">period_label</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>bool<span class="p">, </span>Dict<span class="p">[</span>str<span class="p">, </span>Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">, </span>str<span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">dpi</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">144</span></em>, <em class="sig-param"><span class="n">orientation</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'h'</span></em>, <em class="sig-param"><span class="n">sort</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'desc'</span></em>, <em class="sig-param"><span class="n">label_bars</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">bar_label_size</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">n_visible</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">line_width</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span><a class="reference internal" href="pandas_alive.charts.ScatterChart.html#pandas_alive.charts.ScatterChart" title="pandas_alive.charts.ScatterChart">pandas_alive.charts.ScatterChart</a><span class="p">, </span><a class="reference internal" href="pandas_alive.charts.BarChart.html#pandas_alive.charts.BarChart" title="pandas_alive.charts.BarChart">pandas_alive.charts.BarChart</a><span class="p">, </span><a class="reference internal" href="pandas_alive.charts.LineChart.html#pandas_alive.charts.LineChart" title="pandas_alive.charts.LineChart">pandas_alive.charts.LineChart</a><span class="p">]</span><a class="reference internal" href="../_modules/pandas_alive/plotting.html#plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandas_alive.plotting.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create animated charts with matplotlib. Optionally the index can label the time period. This is very resource intensive, will take time to run and export.</p>
+<code class="sig-prename descclassname">pandas_alive.plotting.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kind</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'barh'</span></em>, <em class="sig-param"><span class="n">interpolate_period</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">steps_per_period</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em>, <em class="sig-param"><span class="n">period_length</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">500</span></em>, <em class="sig-param"><span class="n">period_fmt</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'%d/%m/%Y'</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">6.5, 3.5</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fig</span><span class="p">:</span> <span class="n">matplotlib.pyplot.figure</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cmap</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>matplotlib.colors.Colormap<span class="p">, </span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">'dark24'</span></em>, <em class="sig-param"><span class="n">tick_label_size</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">period_label</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>bool<span class="p">, </span>Dict<span class="p">[</span>str<span class="p">, </span>Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">, </span>str<span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">period_summary_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dpi</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">144</span></em>, <em class="sig-param"><span class="n">orientation</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'h'</span></em>, <em class="sig-param"><span class="n">sort</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'desc'</span></em>, <em class="sig-param"><span class="n">label_bars</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">bar_label_size</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">n_visible</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fixed_order</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>bool<span class="p">, </span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">fixed_max</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">perpendicular_bar_func</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>Callable<span class="p">, </span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">line_width</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span><a class="reference internal" href="pandas_alive.charts.ScatterChart.html#pandas_alive.charts.ScatterChart" title="pandas_alive.charts.ScatterChart">pandas_alive.charts.ScatterChart</a><span class="p">, </span><a class="reference internal" href="pandas_alive.charts.BarChart.html#pandas_alive.charts.BarChart" title="pandas_alive.charts.BarChart">pandas_alive.charts.BarChart</a><span class="p">, </span><a class="reference internal" href="pandas_alive.charts.LineChart.html#pandas_alive.charts.LineChart" title="pandas_alive.charts.LineChart">pandas_alive.charts.LineChart</a><span class="p">]</span><a class="reference internal" href="../_modules/pandas_alive/plotting.html#plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandas_alive.plotting.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create animated charts with matplotlib and pandas</p>
+<p>Data must be in ‘wide’ format where each row represents a single time period and each
+column represents a distinct category. Optionally, the index can label the time period.
+Bar height and location change linearly from one time period to the next.
+This is resource intensive - Start with just a few rows of data to test.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input_df</strong> (<em>pd.DataFrame</em>) – Input dataframe containing data to be plotted. Function will attempt to plot as many columns of data as possible.</p></li>
-<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – If None returns instance of chart to be used later with <cite>.save()</cite> or <cite>.get_html5_video()</cite>. Defaults to None.</p></li>
-<li><p><strong>x</strong> (<em>str</em><em>, </em><em>optional</em>) – Intended for future use, currently does nothing. Defaults to None.</p></li>
-<li><p><strong>y</strong> (<em>str</em><em>, </em><em>optional</em>) – Intended for future use, currently does nothing.. Defaults to None.</p></li>
-<li><p><strong>kind</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of chart to use, see get_allowed_kinds for possible options. Defaults to “barh”.</p></li>
-<li><p><strong>n_visible</strong> (<em>int</em><em>, </em><em>optional</em>) – Show top/bottom N values in bar chart, not implemented for line chart currently. Defaults to None.</p></li>
-<li><p><strong>line_width</strong> (<em>int</em><em>, </em><em>optional</em>) – Line width for Line charts, applies to all lines. Defaults to 3.</p></li>
-<li><p><strong>use_index</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use index for time axis. Defaults to True.</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – If a string, save animation to that filename location. Defaults to None.</p></li>
+<li><p><strong>kind</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of chart to use. Defaults to “barh”.</p></li>
+<li><p><strong>interpolate_period</strong> (<em>bool</em><em>, </em><em>optional</em>) – <p>Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaullts to <cite>True</cite>.
+When set to <cite>True</cite>, for example, the two consecutive periods 2020-03-29 and 2020-03-30 would yield a new index of</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">interpolate_period</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">steps_per_period</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">    2020-03-29 00:00:00</span>
+<span class="go">    2020-03-29 06:00:00</span>
+<span class="go">    2020-03-29 12:00:00</span>
+<span class="go">    2020-03-29 18:00:00</span>
+<span class="go">    2020-03-30 00:00:00</span>
+</pre></div>
+</div>
+</p></li>
 <li><p><strong>steps_per_period</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of steps to go from one time period to the next. Animation will interpolate between time periods. Defaults to 10.</p></li>
 <li><p><strong>period_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of milliseconds to animate each period (row). Defaults to 500.</p></li>
-<li><p><strong>figsize</strong> (<em>typing.Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Matplotlib figure size in inches, will be overridden if fig supplied. Defaults to (6.5, 3.5).</p></li>
-<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Title of plot, will become subplot title if used in multiple. Defaults to None.</p></li>
-<li><p><strong>fig</strong> (<em>plt.figure</em><em>, </em><em>optional</em>) – For specifying figure outside of this function. Defaults to None.</p></li>
-<li><p><strong>enable_legend</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show legend on line charts, will run off screen for two many lines. Defaults to False.</p></li>
-<li><p><strong>orientation</strong> (<em>str</em><em>, </em><em>optional</em>) – Orientation of bar chart, horizontal (‘h’) or vertical (‘v’). Defaults to “h”.</p></li>
-<li><p><strong>sort</strong> (<em>str</em><em>, </em><em>optional</em>) – Choose how to sort the bar chart. Use ‘desc’ to put the largest bars on top, and ‘asc’ for the largest bars on bottom. Defaults to “desc”.</p></li>
-<li><p><strong>label_bars</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to label the bars with their value to the right. Defaults to None.</p></li>
-<li><p><strong>cmap</strong> (<em>typing.Union</em><em>[</em><em>str</em><em>, </em><em>matplotlib.colors.Colormap</em><em>, </em><em>typing.List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Provide string of colormap name, colormap instance, single color instance or list of colors as supported by <a class="reference external" href="https://matplotlib.org/2.0.2/api/colors_api.html">https://matplotlib.org/2.0.2/api/colors_api.html</a>. Defaults to “dark24”.</p></li>
-<li><p><strong>bar_label_size</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Size in points of numeric labels just outside of bars. Defaults to 7.</p></li>
+<li><p><strong>period_fmt</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Either a string with date directives or a new-style (Python 3.6+) formatted string.
+For a string with a date directive, find the complete list here <a class="reference external" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes">https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes</a></p>
+<p>String with date directives
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">period_fmt</span><span class="o">=</span><span class="s1">&#39;%B </span><span class="si">%d</span><span class="s1">, %Y&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will change 2020/03/29 to March 29, 2020</p>
+<p>For new-style formatted string. Use curly braces and the variable <cite>x</cite>,
+which will be passed the current period’s index value.
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Period </span><span class="si">{x:10.2f}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>Date directives will only be used for datetime indexes. Defaults to “%d/%m/%Y”.</p>
+</p></li>
+<li><p><strong>figsize</strong> (<em>typing.Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – matplotlib figure size in inches. Will be overridden if figure supplied to <cite>fig</cite>. Defaults to (6.5, 3.5).</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Title of plot. Defaults to None.</p></li>
+<li><p><strong>fig</strong> (<em>plt.figure</em><em>, </em><em>optional</em>) – For greater control over the aesthetics, supply your own figure. Defaults to None.</p></li>
+<li><p><strong>cmap</strong> (<em>typing.Union</em><em>[</em><em>str</em><em>, </em><em>Colormap</em><em>, </em><em>typing.List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Provide string of colormap name, colormap instance, single color instance or list of colors as supported by <a class="reference external" href="https://matplotlib.org/2.0.2/api/colors_api.html">https://matplotlib.org/2.0.2/api/colors_api.html</a>. Defaults to “dark24”.</p></li>
 <li><p><strong>tick_label_size</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Size in points of tick labels. Defaults to 7.</p></li>
-<li><p><strong>period_annotation_size</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Size in points of period annotation on chart. Defaults to 16.</p></li>
-<li><p><strong>x_period_annotation_location</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Custom x location for period annotation. Must be supplied with custom y location. Defaults to None.</p></li>
-<li><p><strong>y_period_annotation_location</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Custom y location for period annotation. Must be supplied with custom x location.. Defaults to None.</p></li>
-<li><p><strong>append_period_to_title</strong> (<em>bool</em><em>, </em><em>optional</em>) – Append period annotation to title, this disables period annotation on chart. Defaults to None.</p></li>
-<li><p><strong>show_period_annotation</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show period annotation on chart. Useful to hide when plotting multiple charts. Defaults to True.</p></li>
-<li><p><strong>dpi</strong> (<em>float</em><em>, </em><em>optional</em>) – It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly.. Defaults to 144.</p></li>
+<li><p><strong>period_label</strong> (<em>typing.Union</em><em>[</em><em>bool</em><em>, </em><em>typing.Dict</em><em>[</em><em>str</em><em>, </em><em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>, </em><em>str</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – <p>If <cite>True</cite> or dict, use the index as a large text label on the axes whose value changes.
+Use a dictionary to supply the exact position of the period along with any valid parameters of the matplotlib <cite>text</cite> method.
+At a minimum, you must supply both ‘x’ and ‘y’ in axes coordinates
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">custom_period_location</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">99</span><span class="p">,</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">8</span><span class="p">,</span>
+    <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;va&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span>
+    <span class="p">}</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">period_label</span><span class="o">=</span><span class="n">custom_period_location</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If <cite>False</cite> - don’t place label on axes. Defaults to True.</p>
+</p></li>
+<li><p><strong>period_summary_func</strong> (<em>typing.Callable</em><em>, </em><em>optional</em>) – <p>Custom text added to the axes each period.
+Create a user-defined function that accepts two pandas Series of the current time period’s values and ranks. It must return a dictionary containing at a minimum the keys “x”, “y”, and “s” which will be passed to the matplotlib <cite>text</cite> method. Defaults to None.
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Total Generation: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">85</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">period_summary_func</span><span class="o">=</span><span class="n">func</span><span class="p">)</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><strong>dpi</strong> (<em>float</em><em>, </em><em>optional</em>) – It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly. Defaults to 144.</p></li>
+<li><p><strong>sort</strong> (<em>str</em><em>, </em><em>optional</em>) – ‘asc’ or ‘desc’. Choose how to sort the bars. Use ‘desc’ to put largest bars on top and ‘asc’ to place largest bars on bottom. Defaults to “desc”.</p></li>
+<li><p><strong>label_bars</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to label the bars with their value on their right. Defaults to True.</p></li>
+<li><p><strong>bar_label_size</strong> (<em>typing.Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Size in points or relative size str of numeric labels just outside of the bars. Defaults to 7.</p></li>
+<li><p><strong>n_visible</strong> (<em>int</em><em>, </em><em>optional</em>) – Choose the maximum number of bars to display on the graph. By default, use all bars. New bars entering the race will appear from the edge of the axes. Defaults to None.</p></li>
+<li><p><strong>fixed_order</strong> (<em>typing.Union</em><em>[</em><em>bool</em><em>, </em><em>list</em><em>]</em><em>, </em><em>optional</em>) – When <cite>False</cite>, bar order changes every time period to correspond
+with <cite>sort</cite>. When <cite>True</cite>, bars remained fixed according to their
+final value corresponding with <cite>sort</cite>. Otherwise, provide a list
+of the exact order of the categories for the entire duration. Defaults to False.</p></li>
+<li><p><strong>fixed_max</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to fix the maximum value of the axis containing the values.
+When <cite>False</cite>, the axis for the values will have its maximum (xlim/ylim)
+just after the largest bar of the current time period.
+The axis maximum will change along with the data.
+When True, the maximum axis value will remain constant for the
+duration of the animation. For example, in a horizontal bar chart,
+if the largest bar has a value of 100 for the first time period and
+10,000 for the last time period. The xlim maximum will be 10,000
+for each frame. Defaults to False.</p></li>
+<li><p><strong>perpendicular_bar_func</strong> (<em>typing.Union</em><em>[</em><em>typing.Callable</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – <p>Creates a single bar perpendicular to the main bars that spans the length of the axis.</p>
+<p>Use either a string that the DataFrame <cite>agg</cite> method understands or a
+user-defined function.</p>
+<p>DataFrame strings - ‘mean’, ‘median’, ‘max’, ‘min’, etc..</p>
+<p>The function is passed two pandas Series of the current time period’s
+data and ranks. It must return a single value.
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="o">.</span><span class="mi">75</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Defaults to None.</p>
+</p></li>
+<li><p><strong>line_width</strong> (<em>int</em><em>, </em><em>optional</em>) – Line width provided on line charts. Defaults to 2.</p></li>
+<li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of scatter points on scatter charts. Defaults to 2.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If supplied kind is not supported</p>
+<dd class="field-even"><p><strong>ValueError</strong> – If chart type is not supported, raise error</p>
 </dd>
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Returns Chart instance to be used with animate_multiple or .save()</p>
+<dd class="field-odd"><p>Return instance of chart type. Can be used with <cite>pandas_alive.animate_multiple_plots</cite> or <cite>.save()</cite>.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>typing.Union[<a class="reference internal" href="pandas_alive.charts.BarChart.html#pandas_alive.charts.BarChart" title="pandas_alive.charts.BarChart">BarChart</a>,<a class="reference internal" href="pandas_alive.charts.LineChart.html#pandas_alive.charts.LineChart" title="pandas_alive.charts.LineChart">LineChart</a>]</p>
+<dd class="field-even"><p>typing.Union[<a class="reference internal" href="pandas_alive.charts.ScatterChart.html#pandas_alive.charts.ScatterChart" title="pandas_alive.charts.ScatterChart">ScatterChart</a>, <a class="reference internal" href="pandas_alive.charts.BarChart.html#pandas_alive.charts.BarChart" title="pandas_alive.charts.BarChart">BarChart</a>, <a class="reference internal" href="pandas_alive.charts.LineChart.html#pandas_alive.charts.LineChart" title="pandas_alive.charts.LineChart">LineChart</a>]</p>
 </dd>
 </dl>
 </dd></dl>

@@ -1,0 +1,9 @@
+pandas\_alive.\_base\_chart
+===========================
+
+.. rubric:: Description
+.. automodule:: pandas_alive._base_chart
+.. currentmodule:: pandas_alive._base_chart
+
+
+
