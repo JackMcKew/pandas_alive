@@ -63,6 +63,7 @@ class _BaseChart:
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = attr.ib()
+    period_summary_func: typing.Callable = attr.ib()
     # append_period_to_title: bool = attr.ib()
     # x_period_annotation_location: typing.Union[int, float] = attr.ib()
     # y_period_annotation_location: typing.Union[int, float] = attr.ib()
@@ -407,6 +408,15 @@ class _BaseChart:
                 )
             else:
                 self.ax.texts[0].set_text(s)
+
+        if self.period_summary_func:
+            values = self.df.iloc[i]
+            text_dict = self.period_summary_func(values)
+            if 'x' not in text_dict or 'y' not in text_dict or 's' not in text_dict:
+                name = self.period_summary_func.__name__
+                raise ValueError(f'The dictionary returned from `{name}` must contain '
+                                '"x", "y", and "s"')
+            self.ax.text(transform=self.ax.transAxes, **text_dict)
 
     def save(self, filename: str) -> None:
         """ Save method for FuncAnimation
