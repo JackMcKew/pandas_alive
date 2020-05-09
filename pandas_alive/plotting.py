@@ -13,7 +13,8 @@ import typing
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation
-from .charts import BarChart, LineChart, ScatterChart, PieChart
+from .charts import BarChartRace, LineChart, ScatterChart, PieChart
+from typing import Sequence
 
 
 def get_allowed_kinds() -> typing.List[str]:
@@ -22,7 +23,7 @@ def get_allowed_kinds() -> typing.List[str]:
     Returns:
         typing.List[str]: List of implemented chart types
     """
-    return ["barh", "line", "scatter","pie"]
+    return ["race", "line", "scatter","pie"]
 
 
 def verify_filename(filename: str) -> str:
@@ -55,7 +56,7 @@ def plot(
     # Base constructor
     input_df: pd.DataFrame,
     filename: str = None,
-    kind: str = "barh",
+    kind: str = "race",
     interpolate_period: bool = True,
     steps_per_period: int = 10,
     period_length: int = 500,
@@ -84,7 +85,7 @@ def plot(
     # Scatter Chart
     size: int = 2,
     **kwargs,
-) -> typing.Union[ScatterChart, BarChart, LineChart]:
+) -> typing.Union[ScatterChart, BarChartRace, LineChart, PieChart]:
     """
     Create animated charts with matplotlib and pandas
 
@@ -96,7 +97,7 @@ def plot(
     Args:
         filename (str, optional): If a string, save animation to that filename location. Defaults to None.
 
-        kind (str, optional): Type of chart to use. Defaults to "barh".
+        kind (str, optional): Type of chart to use. Defaults to "ra".
 
         interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaullts to `True`.
             When set to `True`, for example, the two consecutive periods 2020-03-29 and 2020-03-30 would yield a new index of
@@ -222,8 +223,8 @@ def plot(
         allowed_kinds = "', '".join(allowed_kinds)
         raise ValueError("Allowed plot kinds are '%s'." % allowed_kinds)
 
-    if kind == "barh":
-        bcr = BarChart(
+    if kind == "race":
+        bcr = BarChartRace(
             df,
             interpolate_period=interpolate_period,
             steps_per_period=steps_per_period,
@@ -323,7 +324,7 @@ def plot(
 
 def animate_multiple_plots(
     filename: str,
-    plots: typing.List[typing.Union[BarChart, LineChart]],
+    plots: typing.List[typing.Union[BarChartRace, LineChart, PieChart, ScatterChart]],
     title: str = None,
     title_fontsize: typing.Union[int, float] = 16,
     dpi: int = 144,

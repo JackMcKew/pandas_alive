@@ -26,7 +26,7 @@ munits.registry[datetime.date] = converter
 munits.registry[datetime.datetime] = converter
 
 @attr.s()
-class BarChart(_BaseChart):
+class BarChartRace(_BaseChart):
     """ BarChart implementation for bar chart races
 
     Args:
