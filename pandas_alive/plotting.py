@@ -75,6 +75,10 @@ def plot(
     label_bars: bool = True,
     bar_label_size: typing.Union[int, float] = 7,
     n_visible: int = None,
+    fixed_order: typing.Union[bool,list] = False,
+    fixed_max: bool = False,
+    perpendicular_bar_func: typing.Union[typing.Callable,str] = None,
+
     # Line Chart
     line_width: int = 2,
     # Scatter Chart
@@ -147,6 +151,9 @@ def plot(
             label_bars=label_bars,
             bar_label_size=bar_label_size,
             n_visible=n_visible,
+            fixed_order=fixed_order,
+            fixed_max=fixed_max,
+            perpendicular_bar_func=perpendicular_bar_func,
             kwargs=kwargs,
         )
         if filename:
