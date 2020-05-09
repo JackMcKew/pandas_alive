@@ -41,6 +41,9 @@ class BarChart(_BaseChart):
     label_bars: bool = attr.ib()
     bar_label_size: typing.Union[int, float] = attr.ib()
     n_visible: int = attr.ib()
+    fixed_order: typing.Union[list,bool] = attr.ib()
+    fixed_max: bool = attr.ib()
+    perpendicular_bar_func: typing.Callable = attr.ib()
 
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
@@ -138,10 +141,14 @@ class BarChart(_BaseChart):
         ax = fig.add_axes(rect)
         if self.orientation == "h":
             ax.set_ylim(limit)
+            if self.fixed_max:
+                ax.set_xlim(0, self.df.values.max().max() * 1.05 * 1.11)
             ax.grid(True, axis="x", color="white")
             ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
         else:
             ax.set_xlim(limit)
+            if self.fixed_max:
+                ax.set_ylim(0, self.df.values.max().max() * 1.05 * 1.11)
             ax.grid(True, axis="y", color="white")
             ax.set_xticklabels(ax.get_xticklabels(), ha="right", rotation=30)
             ax.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
@@ -241,7 +248,8 @@ class BarChart(_BaseChart):
                 color=colors,
                 # **self.kwargs,
             )
-            self.ax.set_xlim(self.ax.get_xlim()[0], bar_length.max() * 1.1)
+            if not self.fixed_max:
+                self.ax.set_xlim(self.ax.get_xlim()[0], bar_length.max() * 1.1)
         else:
             self.ax.bar(
                 bar_location,
@@ -251,7 +259,8 @@ class BarChart(_BaseChart):
                 color=colors,
                 **self.kwargs,
             )
-            self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
+            if not self.fixed_max:
+                self.ax.set_ylim(self.ax.get_ylim()[0], bar_length.max() * 1.16)
 
         super().show_period(i)
 
