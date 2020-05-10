@@ -52,6 +52,7 @@ covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 - [Vertical Bar Charts](#vertical-bar-charts)
 - [Line Charts](#line-charts)
 - [Scatter Charts](#scatter-charts)
+- [Pie Charts](#pie-charts)
 
 #### Horizontal Bar Charts
 
@@ -166,7 +167,7 @@ merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='exampl
 
 ![Example Scatter Chart](examples/example-scatter-chart.gif)
 
-#### Pie Chart
+#### Pie Charts
 
 ``` python
 import pandas_alive
@@ -175,6 +176,8 @@ covid_df = pandas_alive.load_dataset()
 
 covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True)
 ```
+
+![Example Pie Chart](examples/example-pie-chart.gif)
 
 ### Multiple Charts
 
