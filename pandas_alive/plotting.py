@@ -429,6 +429,20 @@ def animate_multiple_plots(
         axes[num].set_axisbelow(True)
         axes[num].tick_params(length=0, labelsize=plot.tick_label_size, pad=2)
         axes[num].set_facecolor(".9")
+        if plot.fixed_max:
+            # Hodgepodge way of fixing this, should refactor to contain all figures and axes
+            if plot.__class__.__name__ == 'BarChartRace':
+                axes[num].set_xlim(axes[num].get_xlim()[0], plot.df.values.max() * 1.1)
+            else:
+                axes[num].set_ylim(
+                    plot.df
+                    .min()
+                    .min(skipna=True),
+                    plot.df
+                    .max()
+                    .max(skipna=True),
+                )
+        # plot.set_x_y_limits(plot.df,0)
         for spine in axes[num].spines.values():
             spine.set_visible(False)
         axes[num].set_title(plot.title)

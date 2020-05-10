@@ -186,10 +186,15 @@ class _BaseChart:
         return chart_colors
 
     def set_x_y_limits(self, df: pd.DataFrame, i: int):
-
-        xlim_start = self.df.index[: i + 1].min()
-        # For avoiding UserWarning on first frame with identical start and end limits
-        xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
+        # TODO fix max for x and y?
+        if self.fixed_max:
+            xlim_start = self.df.index.min()
+            # For avoiding UserWarning on first frame with identical start and end limits
+            xlim_end = self.df.index.max() + pd.Timedelta(seconds=1)
+        else:
+            xlim_start = self.df.index[: i + 1].min()
+            # For avoiding UserWarning on first frame with identical start and end limits
+            xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
         self.ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         if self.fixed_max:
