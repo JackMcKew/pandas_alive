@@ -370,7 +370,7 @@ class ScatterChart(_BaseChart):
             self._points[name]["y"] = []
 
     def plot_point(self, i: int) -> None:
-        super().set_x_y_limits(self.df, i)
+        super().set_x_y_limits(self.df, i,self.ax)
         for name, color in zip(self.data_cols, self.colors):
             self._points[name]["x"].append(self.df[name].index[i])
             self._points[name]["y"].append(self.df[name].iloc[i])
@@ -435,7 +435,7 @@ class LineChart(_BaseChart):
             i (int): Index of frame for animation
         """
         # TODO Somehow implement n visible lines?
-        super().set_x_y_limits(self.df, i)
+        super().set_x_y_limits(self.df, i,self.ax)
         for name, color in zip(self.data_cols, self.line_colors):
 
             self._lines[name]["x"].append(self.df[name].index[i])
@@ -545,3 +545,95 @@ class PieChart(_BaseChart):
         """ Initialization function for animation
         """
         self.ax.pie([])
+
+
+@attr.s
+class BarChart(_BaseChart):
+    """ Animated Bar Chart implementation
+
+    Args:
+        BaseChart (BaseChart): Shared Base Chart class inherit to all charts
+
+    Returns:
+        BarChart: Animated Bar Chart class for use with multiple plots or save
+    """
+
+    def __attrs_post_init__(self):
+
+        super().__attrs_post_init__()
+        self.bar_colors = self.get_colors(self.cmap)
+
+        self._bars: typing.Dict = {}
+        for name in self.data_cols:
+            self._bars[name] = {}
+            self._bars[name]["x"] = []
+            self._bars[name]["y"] = []
+
+    def plot_bars(self, i: int) -> None:
+        """ Function for plotting all lines in dataframe
+
+        Args:
+            i (int): Index of frame for animation
+        """
+
+        # for text in self.ax.texts[int(bool(self.period_fmt)):]:
+        #     text.remove()
+        
+        super().set_x_y_limits(self.df, i,self.ax)
+
+        for name, color in zip(self.data_cols, self.bar_colors):
+
+            self._bars[name]["x"].append(self.df[name].index[i])
+            self._bars[name]["y"].append(self.df[name].iloc[i])
+            self.ax.bar(
+                self._bars[name]["x"],
+                self._bars[name]["y"],
+                # self.line_width,
+                color=color,
+                **self.kwargs,
+            )
+        # print(self.df[self.data_cols].notnull())
+        # filt_nan = self.df[self.data_cols].iloc[i].notnull()
+
+        # print(self.df[self.data_cols].iloc[i][filt_nan])
+        # bars = self.df[self.data_cols].iloc[i][filt_nan]
+
+        # bar_color_list = []
+        # for label in bars.index:
+        #     bar_color_list.append(self.bar_colors[label])
+
+        # self.ax.bar(
+        #     bars.,
+        #     height=bars.values,
+        #     color=bar_color_list,
+        #     **self.kwargs
+        # )
+
+        # for name, color in zip(self.data_cols, self.wedge_colors):
+
+        #     self._wedges[name]["size"].append(self.df[name].index[i])
+        #     # self._lines[name]["y"].append(self.df[name].iloc[i])
+        #     self.ax.pie(
+        #         self._wedges[name]["size"],
+        #         label=name,
+        #         color=color,
+        #         **self.kwargs,
+        #     )
+
+    def anim_func(self, i: int) -> None:
+        """ Animation function, removes all lines and updates legend/period annotation
+
+        Args:
+            i (int): Index of frame of animation
+        """
+        for bar in self.ax.containers:
+            bar.remove()
+        if self.period_fmt:
+            self.show_period(i)
+        self.plot_bars(i)
+        
+
+    def init_func(self) -> None:
+        """ Initialization function for animation
+        """
+        self.ax.bar([],[])
