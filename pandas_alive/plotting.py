@@ -431,8 +431,10 @@ def animate_multiple_plots(
         axes[num].set_facecolor(".9")
         if plot.fixed_max:
             # Hodgepodge way of fixing this, should refactor to contain all figures and axes
-            if plot.__class__.__name__ == 'BarChartRace':
+            if plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "h":
                 axes[num].set_xlim(axes[num].get_xlim()[0], plot.df.values.max() * 1.1)
+            elif plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "v":
+                axes[num].set_ylim(axes[num].get_ylim()[0], plot.df.values.max() * 1.1)
             else:
                 axes[num].set_ylim(
                     plot.df
