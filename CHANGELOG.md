@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.12] - 2020-05-10
+
+- `fixed_max` optional for all chart types
+- `fixed_max` amended to work with multiple plots
+
 ## [0.1.11] - 2020-05-09
 
 - `period_summary_func` provided for charts to display overall period calculations on plot
