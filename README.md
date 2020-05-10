@@ -76,6 +76,42 @@ elec_df.fillna(0).plot_animated('examples/example-electricity-generated-australi
 
 ![Electricity Example Line Chart](examples/example-electricity-generated-australia.gif)
 
+``` python
+import pandas_alive
+
+covid_df = pandas_alive.load_dataset()
+
+def current_total(values):
+    total = values.sum()
+    s = f'Total : {int(total)}'
+    return {'x': .85, 'y': .2, 's': s, 'ha': 'right', 'size': 11}
+
+covid_df.plot_animated(filename='examples/summary-func-example.gif',period_summary_func=current_total)
+```
+
+![Summary Func Example](examples/summary-func-example.gif)
+
+``` python
+import pandas as pd
+import pandas_alive
+
+elec_df = pd.read_csv("data/Aus_Elec_Gen_1980_2018.csv",index_col=0,parse_dates=[0],thousands=',')
+
+elec_df.fillna(0).plot_animated('examples/fixed-example.gif',period_fmt="%Y",title='Australian Electricity Generation Sources 1980-2018',fixed_max=True,fixed_order=True)
+```
+
+![Fixed Example](examples/fixed-example.gif)
+
+``` python
+import pandas_alive
+
+covid_df = pandas_alive.load_dataset()
+
+covid_df.plot_animated(filename='examples/perpendicular-example.gif',perpendicular_bar_func='mean')
+```
+
+![Perpendicular Example](examples/perpendicular-example.gif)
+
 #### Vertical Bar Charts
 
 ``` python
@@ -200,6 +236,10 @@ Documentation is provided at <https://jackmckew.github.io/pandas_alive/>
 ## Contributing
 
 Pull requests are welcome! Please help to cover more and more chart types!
+
+### [Changelog](CHANGELOG.md)
+
+[Changelog](CHANGELOG.md)
 
 ``` python
 
