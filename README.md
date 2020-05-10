@@ -166,6 +166,16 @@ merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='exampl
 
 ![Example Scatter Chart](examples/example-scatter-chart.gif)
 
+#### Pie Chart
+
+``` python
+import pandas_alive
+
+covid_df = pandas_alive.load_dataset()
+
+covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True)
+```
+
 ### Multiple Charts
 
 `pandas_alive` supports multiple animated charts in a single visualisation.
@@ -181,7 +191,7 @@ covid_df = pandas_alive.load_dataset()
 
 animated_line_chart = covid_df.diff().fillna(0).plot_animated(kind='line',period_label=False)
 
-animated_bar_chart = covid_df.plot_animated(kind='barh',n_visible=10)
+animated_bar_chart = covid_df.plot_animated(n_visible=10)
 
 pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart])
 ```
@@ -201,13 +211,67 @@ animated_line_chart = (
     .plot_animated(kind="line", title="Total % Change in Population",period_label=False)
 )
 
-animated_bar_chart = urban_df.plot_animated(kind='barh',n_visible=10,title='Top 10 Populous Countries',period_fmt="%Y")
+animated_bar_chart = urban_df.plot_animated(n_visible=10,title='Top 10 Populous Countries',period_fmt="%Y")
 
 pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018',adjust_subplot_top=0.85)
 ```
 
 ![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
 
+
+``` python
+import pandas_alive
+import pandas as pd
+
+data_raw = pd.read_csv(
+    "https://raw.githubusercontent.com/owid/owid-datasets/master/datasets/Long%20run%20life%20expectancy%20-%20Gapminder%2C%20UN/Long%20run%20life%20expectancy%20-%20Gapminder%2C%20UN.csv"
+)
+
+list_G7 = [
+    "Canada",
+    "France",
+    "Germany",
+    "Italy",
+    "Japan",
+    "United Kingdom",
+    "United States",
+]
+
+data_raw = data_raw.pivot(
+    index="Year", columns="Entity", values="Life expectancy (Gapminder, UN)"
+)
+
+data = pd.DataFrame()
+data["Year"] = data_raw.reset_index()["Year"]
+for country in list_G7:
+    data[country] = data_raw[country].values
+
+data = data.fillna(method="pad")
+data = data.fillna(0)
+data = data.set_index("Year").loc[1900:].reset_index()
+
+data["Year"] = pd.to_datetime(data.reset_index()["Year"].astype(str))
+
+data = data.set_index("Year")
+
+animated_bar_chart = data.plot_animated(
+    period_fmt="%Y",perpendicular_bar_func="mean", period_length=200,fixed_max=True
+)
+
+animated_line_chart = data.plot_animated(
+    kind="line", period_fmt="%Y", period_length=200,fixed_max=True
+)
+
+pandas_alive.animate_multiple_plots(
+    "examples/life-expectancy.gif",
+    plots=[animated_bar_chart, animated_line_chart],
+    title="Life expectancy in G7 countries up to 2015",
+    adjust_subplot_left=0.2,
+)
+
+```
+
+![Life Expectancy Chart](examples/life-expectancy.gif)
 
 ## Inspiration
 
