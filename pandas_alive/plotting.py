@@ -13,7 +13,7 @@ import typing
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation
-from .charts import BarChartRace, LineChart, ScatterChart, PieChart
+from .charts import BarChartRace, LineChart, ScatterChart, PieChart, BarChart
 from typing import Sequence
 
 
@@ -23,7 +23,7 @@ def get_allowed_kinds() -> typing.List[str]:
     Returns:
         typing.List[str]: List of implemented chart types
     """
-    return ["race", "line", "scatter","pie"]
+    return ["race", "line", "scatter","pie","bar"]
 
 
 def verify_filename(filename: str) -> str:
@@ -319,6 +319,27 @@ def plot(
         if filename:
             animated_pie.save(verify_filename(filename))
         return animated_pie
+    elif kind == "bar":
+        animated_bar = BarChart(
+            df,
+            interpolate_period=interpolate_period,
+            steps_per_period=steps_per_period,
+            period_length=period_length,
+            period_fmt=period_fmt,
+            figsize=figsize,
+            title=title,
+            fig=fig,
+            cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_label=period_label,
+            period_summary_func=period_summary_func,
+            fixed_max=fixed_max,
+            dpi=dpi,
+            kwargs=kwargs,
+        )
+        if filename:
+            animated_bar.save(verify_filename(filename))
+        return animated_bar
 
 
 
@@ -404,12 +425,31 @@ def animate_multiple_plots(
 
     for num, plot in enumerate(plots):
         # plot.ax = fig.add_subplot(spec[num:,0])[0]
-        axes[num].grid(True, axis="x", color="white")
-        axes[num].set_axisbelow(True)
-        axes[num].tick_params(length=0, labelsize=plot.tick_label_size, pad=2)
-        axes[num].set_facecolor(".9")
-        for spine in axes[num].spines.values():
-            spine.set_visible(False)
+        # axes[num].grid(True, axis="x", color="white")
+        # axes[num].set_axisbelow(True)
+        # axes[num].tick_params(length=0, labelsize=plot.tick_label_size, pad=2)
+        # axes[num].set_facecolor(".9")
+        axes[num] = plot.apply_style(axes[num])
+        # plot.set_x_y_limits(plot.df,1,axes[num])
+        if plot.fixed_max:
+            # Hodgepodge way of fixing this, should refactor to contain all figures and axes
+            # TODO plot.axes_format(self,ax) and pass current ax or desired ax
+            if plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "h":
+                axes[num].set_xlim(axes[num].get_xlim()[0], plot.df.values.max() * 1.1)
+            elif plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "v":
+                axes[num].set_ylim(axes[num].get_ylim()[0], plot.df.values.max() * 1.1)
+            # else:
+            #     axes[num].set_ylim(
+            #         plot.df
+            #         .min()
+            #         .min(skipna=True),
+            #         plot.df
+            #         .max()
+            #         .max(skipna=True),
+            #     )
+        
+        # for spine in axes[num].spines.values():
+        #     spine.set_visible(False)
         axes[num].set_title(plot.title)
         plot.ax = axes[num]
 

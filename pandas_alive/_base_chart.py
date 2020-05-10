@@ -185,15 +185,20 @@ class _BaseChart:
 
         return chart_colors
 
-    def set_x_y_limits(self, df: pd.DataFrame, i: int):
-
-        xlim_start = self.df.index[: i + 1].min()
-        # For avoiding UserWarning on first frame with identical start and end limits
-        xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
-        self.ax.set_xlim(xlim_start, xlim_end)
+    def set_x_y_limits(self, df: pd.DataFrame, i: int, ax):
+        # TODO fix max for x and y?
+        if self.fixed_max:
+            xlim_start = self.df.index.min()
+            # For avoiding UserWarning on first frame with identical start and end limits
+            xlim_end = self.df.index.max() + pd.Timedelta(seconds=1)
+        else:
+            xlim_start = self.df.index[: i + 1].min()
+            # For avoiding UserWarning on first frame with identical start and end limits
+            xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
+        ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         if self.fixed_max:
-            self.ax.set_ylim(
+            ax.set_ylim(
                 self.df
                 .min()
                 .min(skipna=True),
@@ -202,7 +207,7 @@ class _BaseChart:
                 .max(skipna=True),
             )
         else:
-            self.ax.set_ylim(
+            ax.set_ylim(
                 self.df.iloc[: i + 1]
                 .select_dtypes(include=[np.number])
                 .min()
@@ -379,6 +384,15 @@ class _BaseChart:
         height = orig_pos.y1 - bottom
         return [left, bottom, width, height]
 
+    def apply_style(self, ax):
+        ax.grid(True, axis="x", color="white")
+        ax.set_axisbelow(True)
+        ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
+        ax.set_facecolor(".9")
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+        return ax
+
     def create_figure(self) -> typing.Tuple[plt.figure, plt.axes]:
         """ Create base figure with styling, can be overridden if styling unwanted
 
@@ -391,12 +405,13 @@ class _BaseChart:
         rect = self.calculate_new_figsize(fig)
         ax = fig.add_axes(rect)
 
-        ax.grid(True, axis="x", color="white")
-        ax.set_axisbelow(True)
-        ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
-        ax.set_facecolor(".9")
-        for spine in ax.spines.values():
-            spine.set_visible(False)
+        ax = self.apply_style(ax)
+        # ax.grid(True, axis="x", color="white")
+        # ax.set_axisbelow(True)
+        # ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
+        # ax.set_facecolor(".9")
+        # for spine in ax.spines.values():
+        #     spine.set_visible(False)
         return fig, ax
 
     def show_period(self, i: int) -> None:
