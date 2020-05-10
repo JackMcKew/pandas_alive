@@ -1,0 +1,6 @@
+PieChart.rename\_data\_columns
+==============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.rename_data_columns

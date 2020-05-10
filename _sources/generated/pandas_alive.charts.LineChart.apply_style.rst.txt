@@ -1,0 +1,6 @@
+LineChart.apply\_style
+======================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.apply_style

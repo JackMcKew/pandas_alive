@@ -1,0 +1,61 @@
+BarChartRace
+============
+
+.. currentmodule:: pandas_alive.charts
+
+.. autoclass:: BarChartRace
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+      :toctree:
+   
+      BarChartRace.__init__
+   
+      BarChartRace.anim_func
+   
+      BarChartRace.apply_style
+   
+      BarChartRace.calculate_new_figsize
+   
+      BarChartRace.calculate_ranks
+   
+      BarChartRace.create_figure
+   
+      BarChartRace.get_colors
+   
+      BarChartRace.get_data_cols
+   
+      BarChartRace.get_frames
+   
+      BarChartRace.get_html5_video
+   
+      BarChartRace.get_interpolated_df
+   
+      BarChartRace.get_label_position
+   
+      BarChartRace.get_period_label
+   
+      BarChartRace.init_func
+   
+      BarChartRace.make_animation
+   
+      BarChartRace.plot_bars
+   
+      BarChartRace.rename_data_columns
+   
+      BarChartRace.save
+   
+      BarChartRace.set_x_y_limits
+   
+      BarChartRace.show_period
+   
+      BarChartRace.validate_params
+   
+   
+   

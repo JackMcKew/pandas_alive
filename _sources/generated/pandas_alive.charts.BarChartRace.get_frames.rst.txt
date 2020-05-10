@@ -1,0 +1,6 @@
+BarChartRace.get\_frames
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.get_frames

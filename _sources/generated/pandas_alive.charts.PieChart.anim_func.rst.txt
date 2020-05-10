@@ -1,0 +1,6 @@
+PieChart.anim\_func
+===================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.anim_func

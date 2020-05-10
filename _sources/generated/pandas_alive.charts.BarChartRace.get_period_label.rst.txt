@@ -1,0 +1,6 @@
+BarChartRace.get\_period\_label
+===============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.get_period_label

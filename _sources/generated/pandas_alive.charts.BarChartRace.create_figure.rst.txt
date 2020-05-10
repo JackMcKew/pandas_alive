@@ -1,0 +1,6 @@
+BarChartRace.create\_figure
+===========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.create_figure

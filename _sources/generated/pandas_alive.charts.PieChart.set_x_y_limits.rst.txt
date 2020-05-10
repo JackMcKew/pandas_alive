@@ -1,0 +1,6 @@
+PieChart.set\_x\_y\_limits
+==========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.set_x_y_limits

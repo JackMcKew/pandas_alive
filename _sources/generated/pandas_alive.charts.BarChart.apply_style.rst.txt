@@ -1,0 +1,6 @@
+BarChart.apply\_style
+=====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChart.apply_style

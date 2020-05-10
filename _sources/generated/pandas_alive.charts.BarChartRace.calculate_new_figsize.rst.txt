@@ -1,0 +1,6 @@
+BarChartRace.calculate\_new\_figsize
+====================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.calculate_new_figsize

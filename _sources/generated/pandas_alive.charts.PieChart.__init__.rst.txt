@@ -1,0 +1,6 @@
+PieChart.\_\_init\_\_
+=====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.__init__

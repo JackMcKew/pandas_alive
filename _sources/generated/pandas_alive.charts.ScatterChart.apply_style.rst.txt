@@ -1,0 +1,6 @@
+ScatterChart.apply\_style
+=========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.apply_style

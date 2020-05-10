@@ -1,0 +1,6 @@
+PieChart.plot\_wedge
+====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.plot_wedge

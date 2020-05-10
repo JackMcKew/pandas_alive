@@ -1,0 +1,6 @@
+BarChartRace.get\_colors
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.get_colors

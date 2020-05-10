@@ -1,0 +1,6 @@
+PieChart.show\_period
+=====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.show_period

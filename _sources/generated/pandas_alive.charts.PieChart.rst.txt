@@ -1,0 +1,57 @@
+PieChart
+========
+
+.. currentmodule:: pandas_alive.charts
+
+.. autoclass:: PieChart
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+      :toctree:
+   
+      PieChart.__init__
+   
+      PieChart.anim_func
+   
+      PieChart.apply_style
+   
+      PieChart.calculate_new_figsize
+   
+      PieChart.create_figure
+   
+      PieChart.get_colors
+   
+      PieChart.get_data_cols
+   
+      PieChart.get_frames
+   
+      PieChart.get_html5_video
+   
+      PieChart.get_interpolated_df
+   
+      PieChart.get_period_label
+   
+      PieChart.init_func
+   
+      PieChart.make_animation
+   
+      PieChart.plot_wedge
+   
+      PieChart.rename_data_columns
+   
+      PieChart.save
+   
+      PieChart.set_x_y_limits
+   
+      PieChart.show_period
+   
+      PieChart.validate_params
+   
+   
+   

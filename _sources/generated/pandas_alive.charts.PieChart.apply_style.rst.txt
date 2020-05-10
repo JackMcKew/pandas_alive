@@ -1,0 +1,6 @@
+PieChart.apply\_style
+=====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.apply_style

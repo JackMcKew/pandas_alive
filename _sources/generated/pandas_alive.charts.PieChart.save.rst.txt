@@ -1,0 +1,6 @@
+PieChart.save
+=============
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.save

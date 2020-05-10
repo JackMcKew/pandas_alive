@@ -1,0 +1,6 @@
+PieChart.get\_interpolated\_df
+==============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.get_interpolated_df

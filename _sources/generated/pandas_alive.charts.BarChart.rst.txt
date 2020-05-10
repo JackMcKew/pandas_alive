@@ -19,9 +19,9 @@ BarChart
    
       BarChart.anim_func
    
-      BarChart.calculate_new_figsize
+      BarChart.apply_style
    
-      BarChart.calculate_ranks
+      BarChart.calculate_new_figsize
    
       BarChart.create_figure
    
@@ -34,8 +34,6 @@ BarChart
       BarChart.get_html5_video
    
       BarChart.get_interpolated_df
-   
-      BarChart.get_label_position
    
       BarChart.get_period_label
    

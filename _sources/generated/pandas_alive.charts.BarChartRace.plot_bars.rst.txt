@@ -1,0 +1,6 @@
+BarChartRace.plot\_bars
+=======================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.plot_bars

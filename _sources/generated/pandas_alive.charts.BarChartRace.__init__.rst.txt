@@ -1,0 +1,6 @@
+BarChartRace.\_\_init\_\_
+=========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.__init__

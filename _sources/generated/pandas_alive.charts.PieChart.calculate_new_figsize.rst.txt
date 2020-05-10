@@ -1,0 +1,6 @@
+PieChart.calculate\_new\_figsize
+================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.calculate_new_figsize

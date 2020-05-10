@@ -163,7 +163,8 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">Colormap</span>
 <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
-<span class="kn">from</span> <span class="nn">.charts</span> <span class="kn">import</span> <span class="n">BarChart</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">ScatterChart</span>
+<span class="kn">from</span> <span class="nn">.charts</span> <span class="kn">import</span> <span class="n">BarChartRace</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">ScatterChart</span><span class="p">,</span> <span class="n">PieChart</span><span class="p">,</span> <span class="n">BarChart</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
 
 
 <div class="viewcode-block" id="get_allowed_kinds"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.get_allowed_kinds.html#pandas_alive.plotting.get_allowed_kinds">[docs]</a><span class="k">def</span> <span class="nf">get_allowed_kinds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
@@ -172,7 +173,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        typing.List[str]: List of implemented chart types</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;barh&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;scatter&quot;</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;scatter&quot;</span><span class="p">,</span><span class="s2">&quot;pie&quot;</span><span class="p">,</span><span class="s2">&quot;bar&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="verify_filename"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.verify_filename.html#pandas_alive.plotting.verify_filename">[docs]</a><span class="k">def</span> <span class="nf">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -205,7 +206,7 @@
     <span class="c1"># Base constructor</span>
     <span class="n">input_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;barh&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span>
     <span class="n">interpolate_period</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">steps_per_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">period_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
@@ -219,6 +220,7 @@
         <span class="nb">bool</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
     <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">period_summary_func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fixed_max</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
     <span class="c1"># Bar chart</span>
     <span class="n">orientation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span>
@@ -227,14 +229,13 @@
     <span class="n">bar_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
     <span class="n">n_visible</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fixed_order</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">fixed_max</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">perpendicular_bar_func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="c1"># Line Chart</span>
     <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="c1"># Scatter Chart</span>
     <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">ScatterChart</span><span class="p">,</span> <span class="n">BarChart</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">ScatterChart</span><span class="p">,</span> <span class="n">BarChartRace</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">PieChart</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create animated charts with matplotlib and pandas</span>
 
@@ -246,7 +247,7 @@
 <span class="sd">    Args:</span>
 <span class="sd">        filename (str, optional): If a string, save animation to that filename location. Defaults to None.</span>
 
-<span class="sd">        kind (str, optional): Type of chart to use. Defaults to &quot;barh&quot;.</span>
+<span class="sd">        kind (str, optional): Type of chart to use. Defaults to &quot;ra&quot;.</span>
 
 <span class="sd">        interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaullts to `True`.</span>
 <span class="sd">            When set to `True`, for example, the two consecutive periods 2020-03-29 and 2020-03-30 would yield a new index of</span>
@@ -372,8 +373,8 @@
         <span class="n">allowed_kinds</span> <span class="o">=</span> <span class="s2">&quot;&#39;, &#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">allowed_kinds</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Allowed plot kinds are &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span> <span class="o">%</span> <span class="n">allowed_kinds</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;barh&quot;</span><span class="p">:</span>
-        <span class="n">bcr</span> <span class="o">=</span> <span class="n">BarChart</span><span class="p">(</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;race&quot;</span><span class="p">:</span>
+        <span class="n">bcr</span> <span class="o">=</span> <span class="n">BarChartRace</span><span class="p">(</span>
             <span class="n">df</span><span class="p">,</span>
             <span class="n">interpolate_period</span><span class="o">=</span><span class="n">interpolate_period</span><span class="p">,</span>
             <span class="n">steps_per_period</span><span class="o">=</span><span class="n">steps_per_period</span><span class="p">,</span>
@@ -386,6 +387,7 @@
             <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
             <span class="n">period_label</span><span class="o">=</span><span class="n">period_label</span><span class="p">,</span>
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
+            <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
             <span class="c1"># Bar chart</span>
             <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">,</span>
@@ -394,7 +396,7 @@
             <span class="n">bar_label_size</span><span class="o">=</span><span class="n">bar_label_size</span><span class="p">,</span>
             <span class="n">n_visible</span><span class="o">=</span><span class="n">n_visible</span><span class="p">,</span>
             <span class="n">fixed_order</span><span class="o">=</span><span class="n">fixed_order</span><span class="p">,</span>
-            <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
+            
             <span class="n">perpendicular_bar_func</span><span class="o">=</span><span class="n">perpendicular_bar_func</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
@@ -416,6 +418,7 @@
             <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
             <span class="n">period_label</span><span class="o">=</span><span class="n">period_label</span><span class="p">,</span>
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
+            <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
             <span class="n">line_width</span><span class="o">=</span><span class="n">line_width</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
@@ -437,18 +440,62 @@
             <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
             <span class="n">period_label</span><span class="o">=</span><span class="n">period_label</span><span class="p">,</span>
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
+            <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
             <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
             <span class="n">animated_scatter</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">animated_scatter</span></div>
+        <span class="k">return</span> <span class="n">animated_scatter</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;pie&quot;</span><span class="p">:</span>
+        <span class="n">animated_pie</span> <span class="o">=</span> <span class="n">PieChart</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span>
+            <span class="n">interpolate_period</span><span class="o">=</span><span class="n">interpolate_period</span><span class="p">,</span>
+            <span class="n">steps_per_period</span><span class="o">=</span><span class="n">steps_per_period</span><span class="p">,</span>
+            <span class="n">period_length</span><span class="o">=</span><span class="n">period_length</span><span class="p">,</span>
+            <span class="n">period_fmt</span><span class="o">=</span><span class="n">period_fmt</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
+            <span class="n">period_label</span><span class="o">=</span><span class="n">period_label</span><span class="p">,</span>
+            <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
+            <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">animated_pie</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">animated_pie</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;bar&quot;</span><span class="p">:</span>
+        <span class="n">animated_bar</span> <span class="o">=</span> <span class="n">BarChart</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span>
+            <span class="n">interpolate_period</span><span class="o">=</span><span class="n">interpolate_period</span><span class="p">,</span>
+            <span class="n">steps_per_period</span><span class="o">=</span><span class="n">steps_per_period</span><span class="p">,</span>
+            <span class="n">period_length</span><span class="o">=</span><span class="n">period_length</span><span class="p">,</span>
+            <span class="n">period_fmt</span><span class="o">=</span><span class="n">period_fmt</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
+            <span class="n">period_label</span><span class="o">=</span><span class="n">period_label</span><span class="p">,</span>
+            <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
+            <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">animated_bar</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">animated_bar</span></div>
+
 
 
 <div class="viewcode-block" id="animate_multiple_plots"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.animate_multiple_plots.html#pandas_alive.plotting.animate_multiple_plots">[docs]</a><span class="k">def</span> <span class="nf">animate_multiple_plots</span><span class="p">(</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">plots</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChart</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">]],</span>
+    <span class="n">plots</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChartRace</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">PieChart</span><span class="p">,</span> <span class="n">ScatterChart</span><span class="p">]],</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title_fontsize</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
@@ -528,12 +575,31 @@
 
     <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">plot</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
         <span class="c1"># plot.ax = fig.add_subplot(spec[num:,0])[0]</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">plot</span><span class="o">.</span><span class="n">tick_label_size</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s2">&quot;.9&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">spine</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># axes[num].grid(True, axis=&quot;x&quot;, color=&quot;white&quot;)</span>
+        <span class="c1"># axes[num].set_axisbelow(True)</span>
+        <span class="c1"># axes[num].tick_params(length=0, labelsize=plot.tick_label_size, pad=2)</span>
+        <span class="c1"># axes[num].set_facecolor(&quot;.9&quot;)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">])</span>
+        <span class="c1"># plot.set_x_y_limits(plot.df,1,axes[num])</span>
+        <span class="k">if</span> <span class="n">plot</span><span class="o">.</span><span class="n">fixed_max</span><span class="p">:</span>
+            <span class="c1"># Hodgepodge way of fixing this, should refactor to contain all figures and axes</span>
+            <span class="c1"># TODO plot.axes_format(self,ax) and pass current ax or desired ax</span>
+            <span class="k">if</span> <span class="n">plot</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;BarChartRace&#39;</span> <span class="ow">and</span> <span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span>
+                <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">plot</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">plot</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;BarChartRace&#39;</span> <span class="ow">and</span> <span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span>
+                <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">plot</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#     axes[num].set_ylim(</span>
+            <span class="c1">#         plot.df</span>
+            <span class="c1">#         .min()</span>
+            <span class="c1">#         .min(skipna=True),</span>
+            <span class="c1">#         plot.df</span>
+            <span class="c1">#         .max()</span>
+            <span class="c1">#         .max(skipna=True),</span>
+            <span class="c1">#     )</span>
+        
+        <span class="c1"># for spine in axes[num].spines.values():</span>
+        <span class="c1">#     spine.set_visible(False)</span>
         <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
         <span class="n">plot</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span>
 

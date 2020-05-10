@@ -1,0 +1,6 @@
+PieChart.get\_colors
+====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.get_colors

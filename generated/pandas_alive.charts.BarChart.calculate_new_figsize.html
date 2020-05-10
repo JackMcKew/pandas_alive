@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="BarChart.calculate_ranks" href="pandas_alive.charts.BarChart.calculate_ranks.html" />
-    <link rel="prev" title="BarChart.anim_func" href="pandas_alive.charts.BarChart.anim_func.html" /> 
+    <link rel="next" title="BarChart.create_figure" href="pandas_alive.charts.BarChart.create_figure.html" />
+    <link rel="prev" title="BarChart.apply_style" href="pandas_alive.charts.BarChart.apply_style.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,15 +95,14 @@
 <li class="toctree-l3 current"><a class="reference internal" href="pandas_alive.charts.BarChart.html">BarChart</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.__init__.html">BarChart.__init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.anim_func.html">BarChart.anim_func</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.apply_style.html">BarChart.apply_style</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">BarChart.calculate_new_figsize</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.calculate_ranks.html">BarChart.calculate_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.create_figure.html">BarChart.create_figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_colors.html">BarChart.get_colors</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_data_cols.html">BarChart.get_data_cols</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_frames.html">BarChart.get_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_html5_video.html">BarChart.get_html5_video</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_interpolated_df.html">BarChart.get_interpolated_df</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_label_position.html">BarChart.get_label_position</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.get_period_label.html">BarChart.get_period_label</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.init_func.html">BarChart.init_func</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.make_animation.html">BarChart.make_animation</a></li>
@@ -115,7 +114,9 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChart.validate_params.html">BarChart.validate_params</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChartRace.html">BarChartRace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.PieChart.html">PieChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.ScatterChart.html">ScatterChart</a></li>
 </ul>
 </li>
@@ -196,7 +197,7 @@
 <h1>BarChart.calculate_new_figsize<a class="headerlink" href="#barchart-calculate-new-figsize" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt id="pandas_alive.charts.BarChart.calculate_new_figsize">
-<code class="sig-prename descclassname">BarChart.</code><code class="sig-name descname">calculate_new_figsize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">real_fig</span><span class="p">:</span> <span class="n">matplotlib.pyplot.figure</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>float<span class="p">]</span><a class="reference internal" href="../_modules/pandas_alive/charts.html#BarChart.calculate_new_figsize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandas_alive.charts.BarChart.calculate_new_figsize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BarChart.</code><code class="sig-name descname">calculate_new_figsize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">real_fig</span><span class="p">:</span> <span class="n">matplotlib.pyplot.figure</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>float<span class="p">]</span><a class="headerlink" href="#pandas_alive.charts.BarChart.calculate_new_figsize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate figure size to allow for labels, etc</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -221,10 +222,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pandas_alive.charts.BarChart.calculate_ranks.html" class="btn btn-neutral float-right" title="BarChart.calculate_ranks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="pandas_alive.charts.BarChart.create_figure.html" class="btn btn-neutral float-right" title="BarChart.create_figure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="pandas_alive.charts.BarChart.anim_func.html" class="btn btn-neutral float-left" title="BarChart.anim_func" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pandas_alive.charts.BarChart.apply_style.html" class="btn btn-neutral float-left" title="BarChart.apply_style" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

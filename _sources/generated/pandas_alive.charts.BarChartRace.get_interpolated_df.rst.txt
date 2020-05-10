@@ -1,0 +1,6 @@
+BarChartRace.get\_interpolated\_df
+==================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.get_interpolated_df

@@ -1,0 +1,6 @@
+PieChart.create\_figure
+=======================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.create_figure

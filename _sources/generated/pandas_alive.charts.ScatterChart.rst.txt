@@ -19,6 +19,8 @@ ScatterChart
    
       ScatterChart.anim_func
    
+      ScatterChart.apply_style
+   
       ScatterChart.calculate_new_figsize
    
       ScatterChart.create_figure

@@ -1,0 +1,6 @@
+PieChart.validate\_params
+=========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.validate_params

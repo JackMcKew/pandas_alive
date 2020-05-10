@@ -12,7 +12,11 @@ pandas\_alive.charts
     
     BarChart
     
+    BarChartRace
+    
     LineChart
+    
+    PieChart
     
     ScatterChart
     

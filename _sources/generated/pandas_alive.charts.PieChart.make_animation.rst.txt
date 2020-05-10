@@ -1,0 +1,6 @@
+PieChart.make\_animation
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.make_animation

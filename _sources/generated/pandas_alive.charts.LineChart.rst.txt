@@ -19,6 +19,8 @@ LineChart
    
       LineChart.anim_func
    
+      LineChart.apply_style
+   
       LineChart.calculate_new_figsize
    
       LineChart.create_figure

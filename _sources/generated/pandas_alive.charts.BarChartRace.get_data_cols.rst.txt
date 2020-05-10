@@ -1,0 +1,6 @@
+BarChartRace.get\_data\_cols
+============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.get_data_cols

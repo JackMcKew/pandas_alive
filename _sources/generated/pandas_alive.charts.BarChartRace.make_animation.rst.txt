@@ -1,0 +1,6 @@
+BarChartRace.make\_animation
+============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.make_animation
