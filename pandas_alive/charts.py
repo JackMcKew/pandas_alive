@@ -370,7 +370,7 @@ class ScatterChart(_BaseChart):
             self._points[name]["y"] = []
 
     def plot_point(self, i: int) -> None:
-        super().set_x_y_limits(self.df, i)
+        super().set_x_y_limits(self.df, i,self.ax)
         for name, color in zip(self.data_cols, self.colors):
             self._points[name]["x"].append(self.df[name].index[i])
             self._points[name]["y"].append(self.df[name].iloc[i])
@@ -435,7 +435,7 @@ class LineChart(_BaseChart):
             i (int): Index of frame for animation
         """
         # TODO Somehow implement n visible lines?
-        super().set_x_y_limits(self.df, i)
+        super().set_x_y_limits(self.df, i,self.ax)
         for name, color in zip(self.data_cols, self.line_colors):
 
             self._lines[name]["x"].append(self.df[name].index[i])
@@ -579,7 +579,7 @@ class BarChart(_BaseChart):
         # for text in self.ax.texts[int(bool(self.period_fmt)):]:
         #     text.remove()
         
-        super().set_x_y_limits(self.df, i)
+        super().set_x_y_limits(self.df, i,self.ax)
 
         for name, color in zip(self.data_cols, self.bar_colors):
 
