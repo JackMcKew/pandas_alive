@@ -1,3 +1,5 @@
+# TODO add check if interpolate period true, must be datetime index
+
 import datetime
 import typing
 
