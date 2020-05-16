@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    if: github.actor == 'JackMcKew' && "startsWith(github.event.head_commit.message, 'Update README')"
+    if: github.actor == 'JackMcKew' && startsWith(github.event.head_commit.message, 'Update README')
     name: Build
     runs-on: ubuntu-latest
     steps:
