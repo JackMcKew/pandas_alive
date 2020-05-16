@@ -276,6 +276,18 @@ pandas_alive.animate_multiple_plots(
 
 ![Life Expectancy Chart](examples/life-expectancy.gif)
 
+## Future Features
+
+A list of future features that may/may not be developed is:
+
+- Multiple dimension plots (with multi indexed dataframes)
+- Bubble charts
+- Geographic charts (currently using OSM export image, potential [cartopy](https://github.com/SciTools/cartopy))
+
+A chart that was built using a development branch of Pandas_Alive can be found:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qyqiYrtpxRE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Inspiration
 
 The inspiration for this project comes from:
