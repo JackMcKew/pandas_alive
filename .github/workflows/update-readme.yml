@@ -8,6 +8,7 @@ on:
 jobs:
   release:
     name: Build
+    if: github.actor == "JackMcKew"
     runs-on: ubuntu-latest
     steps:
 
