@@ -10,6 +10,31 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 
 ![Example Bar Chart](examples/example-barh-chart.gif)
 
+## Table of Contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Currently Supported Chart Types](#currently-supported-chart-types)
+    - [Horizontal Bar Charts](#horizontal-bar-charts)
+    - [Vertical Bar Charts](#vertical-bar-charts)
+    - [Line Charts](#line-charts)
+    - [Scatter Charts](#scatter-charts)
+    - [Pie Charts](#pie-charts)
+  - [Multiple Charts](#multiple-charts)
+    - [Urban Population](#urban-population)
+    - [Life Expectancy in G7 Countries](#life-expectancy-in-g7-countries)
+- [Future Features](#future-features)
+- [Inspiration](#inspiration)
+- [Requirements](#requirements)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+  - [Changelog](#changelog)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Installation
 
 Install with `pip install pandas_alive`
@@ -52,6 +77,7 @@ covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 - [Vertical Bar Charts](#vertical-bar-charts)
 - [Line Charts](#line-charts)
 - [Scatter Charts](#scatter-charts)
+- [Pie Charts](#pie-charts)
 
 #### Horizontal Bar Charts
 
@@ -166,7 +192,7 @@ merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='exampl
 
 ![Example Scatter Chart](examples/example-scatter-chart.gif)
 
-#### Pie Chart
+#### Pie Charts
 
 ``` python
 import pandas_alive
@@ -175,6 +201,8 @@ covid_df = pandas_alive.load_dataset()
 
 covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True)
 ```
+
+![Example Pie Chart](examples/example-pie-chart.gif)
 
 ### Multiple Charts
 
@@ -198,6 +226,8 @@ pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[a
 
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
+#### Urban Population
+
 ``` python
 import pandas_alive
 
@@ -218,6 +248,8 @@ pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.g
 
 ![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
 
+
+#### Life Expectancy in G7 Countries
 
 ``` python
 import pandas_alive
@@ -272,6 +304,18 @@ pandas_alive.animate_multiple_plots(
 ```
 
 ![Life Expectancy Chart](examples/life-expectancy.gif)
+
+## Future Features
+
+A list of future features that may/may not be developed is:
+
+- Multiple dimension plots (with multi indexed dataframes)
+- Bubble charts
+- Geographic charts (currently using OSM export image, potential [cartopy](https://github.com/SciTools/cartopy))
+
+A chart that was built using a development branch of Pandas_Alive is:
+
+[![NSW COVID19 Cases](examples/nsw-covid.gif)](https://www.youtube.com/watch?v=qyqiYrtpxRE)
 
 ## Inspiration
 
