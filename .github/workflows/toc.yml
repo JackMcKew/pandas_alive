@@ -1,0 +1,12 @@
+on: push
+name: TOC Generator
+jobs:
+  generateTOC:
+    if: github.actor == 'GitHub Action'
+    name: TOC Generator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: technote-space/toc-generator@v2
+        with:
+          TOC_TITLE: ''
+
