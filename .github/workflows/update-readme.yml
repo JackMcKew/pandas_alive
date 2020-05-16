@@ -23,9 +23,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         jupyter nbconvert --template "pythoncodeblocks.tpl" --ClearMetadataPreprocessor.enabled=True --ClearOutput.enabled=True  --to markdown README.ipynb
-  
-    - name: Generate TOC
-      uses: technote-space/toc-generator@v2
 
     - name: Commit files
       run: |
