@@ -23,7 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         jupyter nbconvert --template "pythoncodeblocks.tpl" --ClearMetadataPreprocessor.enabled=True --ClearOutput.enabled=True  --to markdown README.ipynb
-
+  
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
@@ -35,3 +35,9 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.ACCESS_TOKEN }}
+
+  generateTOC:
+    name: TOC Generator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: technote-space/toc-generator@v2
