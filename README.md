@@ -201,6 +201,8 @@ pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[a
 
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
+#### Urban Population
+
 ``` python
 import pandas_alive
 
@@ -221,6 +223,8 @@ pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.g
 
 ![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
 
+
+#### Life Expectancy in G7 Countries
 
 ``` python
 import pandas_alive
@@ -284,9 +288,9 @@ A list of future features that may/may not be developed is:
 - Bubble charts
 - Geographic charts (currently using OSM export image, potential [cartopy](https://github.com/SciTools/cartopy))
 
-A chart that was built using a development branch of Pandas_Alive can be found:
+A chart that was built using a development branch of Pandas_Alive is:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qyqiYrtpxRE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![NSW COVID19 Cases](examples/nsw-covid.gif)](https://www.youtube.com/watch?v=qyqiYrtpxRE)
 
 ## Inspiration
 
