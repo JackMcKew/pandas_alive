@@ -8,7 +8,6 @@ on:
 jobs:
   release:
     name: Build
-    if: github.actor == "JackMcKew"
     runs-on: ubuntu-latest
     steps:
 
@@ -25,13 +24,14 @@ jobs:
         jupyter nbconvert --template "pythoncodeblocks.tpl" --ClearMetadataPreprocessor.enabled=True --ClearOutput.enabled=True  --to markdown README.ipynb
 
     - name: Commit files
+      if: github.actor == "JackMcKew"
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "Convert README.ipynb to README.md" -a
 
     - name: Push changes
-      if: success()
+      if: success() && github.actor == "JackMcKew"
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.ACCESS_TOKEN }}
