@@ -11,8 +11,29 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 ![Example Bar Chart](examples/example-barh-chart.gif)
 
 ## Table of Contents
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Currently Supported Chart Types](#currently-supported-chart-types)
+    - [Horizontal Bar Charts](#horizontal-bar-charts)
+    - [Vertical Bar Charts](#vertical-bar-charts)
+    - [Line Charts](#line-charts)
+    - [Scatter Charts](#scatter-charts)
+    - [Pie Charts](#pie-charts)
+  - [Multiple Charts](#multiple-charts)
+    - [Urban Population](#urban-population)
+    - [Life Expectancy in G7 Countries](#life-expectancy-in-g7-countries)
+- [Future Features](#future-features)
+- [Inspiration](#inspiration)
+- [Requirements](#requirements)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+  - [Changelog](#changelog)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation
 
