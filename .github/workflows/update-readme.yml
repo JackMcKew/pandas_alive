@@ -31,7 +31,7 @@ jobs:
         git commit -m "Convert README.ipynb to README.md" -a
 
     - name: Push changes
-      if: success() && github.actor == "JackMcKew"
+      if: success() && github.actor == 'JackMcKew'
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.ACCESS_TOKEN }}
