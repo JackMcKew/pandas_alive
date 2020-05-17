@@ -82,6 +82,9 @@ class _BaseChart:
             self.df = pd.DataFrame(self.df)
         from matplotlib import rcParams
         rcParams.update({'figure.autolayout':True})
+
+        if self.interpolate_period == True and not isinstance(self.df.index,pd.DatetimeIndex):
+            raise ValueError(f"If using interpolate_period, ensure the index is a DatetimeIndex (eg, use df.index = pd.to_datetime(df.index))")
         # rcParams.update({'figure.autolayout': True})
         self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting

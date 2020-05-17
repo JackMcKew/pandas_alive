@@ -101,7 +101,8 @@ def plot(
     Args:
         filename (str, optional): If a string, save animation to that filename location. Defaults to None.
 
-        kind (str, optional): Type of chart to use. Defaults to "ra".
+        kind (str, optional): Type of chart to use. Defaults to "race".
+            Supported kinds are: "race", "line", "scatter","pie","bar","bubble"
 
         interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaullts to `True`.
             When set to `True`, for example, the two consecutive periods 2020-03-29 and 2020-03-30 would yield a new index of
