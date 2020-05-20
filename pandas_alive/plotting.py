@@ -82,6 +82,7 @@ def plot(
     perpendicular_bar_func: typing.Union[typing.Callable, str] = None,
     # Line Chart
     line_width: int = 2,
+    label_events: typing.Dict[str,str] = None,
     # Scatter Chart
     size: int = 2,
     # Bubble Chart
@@ -276,6 +277,7 @@ def plot(
             fixed_max=fixed_max,
             dpi=dpi,
             line_width=line_width,
+            label_events=label_events,
             kwargs=kwargs,
         )
         if filename:

@@ -466,10 +466,13 @@ class _BaseChart:
         self.fps = 1000 / self.period_length * self.steps_per_period
 
         extension = filename.split(".")[-1]
-        if extension == "gif":
-            anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
-        else:
-            anim.save(filename, fps=self.fps, dpi=self.dpi)
+        try:
+            if extension == "gif":
+                anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
+            else:
+                anim.save(filename, fps=self.fps, dpi=self.dpi)
+        except:
+            raise RuntimeError("Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details")
 
     def get_html5_video(self):
         """ Convert the animation to an HTML5 <video> tag.
