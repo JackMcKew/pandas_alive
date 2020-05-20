@@ -452,7 +452,9 @@ class LineChart(_BaseChart):
                 **self.kwargs,
             )
             if self.period_label:
-                self.ax.fill_between(self._lines[name]["x"],self._lines[name]["y"],color='blue')
+                self.ax.fill_between(
+                    self._lines[name]["x"], self._lines[name]["y"], color="blue"
+                )
 
                 # Greater than lockdown date index plot v bar
                 # from datetime import datetime
@@ -462,34 +464,40 @@ class LineChart(_BaseChart):
 
                 from datetime import datetime
                 import numpy as np
-                princess_date = datetime.strptime("19/03/2020","%d/%m/%Y")
+
+                princess_date = datetime.strptime("19/03/2020", "%d/%m/%Y")
                 princess_index = np.sum(self.df.index <= princess_date)
                 # 194 Ruby Princiess disembark
-                
+
                 if i >= princess_index:
                     lockdown_start = self.df.index[princess_index]
                     trans = transforms.blended_transform_factory(
-                        self.ax.transData, self.ax.transAxes)
+                        self.ax.transData, self.ax.transAxes
+                    )
 
                     # plt.text(x, .5, 'hello', transform=trans)
 
                     self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
-                    self.ax.text(lockdown_start,0.9,"Ruby Princess Disembark",transform=trans)
+                    self.ax.text(
+                        lockdown_start, 0.9, "Ruby Princess Disembark", transform=trans
+                    )
 
                 from datetime import datetime
                 import numpy as np
-                lockdown_date = datetime.strptime("1/04/2020","%d/%m/%Y")
+
+                lockdown_date = datetime.strptime("1/04/2020", "%d/%m/%Y")
                 lockdown_index = np.sum(self.df.index <= lockdown_date)
 
                 if i >= lockdown_index:
                     lockdown_start = self.df.index[lockdown_index]
                     trans = transforms.blended_transform_factory(
-                        self.ax.transData, self.ax.transAxes)
+                        self.ax.transData, self.ax.transAxes
+                    )
 
                     # plt.text(x, .5, 'hello', transform=trans)
 
                     self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
-                    self.ax.text(lockdown_start,0.7,"Lockdown",transform=trans)
+                    self.ax.text(lockdown_start, 0.7, "Lockdown", transform=trans)
 
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
@@ -700,12 +708,6 @@ class BubbleChart(_BaseChart):
         # super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
         self._points: typing.Dict = {}
-        # for name in self.data_cols:
-        #     self._points[name] = {}
-        #     self._points[name]["x"] = []
-        #     self._points[name]["y"] = []
-        #     self._points[name]["size"] = []
-        #     self._points[name]["color"] = []
         self.column_keys = self.df.columns.get_level_values(level=0).unique().tolist()
         self.mapping = {"x": self.x_data_label, "y": self.y_data_label}
         if isinstance(self.size_data_label, str):
@@ -730,31 +732,26 @@ class BubbleChart(_BaseChart):
             self.ax.set_title(self.title)
 
     def plot_point(self, i: int) -> None:
-        self.ax.text(153.592843,-36.860723,"No Location",fontsize=3,horizontalalignment='right')
-        # super().set_x_y_limits(self.df, i,self.ax)
-        # print(self.df[self.mapping["x"]])
-        # print(self.df[self.mapping["x"]].values.min())
-        # self.ax.set_xlim(150, self.df[self.mapping["x"]].values.max())
+
         BBox = (
             self.df[self.mapping["x"]].values.min(),
             self.df[self.mapping["x"]].values.max(),
             self.df[self.mapping["y"]].values.min(),
             self.df[self.mapping["y"]].values.max(),
         )
-        self.ax.set_xlim(BBox[0],BBox[1])
-        self.ax.set_ylim(BBox[2],BBox[3])
-        image = plt.imread('C:\\Users\\jackm\\Documents\\GitHub\\pandas-alive\\data\\nsw_map.png')
-        self.ax.imshow(image, zorder=0, extent = BBox, aspect= 'equal')
-        # self.ax.set_xlim(
-        #     self.df[self.mapping["x"]].values.min(),
-        #     self.df[self.mapping["x"]].values.max(),
-        # )
-        # self.ax.set_ylim(
-        #     self.df[self.mapping["y"]].values.min(),
-        #     self.df[self.mapping["y"]].values.max(),
-        # )
-        for output_key, column_key in self.mapping.items():
+        self.ax.set_xlim(BBox[0], BBox[1])
+        self.ax.set_ylim(BBox[2], BBox[3])
 
+        # TODO Add geopandas for map plots
+        # self.ax = self.show_image(
+        #     self.ax,
+        #     "C:\\Users\\jackm\\Documents\\GitHub\\pandas-alive\\data\\nsw_map.png",
+        #     extent=BBox,
+        #     zorder=0,
+        #     aspect="equal",
+        # )
+
+        for output_key, column_key in self.mapping.items():
             self._points[output_key] = self.df[column_key].iloc[i].values
 
         self.ax.scatter(
@@ -766,26 +763,6 @@ class BubbleChart(_BaseChart):
             color="blue",
             **self.kwargs,
         )
-        # for column_key in self.column_keys:
-        #     self.df[column_key].iloc[i].values
-        # for name, color in zip(self.data_cols, self.colors):
-        #     self._points[name]["x"].append(self.df[name].index[i])
-        #     self._points[name]["y"].append(self.df[name].iloc[i])
-        #     if isinstance(self.size, str):
-        #         if self.size not in self.data_cols:
-        #             raise ValueError(
-        #                 f"Size provided as string: {self.size}, not present in dataframe columns"
-        #             )
-        #         self._points[name]["size"] = self.df[self.size].iloc[i]
-        #     else:
-        #         self._points[name]["size"] = self.size
-        #     self.ax.scatter(
-        #         self._points[name]["x"],
-        #         self._points[name]["y"],
-        #         s=self._points[name]["size"],
-        #         color=color,
-        #         **self.kwargs,
-        #     )
 
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
