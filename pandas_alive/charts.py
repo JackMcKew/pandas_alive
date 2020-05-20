@@ -62,6 +62,14 @@ class BarChartRace(_BaseChart):
             self.df = self.df[cols]
 
         super().__attrs_post_init__()
+
+        if self.n_visible > 15:
+            import warnings
+
+            warnings.warn(
+                "Plotting too many bars may result in undesirable output, use `n_visible=5 to limit number of bars"
+            )
+
         self.validate_params()
 
         self.df_rank = self.calculate_ranks(self.orig_df)
@@ -421,6 +429,7 @@ class LineChart(_BaseChart):
     """
 
     line_width: int = attr.ib()
+    label_events: typing.Dict[str,str] = attr.ib()
 
     def __attrs_post_init__(self):
         super().__attrs_post_init__()
@@ -452,6 +461,26 @@ class LineChart(_BaseChart):
                 **self.kwargs,
             )
             # TODO add option bar locations
+            if self.label_events:
+                from datetime import datetime
+                import numpy as np
+                for pos, (label, date) in enumerate(self.label_events.items()):
+                    event_index = np.sum(self.df.index <= date)
+                    if i >= event_index:
+                        event_start = self.df.index[event_index]
+                        trans = transforms.blended_transform_factory(
+                            self.ax.transData, self.ax.transAxes
+                        )
+
+                        # plt.text(label, 0.9-(pos*0.1), label, transform=trans)
+                        self.ax.axvline(event_start, lw=10, color=".5", zorder=0.5)
+                        self.ax.text(
+                            event_start, 0.9-(pos*0.1), label, transform=trans
+                        )
+
+
+                    
+
             # if self.period_label:
             #     # self.ax.fill_between(
             #     #     self._lines[name]["x"], self._lines[name]["y"], color="blue"
