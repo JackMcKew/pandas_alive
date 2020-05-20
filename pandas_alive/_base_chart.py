@@ -78,13 +78,18 @@ class _BaseChart:
     kwargs = attr.ib()
 
     def __attrs_post_init__(self):
-        if isinstance(self.df,pd.Series):
+        if isinstance(self.df, pd.Series):
             self.df = pd.DataFrame(self.df)
         from matplotlib import rcParams
-        rcParams.update({'figure.autolayout':True})
 
-        if self.interpolate_period == True and not isinstance(self.df.index,pd.DatetimeIndex):
-            raise ValueError(f"If using interpolate_period, ensure the index is a DatetimeIndex (eg, use df.index = pd.to_datetime(df.index))")
+        rcParams.update({"figure.autolayout": True})
+
+        if self.interpolate_period == True and not isinstance(
+            self.df.index, pd.DatetimeIndex
+        ):
+            raise ValueError(
+                f"If using interpolate_period, ensure the index is a DatetimeIndex (eg, use df.index = pd.to_datetime(df.index))"
+            )
         # rcParams.update({'figure.autolayout': True})
         self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting
@@ -204,12 +209,7 @@ class _BaseChart:
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         if self.fixed_max:
             ax.set_ylim(
-                self.df
-                .min()
-                .min(skipna=True),
-                self.df
-                .max()
-                .max(skipna=True),
+                self.df.min().min(skipna=True), self.df.max().max(skipna=True),
             )
         else:
             ax.set_ylim(
@@ -289,11 +289,11 @@ class _BaseChart:
 
         interpolated_df = interpolated_df.set_index(interpolated_df.columns[0])
 
-        if interpolate_period:            
+        if interpolate_period:
             interpolated_df = interpolated_df.interpolate(method="time")
         else:
             interpolated_df = interpolated_df.interpolate()
-        
+
         return interpolated_df
 
     def init_func(self) -> None:
@@ -411,12 +411,7 @@ class _BaseChart:
         ax = fig.add_axes(rect)
 
         ax = self.apply_style(ax)
-        # ax.grid(True, axis="x", color="white")
-        # ax.set_axisbelow(True)
-        # ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
-        # ax.set_facecolor(".9")
-        # for spine in ax.spines.values():
-        #     spine.set_visible(False)
+        
         return fig, ax
 
     def show_period(self, i: int) -> None:
@@ -435,7 +430,7 @@ class _BaseChart:
                 self.ax.text(
                     s=s,
                     transform=self.ax.transAxes,
-                    **self.get_period_label(self.period_label)
+                    **self.get_period_label(self.period_label),
                 )
             else:
                 self.ax.texts[0].set_text(s)
@@ -443,14 +438,16 @@ class _BaseChart:
         if self.period_summary_func:
             values = self.df.iloc[i]
             text_dict = self.period_summary_func(values)
-            if 'x' not in text_dict or 'y' not in text_dict or 's' not in text_dict:
+            if "x" not in text_dict or "y" not in text_dict or "s" not in text_dict:
                 name = self.period_summary_func.__name__
-                raise ValueError(f'The dictionary returned from `{name}` must contain '
-                                '"x", "y", and "s"')
+                raise ValueError(
+                    f"The dictionary returned from `{name}` must contain "
+                    '"x", "y", and "s"'
+                )
             if len(self.ax.texts) != 2:
                 self.ax.text(transform=self.ax.transAxes, **text_dict)
             else:
-                self.ax.texts[1].set_text(text_dict['s'])
+                self.ax.texts[1].set_text(text_dict["s"])
 
     def save(self, filename: str) -> None:
         """ Save method for FuncAnimation
@@ -482,3 +479,18 @@ class _BaseChart:
 
         anim = self.make_animation(self.get_frames(), self.init_func)
         return anim.to_html5_video()
+
+    # Possibly include image background method?
+    # def show_image(
+    #     self,
+    #     ax,
+    #     path_to_image: str,
+    #     extent: typing.Tuple[float],
+    #     zorder: int = 0,
+    #     aspect: str = "equal",
+    # ):
+    #     image = plt.imread(path_to_image)
+
+    #     ax.imshow(image, zorder=zorder, extent=extent, aspect=aspect)
+
+    #     return ax
