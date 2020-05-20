@@ -93,10 +93,13 @@ class _BaseChart:
         # rcParams.update({'figure.autolayout': True})
         self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting
-        self.data_cols = self.get_data_cols(self.df)  # Get column names with valid data
-        self.df = self.rename_data_columns(
-            self.df
-        )  # Force data column names to be string
+        if not isinstance(self.df.columns,pd.MultiIndex):
+            self.data_cols = self.get_data_cols(self.df)  # Get column names with valid data
+            self.df = self.rename_data_columns(
+                self.df
+            )  # Force data column names to be string
+        else:
+            self.data_cols = self.df.columns.get_level_values(level=0).unique().tolist()
 
         # Careful to use self.df in later calculations (eg, df_rank), use orig_df if needed
         self.df = self.get_interpolated_df(
