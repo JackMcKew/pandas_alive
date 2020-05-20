@@ -451,53 +451,54 @@ class LineChart(_BaseChart):
                 color=color,
                 **self.kwargs,
             )
-            if self.period_label:
-                self.ax.fill_between(
-                    self._lines[name]["x"], self._lines[name]["y"], color="blue"
-                )
+            # TODO add option bar locations
+            # if self.period_label:
+            #     # self.ax.fill_between(
+            #     #     self._lines[name]["x"], self._lines[name]["y"], color="blue"
+            #     # )
 
-                # Greater than lockdown date index plot v bar
-                # from datetime import datetime
-                # lockdown_date = datetime.strptime("01/04/2020","%d/%m/%Y")
-                # print(multi_df[multi_df.index <= lockdown_date]
-                # x_date_val = 498
+            #     # Greater than lockdown date index plot v bar
+            #     # from datetime import datetime
+            #     # lockdown_date = datetime.strptime("01/04/2020","%d/%m/%Y")
+            #     # print(multi_df[multi_df.index <= lockdown_date]
+            #     # x_date_val = 498
 
-                from datetime import datetime
-                import numpy as np
+            #     from datetime import datetime
+            #     import numpy as np
 
-                princess_date = datetime.strptime("19/03/2020", "%d/%m/%Y")
-                princess_index = np.sum(self.df.index <= princess_date)
-                # 194 Ruby Princiess disembark
+            #     princess_date = datetime.strptime("19/03/2020", "%d/%m/%Y")
+            #     princess_index = np.sum(self.df.index <= princess_date)
+            #     # 194 Ruby Princiess disembark
 
-                if i >= princess_index:
-                    lockdown_start = self.df.index[princess_index]
-                    trans = transforms.blended_transform_factory(
-                        self.ax.transData, self.ax.transAxes
-                    )
+            #     if i >= princess_index:
+            #         lockdown_start = self.df.index[princess_index]
+            #         trans = transforms.blended_transform_factory(
+            #             self.ax.transData, self.ax.transAxes
+            #         )
 
-                    # plt.text(x, .5, 'hello', transform=trans)
+            #         # plt.text(x, .5, 'hello', transform=trans)
 
-                    self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
-                    self.ax.text(
-                        lockdown_start, 0.9, "Ruby Princess Disembark", transform=trans
-                    )
+            #         self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
+            #         self.ax.text(
+            #             lockdown_start, 0.9, "Ruby Princess Disembark", transform=trans
+            #         )
 
-                from datetime import datetime
-                import numpy as np
+            #     from datetime import datetime
+            #     import numpy as np
 
-                lockdown_date = datetime.strptime("1/04/2020", "%d/%m/%Y")
-                lockdown_index = np.sum(self.df.index <= lockdown_date)
+            #     lockdown_date = datetime.strptime("1/04/2020", "%d/%m/%Y")
+            #     lockdown_index = np.sum(self.df.index <= lockdown_date)
 
-                if i >= lockdown_index:
-                    lockdown_start = self.df.index[lockdown_index]
-                    trans = transforms.blended_transform_factory(
-                        self.ax.transData, self.ax.transAxes
-                    )
+            #     if i >= lockdown_index:
+            #         lockdown_start = self.df.index[lockdown_index]
+            #         trans = transforms.blended_transform_factory(
+            #             self.ax.transData, self.ax.transAxes
+            #         )
 
-                    # plt.text(x, .5, 'hello', transform=trans)
+            #         # plt.text(x, .5, 'hello', transform=trans)
 
-                    self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
-                    self.ax.text(lockdown_start, 0.7, "Lockdown", transform=trans)
+            #         self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
+            #         self.ax.text(lockdown_start, 0.7, "Lockdown", transform=trans)
 
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
