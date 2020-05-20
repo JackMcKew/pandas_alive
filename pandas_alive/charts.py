@@ -432,7 +432,7 @@ class LineChart(_BaseChart):
             self._lines[name]["y"] = []
 
     def plot_line(self, i: int) -> None:
-        print(f"Plotting frame {i}")
+        # print(f"Plotting frame {i}")
         """ Function for plotting all lines in dataframe
 
         Args:
@@ -706,7 +706,7 @@ class BubbleChart(_BaseChart):
     size_data_label: typing.Union[int, str] = attr.ib()
 
     def __attrs_post_init__(self):
-        # super().__attrs_post_init__()
+        super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
         self._points: typing.Dict = {}
         self.column_keys = self.df.columns.get_level_values(level=0).unique().tolist()
@@ -722,26 +722,17 @@ class BubbleChart(_BaseChart):
             raise ValueError(
                 f"Provided keys must be in level 0 multi index, possible values: {self.column_keys}"
             )
-        if self.fig is None:
-            self.fig, self.ax = self.create_figure()
-            self.figsize = self.fig.get_size_inches()
-        else:
-            self.fig = plt.figure()
-            self.ax = plt.axes()
-        self.fig.set_tight_layout(False)
-        if self.title:
-            self.ax.set_title(self.title)
 
     def plot_point(self, i: int) -> None:
-
-        BBox = (
-            self.df[self.mapping["x"]].values.min(),
-            self.df[self.mapping["x"]].values.max(),
-            self.df[self.mapping["y"]].values.min(),
-            self.df[self.mapping["y"]].values.max(),
-        )
-        self.ax.set_xlim(BBox[0], BBox[1])
-        self.ax.set_ylim(BBox[2], BBox[3])
+        if self.fixed_max:
+            BBox = (
+                self.df[self.mapping["x"]].values.min(),
+                self.df[self.mapping["x"]].values.max(),
+                self.df[self.mapping["y"]].values.min(),
+                self.df[self.mapping["y"]].values.max(),
+            )
+            self.ax.set_xlim(BBox[0], BBox[1])
+            self.ax.set_ylim(BBox[2], BBox[3])
 
         # TODO Add geopandas for map plots
         # self.ax = self.show_image(
