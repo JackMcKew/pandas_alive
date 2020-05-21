@@ -1,9 +1,14 @@
-# TODO add check if interpolate period true, must be datetime index
+""" Implementation of BaseChart constructor that all chart types should inherit from.
+
+Methods & Attributes defined will be shared on all other chart types, is also interfaced with use of `super().method()`.
+
+"""
 
 import datetime
 import typing
 
 import attr
+import matplotlib
 from matplotlib import ticker
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import Colormap, to_rgba
@@ -50,7 +55,12 @@ DARK24 = [
 
 @attr.s()
 class _BaseChart:
-    # Refactored BaseChart
+    """
+    BaseChart constructor for attributes and methods for all chart types to share
+
+    See :func: pandas_alive.plotting.plot for more details on input requirements
+
+    """
     df: pd.DataFrame = attr.ib()
     interpolate_period: bool = attr.ib()
     steps_per_period: int = attr.ib()
@@ -60,26 +70,28 @@ class _BaseChart:
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
     cmap: typing.Union[str, Colormap, typing.List[str]] = attr.ib()
-    # n_visible: int = attr.ib()
     tick_label_size: typing.Union[int, float] = attr.ib()
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = attr.ib()
     period_summary_func: typing.Callable = attr.ib()
     fixed_max: bool = attr.ib()
-    # append_period_to_title: bool = attr.ib()
-    # x_period_annotation_location: typing.Union[int, float] = attr.ib()
-    # y_period_annotation_location: typing.Union[int, float] = attr.ib()
-    # period_annotation_size: typing.Union[int, float] = attr.ib()
-    # show_period_annotation: bool = attr.ib()
-    # enable_legend: bool = attr.ib()
-    # period_annotation_formatter: str = attr.ib()
     dpi: float = attr.ib()
     kwargs = attr.ib()
 
     def __attrs_post_init__(self):
+        """
+        Post initialisation steps to run
+
+        Functionality from attrs to calculate new attributes based on input args and kwargs
+
+        Raises:
+            ValueError: If `interpolate_period=True` and DataFrame index is not DateTimeIndex
+        """
         if isinstance(self.df, pd.Series):
             self.df = pd.DataFrame(self.df)
+
+        self.df = self.df.copy()
         from matplotlib import rcParams
 
         rcParams.update({"figure.autolayout": True})
@@ -198,10 +210,32 @@ class _BaseChart:
 
         return chart_colors
 
-    def get_single_color(self,color_string:str):
+    def get_single_color(self,color_string:str) -> typing.Tuple[int,int,int,int]:
+        """
+        Get single RBGA value from string
+
+        From provided string return the RGB value from `to_rgba`, see more details at https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.colors.to_rgba.html
+
+        Args:
+            color_string (str): Must be apart of named colors in matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py
+
+        Returns:
+            typing.Tuple[int,int,int,int]: Tuple of (r, g, b, a) scalars.
+        """
         return to_rgba(color_string)
 
-    def set_x_y_limits(self, df: pd.DataFrame, i: int, ax):
+    def set_x_y_limits(self, df: pd.DataFrame, i: int, ax: matplotlib.pyplot.Axes):
+        """
+        Set axis limits for both x and y of passed axes object
+
+        For use with fixed_max to set the figure as the highest/lowest value in entire dataframe otherwise takes min/max from each timestep
+        Fixed_max applies to both x & y
+
+        Args:
+            df (pd.DataFrame): DataFrame to take min/max from
+            i (int): Frame number to slice DataFrame on if used without fixed_max
+            ax (matplotlib.pyplot.Axes): Axes to apply limits to
+        """
         # TODO fix max for x and y?
         if self.fixed_max:
             xlim_start = self.df.index.min()
@@ -230,7 +264,15 @@ class _BaseChart:
             )
 
     def rename_data_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        # data_cols = self.get_data_cols(df)
+        """
+        Converts all column names to string
+
+        Args:
+            df (pd.DataFrame): DataFrame to rename columns on
+
+        Returns:
+            pd.DataFrame: DataFrame with converted columns
+        """
         df.columns = df.columns.astype(str)
         return df
 
@@ -395,7 +437,17 @@ class _BaseChart:
         height = orig_pos.y1 - bottom
         return [left, bottom, width, height]
 
-    def apply_style(self, ax):
+    def apply_style(self, ax: matplotlib.pyplot.Axes) -> matplotlib.pyplot.Axes:
+        """
+        Apply styling to axes with spines and grid, can be overridden
+
+        Args:
+            ax (matplotlib.pyplot.Axes): Axes to apply styling to
+
+        Returns:
+            matplotlib.pyplot.Axes: Styled Axes object
+        """
+
         ax.grid(True, axis="x", color="white")
         ax.set_axisbelow(True)
         ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
@@ -421,6 +473,15 @@ class _BaseChart:
         return fig, ax
 
     def show_period(self, i: int) -> None:
+        """
+        Show period label on plot
+
+        Args:
+            i (int): Frame number of animation to take slice of DataFrame and retrieve current index for show as period
+
+        Raises:
+            ValueError: If custom period label location is used must contain `x`, `y` and `s` in dictionary.
+        """
         if self.period_label:
             if self.period_fmt:
                 idx_val = self.df.index[i]
@@ -474,8 +535,6 @@ class _BaseChart:
                 anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
             else:
                 anim.save(filename, fps=self.fps, dpi=self.dpi)
-        except Exception as e:
-            print(e)
         except TypeError:
             raise RuntimeError("Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details")
 
