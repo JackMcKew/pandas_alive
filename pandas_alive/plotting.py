@@ -1,7 +1,6 @@
 """ Plotting implementations for accessor to Pandas.DataFrame & multiple animated plots
 
-This module contains functions for plotting functionality.
-
+Implementation of accessor to pass args and kwargs from accessor function to chart constructors.
 
 Example:
     ``df.plot_animated()``
@@ -13,8 +12,16 @@ import typing
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation
-from .charts import BarChartRace, LineChart, ScatterChart, PieChart, BarChart
+from .charts import (
+    BarChartRace,
+    BubbleChart,
+    LineChart,
+    ScatterChart,
+    PieChart,
+    BarChart,
+)
 from typing import Sequence
+import datetime
 
 
 def get_allowed_kinds() -> typing.List[str]:
@@ -23,7 +30,7 @@ def get_allowed_kinds() -> typing.List[str]:
     Returns:
         typing.List[str]: List of implemented chart types
     """
-    return ["race", "line", "scatter","pie","bar"]
+    return ["race", "line", "scatter", "pie", "bar", "bubble"]
 
 
 def verify_filename(filename: str) -> str:
@@ -82,8 +89,15 @@ def plot(
     perpendicular_bar_func: typing.Union[typing.Callable, str] = None,
     # Line Chart
     line_width: int = 2,
+    label_events: typing.Dict[str, datetime.datetime] = None,
+    fill_under_line_color: str = None,
     # Scatter Chart
     size: int = 2,
+    # Bubble Chart
+    x_data_label: str = None,
+    y_data_label: str = None,
+    size_data_label: typing.Union[int, str] = 2,
+    color_data_label: str = "blue",
     **kwargs,
 ) -> typing.Union[ScatterChart, BarChartRace, LineChart, PieChart]:
     """
@@ -97,9 +111,10 @@ def plot(
     Args:
         filename (str, optional): If a string, save animation to that filename location. Defaults to None.
 
-        kind (str, optional): Type of chart to use. Defaults to "ra".
+        kind (str, optional): Type of chart to use. Defaults to "race".
+            Supported kinds are: "race", "line", "scatter","pie","bar","bubble"
 
-        interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaullts to `True`.
+        interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaults to `True`.
             When set to `True`, for example, the two consecutive periods 2020-03-29 and 2020-03-30 would yield a new index of
                 >>> df.plot_animated(interpolate_period=True,steps_per_period=4)
                     2020-03-29 00:00:00
@@ -203,10 +218,46 @@ def plot(
             Defaults to None.
 
         line_width (int, optional): Line width provided on line charts. Defaults to 2.
+
+        label_events (typing.Dict[str,datetime.datetime],optional): Provide list of events to label with a vertical bar on line charts. Defaults to None.
+
+            To be used with strptime or any datetime object
+
+            Sample use:
+            .. code-block::
+                df.plot_animated(
+                        kind='line',
+                        filename='test.mp4',
+                        label_events={
+                            'Ruby Princess Disembark':datetime.strptime("19/03/2020", "%d/%m/%Y"),
+                            'Lockdown':datetime.strptime("31/03/2020", "%d/%m/%Y")
+                        },
+                    )
+        
+        fill_under_line_color (str,optional): Color to show under line to create an area chart equivalent
+
+            String passed must be in list of named colors by matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py
     
         size (int, optional): Size of scatter points on scatter charts. Defaults to 2.
-            
 
+        x_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex
+
+            Label passed all values will be used for the x-axis
+
+        y_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex
+
+            Label passed all values will be used for the y-axis
+
+        size_data_label (typing.Union[int,str],optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults to 2.
+
+            Label passed all values will be used for the size of each point on the plot.
+            Otherwise a int can be passed for all points to be that size.
+
+        color_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults. to "blue".
+
+            Label passed all values will be used to create a colourmap for points.
+            Otherwise a string can be passed of a named color by matplotlib for all points to be that color.
+            
     Raises:
         ValueError: If chart type is not supported, raise error
 
@@ -246,7 +297,6 @@ def plot(
             bar_label_size=bar_label_size,
             n_visible=n_visible,
             fixed_order=fixed_order,
-            
             perpendicular_bar_func=perpendicular_bar_func,
             kwargs=kwargs,
         )
@@ -271,6 +321,8 @@ def plot(
             fixed_max=fixed_max,
             dpi=dpi,
             line_width=line_width,
+            label_events=label_events,
+            fill_under_line_color=fill_under_line_color,
             kwargs=kwargs,
         )
         if filename:
@@ -340,7 +392,31 @@ def plot(
         if filename:
             animated_bar.save(verify_filename(filename))
         return animated_bar
-
+    elif kind == "bubble":
+        animated_bubble = BubbleChart(
+            df,
+            interpolate_period=interpolate_period,
+            steps_per_period=steps_per_period,
+            period_length=period_length,
+            period_fmt=period_fmt,
+            figsize=figsize,
+            title=title,
+            fig=fig,
+            cmap=cmap,
+            tick_label_size=tick_label_size,
+            period_label=period_label,
+            period_summary_func=period_summary_func,
+            fixed_max=fixed_max,
+            dpi=dpi,
+            x_data_label=x_data_label,
+            y_data_label=y_data_label,
+            size_data_label=size_data_label,
+            color_data_label=color_data_label,
+            kwargs=kwargs,
+        )
+        if filename:
+            animated_bubble.save(verify_filename(filename))
+        return animated_bubble
 
 
 def animate_multiple_plots(
@@ -374,9 +450,17 @@ def animate_multiple_plots(
     Raises:
         UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length
     """
-    # TODO Maybe add multichart class?
 
-    def update_all_graphs(frame):
+    def update_all_graphs(frame: int):
+        """
+        Function for updating all plots provided as a list via their respective `anim_func` method
+
+        Args:
+            frame (int): Frame to animate
+
+        Raises:
+            UserWarning: DataFrames apart of plots must have same length of index
+        """
         for plot in plots:
             try:
                 plot.anim_func(frame)
@@ -384,9 +468,6 @@ def animate_multiple_plots(
                 raise UserWarning(
                     f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}"
                 )
-                # raise UserWarning(
-                #     f"{type(plot)} {plot.title} error plotting on frame {frame}, ensure all plots share index"
-                # )
 
     # Current just number of columns for number of plots
     # TODO add option for number of rows/columns
@@ -397,6 +478,7 @@ def animate_multiple_plots(
 
     rcParams.update({"figure.autolayout": False})
     fig, axes = plt.subplots(len(plots))
+    # fig, axes = plt.subplots(2,2)
 
     if title is not None:
         fig.suptitle(title)
@@ -424,32 +506,16 @@ def animate_multiple_plots(
     # plt.rcParams.update({'figure.autolayout': True})
 
     for num, plot in enumerate(plots):
-        # plot.ax = fig.add_subplot(spec[num:,0])[0]
-        # axes[num].grid(True, axis="x", color="white")
-        # axes[num].set_axisbelow(True)
-        # axes[num].tick_params(length=0, labelsize=plot.tick_label_size, pad=2)
-        # axes[num].set_facecolor(".9")
         axes[num] = plot.apply_style(axes[num])
         # plot.set_x_y_limits(plot.df,1,axes[num])
         if plot.fixed_max:
             # Hodgepodge way of fixing this, should refactor to contain all figures and axes
             # TODO plot.axes_format(self,ax) and pass current ax or desired ax
-            if plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "h":
+            if plot.__class__.__name__ == "BarChartRace" and plot.orientation == "h":
                 axes[num].set_xlim(axes[num].get_xlim()[0], plot.df.values.max() * 1.1)
-            elif plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "v":
+            elif plot.__class__.__name__ == "BarChartRace" and plot.orientation == "v":
                 axes[num].set_ylim(axes[num].get_ylim()[0], plot.df.values.max() * 1.1)
-            # else:
-            #     axes[num].set_ylim(
-            #         plot.df
-            #         .min()
-            #         .min(skipna=True),
-            #         plot.df
-            #         .max()
-            #         .max(skipna=True),
-            #     )
-        
-        # for spine in axes[num].spines.values():
-        #     spine.set_visible(False)
+
         axes[num].set_title(plot.title)
         plot.ax = axes[num]
 
@@ -486,10 +552,22 @@ class BasePlotMethods(PandasObject):
         PandasObject (PandasObject): Base Pandas Object
     """
 
-    def __init__(self, data):
+    def __init__(self, data: typing.Union[pd.Series, pd.DataFrame]):
+        """
+        Initialise BasePlotMethods with parent data as either Series or DataFrame
+
+        Args:
+            data (typing.Union[pd.Series,pd.DataFrame]): Will take _parent attribute from DataFrame/Series
+        """
         self._parent = data  # can be Series or DataFrame
 
     def __call__(self, *args, **kwargs):
+        """
+        If accessor hasn't been initialised raise error
+
+        Raises:
+            NotImplementedError: Error if accessor function has not been overridden
+        """
         raise NotImplementedError
 
 
@@ -501,10 +579,21 @@ class AnimatedAccessor(BasePlotMethods):
     """
 
     def __call__(self, *args, **kwargs):
+        """
+        Must be overriden to enable funcctionality
+        
+        Calls :func: pandas_alive.plotting.plot and returns instance of constructed chart
+        """
         return plot(self.df, *args, **kwargs)
 
     @property
-    def df(self):
+    def df(self) -> typing.Union[pd.Series, pd.DataFrame]:
+        """
+        Contains _parent DataFrame
+
+        Returns:
+            typing.Union[pd.Series,pd.DataFrame]: Parent DataFrame/Series
+        """
 
         return self._parent
 

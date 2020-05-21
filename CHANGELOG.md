@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.13] - 2020-05-21
+
+- New chart type introduced: Bubble Charts, to be used with MultiIndexed DataFrames.
+    - Bubble charts support x & y axis by data inside MultiIndex (`x_data_label` & `y_data_label`)
+    - Bubble charts support size & color optionally by data inside DataFrame (`size_data_label` & `color_data_label`)
+- New chart type introduced: Scatter Chart
+- New chart type introduced: Bar Chart, create animated bar charts with time as the x-axis
+- QOL improvements for warnings & errors
+- Line charts now support filling underneath to mimic an area chart `df.plot_animated(kind="line",fill_under_line_color="red")`
+- Line charts now support event labelling with perpendicular bars
+
+    ``` python
+    df.plot_animated(
+                kind='line',
+                label_events={
+                    'Ruby Princess Disembark':datetime.strptime("19/03/2020", "%d/%m/%Y"),
+                    'Lockdown':datetime.strptime("31/03/2020", "%d/%m/%Y")
+                },
+            )
+    ```
+
 ## [0.1.12] - 2020-05-10
 
 - `fixed_max` optional for all chart types
