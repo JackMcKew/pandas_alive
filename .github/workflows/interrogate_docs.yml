@@ -3,12 +3,9 @@ name: Interrogate documentation
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
-  build:
-
+  interrogate:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,6 +22,7 @@ jobs:
         badge-location: 'badges/interrogate_badge.svg'
 
     - name: Commit files
+      continue-on-error: true
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
