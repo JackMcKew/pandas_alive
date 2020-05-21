@@ -2,7 +2,7 @@
 
 Animated plotting extension for Pandas with Matplotlib
 
-[![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://jackmckew.github.io/pandas_alive/) ![Interrogate Badge](badges/interrogate_badge.svg) [![PyPI download month](https://img.shields.io/pypi/dm/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI version shields.io](https://img.shields.io/pypi/v/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI license](https://img.shields.io/pypi/l/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://www.buymeacoffee.com/jackmckew)
+[![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://jackmckew.github.io/pandas_alive/) ![Interrogate Badge](https://raw.githubusercontent.com/JackMcKew/pandas_alive/master/badges/interrogate_badge.svg) [![PyPI download month](https://img.shields.io/pypi/dm/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI version shields.io](https://img.shields.io/pypi/v/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI license](https://img.shields.io/pypi/l/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://www.buymeacoffee.com/jackmckew)
 
 **Pandas_Alive** is intended to provide a plotting backend for animated [matplotlib](https://matplotlib.org/) charts for [Pandas](https://pandas.pydata.org/) DataFrames, similar to the already [existing Visualization feature of Pandas](https://pandas.pydata.org/pandas-docs/stable/visualization.html).
 
@@ -13,31 +13,8 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 ![Example Bar Chart](examples/example-barh-chart.gif)
 
 ## Table of Contents
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Currently Supported Chart Types](#currently-supported-chart-types)
-    - [Horizontal Bar Chart Races](#horizontal-bar-chart-races)
-    - [Vertical Bar Chart Races](#vertical-bar-chart-races)
-    - [Line Charts](#line-charts)
-    - [Bar Charts](#bar-charts)
-    - [Scatter Charts](#scatter-charts)
-    - [Pie Charts](#pie-charts)
-    - [Bubble Charts](#bubble-charts)
-  - [Multiple Charts](#multiple-charts)
-    - [Urban Population](#urban-population)
-    - [Life Expectancy in G7 Countries](#life-expectancy-in-g7-countries)
-- [Future Features](#future-features)
-- [Inspiration](#inspiration)
-- [Requirements](#requirements)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [Changelog](#changelog)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 ## Installation
 
