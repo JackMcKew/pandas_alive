@@ -83,12 +83,14 @@ def plot(
     # Line Chart
     line_width: int = 2,
     label_events: typing.Dict[str,str] = None,
+    fill_under_line_color: str = None,
     # Scatter Chart
     size: int = 2,
     # Bubble Chart
     x_data_label: str = None,
     y_data_label: str = None,
     size_data_label: typing.Union[int,str] = 2,
+    color_data_label:str = "blue",
     **kwargs,
 ) -> typing.Union[ScatterChart, BarChartRace, LineChart, PieChart]:
     """
@@ -278,6 +280,7 @@ def plot(
             dpi=dpi,
             line_width=line_width,
             label_events=label_events,
+            fill_under_line_color=fill_under_line_color,
             kwargs=kwargs,
         )
         if filename:
@@ -366,6 +369,7 @@ def plot(
             x_data_label=x_data_label,
             y_data_label=y_data_label,
             size_data_label=size_data_label,
+            color_data_label=color_data_label,
             kwargs=kwargs,
         )
         if filename:

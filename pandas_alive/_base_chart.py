@@ -198,6 +198,9 @@ class _BaseChart:
 
         return chart_colors
 
+    def get_single_color(self,color_string:str):
+        return to_rgba(color_string)
+
     def set_x_y_limits(self, df: pd.DataFrame, i: int, ax):
         # TODO fix max for x and y?
         if self.fixed_max:
@@ -471,7 +474,9 @@ class _BaseChart:
                 anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
             else:
                 anim.save(filename, fps=self.fps, dpi=self.dpi)
-        except:
+        except Exception as e:
+            print(e)
+        except TypeError:
             raise RuntimeError("Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details")
 
     def get_html5_video(self):
