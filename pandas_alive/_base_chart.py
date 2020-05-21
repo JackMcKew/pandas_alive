@@ -1,7 +1,14 @@
+""" Implementation of BaseChart constructor that all chart types should inherit from.
+
+Methods & Attributes defined will be shared on all other chart types, is also interfaced with use of `super().method()`.
+
+"""
+
 import datetime
 import typing
 
 import attr
+import matplotlib
 from matplotlib import ticker
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import Colormap, to_rgba
@@ -48,7 +55,13 @@ DARK24 = [
 
 @attr.s()
 class _BaseChart:
-    # Refactored BaseChart
+    """
+    BaseChart constructor for attributes and methods for all chart types to share
+
+    See :func: pandas_alive.plotting.plot for more details on input requirements
+
+    """
+
     df: pd.DataFrame = attr.ib()
     interpolate_period: bool = attr.ib()
     steps_per_period: int = attr.ib()
@@ -58,35 +71,50 @@ class _BaseChart:
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
     cmap: typing.Union[str, Colormap, typing.List[str]] = attr.ib()
-    # n_visible: int = attr.ib()
     tick_label_size: typing.Union[int, float] = attr.ib()
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = attr.ib()
     period_summary_func: typing.Callable = attr.ib()
     fixed_max: bool = attr.ib()
-    # append_period_to_title: bool = attr.ib()
-    # x_period_annotation_location: typing.Union[int, float] = attr.ib()
-    # y_period_annotation_location: typing.Union[int, float] = attr.ib()
-    # period_annotation_size: typing.Union[int, float] = attr.ib()
-    # show_period_annotation: bool = attr.ib()
-    # enable_legend: bool = attr.ib()
-    # period_annotation_formatter: str = attr.ib()
     dpi: float = attr.ib()
     kwargs = attr.ib()
 
     def __attrs_post_init__(self):
-        if isinstance(self.df,pd.Series):
+        """
+        Post initialisation steps to run
+
+        Functionality from attrs to calculate new attributes based on input args and kwargs
+
+        Raises:
+            ValueError: If `interpolate_period=True` and DataFrame index is not DateTimeIndex
+        """
+        if isinstance(self.df, pd.Series):
             self.df = pd.DataFrame(self.df)
+
+        self.df = self.df.copy()
         from matplotlib import rcParams
-        rcParams.update({'figure.autolayout':True})
+
+        rcParams.update({"figure.autolayout": True})
+
+        if self.interpolate_period == True and not isinstance(
+            self.df.index, pd.DatetimeIndex
+        ):
+            raise ValueError(
+                f"If using interpolate_period, ensure the index is a DatetimeIndex (eg, use df.index = pd.to_datetime(df.index))"
+            )
         # rcParams.update({'figure.autolayout': True})
         self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting
-        self.data_cols = self.get_data_cols(self.df)  # Get column names with valid data
-        self.df = self.rename_data_columns(
-            self.df
-        )  # Force data column names to be string
+        if not isinstance(self.df.columns, pd.MultiIndex):
+            self.data_cols = self.get_data_cols(
+                self.df
+            )  # Get column names with valid data
+            self.df = self.rename_data_columns(
+                self.df
+            )  # Force data column names to be string
+        else:
+            self.data_cols = self.df.columns.get_level_values(level=0).unique().tolist()
 
         # Careful to use self.df in later calculations (eg, df_rank), use orig_df if needed
         self.df = self.get_interpolated_df(
@@ -185,7 +213,32 @@ class _BaseChart:
 
         return chart_colors
 
-    def set_x_y_limits(self, df: pd.DataFrame, i: int, ax):
+    def get_single_color(self, color_string: str) -> typing.Tuple[int, int, int, int]:
+        """
+        Get single RBGA value from string
+
+        From provided string return the RGB value from `to_rgba`, see more details at https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.colors.to_rgba.html
+
+        Args:
+            color_string (str): Must be apart of named colors in matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py
+
+        Returns:
+            typing.Tuple[int,int,int,int]: Tuple of (r, g, b, a) scalars.
+        """
+        return to_rgba(color_string)
+
+    def set_x_y_limits(self, df: pd.DataFrame, i: int, ax: matplotlib.pyplot.Axes):
+        """
+        Set axis limits for both x and y of passed axes object
+
+        For use with fixed_max to set the figure as the highest/lowest value in entire dataframe otherwise takes min/max from each timestep
+        Fixed_max applies to both x & y
+
+        Args:
+            df (pd.DataFrame): DataFrame to take min/max from
+            i (int): Frame number to slice DataFrame on if used without fixed_max
+            ax (matplotlib.pyplot.Axes): Axes to apply limits to
+        """
         # TODO fix max for x and y?
         if self.fixed_max:
             xlim_start = self.df.index.min()
@@ -199,12 +252,7 @@ class _BaseChart:
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         if self.fixed_max:
             ax.set_ylim(
-                self.df
-                .min()
-                .min(skipna=True),
-                self.df
-                .max()
-                .max(skipna=True),
+                self.df.min().min(skipna=True), self.df.max().max(skipna=True),
             )
         else:
             ax.set_ylim(
@@ -219,7 +267,15 @@ class _BaseChart:
             )
 
     def rename_data_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        # data_cols = self.get_data_cols(df)
+        """
+        Converts all column names to string
+
+        Args:
+            df (pd.DataFrame): DataFrame to rename columns on
+
+        Returns:
+            pd.DataFrame: DataFrame with converted columns
+        """
         df.columns = df.columns.astype(str)
         return df
 
@@ -284,11 +340,11 @@ class _BaseChart:
 
         interpolated_df = interpolated_df.set_index(interpolated_df.columns[0])
 
-        if interpolate_period:            
+        if interpolate_period:
             interpolated_df = interpolated_df.interpolate(method="time")
         else:
             interpolated_df = interpolated_df.interpolate()
-        
+
         return interpolated_df
 
     def init_func(self) -> None:
@@ -384,7 +440,17 @@ class _BaseChart:
         height = orig_pos.y1 - bottom
         return [left, bottom, width, height]
 
-    def apply_style(self, ax):
+    def apply_style(self, ax: matplotlib.pyplot.Axes) -> matplotlib.pyplot.Axes:
+        """
+        Apply styling to axes with spines and grid, can be overridden
+
+        Args:
+            ax (matplotlib.pyplot.Axes): Axes to apply styling to
+
+        Returns:
+            matplotlib.pyplot.Axes: Styled Axes object
+        """
+
         ax.grid(True, axis="x", color="white")
         ax.set_axisbelow(True)
         ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
@@ -406,15 +472,19 @@ class _BaseChart:
         ax = fig.add_axes(rect)
 
         ax = self.apply_style(ax)
-        # ax.grid(True, axis="x", color="white")
-        # ax.set_axisbelow(True)
-        # ax.tick_params(length=0, labelsize=self.tick_label_size, pad=2)
-        # ax.set_facecolor(".9")
-        # for spine in ax.spines.values():
-        #     spine.set_visible(False)
+
         return fig, ax
 
     def show_period(self, i: int) -> None:
+        """
+        Show period label on plot
+
+        Args:
+            i (int): Frame number of animation to take slice of DataFrame and retrieve current index for show as period
+
+        Raises:
+            ValueError: If custom period label location is used must contain `x`, `y` and `s` in dictionary.
+        """
         if self.period_label:
             if self.period_fmt:
                 idx_val = self.df.index[i]
@@ -430,7 +500,7 @@ class _BaseChart:
                 self.ax.text(
                     s=s,
                     transform=self.ax.transAxes,
-                    **self.get_period_label(self.period_label)
+                    **self.get_period_label(self.period_label),
                 )
             else:
                 self.ax.texts[0].set_text(s)
@@ -438,14 +508,16 @@ class _BaseChart:
         if self.period_summary_func:
             values = self.df.iloc[i]
             text_dict = self.period_summary_func(values)
-            if 'x' not in text_dict or 'y' not in text_dict or 's' not in text_dict:
+            if "x" not in text_dict or "y" not in text_dict or "s" not in text_dict:
                 name = self.period_summary_func.__name__
-                raise ValueError(f'The dictionary returned from `{name}` must contain '
-                                '"x", "y", and "s"')
+                raise ValueError(
+                    f"The dictionary returned from `{name}` must contain "
+                    '"x", "y", and "s"'
+                )
             if len(self.ax.texts) != 2:
                 self.ax.text(transform=self.ax.transAxes, **text_dict)
             else:
-                self.ax.texts[1].set_text(text_dict['s'])
+                self.ax.texts[1].set_text(text_dict["s"])
 
     def save(self, filename: str) -> None:
         """ Save method for FuncAnimation
@@ -461,10 +533,15 @@ class _BaseChart:
         self.fps = 1000 / self.period_length * self.steps_per_period
 
         extension = filename.split(".")[-1]
-        if extension == "gif":
-            anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
-        else:
-            anim.save(filename, fps=self.fps, dpi=self.dpi)
+        try:
+            if extension == "gif":
+                anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
+            else:
+                anim.save(filename, fps=self.fps, dpi=self.dpi)
+        except TypeError:
+            raise RuntimeError(
+                "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
+            )
 
     def get_html5_video(self):
         """ Convert the animation to an HTML5 <video> tag.
@@ -477,3 +554,18 @@ class _BaseChart:
 
         anim = self.make_animation(self.get_frames(), self.init_func)
         return anim.to_html5_video()
+
+    # Possibly include image background method?
+    # def show_image(
+    #     self,
+    #     ax,
+    #     path_to_image: str,
+    #     extent: typing.Tuple[float],
+    #     zorder: int = 0,
+    #     aspect: str = "equal",
+    # ):
+    #     image = plt.imread(path_to_image)
+
+    #     ax.imshow(image, zorder=zorder, extent=extent, aspect=aspect)
+
+    #     return ax

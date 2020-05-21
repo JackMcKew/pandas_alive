@@ -5,11 +5,13 @@ This module contains functions for chart types.
 """
 
 import datetime
+
 import typing
+from typing import Mapping
 
 import attr
 from matplotlib.colors import Colormap
-from matplotlib import colors, ticker
+from matplotlib import colors, ticker, transforms
 from matplotlib.animation import FuncAnimation
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -24,6 +26,7 @@ converter = mdates.ConciseDateConverter()
 munits.registry[np.datetime64] = converter
 munits.registry[datetime.date] = converter
 munits.registry[datetime.datetime] = converter
+
 
 @attr.s()
 class BarChartRace(_BaseChart):
@@ -41,8 +44,8 @@ class BarChartRace(_BaseChart):
     label_bars: bool = attr.ib()
     bar_label_size: typing.Union[int, float] = attr.ib()
     n_visible: int = attr.ib()
-    fixed_order: typing.Union[list,bool] = attr.ib()
-    
+    fixed_order: typing.Union[list, bool] = attr.ib()
+
     perpendicular_bar_func: typing.Callable = attr.ib()
 
     def __attrs_post_init__(self):
@@ -52,29 +55,37 @@ class BarChartRace(_BaseChart):
 
         if self.fixed_order is True:
             last_values = self.df.iloc[-1].sort_values(ascending=False)
-            cols = last_values.iloc[:self.n_visible].index
+            cols = last_values.iloc[: self.n_visible].index
             self.df = self.df[cols]
         elif isinstance(self.fixed_order, list):
             cols = self.fixed_order
             self.df = self.df[cols]
-        
+
         super().__attrs_post_init__()
+
+        if self.n_visible > 15:
+            import warnings
+
+            warnings.warn(
+                "Plotting too many bars may result in undesirable output, use `n_visible=5 to limit number of bars"
+            )
+
         self.validate_params()
 
         self.df_rank = self.calculate_ranks(self.orig_df)
 
         if self.fixed_order:
-            
+
             n = self.df.shape[1] + 1
             m = self.df.shape[0]
             rank_row = np.arange(1, n)
-            if (self.sort == 'desc' and self.orientation == 'h') or \
-                (self.sort == 'asc' and self.orientation == 'v'):
+            if (self.sort == "desc" and self.orientation == "h") or (
+                self.sort == "asc" and self.orientation == "v"
+            ):
                 rank_row = rank_row[::-1]
-            
+
             ranks_arr = np.repeat(rank_row.reshape(1, -1), m, axis=0)
             self.df_rank = pd.DataFrame(data=ranks_arr, columns=cols)
-            
 
         self.orig_index = self.df.index.astype("str")
 
@@ -134,7 +145,7 @@ class BarChartRace(_BaseChart):
         Returns:
             typing.Tuple[pd.DataFrame,pd.DataFrame]: df_values contains interpolated values, df_rank contains interpolated rank
         """
-        
+
         df_rank = df.rank(axis=1, method="first", ascending=False).clip(
             upper=self.n_visible + 1
         )
@@ -328,13 +339,13 @@ class BarChartRace(_BaseChart):
                 val = self.perpendicular_bar_func(values, ranks)
 
             if not self.ax.lines:
-                if self.orientation == 'h':
-                    self.ax.axvline(val, lw=10, color='.5', zorder=.5)
+                if self.orientation == "h":
+                    self.ax.axvline(val, lw=10, color=".5", zorder=0.5)
                 else:
-                    self.ax.axhline(val, lw=10, color='.5', zorder=.5)
+                    self.ax.axhline(val, lw=10, color=".5", zorder=0.5)
             else:
                 line = self.ax.lines[0]
-                if self.orientation == 'h':
+                if self.orientation == "h":
                     line.set_xdata([val] * 2)
                 else:
                     line.set_ydata([val] * 2)
@@ -358,6 +369,18 @@ class BarChartRace(_BaseChart):
 
 @attr.s
 class ScatterChart(_BaseChart):
+    """
+    ScatterChart to be generate animated plot with `matplotlib.pyplot.axes.scatter`
+
+    Accepts kwargs as detailed on https://matplotlib.org/3.2.1/api/_as_gen/matplotlib.pyplot.scatter.html
+
+    Args:
+        _BaseChart : BaseChart constructor that all charts share
+
+    Raises:
+        ValueError: Size label must be a column in DataFrame
+    """
+
     size: typing.Union[int, str] = attr.ib()
 
     def __attrs_post_init__(self):
@@ -370,7 +393,17 @@ class ScatterChart(_BaseChart):
             self._points[name]["y"] = []
 
     def plot_point(self, i: int) -> None:
-        super().set_x_y_limits(self.df, i,self.ax)
+        """
+        Plot points for scatter on chart
+
+
+        Args:
+            i (int): Frame to be plotted, will take slice of DataFrame at this index
+
+        Raises:
+            ValueError: Size label must be a column in DataFrame
+        """
+        super().set_x_y_limits(self.df, i, self.ax)
         for name, color in zip(self.data_cols, self.colors):
             self._points[name]["x"].append(self.df[name].index[i])
             self._points[name]["y"].append(self.df[name].iloc[i])
@@ -418,6 +451,8 @@ class LineChart(_BaseChart):
     """
 
     line_width: int = attr.ib()
+    label_events: typing.Dict[str, str] = attr.ib()
+    fill_under_line_color: str = attr.ib()
 
     def __attrs_post_init__(self):
         super().__attrs_post_init__()
@@ -435,7 +470,7 @@ class LineChart(_BaseChart):
             i (int): Index of frame for animation
         """
         # TODO Somehow implement n visible lines?
-        super().set_x_y_limits(self.df, i,self.ax)
+        super().set_x_y_limits(self.df, i, self.ax)
         for name, color in zip(self.data_cols, self.line_colors):
 
             self._lines[name]["x"].append(self.df[name].index[i])
@@ -447,6 +482,31 @@ class LineChart(_BaseChart):
                 color=color,
                 **self.kwargs,
             )
+            # TODO add option bar locations
+            if self.label_events:
+                # from datetime import datetime
+                import numpy as np
+
+                for pos, (label, date) in enumerate(self.label_events.items()):
+                    event_index = np.sum(self.df.index <= date)
+                    if i >= event_index:
+                        event_start = self.df.index[event_index]
+                        trans = transforms.blended_transform_factory(
+                            self.ax.transData, self.ax.transAxes
+                        )
+
+                        # plt.text(label, 0.9-(pos*0.1), label, transform=trans)
+                        self.ax.axvline(event_start, lw=10, color=".5", zorder=0.5)
+                        self.ax.text(
+                            event_start, 0.9 - (pos * 0.1), label, transform=trans
+                        )
+
+            if self.fill_under_line_color:
+                self.ax.fill_between(
+                    self._lines[name]["x"],
+                    self._lines[name]["y"],
+                    color=self.get_single_color(self.fill_under_line_color),
+                )
 
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
@@ -481,7 +541,7 @@ class PieChart(_BaseChart):
         super().__attrs_post_init__()
         self.wedge_colors = self.get_colors(self.cmap)
 
-        self.wedge_colors = dict(zip(self.data_cols,self.wedge_colors))
+        self.wedge_colors = dict(zip(self.data_cols, self.wedge_colors))
 
         self._wedges: typing.Dict = {}
         for name in self.data_cols:
@@ -495,9 +555,9 @@ class PieChart(_BaseChart):
             i (int): Index of frame for animation
         """
 
-        for text in self.ax.texts[int(bool(self.period_fmt)):]:
+        for text in self.ax.texts[int(bool(self.period_fmt)) :]:
             text.remove()
-        
+
         # super().set_x_y_limits(self.df, i)
         # print(self.df[self.data_cols].notnull())
         filt_nan = self.df[self.data_cols].iloc[i].notnull()
@@ -511,10 +571,7 @@ class PieChart(_BaseChart):
             wedge_color_list.append(self.wedge_colors[label])
 
         self.ax.pie(
-            wedges.values,
-            labels=wedges.index,
-            colors=wedge_color_list,
-            **self.kwargs
+            wedges.values, labels=wedges.index, colors=wedge_color_list, **self.kwargs
         )
 
         # for name, color in zip(self.data_cols, self.wedge_colors):
@@ -539,7 +596,6 @@ class PieChart(_BaseChart):
         if self.period_fmt:
             self.show_period(i)
         self.plot_wedge(i)
-        
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -578,8 +634,8 @@ class BarChart(_BaseChart):
 
         # for text in self.ax.texts[int(bool(self.period_fmt)):]:
         #     text.remove()
-        
-        super().set_x_y_limits(self.df, i,self.ax)
+
+        super().set_x_y_limits(self.df, i, self.ax)
 
         for name, color in zip(self.data_cols, self.bar_colors):
 
@@ -592,33 +648,6 @@ class BarChart(_BaseChart):
                 color=color,
                 **self.kwargs,
             )
-        # print(self.df[self.data_cols].notnull())
-        # filt_nan = self.df[self.data_cols].iloc[i].notnull()
-
-        # print(self.df[self.data_cols].iloc[i][filt_nan])
-        # bars = self.df[self.data_cols].iloc[i][filt_nan]
-
-        # bar_color_list = []
-        # for label in bars.index:
-        #     bar_color_list.append(self.bar_colors[label])
-
-        # self.ax.bar(
-        #     bars.,
-        #     height=bars.values,
-        #     color=bar_color_list,
-        #     **self.kwargs
-        # )
-
-        # for name, color in zip(self.data_cols, self.wedge_colors):
-
-        #     self._wedges[name]["size"].append(self.df[name].index[i])
-        #     # self._lines[name]["y"].append(self.df[name].iloc[i])
-        #     self.ax.pie(
-        #         self._wedges[name]["size"],
-        #         label=name,
-        #         color=color,
-        #         **self.kwargs,
-        #     )
 
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
@@ -631,9 +660,114 @@ class BarChart(_BaseChart):
         if self.period_fmt:
             self.show_period(i)
         self.plot_bars(i)
-        
 
     def init_func(self) -> None:
         """ Initialization function for animation
         """
-        self.ax.bar([],[])
+        self.ax.bar([], [])
+
+
+@attr.s
+class BubbleChart(_BaseChart):
+    """
+    Multivariate Bubble charts from MultiIndex
+
+    Generate animated bubble charts with multivariate data (x,y at a minimum must be supplied)
+    Optionally supply data for colour and/or size
+
+    Args:
+        _BaseChart ([type]): Base chart for all chart classes
+
+    Raises:
+        ValueError: [description]
+    """
+
+    x_data_label: str = attr.ib()
+    y_data_label: str = attr.ib()
+    size_data_label: typing.Union[int, str] = attr.ib()
+    color_data_label: str = attr.ib()
+
+    def __attrs_post_init__(self):
+        super().__attrs_post_init__()
+        self.colors = self.get_colors(self.cmap)
+        self._points: typing.Dict = {}
+        self.column_keys = self.df.columns.get_level_values(level=0).unique().tolist()
+        # self.data_cols = self.df.columns.get_level_values(level=1).unique().tolist()
+        self.mapping = {"x": self.x_data_label, "y": self.y_data_label}
+        if isinstance(self.size_data_label, str):
+            self.mapping["size"] = self.size_data_label
+        if (
+            isinstance(self.color_data_label, str)
+            and self.color_data_label in self.column_keys
+        ):
+            self.mapping["color"] = self.color_data_label
+        if self.x_data_label is None or self.y_data_label is None:
+            raise ValueError("X Y labels must be provided at a minimum")
+        if not (
+            self.x_data_label in self.column_keys
+            and self.y_data_label in self.column_keys
+        ):
+            raise ValueError(
+                f"Provided keys must be in level 0 multi index, possible values: {self.column_keys}"
+            )
+
+    def plot_point(self, i: int) -> None:
+        """
+        Plot points from MultiIndexed DataFrame
+
+        Optionally size & colour can be provided and if so, the string provided must be present in the level 0 column labels
+
+        Args:
+            i (int): Frame to plot, will slice DataFrame at this index
+        """
+        if self.fixed_max:
+            BBox = (
+                self.df[self.mapping["x"]].values.min(),
+                self.df[self.mapping["x"]].values.max(),
+                self.df[self.mapping["y"]].values.min(),
+                self.df[self.mapping["y"]].values.max(),
+            )
+            self.ax.set_xlim(BBox[0], BBox[1])
+            self.ax.set_ylim(BBox[2], BBox[3])
+
+        # TODO Add geopandas for map plots
+        # self.ax = self.show_image(
+        #     self.ax,
+        #     "C:\\Users\\jackm\\Documents\\GitHub\\pandas-alive\\data\\nsw_map.png",
+        #     extent=BBox,
+        #     zorder=0,
+        #     aspect="equal",
+        # )
+
+        for output_key, column_key in self.mapping.items():
+            self._points[output_key] = self.df[column_key].iloc[i].values
+
+        self.ax.scatter(
+            self._points["x"],
+            self._points["y"],
+            s=self._points["size"]
+            if isinstance(self.size_data_label, str)
+            else self.size_data_label,
+            c=self._points["color"]
+            if isinstance(self.color_data_label, str)
+            and self.color_data_label in self.data_cols
+            else self.color_data_label,
+            **self.kwargs,
+        )
+
+    def anim_func(self, i: int) -> None:
+        """ Animation function, removes all lines and updates legend/period annotation
+
+        Args:
+            i (int): Index of frame of animation
+        """
+        for path in self.ax.collections:
+            path.remove()
+        self.plot_point(i)
+        if self.period_fmt:
+            self.show_period(i)
+
+    def init_func(self) -> None:
+        """ Initialization function for animation
+        """
+        self.ax.scatter([], [])
