@@ -369,6 +369,17 @@ class BarChartRace(_BaseChart):
 
 @attr.s
 class ScatterChart(_BaseChart):
+    """
+    ScatterChart to be generate animated plot with `matplotlib.pyplot.axes.scatter`
+
+    Accepts kwargs as detailed on https://matplotlib.org/3.2.1/api/_as_gen/matplotlib.pyplot.scatter.html
+
+    Args:
+        _BaseChart : BaseChart constructor that all charts share
+
+    Raises:
+        ValueError: Size label must be a column in DataFrame
+    """
     size: typing.Union[int, str] = attr.ib()
 
     def __attrs_post_init__(self):
@@ -381,6 +392,16 @@ class ScatterChart(_BaseChart):
             self._points[name]["y"] = []
 
     def plot_point(self, i: int) -> None:
+        """
+        Plot points for scatter on chart
+
+
+        Args:
+            i (int): Frame to be plotted, will take slice of DataFrame at this index
+
+        Raises:
+            ValueError: Size label must be a column in DataFrame
+        """
         super().set_x_y_limits(self.df, i, self.ax)
         for name, color in zip(self.data_cols, self.colors):
             self._points[name]["x"].append(self.df[name].index[i])
@@ -442,7 +463,6 @@ class LineChart(_BaseChart):
             self._lines[name]["y"] = []
 
     def plot_line(self, i: int) -> None:
-        # print(f"Plotting frame {i}")
         """ Function for plotting all lines in dataframe
 
         Args:
@@ -486,49 +506,6 @@ class LineChart(_BaseChart):
                 self.ax.fill_between(
                     self._lines[name]["x"], self._lines[name]["y"], color=self.get_single_color(self.fill_under_line_color)
                 )
-
-            #     # Greater than lockdown date index plot v bar
-            #     # from datetime import datetime
-            #     # lockdown_date = datetime.strptime("01/04/2020","%d/%m/%Y")
-            #     # print(multi_df[multi_df.index <= lockdown_date]
-            #     # x_date_val = 498
-
-            #     from datetime import datetime
-            #     import numpy as np
-
-            #     princess_date = datetime.strptime("19/03/2020", "%d/%m/%Y")
-            #     princess_index = np.sum(self.df.index <= princess_date)
-            #     # 194 Ruby Princiess disembark
-
-            #     if i >= princess_index:
-            #         lockdown_start = self.df.index[princess_index]
-            #         trans = transforms.blended_transform_factory(
-            #             self.ax.transData, self.ax.transAxes
-            #         )
-
-            #         # plt.text(x, .5, 'hello', transform=trans)
-
-            #         self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
-            #         self.ax.text(
-            #             lockdown_start, 0.9, "Ruby Princess Disembark", transform=trans
-            #         )
-
-            #     from datetime import datetime
-            #     import numpy as np
-
-            #     lockdown_date = datetime.strptime("1/04/2020", "%d/%m/%Y")
-            #     lockdown_index = np.sum(self.df.index <= lockdown_date)
-
-            #     if i >= lockdown_index:
-            #         lockdown_start = self.df.index[lockdown_index]
-            #         trans = transforms.blended_transform_factory(
-            #             self.ax.transData, self.ax.transAxes
-            #         )
-
-            #         # plt.text(x, .5, 'hello', transform=trans)
-
-            #         self.ax.axvline(lockdown_start, lw=10, color=".5", zorder=0.5)
-            #         self.ax.text(lockdown_start, 0.7, "Lockdown", transform=trans)
 
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
@@ -670,34 +647,6 @@ class BarChart(_BaseChart):
                 color=color,
                 **self.kwargs,
             )
-        # print(self.df[self.data_cols].notnull())
-        # filt_nan = self.df[self.data_cols].iloc[i].notnull()
-
-        # print(self.df[self.data_cols].iloc[i][filt_nan])
-        # bars = self.df[self.data_cols].iloc[i][filt_nan]
-
-        # bar_color_list = []
-        # for label in bars.index:
-        #     bar_color_list.append(self.bar_colors[label])
-
-        # self.ax.bar(
-        #     bars.,
-        #     height=bars.values,
-        #     color=bar_color_list,
-        #     **self.kwargs
-        # )
-
-        # for name, color in zip(self.data_cols, self.wedge_colors):
-
-        #     self._wedges[name]["size"].append(self.df[name].index[i])
-        #     # self._lines[name]["y"].append(self.df[name].iloc[i])
-        #     self.ax.pie(
-        #         self._wedges[name]["size"],
-        #         label=name,
-        #         color=color,
-        #         **self.kwargs,
-        #     )
-
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
 
@@ -758,6 +707,14 @@ class BubbleChart(_BaseChart):
             )
 
     def plot_point(self, i: int) -> None:
+        """
+        Plot points from MultiIndexed DataFrame
+
+        Optionally size & colour can be provided and if so, the string provided must be present in the level 0 column labels
+
+        Args:
+            i (int): Frame to plot, will slice DataFrame at this index
+        """
         if self.fixed_max:
             BBox = (
                 self.df[self.mapping["x"]].values.min(),

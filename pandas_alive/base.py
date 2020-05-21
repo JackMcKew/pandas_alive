@@ -2,9 +2,8 @@
 
 This module contains functions/classes for functionality outside of plotting.
 
-
 Example:
-    ``df = pandas_alive.load_dataset()``
+    `df = pandas_alive.load_dataset()`
 
     Example dataset suitable for immediate use with pandas_alive. Either `covid19` or `urban_pop`. Defaults to `covid19`.
 """

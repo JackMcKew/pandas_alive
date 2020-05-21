@@ -1,7 +1,6 @@
 """ Plotting implementations for accessor to Pandas.DataFrame & multiple animated plots
 
-This module contains functions for plotting functionality.
-
+Implementation of accessor to pass args and kwargs from accessor function to chart constructors.
 
 Example:
     ``df.plot_animated()``
@@ -15,6 +14,7 @@ from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation
 from .charts import BarChartRace, BubbleChart, LineChart, ScatterChart, PieChart, BarChart
 from typing import Sequence
+import datetime
 
 
 def get_allowed_kinds() -> typing.List[str]:
@@ -82,7 +82,7 @@ def plot(
     perpendicular_bar_func: typing.Union[typing.Callable, str] = None,
     # Line Chart
     line_width: int = 2,
-    label_events: typing.Dict[str,str] = None,
+    label_events: typing.Dict[str,datetime.datetime] = None,
     fill_under_line_color: str = None,
     # Scatter Chart
     size: int = 2,
@@ -107,7 +107,7 @@ def plot(
         kind (str, optional): Type of chart to use. Defaults to "race".
             Supported kinds are: "race", "line", "scatter","pie","bar","bubble"
 
-        interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaullts to `True`.
+        interpolate_period (bool, optional): Whether to interpolate the period. Only valid for datetime or numeric indexes. Defaults to `True`.
             When set to `True`, for example, the two consecutive periods 2020-03-29 and 2020-03-30 would yield a new index of
                 >>> df.plot_animated(interpolate_period=True,steps_per_period=4)
                     2020-03-29 00:00:00
@@ -211,10 +211,46 @@ def plot(
             Defaults to None.
 
         line_width (int, optional): Line width provided on line charts. Defaults to 2.
+
+        label_events (typing.Dict[str,datetime.datetime],optional): Provide list of events to label with a vertical bar on line charts. Defaults to None.
+
+            To be used with strptime or any datetime object
+
+            Sample use:
+            .. code-block::
+                df.plot_animated(
+                        kind='line',
+                        filename='test.mp4',
+                        label_events={
+                            'Ruby Princess Disembark':datetime.strptime("19/03/2020", "%d/%m/%Y"),
+                            'Lockdown':datetime.strptime("31/03/2020", "%d/%m/%Y")
+                        },
+                    )
+        
+        fill_under_line_color (str,optional): Color to show under line to create an area chart equivalent
+
+            String passed must be in list of named colors by matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py
     
         size (int, optional): Size of scatter points on scatter charts. Defaults to 2.
-            
 
+        x_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex
+
+            Label passed all values will be used for the x-axis
+
+        y_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex
+
+            Label passed all values will be used for the y-axis
+
+        size_data_label (typing.Union[int,str],optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults to 2.
+
+            Label passed all values will be used for the size of each point on the plot.
+            Otherwise a int can be passed for all points to be that size.
+
+        color_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults. to "blue".
+
+            Label passed all values will be used to create a colourmap for points.
+            Otherwise a string can be passed of a named color by matplotlib for all points to be that color.
+            
     Raises:
         ValueError: If chart type is not supported, raise error
 
@@ -409,9 +445,17 @@ def animate_multiple_plots(
     Raises:
         UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length
     """
-    # TODO Maybe add multichart class?
 
-    def update_all_graphs(frame):
+    def update_all_graphs(frame:int):
+        """
+        Function for updating all plots provided as a list via their respective `anim_func` method
+
+        Args:
+            frame (int): Frame to animate
+
+        Raises:
+            UserWarning: DataFrames apart of plots must have same length of index
+        """
         for plot in plots:
             try:
                 plot.anim_func(frame)
@@ -419,10 +463,6 @@ def animate_multiple_plots(
                 raise UserWarning(
                     f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}"
                 )
-                # raise UserWarning(
-                #     f"{type(plot)} {plot.title} error plotting on frame {frame}, ensure all plots share index"
-                # )
-
     # Current just number of columns for number of plots
     # TODO add option for number of rows/columns
     # TODO Use gridspec?
@@ -506,10 +546,22 @@ class BasePlotMethods(PandasObject):
         PandasObject (PandasObject): Base Pandas Object
     """
 
-    def __init__(self, data):
+    def __init__(self, data:typing.Union[pd.Series,pd.DataFrame]):
+        """
+        Initialise BasePlotMethods with parent data as either Series or DataFrame
+
+        Args:
+            data (typing.Union[pd.Series,pd.DataFrame]): Will take _parent attribute from DataFrame/Series
+        """
         self._parent = data  # can be Series or DataFrame
 
     def __call__(self, *args, **kwargs):
+        """
+        If accessor hasn't been initialised raise error
+
+        Raises:
+            NotImplementedError: Error if accessor function has not been overridden
+        """
         raise NotImplementedError
 
 
@@ -521,10 +573,21 @@ class AnimatedAccessor(BasePlotMethods):
     """
 
     def __call__(self, *args, **kwargs):
+        """
+        Must be overriden to enable funcctionality
+        
+        Calls :func: pandas_alive.plotting.plot and returns instance of constructed chart
+        """
         return plot(self.df, *args, **kwargs)
 
     @property
-    def df(self):
+    def df(self) -> typing.Union[pd.Series,pd.DataFrame]:
+        """
+        Contains _parent DataFrame
+
+        Returns:
+            typing.Union[pd.Series,pd.DataFrame]: Parent DataFrame/Series
+        """
 
         return self._parent
 
