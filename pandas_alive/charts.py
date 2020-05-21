@@ -430,6 +430,7 @@ class LineChart(_BaseChart):
 
     line_width: int = attr.ib()
     label_events: typing.Dict[str,str] = attr.ib()
+    fill_under_line_color: str = attr.ib()
 
     def __attrs_post_init__(self):
         super().__attrs_post_init__()
@@ -462,7 +463,7 @@ class LineChart(_BaseChart):
             )
             # TODO add option bar locations
             if self.label_events:
-                from datetime import datetime
+                # from datetime import datetime
                 import numpy as np
                 for pos, (label, date) in enumerate(self.label_events.items()):
                     event_index = np.sum(self.df.index <= date)
@@ -481,10 +482,10 @@ class LineChart(_BaseChart):
 
                     
 
-            # if self.period_label:
-            #     # self.ax.fill_between(
-            #     #     self._lines[name]["x"], self._lines[name]["y"], color="blue"
-            #     # )
+            if self.fill_under_line_color:
+                self.ax.fill_between(
+                    self._lines[name]["x"], self._lines[name]["y"], color=self.get_single_color(self.fill_under_line_color)
+                )
 
             #     # Greater than lockdown date index plot v bar
             #     # from datetime import datetime
@@ -733,15 +734,19 @@ class BubbleChart(_BaseChart):
     x_data_label: str = attr.ib()
     y_data_label: str = attr.ib()
     size_data_label: typing.Union[int, str] = attr.ib()
+    color_data_label: str = attr.ib()
 
     def __attrs_post_init__(self):
         super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
         self._points: typing.Dict = {}
         self.column_keys = self.df.columns.get_level_values(level=0).unique().tolist()
+        # self.data_cols = self.df.columns.get_level_values(level=1).unique().tolist()
         self.mapping = {"x": self.x_data_label, "y": self.y_data_label}
         if isinstance(self.size_data_label, str):
             self.mapping["size"] = self.size_data_label
+        if isinstance(self.color_data_label,str) and self.color_data_label in self.column_keys:
+            self.mapping["color"] = self.color_data_label
         if self.x_data_label is None or self.y_data_label is None:
             raise ValueError("X Y labels must be provided at a minimum")
         if not (
@@ -781,7 +786,7 @@ class BubbleChart(_BaseChart):
             s=self._points["size"]
             if isinstance(self.size_data_label, str)
             else self.size_data_label,
-            color="blue",
+            c= self._points['color'] if isinstance(self.color_data_label,str) and self.color_data_label in self.data_cols else self.color_data_label,
             **self.kwargs,
         )
 
