@@ -1,0 +1,38 @@
+name: Interrogate documentation
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Python Interrogate Check
+      uses: JackMcKew/python-interrogate-check@master
+      with:
+        path: 'pandas_alive'
+        fail-under: '0'
+        badge-location: 'badges/interrogate_badge.svg'
+
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add badges/interrogate_badge.svg
+        git commit -m "Update interrogate_badge.svg" -a
+
+    - name: Push changes
+      if: success()
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.ACCESS_TOKEN }}
