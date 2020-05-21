@@ -61,6 +61,7 @@ class _BaseChart:
     See :func: pandas_alive.plotting.plot for more details on input requirements
 
     """
+
     df: pd.DataFrame = attr.ib()
     interpolate_period: bool = attr.ib()
     steps_per_period: int = attr.ib()
@@ -105,8 +106,10 @@ class _BaseChart:
         # rcParams.update({'figure.autolayout': True})
         self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting
-        if not isinstance(self.df.columns,pd.MultiIndex):
-            self.data_cols = self.get_data_cols(self.df)  # Get column names with valid data
+        if not isinstance(self.df.columns, pd.MultiIndex):
+            self.data_cols = self.get_data_cols(
+                self.df
+            )  # Get column names with valid data
             self.df = self.rename_data_columns(
                 self.df
             )  # Force data column names to be string
@@ -210,7 +213,7 @@ class _BaseChart:
 
         return chart_colors
 
-    def get_single_color(self,color_string:str) -> typing.Tuple[int,int,int,int]:
+    def get_single_color(self, color_string: str) -> typing.Tuple[int, int, int, int]:
         """
         Get single RBGA value from string
 
@@ -469,7 +472,7 @@ class _BaseChart:
         ax = fig.add_axes(rect)
 
         ax = self.apply_style(ax)
-        
+
         return fig, ax
 
     def show_period(self, i: int) -> None:
@@ -536,7 +539,9 @@ class _BaseChart:
             else:
                 anim.save(filename, fps=self.fps, dpi=self.dpi)
         except TypeError:
-            raise RuntimeError("Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details")
+            raise RuntimeError(
+                "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
+            )
 
     def get_html5_video(self):
         """ Convert the animation to an HTML5 <video> tag.

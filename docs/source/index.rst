@@ -1,6 +1,6 @@
 .. module:: pandas_alive
 
-Pandas_Alive |version|
+Pandas_Alive |release|
 ========================================
 
 Animated plotting extension for Pandas with Matplotlib

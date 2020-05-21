@@ -380,6 +380,7 @@ class ScatterChart(_BaseChart):
     Raises:
         ValueError: Size label must be a column in DataFrame
     """
+
     size: typing.Union[int, str] = attr.ib()
 
     def __attrs_post_init__(self):
@@ -450,7 +451,7 @@ class LineChart(_BaseChart):
     """
 
     line_width: int = attr.ib()
-    label_events: typing.Dict[str,str] = attr.ib()
+    label_events: typing.Dict[str, str] = attr.ib()
     fill_under_line_color: str = attr.ib()
 
     def __attrs_post_init__(self):
@@ -485,6 +486,7 @@ class LineChart(_BaseChart):
             if self.label_events:
                 # from datetime import datetime
                 import numpy as np
+
                 for pos, (label, date) in enumerate(self.label_events.items()):
                     event_index = np.sum(self.df.index <= date)
                     if i >= event_index:
@@ -496,15 +498,14 @@ class LineChart(_BaseChart):
                         # plt.text(label, 0.9-(pos*0.1), label, transform=trans)
                         self.ax.axvline(event_start, lw=10, color=".5", zorder=0.5)
                         self.ax.text(
-                            event_start, 0.9-(pos*0.1), label, transform=trans
+                            event_start, 0.9 - (pos * 0.1), label, transform=trans
                         )
-
-
-                    
 
             if self.fill_under_line_color:
                 self.ax.fill_between(
-                    self._lines[name]["x"], self._lines[name]["y"], color=self.get_single_color(self.fill_under_line_color)
+                    self._lines[name]["x"],
+                    self._lines[name]["y"],
+                    color=self.get_single_color(self.fill_under_line_color),
                 )
 
     def anim_func(self, i: int) -> None:
@@ -647,6 +648,7 @@ class BarChart(_BaseChart):
                 color=color,
                 **self.kwargs,
             )
+
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
 
@@ -694,7 +696,10 @@ class BubbleChart(_BaseChart):
         self.mapping = {"x": self.x_data_label, "y": self.y_data_label}
         if isinstance(self.size_data_label, str):
             self.mapping["size"] = self.size_data_label
-        if isinstance(self.color_data_label,str) and self.color_data_label in self.column_keys:
+        if (
+            isinstance(self.color_data_label, str)
+            and self.color_data_label in self.column_keys
+        ):
             self.mapping["color"] = self.color_data_label
         if self.x_data_label is None or self.y_data_label is None:
             raise ValueError("X Y labels must be provided at a minimum")
@@ -743,7 +748,10 @@ class BubbleChart(_BaseChart):
             s=self._points["size"]
             if isinstance(self.size_data_label, str)
             else self.size_data_label,
-            c= self._points['color'] if isinstance(self.color_data_label,str) and self.color_data_label in self.data_cols else self.color_data_label,
+            c=self._points["color"]
+            if isinstance(self.color_data_label, str)
+            and self.color_data_label in self.data_cols
+            else self.color_data_label,
             **self.kwargs,
         )
 

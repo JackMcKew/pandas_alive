@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pandas_alive"
-version = "0.1.12"
+version = "0.1.13"
 description = "Animated plotting extension for Pandas with Matplotlib"
 authors = ["JackMcKew <jackmckew2@gmail.com>"]
 readme = "README.md"

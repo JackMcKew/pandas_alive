@@ -12,7 +12,14 @@ import typing
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation
-from .charts import BarChartRace, BubbleChart, LineChart, ScatterChart, PieChart, BarChart
+from .charts import (
+    BarChartRace,
+    BubbleChart,
+    LineChart,
+    ScatterChart,
+    PieChart,
+    BarChart,
+)
 from typing import Sequence
 import datetime
 
@@ -23,7 +30,7 @@ def get_allowed_kinds() -> typing.List[str]:
     Returns:
         typing.List[str]: List of implemented chart types
     """
-    return ["race", "line", "scatter","pie","bar","bubble"]
+    return ["race", "line", "scatter", "pie", "bar", "bubble"]
 
 
 def verify_filename(filename: str) -> str:
@@ -82,15 +89,15 @@ def plot(
     perpendicular_bar_func: typing.Union[typing.Callable, str] = None,
     # Line Chart
     line_width: int = 2,
-    label_events: typing.Dict[str,datetime.datetime] = None,
+    label_events: typing.Dict[str, datetime.datetime] = None,
     fill_under_line_color: str = None,
     # Scatter Chart
     size: int = 2,
     # Bubble Chart
     x_data_label: str = None,
     y_data_label: str = None,
-    size_data_label: typing.Union[int,str] = 2,
-    color_data_label:str = "blue",
+    size_data_label: typing.Union[int, str] = 2,
+    color_data_label: str = "blue",
     **kwargs,
 ) -> typing.Union[ScatterChart, BarChartRace, LineChart, PieChart]:
     """
@@ -290,7 +297,6 @@ def plot(
             bar_label_size=bar_label_size,
             n_visible=n_visible,
             fixed_order=fixed_order,
-            
             perpendicular_bar_func=perpendicular_bar_func,
             kwargs=kwargs,
         )
@@ -413,7 +419,6 @@ def plot(
         return animated_bubble
 
 
-
 def animate_multiple_plots(
     filename: str,
     plots: typing.List[typing.Union[BarChartRace, LineChart, PieChart, ScatterChart]],
@@ -446,7 +451,7 @@ def animate_multiple_plots(
         UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length
     """
 
-    def update_all_graphs(frame:int):
+    def update_all_graphs(frame: int):
         """
         Function for updating all plots provided as a list via their respective `anim_func` method
 
@@ -463,6 +468,7 @@ def animate_multiple_plots(
                 raise UserWarning(
                     f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}"
                 )
+
     # Current just number of columns for number of plots
     # TODO add option for number of rows/columns
     # TODO Use gridspec?
@@ -505,9 +511,9 @@ def animate_multiple_plots(
         if plot.fixed_max:
             # Hodgepodge way of fixing this, should refactor to contain all figures and axes
             # TODO plot.axes_format(self,ax) and pass current ax or desired ax
-            if plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "h":
+            if plot.__class__.__name__ == "BarChartRace" and plot.orientation == "h":
                 axes[num].set_xlim(axes[num].get_xlim()[0], plot.df.values.max() * 1.1)
-            elif plot.__class__.__name__ == 'BarChartRace' and plot.orientation == "v":
+            elif plot.__class__.__name__ == "BarChartRace" and plot.orientation == "v":
                 axes[num].set_ylim(axes[num].get_ylim()[0], plot.df.values.max() * 1.1)
 
         axes[num].set_title(plot.title)
@@ -546,7 +552,7 @@ class BasePlotMethods(PandasObject):
         PandasObject (PandasObject): Base Pandas Object
     """
 
-    def __init__(self, data:typing.Union[pd.Series,pd.DataFrame]):
+    def __init__(self, data: typing.Union[pd.Series, pd.DataFrame]):
         """
         Initialise BasePlotMethods with parent data as either Series or DataFrame
 
@@ -581,7 +587,7 @@ class AnimatedAccessor(BasePlotMethods):
         return plot(self.df, *args, **kwargs)
 
     @property
-    def df(self) -> typing.Union[pd.Series,pd.DataFrame]:
+    def df(self) -> typing.Union[pd.Series, pd.DataFrame]:
         """
         Contains _parent DataFrame
 
