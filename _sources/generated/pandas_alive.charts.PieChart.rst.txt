@@ -37,6 +37,8 @@ PieChart
    
       PieChart.get_period_label
    
+      PieChart.get_single_color
+   
       PieChart.init_func
    
       PieChart.make_animation

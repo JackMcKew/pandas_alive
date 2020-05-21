@@ -1,0 +1,6 @@
+BarChart.get\_single\_color
+===========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChart.get_single_color

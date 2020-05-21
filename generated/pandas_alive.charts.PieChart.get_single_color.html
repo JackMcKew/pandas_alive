@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PieChart.get_single_color &mdash; Pandas_Alive 0.1.13 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PieChart.init_func" href="pandas_alive.charts.PieChart.init_func.html" />
+    <link rel="prev" title="PieChart.get_period_label" href="pandas_alive.charts.PieChart.get_period_label.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pandas_Alive
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Installation &amp; Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../developer.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.plotting.plot.html">plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.plotting.html">pandas_alive.plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.base.html">pandas_alive.base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive._base_chart.html">pandas_alive._base_chart</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pandas_alive.charts.html">pandas_alive.charts</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChart.html">BarChart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChartRace.html">BarChartRace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BubbleChart.html">BubbleChart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="pandas_alive.charts.PieChart.html">PieChart</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.__init__.html">PieChart.__init__</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.anim_func.html">PieChart.anim_func</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.apply_style.html">PieChart.apply_style</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.calculate_new_figsize.html">PieChart.calculate_new_figsize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.create_figure.html">PieChart.create_figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_colors.html">PieChart.get_colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_data_cols.html">PieChart.get_data_cols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_frames.html">PieChart.get_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_html5_video.html">PieChart.get_html5_video</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_interpolated_df.html">PieChart.get_interpolated_df</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_period_label.html">PieChart.get_period_label</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">PieChart.get_single_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.init_func.html">PieChart.init_func</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.make_animation.html">PieChart.make_animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.plot_wedge.html">PieChart.plot_wedge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.rename_data_columns.html">PieChart.rename_data_columns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.save.html">PieChart.save</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.set_x_y_limits.html">PieChart.set_x_y_limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.show_period.html">PieChart.show_period</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.validate_params.html">PieChart.validate_params</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.ScatterChart.html">ScatterChart</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_alive.__init__.html">__init__</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandas_Alive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../developer.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="pandas_alive.charts.html">pandas_alive.charts</a> &raquo;</li>
+        
+          <li><a href="pandas_alive.charts.PieChart.html">PieChart</a> &raquo;</li>
+        
+      <li>PieChart.get_single_color</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pandas_alive.charts.PieChart.get_single_color.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="piechart-get-single-color">
+<h1>PieChart.get_single_color<a class="headerlink" href="#piechart-get-single-color" title="Permalink to this headline">¶</a></h1>
+<dl class="py method">
+<dt id="pandas_alive.charts.PieChart.get_single_color">
+<code class="sig-prename descclassname">PieChart.</code><code class="sig-name descname">get_single_color</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color_string</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">, </span>int<span class="p">, </span>int<span class="p">]</span><a class="headerlink" href="#pandas_alive.charts.PieChart.get_single_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get single RBGA value from string</p>
+<p>From provided string return the RGB value from <cite>to_rgba</cite>, see more details at <a class="reference external" href="https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.colors.to_rgba.html">https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.colors.to_rgba.html</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color_string</strong> (<em>str</em>) – Must be apart of named colors in matplotlib <a class="reference external" href="https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py">https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py</a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple of (r, g, b, a) scalars.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>typing.Tuple[int,int,int,int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pandas_alive.charts.PieChart.init_func.html" class="btn btn-neutral float-right" title="PieChart.init_func" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pandas_alive.charts.PieChart.get_period_label.html" class="btn btn-neutral float-left" title="PieChart.get_period_label" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jack McKew
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

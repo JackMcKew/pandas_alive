@@ -1,0 +1,6 @@
+BubbleChart.show\_period
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.show_period

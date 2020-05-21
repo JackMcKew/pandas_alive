@@ -37,6 +37,8 @@ LineChart
    
       LineChart.get_period_label
    
+      LineChart.get_single_color
+   
       LineChart.init_func
    
       LineChart.make_animation

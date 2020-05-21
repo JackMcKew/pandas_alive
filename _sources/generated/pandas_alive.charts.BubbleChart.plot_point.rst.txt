@@ -1,0 +1,6 @@
+BubbleChart.plot\_point
+=======================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.plot_point

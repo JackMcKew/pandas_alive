@@ -37,6 +37,8 @@ ScatterChart
    
       ScatterChart.get_period_label
    
+      ScatterChart.get_single_color
+   
       ScatterChart.init_func
    
       ScatterChart.make_animation

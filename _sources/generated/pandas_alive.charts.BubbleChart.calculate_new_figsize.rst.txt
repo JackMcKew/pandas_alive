@@ -1,0 +1,6 @@
+BubbleChart.calculate\_new\_figsize
+===================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.calculate_new_figsize

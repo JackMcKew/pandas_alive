@@ -1,0 +1,6 @@
+BubbleChart.apply\_style
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.apply_style

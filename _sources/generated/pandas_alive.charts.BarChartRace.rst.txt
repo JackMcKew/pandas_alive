@@ -41,6 +41,8 @@ BarChartRace
    
       BarChartRace.get_period_label
    
+      BarChartRace.get_single_color
+   
       BarChartRace.init_func
    
       BarChartRace.make_animation

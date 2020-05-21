@@ -1,0 +1,6 @@
+BubbleChart.get\_interpolated\_df
+=================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.get_interpolated_df

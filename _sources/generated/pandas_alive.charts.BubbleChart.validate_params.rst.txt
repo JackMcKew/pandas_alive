@@ -1,0 +1,6 @@
+BubbleChart.validate\_params
+============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.validate_params

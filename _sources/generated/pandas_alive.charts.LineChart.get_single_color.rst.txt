@@ -1,0 +1,6 @@
+LineChart.get\_single\_color
+============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.get_single_color

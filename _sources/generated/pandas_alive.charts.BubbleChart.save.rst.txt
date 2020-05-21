@@ -1,0 +1,6 @@
+BubbleChart.save
+================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.save

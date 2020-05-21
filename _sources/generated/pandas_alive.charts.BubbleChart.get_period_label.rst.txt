@@ -1,0 +1,6 @@
+BubbleChart.get\_period\_label
+==============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.get_period_label

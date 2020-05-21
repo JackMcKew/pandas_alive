@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PieChart &mdash; Pandas_Alive 0.1.5 documentation</title>
+  <title>PieChart &mdash; Pandas_Alive 0.1.13 documentation</title>
   
 
   
@@ -94,6 +94,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="pandas_alive.charts.html">pandas_alive.charts</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChart.html">BarChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChartRace.html">BarChartRace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BubbleChart.html">BubbleChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">PieChart</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.__init__.html">PieChart.__init__</a></li>
@@ -107,6 +108,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_html5_video.html">PieChart.get_html5_video</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_interpolated_df.html">PieChart.get_interpolated_df</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_period_label.html">PieChart.get_period_label</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.get_single_color.html">PieChart.get_single_color</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.init_func.html">PieChart.init_func</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.make_animation.html">PieChart.make_animation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.PieChart.plot_wedge.html">PieChart.plot_wedge</a></li>
@@ -222,7 +224,7 @@
 <td><p>Animation function, removes all lines and updates legend/period annotation</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.apply_style.html#pandas_alive.charts.PieChart.apply_style" title="pandas_alive.charts.PieChart.apply_style"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.apply_style</span></code></a>(ax)</p></td>
-<td><p></p></td>
+<td><p>Apply styling to axes with spines and grid, can be overridden</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.calculate_new_figsize.html#pandas_alive.charts.PieChart.calculate_new_figsize" title="pandas_alive.charts.PieChart.calculate_new_figsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.calculate_new_figsize</span></code></a>(real_fig)</p></td>
 <td><p>Calculate figure size to allow for labels, etc</p></td>
@@ -248,28 +250,31 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.get_period_label.html#pandas_alive.charts.PieChart.get_period_label" title="pandas_alive.charts.PieChart.get_period_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.get_period_label</span></code></a>(period_label)</p></td>
 <td><p>Parameters for period annotation on charts, dict will be passed to kwargs in matplotlib.ax.text()</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.init_func.html#pandas_alive.charts.PieChart.init_func" title="pandas_alive.charts.PieChart.init_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.init_func</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.get_single_color.html#pandas_alive.charts.PieChart.get_single_color" title="pandas_alive.charts.PieChart.get_single_color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.get_single_color</span></code></a>(color_string)</p></td>
+<td><p>Get single RBGA value from string</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.init_func.html#pandas_alive.charts.PieChart.init_func" title="pandas_alive.charts.PieChart.init_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.init_func</span></code></a>()</p></td>
 <td><p>Initialization function for animation</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.make_animation.html#pandas_alive.charts.PieChart.make_animation" title="pandas_alive.charts.PieChart.make_animation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.make_animation</span></code></a>(frames, init_func)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.make_animation.html#pandas_alive.charts.PieChart.make_animation" title="pandas_alive.charts.PieChart.make_animation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.make_animation</span></code></a>(frames, init_func)</p></td>
 <td><p>Method for creating animation</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.plot_wedge.html#pandas_alive.charts.PieChart.plot_wedge" title="pandas_alive.charts.PieChart.plot_wedge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.plot_wedge</span></code></a>(i)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.plot_wedge.html#pandas_alive.charts.PieChart.plot_wedge" title="pandas_alive.charts.PieChart.plot_wedge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.plot_wedge</span></code></a>(i)</p></td>
 <td><p>Function for plotting all lines in dataframe</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.rename_data_columns.html#pandas_alive.charts.PieChart.rename_data_columns" title="pandas_alive.charts.PieChart.rename_data_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.rename_data_columns</span></code></a>(df)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.rename_data_columns.html#pandas_alive.charts.PieChart.rename_data_columns" title="pandas_alive.charts.PieChart.rename_data_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.rename_data_columns</span></code></a>(df)</p></td>
+<td><p>Converts all column names to string</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.save.html#pandas_alive.charts.PieChart.save" title="pandas_alive.charts.PieChart.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.save</span></code></a>(filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.save.html#pandas_alive.charts.PieChart.save" title="pandas_alive.charts.PieChart.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.save</span></code></a>(filename)</p></td>
 <td><p>Save method for FuncAnimation</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.set_x_y_limits.html#pandas_alive.charts.PieChart.set_x_y_limits" title="pandas_alive.charts.PieChart.set_x_y_limits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.set_x_y_limits</span></code></a>(df, i, ax)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.set_x_y_limits.html#pandas_alive.charts.PieChart.set_x_y_limits" title="pandas_alive.charts.PieChart.set_x_y_limits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.set_x_y_limits</span></code></a>(df, i, ax)</p></td>
+<td><p>Set axis limits for both x and y of passed axes object</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.show_period.html#pandas_alive.charts.PieChart.show_period" title="pandas_alive.charts.PieChart.show_period"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.show_period</span></code></a>(i)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.show_period.html#pandas_alive.charts.PieChart.show_period" title="pandas_alive.charts.PieChart.show_period"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.show_period</span></code></a>(i)</p></td>
+<td><p>Show period label on plot</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.validate_params.html#pandas_alive.charts.PieChart.validate_params" title="pandas_alive.charts.PieChart.validate_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.validate_params</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.PieChart.validate_params.html#pandas_alive.charts.PieChart.validate_params" title="pandas_alive.charts.PieChart.validate_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PieChart.validate_params</span></code></a>()</p></td>
 <td><p>Validate figure is a matplotlib Figure instance</p></td>
 </tr>
 </tbody>

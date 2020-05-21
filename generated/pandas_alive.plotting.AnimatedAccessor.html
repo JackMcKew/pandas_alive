@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>AnimatedAccessor &mdash; Pandas_Alive 0.1.5 documentation</title>
+  <title>AnimatedAccessor &mdash; Pandas_Alive 0.1.13 documentation</title>
   
 
   
@@ -180,7 +180,7 @@
 <h1>AnimatedAccessor<a class="headerlink" href="#animatedaccessor" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="pandas_alive.plotting.AnimatedAccessor">
-<em class="property">class </em><code class="sig-prename descclassname">pandas_alive.plotting.</code><code class="sig-name descname">AnimatedAccessor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pandas_alive/plotting.html#AnimatedAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandas_alive.plotting.AnimatedAccessor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pandas_alive.plotting.</code><code class="sig-name descname">AnimatedAccessor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>pandas.core.series.Series<span class="p">, </span>pandas.core.frame.DataFrame<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pandas_alive/plotting.html#AnimatedAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandas_alive.plotting.AnimatedAccessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>For including accessor on df, to enable <cite>df.plot_animated()</cite></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -195,7 +195,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.plotting.AnimatedAccessor.df.html#pandas_alive.plotting.AnimatedAccessor.df" title="pandas_alive.plotting.AnimatedAccessor.df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnimatedAccessor.df</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Contains _parent DataFrame</p></td>
 </tr>
 </tbody>
 </table>
@@ -207,7 +207,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.plotting.AnimatedAccessor.__init__.html#pandas_alive.plotting.AnimatedAccessor.__init__" title="pandas_alive.plotting.AnimatedAccessor.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnimatedAccessor.__init__</span></code></a>(data)</p></td>
-<td><p>Initialize self.</p></td>
+<td><p>Initialise BasePlotMethods with parent data as either Series or DataFrame</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.plotting.AnimatedAccessor.barh.html#pandas_alive.plotting.AnimatedAccessor.barh" title="pandas_alive.plotting.AnimatedAccessor.barh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnimatedAccessor.barh</span></code></a>([x, y])</p></td>
 <td><p>Make an animated horizontal bar plot.</p></td>

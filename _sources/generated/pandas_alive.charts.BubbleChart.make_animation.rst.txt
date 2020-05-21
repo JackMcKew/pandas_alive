@@ -1,0 +1,6 @@
+BubbleChart.make\_animation
+===========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.make_animation

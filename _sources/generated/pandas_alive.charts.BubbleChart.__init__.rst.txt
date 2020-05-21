@@ -1,0 +1,6 @@
+BubbleChart.\_\_init\_\_
+========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.__init__

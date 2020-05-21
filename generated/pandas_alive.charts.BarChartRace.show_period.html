@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>BarChartRace.show_period &mdash; Pandas_Alive 0.1.5 documentation</title>
+  <title>BarChartRace.show_period &mdash; Pandas_Alive 0.1.13 documentation</title>
   
 
   
@@ -107,6 +107,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_interpolated_df.html">BarChartRace.get_interpolated_df</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_label_position.html">BarChartRace.get_label_position</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_period_label.html">BarChartRace.get_period_label</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_single_color.html">BarChartRace.get_single_color</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.init_func.html">BarChartRace.init_func</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.make_animation.html">BarChartRace.make_animation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.plot_bars.html">BarChartRace.plot_bars</a></li>
@@ -117,6 +118,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.validate_params.html">BarChartRace.validate_params</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BubbleChart.html">BubbleChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.PieChart.html">PieChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.ScatterChart.html">ScatterChart</a></li>
@@ -200,7 +202,16 @@
 <dl class="py method">
 <dt id="pandas_alive.charts.BarChartRace.show_period">
 <code class="sig-prename descclassname">BarChartRace.</code><code class="sig-name descname">show_period</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#pandas_alive.charts.BarChartRace.show_period" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Show period label on plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – Frame number of animation to take slice of DataFrame and retrieve current index for show as period</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If custom period label location is used must contain <cite>x</cite>, <cite>y</cite> and <cite>s</cite> in dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 

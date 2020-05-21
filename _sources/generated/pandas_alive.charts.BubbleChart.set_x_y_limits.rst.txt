@@ -1,0 +1,6 @@
+BubbleChart.set\_x\_y\_limits
+=============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.set_x_y_limits

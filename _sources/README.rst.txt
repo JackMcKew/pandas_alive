@@ -1,8 +1,33 @@
+.. role:: raw-html-m2r(raw)
+   :format: html
+
 
 Pandas_Alive
 ============
 
 Animated plotting extension for Pandas with Matplotlib
+
+
+.. image:: http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master
+   :target: https://jackmckew.github.io/pandas_alive/
+   :alt: Inline docs
+ 
+.. image:: https://img.shields.io/pypi/dm/pandas_alive.svg
+   :target: https://pypi.python.org/pypi/pandas_alive/
+   :alt: PyPI download month
+ 
+.. image:: https://img.shields.io/pypi/v/pandas_alive.svg
+   :target: https://pypi.python.org/pypi/pandas_alive/
+   :alt: PyPI version shields.io
+ 
+.. image:: https://img.shields.io/pypi/l/pandas_alive.svg
+   :target: https://pypi.python.org/pypi/pandas_alive/
+   :alt: PyPI license
+ 
+.. image:: https://img.shields.io/badge/say-thanks-ff69b4.svg
+   :target: https://www.buymeacoffee.com/jackmckew
+   :alt: saythanks
+
 
 **Pandas_Alive** is intended to provide a plotting backend for animated `matplotlib <https://matplotlib.org/>`_ charts for `Pandas <https://pandas.pydata.org/>`_ DataFrames, similar to the already `existing Visualization feature of Pandas <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_.
 
@@ -14,6 +39,51 @@ With **Pandas_Alive**\ , creating stunning, animated visualisations is as easy a
 .. image:: ../../examples/example-barh-chart.gif
    :target: examples/example-barh-chart.gif
    :alt: Example Bar Chart
+
+
+Table of Contents
+-----------------
+
+
+.. raw:: html
+
+   <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+   <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+
+
+
+* `Installation <#installation>`_
+* `Usage <#usage>`_
+
+  * `Currently Supported Chart Types <#currently-supported-chart-types>`_
+
+    * `Horizontal Bar Chart Races <#horizontal-bar-chart-races>`_
+    * `Vertical Bar Chart Races <#vertical-bar-chart-races>`_
+    * `Line Charts <#line-charts>`_
+    * `Bar Charts <#bar-charts>`_
+    * `Scatter Charts <#scatter-charts>`_
+    * `Pie Charts <#pie-charts>`_
+    * `Bubble Charts <#bubble-charts>`_
+
+  * `Multiple Charts <#multiple-charts>`_
+
+    * `Urban Population <#urban-population>`_
+    * `Life Expectancy in G7 Countries <#life-expectancy-in-g7-countries>`_
+
+* `Future Features <#future-features>`_
+* `Inspiration <#inspiration>`_
+* `Requirements <#requirements>`_
+* `Documentation <#documentation>`_
+* `Contributing <#contributing>`_
+* `Changelog <#changelog>`_
+
+
+.. raw:: html
+
+   <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 
 Installation
@@ -40,7 +110,6 @@ The data below is an example of properly formatted data. It shows total deaths f
    :target: https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png
    :alt: Example Data Table
 
-`Example Table <examples/example_dataset_table.md>`_
 
 To produce the above visualisation:
 
@@ -63,31 +132,8 @@ To produce the above visualisation:
 Currently Supported Chart Types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``pandas_alive`` current supports:
-
-
-* `Horizontal Bar Charts <#horizontal-bar-charts>`_
-* `Vertical Bar Charts <#vertical-bar-charts>`_
-* `Line Charts <#line-charts>`_
-* `Scatter Charts <#scatter-charts>`_
-* `Pie Charts <#pie-charts>`_
-
-Horizontal Bar Charts
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: python
-
-   import pandas_alive
-
-   covid_df = pandas_alive.load_dataset()
-
-   covid_df.plot_animated(filename='example-barh-chart.gif')
-
-
-.. image:: ../../examples/example-barh-chart.gif
-   :target: examples/example-barh-chart.gif
-   :alt: Example Barh Chart
-
+Horizontal Bar Chart Races
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -152,8 +198,8 @@ Horizontal Bar Charts
    :alt: Perpendicular Example
 
 
-Vertical Bar Charts
-~~~~~~~~~~~~~~~~~~~
+Vertical Bar Chart Races
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -186,6 +232,25 @@ With as many lines as data columns in the DataFrame.
 .. image:: ../../examples/example-line-chart.gif
    :target: examples/example-line-chart.gif
    :alt: Example Line Chart
+
+
+Bar Charts
+~~~~~~~~~~
+
+Similar to line charts with time as the x-axis
+
+.. code-block:: python
+
+   import pandas_alive
+
+   covid_df = pandas_alive.load_dataset()
+
+   covid_df.sum(axis=1).fillna(0).plot_animated(filename='examples/example-bar-chart.gif',kind='bar',period_label={'x':0.1,'y':0.9})
+
+
+.. image:: ../../examples/example-bar-chart.gif
+   :target: examples/example-bar-chart.gif
+   :alt: Example Bar Chart
 
 
 Scatter Charts
@@ -228,12 +293,41 @@ Pie Charts
 
    covid_df = pandas_alive.load_dataset()
 
-   covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True)
+   covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True,period_label={'x':0,'y':0})
 
 
 .. image:: ../../examples/example-pie-chart.gif
    :target: examples/example-pie-chart.gif
    :alt: Example Pie Chart
+
+
+Bubble Charts
+~~~~~~~~~~~~~
+
+Bubble charts are generated from a multi-indexed dataframes. Where the index is the time period (optional) and the axes are defined with ``x_data_label`` & ``y_data_label`` which should be passed a string in the level 0 column labels.
+
+See an example multi-indexed dataframe at: https://github.com/JackMcKew/pandas_alive/tree/master/data/multi.csv
+
+.. code-block:: python
+
+   import pandas_alive
+
+   multi_index_df = pd.read_csv("data/multi.csv", header=[0, 1], index_col=0)
+
+   multi_index_df.index = pd.to_datetime(multi_index_df.index,dayfirst=True)
+
+   map_chart = multi_index_df.plot_animated(
+       kind="bubble",
+       filename="examples/example-bubble-chart.gif",
+       x_data_label="Longitude",
+       y_data_label="Latitude",
+       size_data_label="Cases",
+   )
+
+
+.. image:: ../../examples/example-bubble-chart.gif
+   :target: examples/example-bubble-chart.gif
+   :alt: Bubble Chart Example
 
 
 Multiple Charts
@@ -264,6 +358,9 @@ Multiple Charts
    :alt: Example Bar & Line Chart
 
 
+Urban Population
+~~~~~~~~~~~~~~~~
+
 .. code-block:: python
 
    import pandas_alive
@@ -287,6 +384,9 @@ Multiple Charts
    :target: examples/example-bar-and-line-urban-chart.gif
    :alt: Urban Population Bar & Line Chart
 
+
+Life Expectancy in G7 Countries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -345,6 +445,23 @@ Multiple Charts
    :alt: Life Expectancy Chart
 
 
+Future Features
+---------------
+
+A list of future features that may/may not be developed is:
+
+
+* Geographic charts (currently using OSM export image, potential `geopandas <https://geopandas.org/>`_\ )
+* Loading bar support (potential `tqdm <https://github.com/tqdm/tqdm>`_ or `alive-progress <https://github.com/rsalmei/alive-progress>`_\ )
+
+A chart that was built using a development branch of Pandas_Alive is:
+
+
+.. image:: ../../examples/nsw-covid.gif
+   :target: https://www.youtube.com/watch?v=qyqiYrtpxRE
+   :alt: NSW COVID19 Cases
+
+
 Inspiration
 -----------
 
@@ -380,9 +497,9 @@ Contributing
 Pull requests are welcome! Please help to cover more and more chart types!
 
 `Changelog <CHANGELOG.md>`_
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
-`Changelog <CHANGELOG.md>`_
+:raw-html-m2r:`<style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 15px 7px 10px !important;line-height: 35px !important;height:51px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 15px 7px 10px !important;font-size: 22px !important;letter-spacing: 0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style>`\ :raw-html-m2r:`<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">`\ :raw-html-m2r:`<a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/jackmckew"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a Pizza"><span style="margin-left:5px;font-size:28px !important;">Buy me a Pizza</span></a>`
 
 .. code-block:: python
 

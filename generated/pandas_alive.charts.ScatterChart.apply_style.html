@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ScatterChart.apply_style &mdash; Pandas_Alive 0.1.5 documentation</title>
+  <title>ScatterChart.apply_style &mdash; Pandas_Alive 0.1.13 documentation</title>
   
 
   
@@ -94,6 +94,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="pandas_alive.charts.html">pandas_alive.charts</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChart.html">BarChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BarChartRace.html">BarChartRace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BubbleChart.html">BubbleChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.PieChart.html">PieChart</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="pandas_alive.charts.ScatterChart.html">ScatterChart</a><ul class="current">
@@ -108,6 +109,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_html5_video.html">ScatterChart.get_html5_video</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_interpolated_df.html">ScatterChart.get_interpolated_df</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_period_label.html">ScatterChart.get_period_label</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.get_single_color.html">ScatterChart.get_single_color</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.init_func.html">ScatterChart.init_func</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.make_animation.html">ScatterChart.make_animation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.ScatterChart.plot_point.html">ScatterChart.plot_point</a></li>
@@ -197,8 +199,20 @@
 <h1>ScatterChart.apply_style<a class="headerlink" href="#scatterchart-apply-style" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt id="pandas_alive.charts.ScatterChart.apply_style">
-<code class="sig-prename descclassname">ScatterChart.</code><code class="sig-name descname">apply_style</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_alive.charts.ScatterChart.apply_style" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">ScatterChart.</code><code class="sig-name descname">apply_style</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span><span class="p">:</span> <span class="n">matplotlib.axes._axes.Axes</span></em><span class="sig-paren">)</span> &#x2192; matplotlib.axes._axes.Axes<a class="headerlink" href="#pandas_alive.charts.ScatterChart.apply_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply styling to axes with spines and grid, can be overridden</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ax</strong> (<em>matplotlib.pyplot.Axes</em>) – Axes to apply styling to</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Styled Axes object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>matplotlib.pyplot.Axes</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 

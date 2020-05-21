@@ -1,0 +1,6 @@
+BubbleChart.create\_figure
+==========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.create_figure

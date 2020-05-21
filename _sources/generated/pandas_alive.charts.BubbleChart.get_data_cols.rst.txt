@@ -1,0 +1,6 @@
+BubbleChart.get\_data\_cols
+===========================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.get_data_cols

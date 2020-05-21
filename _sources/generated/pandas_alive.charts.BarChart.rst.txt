@@ -37,6 +37,8 @@ BarChart
    
       BarChart.get_period_label
    
+      BarChart.get_single_color
+   
       BarChart.init_func
    
       BarChart.make_animation

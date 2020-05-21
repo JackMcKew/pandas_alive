@@ -1,0 +1,6 @@
+BubbleChart.get\_colors
+=======================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.get_colors

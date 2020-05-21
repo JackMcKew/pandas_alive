@@ -1,0 +1,59 @@
+BubbleChart
+===========
+
+.. currentmodule:: pandas_alive.charts
+
+.. autoclass:: BubbleChart
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+      :toctree:
+   
+      BubbleChart.__init__
+   
+      BubbleChart.anim_func
+   
+      BubbleChart.apply_style
+   
+      BubbleChart.calculate_new_figsize
+   
+      BubbleChart.create_figure
+   
+      BubbleChart.get_colors
+   
+      BubbleChart.get_data_cols
+   
+      BubbleChart.get_frames
+   
+      BubbleChart.get_html5_video
+   
+      BubbleChart.get_interpolated_df
+   
+      BubbleChart.get_period_label
+   
+      BubbleChart.get_single_color
+   
+      BubbleChart.init_func
+   
+      BubbleChart.make_animation
+   
+      BubbleChart.plot_point
+   
+      BubbleChart.rename_data_columns
+   
+      BubbleChart.save
+   
+      BubbleChart.set_x_y_limits
+   
+      BubbleChart.show_period
+   
+      BubbleChart.validate_params
+   
+   
+   

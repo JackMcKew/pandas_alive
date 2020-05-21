@@ -1,0 +1,6 @@
+BubbleChart.rename\_data\_columns
+=================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.rename_data_columns

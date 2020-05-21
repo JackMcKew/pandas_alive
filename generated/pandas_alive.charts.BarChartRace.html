@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>BarChartRace &mdash; Pandas_Alive 0.1.5 documentation</title>
+  <title>BarChartRace &mdash; Pandas_Alive 0.1.13 documentation</title>
   
 
   
@@ -107,6 +107,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_interpolated_df.html">BarChartRace.get_interpolated_df</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_label_position.html">BarChartRace.get_label_position</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_period_label.html">BarChartRace.get_period_label</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_single_color.html">BarChartRace.get_single_color</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.init_func.html">BarChartRace.init_func</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.make_animation.html">BarChartRace.make_animation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.plot_bars.html">BarChartRace.plot_bars</a></li>
@@ -117,6 +118,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pandas_alive.charts.BarChartRace.validate_params.html">BarChartRace.validate_params</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.BubbleChart.html">BubbleChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.LineChart.html">LineChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.PieChart.html">PieChart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pandas_alive.charts.ScatterChart.html">ScatterChart</a></li>
@@ -224,7 +226,7 @@
 <td><p>Animation function for plot bars</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.apply_style.html#pandas_alive.charts.BarChartRace.apply_style" title="pandas_alive.charts.BarChartRace.apply_style"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.apply_style</span></code></a>(ax)</p></td>
-<td><p></p></td>
+<td><p>Apply styling to axes with spines and grid, can be overridden</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.calculate_new_figsize.html#pandas_alive.charts.BarChartRace.calculate_new_figsize" title="pandas_alive.charts.BarChartRace.calculate_new_figsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.calculate_new_figsize</span></code></a>(real_fig)</p></td>
 <td><p>Calculate figure size to allow for labels, etc</p></td>
@@ -256,28 +258,31 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_period_label.html#pandas_alive.charts.BarChartRace.get_period_label" title="pandas_alive.charts.BarChartRace.get_period_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.get_period_label</span></code></a>(period_label)</p></td>
 <td><p>Parameters for period annotation on charts, dict will be passed to kwargs in matplotlib.ax.text()</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.init_func.html#pandas_alive.charts.BarChartRace.init_func" title="pandas_alive.charts.BarChartRace.init_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.init_func</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.get_single_color.html#pandas_alive.charts.BarChartRace.get_single_color" title="pandas_alive.charts.BarChartRace.get_single_color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.get_single_color</span></code></a>(color_string)</p></td>
+<td><p>Get single RBGA value from string</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.init_func.html#pandas_alive.charts.BarChartRace.init_func" title="pandas_alive.charts.BarChartRace.init_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.init_func</span></code></a>()</p></td>
 <td><p>Initialization function for animation</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.make_animation.html#pandas_alive.charts.BarChartRace.make_animation" title="pandas_alive.charts.BarChartRace.make_animation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.make_animation</span></code></a>(frames, init_func)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.make_animation.html#pandas_alive.charts.BarChartRace.make_animation" title="pandas_alive.charts.BarChartRace.make_animation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.make_animation</span></code></a>(frames, init_func)</p></td>
 <td><p>Method for creating animation</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.plot_bars.html#pandas_alive.charts.BarChartRace.plot_bars" title="pandas_alive.charts.BarChartRace.plot_bars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.plot_bars</span></code></a>(i)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.plot_bars.html#pandas_alive.charts.BarChartRace.plot_bars" title="pandas_alive.charts.BarChartRace.plot_bars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.plot_bars</span></code></a>(i)</p></td>
 <td><p>Plot bars in bar chart race on axes</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.rename_data_columns.html#pandas_alive.charts.BarChartRace.rename_data_columns" title="pandas_alive.charts.BarChartRace.rename_data_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.rename_data_columns</span></code></a>(df)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.rename_data_columns.html#pandas_alive.charts.BarChartRace.rename_data_columns" title="pandas_alive.charts.BarChartRace.rename_data_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.rename_data_columns</span></code></a>(df)</p></td>
+<td><p>Converts all column names to string</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.save.html#pandas_alive.charts.BarChartRace.save" title="pandas_alive.charts.BarChartRace.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.save</span></code></a>(filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.save.html#pandas_alive.charts.BarChartRace.save" title="pandas_alive.charts.BarChartRace.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.save</span></code></a>(filename)</p></td>
 <td><p>Save method for FuncAnimation</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.set_x_y_limits.html#pandas_alive.charts.BarChartRace.set_x_y_limits" title="pandas_alive.charts.BarChartRace.set_x_y_limits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.set_x_y_limits</span></code></a>(df, i, ax)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.set_x_y_limits.html#pandas_alive.charts.BarChartRace.set_x_y_limits" title="pandas_alive.charts.BarChartRace.set_x_y_limits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.set_x_y_limits</span></code></a>(df, i, ax)</p></td>
+<td><p>Set axis limits for both x and y of passed axes object</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.show_period.html#pandas_alive.charts.BarChartRace.show_period" title="pandas_alive.charts.BarChartRace.show_period"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.show_period</span></code></a>(i)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.show_period.html#pandas_alive.charts.BarChartRace.show_period" title="pandas_alive.charts.BarChartRace.show_period"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.show_period</span></code></a>(i)</p></td>
+<td><p>Show period label on plot</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.validate_params.html#pandas_alive.charts.BarChartRace.validate_params" title="pandas_alive.charts.BarChartRace.validate_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.validate_params</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="pandas_alive.charts.BarChartRace.validate_params.html#pandas_alive.charts.BarChartRace.validate_params" title="pandas_alive.charts.BarChartRace.validate_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BarChartRace.validate_params</span></code></a>()</p></td>
 <td><p>Validate parameters provided to chart instance</p></td>
 </tr>
 </tbody>

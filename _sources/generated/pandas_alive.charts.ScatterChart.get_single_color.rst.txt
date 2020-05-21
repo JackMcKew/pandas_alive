@@ -1,0 +1,6 @@
+ScatterChart.get\_single\_color
+===============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.get_single_color
