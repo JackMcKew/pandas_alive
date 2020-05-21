@@ -2,6 +2,8 @@
 
 Animated plotting extension for Pandas with Matplotlib
 
+[![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://jackmckew.github.io/pandas_alive/) [![PyPI download month](https://img.shields.io/pypi/dm/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI version shields.io](https://img.shields.io/pypi/v/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI license](https://img.shields.io/pypi/l/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://www.buymeacoffee.com/jackmckew)
+
 **Pandas_Alive** is intended to provide a plotting backend for animated [matplotlib](https://matplotlib.org/) charts for [Pandas](https://pandas.pydata.org/) DataFrames, similar to the already [existing Visualization feature of Pandas](https://pandas.pydata.org/pandas-docs/stable/visualization.html).
 
 With **Pandas_Alive**, creating stunning, animated visualisations is as easy as calling:
@@ -18,11 +20,13 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 - [Installation](#installation)
 - [Usage](#usage)
   - [Currently Supported Chart Types](#currently-supported-chart-types)
-    - [Horizontal Bar Charts](#horizontal-bar-charts)
-    - [Vertical Bar Charts](#vertical-bar-charts)
+    - [Horizontal Bar Chart Races](#horizontal-bar-chart-races)
+    - [Vertical Bar Chart Races](#vertical-bar-chart-races)
     - [Line Charts](#line-charts)
+    - [Bar Charts](#bar-charts)
     - [Scatter Charts](#scatter-charts)
     - [Pie Charts](#pie-charts)
+    - [Bubble Charts](#bubble-charts)
   - [Multiple Charts](#multiple-charts)
     - [Urban Population](#urban-population)
     - [Life Expectancy in G7 Countries](#life-expectancy-in-g7-countries)
@@ -31,7 +35,7 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 - [Requirements](#requirements)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
-  - [Changelog](#changelog)
+- [Changelog](#changelog)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -52,7 +56,6 @@ Must begin with a pandas DataFrame containing 'wide' data where:
 The data below is an example of properly formatted data. It shows total deaths from COVID-19 for the highest 20 countries by date.
 
 ![Example Data Table](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png)
-[Example Table](examples/example_dataset_table.md)
 
 To produce the above visualisation:
 
@@ -71,25 +74,7 @@ covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 
 ### Currently Supported Chart Types
 
-`pandas_alive` current supports:
-
-- [Horizontal Bar Charts](#horizontal-bar-charts)
-- [Vertical Bar Charts](#vertical-bar-charts)
-- [Line Charts](#line-charts)
-- [Scatter Charts](#scatter-charts)
-- [Pie Charts](#pie-charts)
-
-#### Horizontal Bar Charts
-
-``` python
-import pandas_alive
-
-covid_df = pandas_alive.load_dataset()
-
-covid_df.plot_animated(filename='example-barh-chart.gif')
-```
-
-![Example Barh Chart](examples/example-barh-chart.gif)
+#### Horizontal Bar Chart Races
 
 ``` python
 import pandas as pd
@@ -138,7 +123,7 @@ covid_df.plot_animated(filename='examples/perpendicular-example.gif',perpendicul
 
 ![Perpendicular Example](examples/perpendicular-example.gif)
 
-#### Vertical Bar Charts
+#### Vertical Bar Chart Races
 
 ``` python
 import pandas_alive
@@ -164,6 +149,20 @@ covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gi
 
 ![Example Line Chart](examples/example-line-chart.gif)
 
+
+#### Bar Charts
+
+Similar to line charts with time as the x-axis
+
+``` python
+import pandas_alive
+
+covid_df = pandas_alive.load_dataset()
+
+covid_df.sum(axis=1).fillna(0).plot_animated(filename='examples/example-bar-chart.gif',kind='bar',period_label={'x':0.1,'y':0.9})
+```
+
+![Example Bar Chart](examples/example-bar-chart.gif)
 
 #### Scatter Charts
 
@@ -199,10 +198,34 @@ import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
 
-covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True)
+covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True,period_label={'x':0,'y':0})
 ```
 
 ![Example Pie Chart](examples/example-pie-chart.gif)
+
+#### Bubble Charts
+
+Bubble charts are generated from a multi-indexed dataframes. Where the index is the time period (optional) and the axes are defined with `x_data_label` & `y_data_label` which should be passed a string in the level 0 column labels.
+
+See an example multi-indexed dataframe at: <https://github.com/JackMcKew/pandas_alive/tree/master/data/multi.csv>
+
+``` python
+import pandas_alive
+
+multi_index_df = pd.read_csv("data/multi.csv", header=[0, 1], index_col=0)
+
+multi_index_df.index = pd.to_datetime(multi_index_df.index,dayfirst=True)
+
+map_chart = multi_index_df.plot_animated(
+    kind="bubble",
+    filename="examples/example-bubble-chart.gif",
+    x_data_label="Longitude",
+    y_data_label="Latitude",
+    size_data_label="Cases",
+)
+```
+
+![Bubble Chart Example](examples/example-bubble-chart.gif)
 
 ### Multiple Charts
 
@@ -309,9 +332,8 @@ pandas_alive.animate_multiple_plots(
 
 A list of future features that may/may not be developed is:
 
-- Multiple dimension plots (with multi indexed dataframes)
-- Bubble charts
-- Geographic charts (currently using OSM export image, potential [cartopy](https://github.com/SciTools/cartopy))
+- Geographic charts (currently using OSM export image, potential [geopandas](https://geopandas.org/))
+- Loading bar support (potential [tqdm](https://github.com/tqdm/tqdm) or [alive-progress](https://github.com/rsalmei/alive-progress))
 
 A chart that was built using a development branch of Pandas_Alive is:
 
@@ -345,9 +367,9 @@ Documentation is provided at <https://jackmckew.github.io/pandas_alive/>
 
 Pull requests are welcome! Please help to cover more and more chart types!
 
-### [Changelog](CHANGELOG.md)
+## [Changelog](CHANGELOG.md)
 
-[Changelog](CHANGELOG.md)
+<style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 15px 7px 10px !important;line-height: 35px !important;height:51px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 15px 7px 10px !important;font-size: 22px !important;letter-spacing: 0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/jackmckew"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a Pizza"><span style="margin-left:5px;font-size:28px !important;">Buy me a Pizza</span></a>
 
 ``` python
 
