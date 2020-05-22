@@ -1,0 +1,6 @@
+LineChart.update\_progress\_bar
+===============================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.update_progress_bar

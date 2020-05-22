@@ -506,6 +506,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            i (int): Frame index for animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_progress_bar</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">containers</span><span class="p">:</span>
             <span class="n">bar</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_bars</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -534,6 +536,8 @@
     <span class="n">size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Properties to be determined after initialization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -579,6 +583,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            i (int): Index of frame of animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_progress_bar</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_point</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_fmt</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">show_period</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
@@ -605,6 +611,8 @@
     <span class="n">fill_under_line_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Properties to be determined after initialization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -657,13 +665,14 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">],</span>
                     <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_single_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fill_under_line_color</span><span class="p">),</span>
                 <span class="p">)</span></div>
-
 <div class="viewcode-block" id="LineChart.anim_func"><a class="viewcode-back" href="../../generated/pandas_alive.charts.LineChart.anim_func.html#pandas_alive.charts.LineChart.anim_func">[docs]</a>    <span class="k">def</span> <span class="nf">anim_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Animation function, removes all lines and updates legend/period annotation</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            i (int): Index of frame of animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_progress_bar</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
             <span class="n">line</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_line</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -688,6 +697,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Properties to be determined after initialization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wedge_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
 
@@ -741,6 +752,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            i (int): Index of frame of animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_progress_bar</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">wedge</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">:</span>
             <span class="n">wedge</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_fmt</span><span class="p">:</span>
@@ -765,6 +778,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Properties to be determined after initialization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bar_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
@@ -805,6 +820,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            i (int): Index of frame of animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_progress_bar</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">containers</span><span class="p">:</span>
             <span class="n">bar</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period_fmt</span><span class="p">:</span>
@@ -838,6 +855,8 @@
     <span class="n">color_data_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Properties to be determined after initialization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -911,6 +930,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            i (int): Index of frame of animation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_progress_bar</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
             <span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_point</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>

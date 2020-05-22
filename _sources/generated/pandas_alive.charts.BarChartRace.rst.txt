@@ -55,7 +55,11 @@ BarChartRace
    
       BarChartRace.set_x_y_limits
    
+      BarChartRace.setup_progress_bar
+   
       BarChartRace.show_period
+   
+      BarChartRace.update_progress_bar
    
       BarChartRace.validate_params
    

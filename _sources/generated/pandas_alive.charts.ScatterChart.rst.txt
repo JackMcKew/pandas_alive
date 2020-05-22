@@ -51,7 +51,11 @@ ScatterChart
    
       ScatterChart.set_x_y_limits
    
+      ScatterChart.setup_progress_bar
+   
       ScatterChart.show_period
+   
+      ScatterChart.update_progress_bar
    
       ScatterChart.validate_params
    

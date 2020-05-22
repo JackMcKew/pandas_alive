@@ -51,7 +51,11 @@ BubbleChart
    
       BubbleChart.set_x_y_limits
    
+      BubbleChart.setup_progress_bar
+   
       BubbleChart.show_period
+   
+      BubbleChart.update_progress_bar
    
       BubbleChart.validate_params
    

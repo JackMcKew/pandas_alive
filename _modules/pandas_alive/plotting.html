@@ -229,6 +229,8 @@
     <span class="n">period_summary_func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fixed_max</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
+    <span class="n">writer</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">enable_progress_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="c1"># Bar chart</span>
     <span class="n">orientation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span>
     <span class="n">sort</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;desc&quot;</span><span class="p">,</span>
@@ -328,6 +330,10 @@
 <span class="sd">                df.plot_animated(period_summary_func=func)</span>
 
 <span class="sd">        dpi (float, optional): It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly. Defaults to 144.</span>
+
+<span class="sd">        writer (str, optional): Specify writer library, must be within list of available writers (`matplotlib.animation.writers.list()`) and `pillow` is not supported. Defaults to None.</span>
+
+<span class="sd">        enable_progress_bar (bool,optional): Enable tqdm bar to show progress on generating animation, see more details at https://github.com/tqdm/tqdm. Defaults to False.</span>
 
 <span class="sd">        sort (str, optional): &#39;asc&#39; or &#39;desc&#39;. Choose how to sort the bars. Use &#39;desc&#39; to put largest bars on top and &#39;asc&#39; to place largest bars on bottom. Defaults to &quot;desc&quot;.</span>
 
@@ -440,6 +446,8 @@
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
             <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="n">enable_progress_bar</span><span class="p">,</span>
             <span class="c1"># Bar chart</span>
             <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">,</span>
             <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
@@ -470,6 +478,8 @@
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
             <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="n">enable_progress_bar</span><span class="p">,</span>
             <span class="n">line_width</span><span class="o">=</span><span class="n">line_width</span><span class="p">,</span>
             <span class="n">label_events</span><span class="o">=</span><span class="n">label_events</span><span class="p">,</span>
             <span class="n">fill_under_line_color</span><span class="o">=</span><span class="n">fill_under_line_color</span><span class="p">,</span>
@@ -494,6 +504,8 @@
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
             <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="n">enable_progress_bar</span><span class="p">,</span>
             <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
@@ -516,6 +528,8 @@
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
             <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="n">enable_progress_bar</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
@@ -537,6 +551,8 @@
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
             <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="n">enable_progress_bar</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
@@ -558,6 +574,8 @@
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
             <span class="n">fixed_max</span><span class="o">=</span><span class="n">fixed_max</span><span class="p">,</span>
             <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span>
+            <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="n">enable_progress_bar</span><span class="p">,</span>
             <span class="n">x_data_label</span><span class="o">=</span><span class="n">x_data_label</span><span class="p">,</span>
             <span class="n">y_data_label</span><span class="o">=</span><span class="n">y_data_label</span><span class="p">,</span>
             <span class="n">size_data_label</span><span class="o">=</span><span class="n">size_data_label</span><span class="p">,</span>
@@ -683,6 +701,7 @@
     <span class="p">)</span>
 
     <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)</span>
     <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;gif&quot;</span><span class="p">:</span>
         <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;imagemagick&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>

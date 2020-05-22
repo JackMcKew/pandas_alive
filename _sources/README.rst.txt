@@ -47,42 +47,8 @@ Table of Contents
 
 .. raw:: html
 
-   <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-   <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-
-
-
-* `Installation <#installation>`_
-* `Usage <#usage>`_
-
-  * `Currently Supported Chart Types <#currently-supported-chart-types>`_
-
-    * `Horizontal Bar Chart Races <#horizontal-bar-chart-races>`_
-    * `Vertical Bar Chart Races <#vertical-bar-chart-races>`_
-    * `Line Charts <#line-charts>`_
-    * `Bar Charts <#bar-charts>`_
-    * `Scatter Charts <#scatter-charts>`_
-    * `Pie Charts <#pie-charts>`_
-    * `Bubble Charts <#bubble-charts>`_
-
-  * `Multiple Charts <#multiple-charts>`_
-
-    * `Urban Population <#urban-population>`_
-    * `Life Expectancy in G7 Countries <#life-expectancy-in-g7-countries>`_
-
-* `Future Features <#future-features>`_
-* `Inspiration <#inspiration>`_
-* `Requirements <#requirements>`_
-* `Documentation <#documentation>`_
-* `Contributing <#contributing>`_
-* `Changelog <#changelog>`_
-
-
-.. raw:: html
-
-   <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+   <!-- START doctoc -->
+   <!-- END doctoc -->
 
 
 
@@ -445,6 +411,47 @@ Life Expectancy in G7 Countries
    :alt: Life Expectancy Chart
 
 
+HTML 5 Videos
+^^^^^^^^^^^^^
+
+``Pandas_Alive`` supports rendering HTML5 videos through the use of ``df.plot_animated().get_html5_video()``. ``.get_html5_video`` saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.
+
+This is typically used in Jupyter notebooks.
+
+.. code-block:: python
+
+   import pandas_alive
+   from IPython.display import HTML
+
+   covid_df = pandas_alive.load_dataset()
+
+   animated_html = covid_df.plot_animated().get_html5_video()
+
+   HTML(animated_html)
+
+Progress Bars!
+^^^^^^^^^^^^^^
+
+Generating animations can take some time, so enable progress bars by installing `tqdm <https://github.com/tqdm/tqdm>`_ with ``pip install tqdm`` and using the keyword ``enable_progress_bar=True``.
+
+By default Pandas_Alive will create a ``tqdm`` progress bar for the number of frames to animate, and update the progres bar after each frame.
+
+.. code-block:: python
+
+   import pandas_alive
+
+   covid_df = pandas_alive.load_dataset()
+
+   covid_df.plot_animated(enable_progress_bar=True)
+
+Example of TQDM in action:
+
+
+.. image:: https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif
+   :target: https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif
+   :alt: TQDM Example
+
+
 Future Features
 ---------------
 
@@ -452,7 +459,7 @@ A list of future features that may/may not be developed is:
 
 
 * Geographic charts (currently using OSM export image, potential `geopandas <https://geopandas.org/>`_\ )
-* Loading bar support (potential `tqdm <https://github.com/tqdm/tqdm>`_ or `alive-progress <https://github.com/rsalmei/alive-progress>`_\ )
+* :raw-html-m2r:`<del>Loading bar support (potential `tqdm <https://github.com/tqdm/tqdm>`_ or `alive-progress <https://github.com/rsalmei/alive-progress>`_\ )</del>`
 
 A chart that was built using a development branch of Pandas_Alive is:
 
@@ -483,8 +490,14 @@ Ensure to have one of the supported tooling software installed prior to use!
 
 * `ffmpeg <https://ffmpeg.org/>`_
 * `ImageMagick <https://imagemagick.org/index.php>`_
-* `Pillow <https://pillow.readthedocs.io/en/stable/>`_
 * See more at https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes
+
+..
+
+   Outputting to GIF file type is only supported by ImageMagick
+
+   Pillow is not supported currently, please submit a PR if you can make Pillow work!
+
 
 Documentation
 -------------
@@ -498,9 +511,3 @@ Pull requests are welcome! Please help to cover more and more chart types!
 
 `Changelog <CHANGELOG.md>`_
 -------------------------------
-
-:raw-html-m2r:`<style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 15px 7px 10px !important;line-height: 35px !important;height:51px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 15px 7px 10px !important;font-size: 22px !important;letter-spacing: 0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style>`\ :raw-html-m2r:`<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">`\ :raw-html-m2r:`<a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/jackmckew"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a Pizza"><span style="margin-left:5px;font-size:28px !important;">Buy me a Pizza</span></a>`
-
-.. code-block:: python
-
-

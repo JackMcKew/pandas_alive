@@ -1,0 +1,6 @@
+ScatterChart.setup\_progress\_bar
+=================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.setup_progress_bar

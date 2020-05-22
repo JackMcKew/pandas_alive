@@ -1,0 +1,6 @@
+BarChartRace.update\_progress\_bar
+==================================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.update_progress_bar

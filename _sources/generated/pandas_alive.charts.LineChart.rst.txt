@@ -51,7 +51,11 @@ LineChart
    
       LineChart.set_x_y_limits
    
+      LineChart.setup_progress_bar
+   
       LineChart.show_period
+   
+      LineChart.update_progress_bar
    
       LineChart.validate_params
    
