@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "pandas_alive"
-version = "0.1.13"
+version = "0.1.14"
 description = "Animated plotting extension for Pandas with Matplotlib"
 authors = ["JackMcKew <jackmckew2@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/JackMcKew/pandas_alive"s
+homepage = "https://github.com/JackMcKew/pandas_alive"
 repository = "https://github.com/JackMcKew/pandas_alive"
 license = "MIT"
 documentation = "https://jackmckew.github.io/pandas_alive/"
