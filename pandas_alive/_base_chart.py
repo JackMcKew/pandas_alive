@@ -599,6 +599,9 @@ class _BaseChart:
         return html_tag
 
     def update_progress_bar(self) -> None:
+        """
+        Update TQDM instance by 1
+        """
         self.progress_bar.update(1)
 
     def setup_progress_bar(self):
