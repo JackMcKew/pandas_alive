@@ -551,11 +551,11 @@ def animate_multiple_plots(
     )
 
     extension = filename.split(".")[-1]
-    anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)
-    # if extension == "gif":
-    #     anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
-    # else:
-    #     anim.save(filename, fps=fps, dpi=dpi)
+    # anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)
+    if extension == "gif":
+        anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
+    else:
+        anim.save(filename, fps=fps, dpi=dpi)
 
 
 ##############################################################################
