@@ -2,7 +2,7 @@
 
 Animated plotting extension for Pandas with Matplotlib
 
-[![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://jackmckew.github.io/pandas_alive/) ![Interrogate Badge](https://raw.githubusercontent.com/JackMcKew/pandas_alive/master/badges/interrogate_badge.svg) [![PyPI download month](https://img.shields.io/pypi/dm/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI version shields.io](https://img.shields.io/pypi/v/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI license](https://img.shields.io/pypi/l/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://www.buymeacoffee.com/jackmckew)
+[![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://jackmckew.github.io/pandas_alive/) [![PyPI download month](https://img.shields.io/pypi/dm/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI version shields.io](https://img.shields.io/pypi/v/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![PyPI license](https://img.shields.io/pypi/l/pandas_alive.svg)](https://pypi.python.org/pypi/pandas_alive/) [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://www.buymeacoffee.com/jackmckew)
 
 **Pandas_Alive** is intended to provide a plotting backend for animated [matplotlib](https://matplotlib.org/) charts for [Pandas](https://pandas.pydata.org/) DataFrames, similar to the already [existing Visualization feature of Pandas](https://pandas.pydata.org/pandas-docs/stable/visualization.html).
 
@@ -13,31 +13,8 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 ![Example Bar Chart](examples/example-barh-chart.gif)
 
 ## Table of Contents
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Currently Supported Chart Types](#currently-supported-chart-types)
-    - [Horizontal Bar Chart Races](#horizontal-bar-chart-races)
-    - [Vertical Bar Chart Races](#vertical-bar-chart-races)
-    - [Line Charts](#line-charts)
-    - [Bar Charts](#bar-charts)
-    - [Scatter Charts](#scatter-charts)
-    - [Pie Charts](#pie-charts)
-    - [Bubble Charts](#bubble-charts)
-  - [Multiple Charts](#multiple-charts)
-    - [Urban Population](#urban-population)
-    - [Life Expectancy in G7 Countries](#life-expectancy-in-g7-countries)
-- [Future Features](#future-features)
-- [Inspiration](#inspiration)
-- [Requirements](#requirements)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [Changelog](#changelog)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 ## Installation
 
@@ -328,12 +305,47 @@ pandas_alive.animate_multiple_plots(
 
 ![Life Expectancy Chart](examples/life-expectancy.gif)
 
+### HTML 5 Videos
+
+`Pandas_Alive` supports rendering HTML5 videos through the use of `df.plot_animated().get_html5_video()`. `.get_html5_video` saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.
+
+This is typically used in Jupyter notebooks.
+
+``` python
+import pandas_alive
+from IPython.display import HTML
+
+covid_df = pandas_alive.load_dataset()
+
+animated_html = covid_df.plot_animated().get_html5_video()
+
+HTML(animated_html)
+```
+
+### Progress Bars!
+
+Generating animations can take some time, so enable progress bars by installing [tqdm](https://github.com/tqdm/tqdm) with `pip install tqdm` and using the keyword `enable_progress_bar=True`.
+
+By default Pandas_Alive will create a `tqdm` progress bar for the number of frames to animate, and update the progres bar after each frame.
+
+``` python
+import pandas_alive
+
+covid_df = pandas_alive.load_dataset()
+
+covid_df.plot_animated(enable_progress_bar=True)
+```
+
+Example of TQDM in action:
+
+![TQDM Example](https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif)
+
 ## Future Features
 
 A list of future features that may/may not be developed is:
 
 - Geographic charts (currently using OSM export image, potential [geopandas](https://geopandas.org/))
-- Loading bar support (potential [tqdm](https://github.com/tqdm/tqdm) or [alive-progress](https://github.com/rsalmei/alive-progress))
+- ~~Loading bar support (potential [tqdm](https://github.com/tqdm/tqdm) or [alive-progress](https://github.com/rsalmei/alive-progress))~~
 
 A chart that was built using a development branch of Pandas_Alive is:
 
@@ -356,8 +368,11 @@ Ensure to have one of the supported tooling software installed prior to use!
 
 - [ffmpeg](https://ffmpeg.org/)
 - [ImageMagick](https://imagemagick.org/index.php)
-- [Pillow](https://pillow.readthedocs.io/en/stable/)
 - See more at <https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes>
+
+> Outputting to GIF file type is only supported by ImageMagick
+
+> Pillow is not supported currently, please submit a PR if you can make Pillow work!
 
 ## Documentation
 
@@ -368,9 +383,3 @@ Documentation is provided at <https://jackmckew.github.io/pandas_alive/>
 Pull requests are welcome! Please help to cover more and more chart types!
 
 ## [Changelog](CHANGELOG.md)
-
-<style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 15px 7px 10px !important;line-height: 35px !important;height:51px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 15px 7px 10px !important;font-size: 22px !important;letter-spacing: 0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/jackmckew"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a Pizza"><span style="margin-left:5px;font-size:28px !important;">Buy me a Pizza</span></a>
-
-``` python
-
-```

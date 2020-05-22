@@ -16,7 +16,7 @@ Must begin with a pandas DataFrame containing 'wide' data where:
 from .plotting import plot, AnimatedAccessor, animate_multiple_plots
 from .base import load_dataset
 
-version = "0.1.13"
+version = "0.1.14"
 
 # Register animated_plot accessor for Pandas DataFrames and Series:
 import pandas as pd

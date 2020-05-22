@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.14] - 2020-05-23
+
+- Progress bars (thanks to [`tqdm`](https://github.com/tqdm/tqdm) can now be enabled with `df.plot_animated(enable_progress_bar=True)
+- Writer can now be specified with `df.plot_animated(writer="imagemagick")`
+    - Pillow is now explicitly unsupported, see relevant issue here <https://github.com/JackMcKew/pandas_alive/issues/5>
+
 ## [0.1.13] - 2020-05-21
 
 - New chart type introduced: Bubble Charts, to be used with MultiIndexed DataFrames.
