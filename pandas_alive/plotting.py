@@ -79,6 +79,8 @@ def plot(
     period_summary_func: typing.Callable = None,
     fixed_max: bool = False,
     dpi: float = 144,
+    writer:str = None,
+    enable_progress_bar: bool = False,
     # Bar chart
     orientation: str = "h",
     sort: str = "desc",
@@ -178,6 +180,10 @@ def plot(
                 df.plot_animated(period_summary_func=func)
 
         dpi (float, optional): It is possible for some bars to be out of order momentarily during a transition since both height and location change linearly. Defaults to 144.
+
+        writer (str, optional): Specify writer library, must be within list of available writers (`matplotlib.animation.writers.list()`) and `pillow` is not supported. Defaults to None.
+
+        enable_progress_bar (bool,optional): Enable tqdm bar to show progress on generating animation, see more details at https://github.com/tqdm/tqdm. Defaults to False.
 
         sort (str, optional): 'asc' or 'desc'. Choose how to sort the bars. Use 'desc' to put largest bars on top and 'asc' to place largest bars on bottom. Defaults to "desc".
 
@@ -290,6 +296,8 @@ def plot(
             period_summary_func=period_summary_func,
             fixed_max=fixed_max,
             dpi=dpi,
+            writer=writer,
+            enable_progress_bar=enable_progress_bar,
             # Bar chart
             orientation=orientation,
             sort=sort,
@@ -320,6 +328,8 @@ def plot(
             period_summary_func=period_summary_func,
             fixed_max=fixed_max,
             dpi=dpi,
+            writer=writer,
+            enable_progress_bar=enable_progress_bar,
             line_width=line_width,
             label_events=label_events,
             fill_under_line_color=fill_under_line_color,
@@ -344,6 +354,8 @@ def plot(
             period_summary_func=period_summary_func,
             fixed_max=fixed_max,
             dpi=dpi,
+            writer=writer,
+            enable_progress_bar=enable_progress_bar,
             size=size,
             kwargs=kwargs,
         )
@@ -366,6 +378,8 @@ def plot(
             period_summary_func=period_summary_func,
             fixed_max=fixed_max,
             dpi=dpi,
+            writer=writer,
+            enable_progress_bar=enable_progress_bar,
             kwargs=kwargs,
         )
         if filename:
@@ -387,6 +401,8 @@ def plot(
             period_summary_func=period_summary_func,
             fixed_max=fixed_max,
             dpi=dpi,
+            writer=writer,
+            enable_progress_bar=enable_progress_bar,
             kwargs=kwargs,
         )
         if filename:
@@ -408,6 +424,8 @@ def plot(
             period_summary_func=period_summary_func,
             fixed_max=fixed_max,
             dpi=dpi,
+            writer=writer,
+            enable_progress_bar=enable_progress_bar,
             x_data_label=x_data_label,
             y_data_label=y_data_label,
             size_data_label=size_data_label,
@@ -533,6 +551,7 @@ def animate_multiple_plots(
     )
 
     extension = filename.split(".")[-1]
+    # anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)
     if extension == "gif":
         anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
     else:
