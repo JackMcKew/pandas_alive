@@ -554,15 +554,15 @@ class _BaseChart:
             if self.writer:
                 anim.save(filename, fps=self.fps, dpi=self.dpi,writer=self.writer)
             else:
-                anim.save(filename, fps=self.fps, dpi=self.dpi)
+                if extension == "gif":
+                    anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
+                else:
+                    anim.save(filename, fps=self.fps, dpi=self.dpi)
+
             if self.enable_progress_bar:
                 self.progress_bar.close()
-            # if extension == "gif":
-            #     anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
-            # else:
-            #     anim.save(filename, fps=self.fps, dpi=self.dpi)
+            
         except TypeError as e:
-            print(e)
             raise RuntimeError(
                 "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
             )
