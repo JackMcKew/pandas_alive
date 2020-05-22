@@ -79,7 +79,7 @@ def plot(
     period_summary_func: typing.Callable = None,
     fixed_max: bool = False,
     dpi: float = 144,
-    writer:str = None,
+    writer: str = None,
     enable_progress_bar: bool = False,
     # Bar chart
     orientation: str = "h",

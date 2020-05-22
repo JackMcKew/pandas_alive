@@ -10,7 +10,7 @@ import typing
 import attr
 import matplotlib
 from matplotlib import ticker
-from matplotlib.animation import FuncAnimation,PillowWriter
+from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import Colormap, to_rgba
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -137,7 +137,6 @@ class _BaseChart:
             self.setup_progress_bar()
         self.validate_params()
 
-
     def validate_params(self):
         """ Validate figure is a matplotlib Figure instance
 
@@ -152,15 +151,15 @@ class _BaseChart:
             raise TypeError("`fig` must be a matplotlib Figure instance")
         if self.writer:
             import matplotlib.animation as manimation
+
             if self.writer == "pillow":
                 raise RuntimeError(
-                    f"Pandas_Alive does not support Pillow, see list of other available writers at https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements"    
+                    f"Pandas_Alive does not support Pillow, see list of other available writers at https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements"
                 )
             if self.writer not in manimation.writers.list():
                 raise RuntimeError(
                     f"Ensure that a matplotlib writer library is installed, list of available writer librarys {manimation.writers.list()}, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
                 )
-
 
     def get_period_label(
         self,
@@ -552,16 +551,18 @@ class _BaseChart:
         extension = filename.split(".")[-1]
         try:
             if self.writer:
-                anim.save(filename, fps=self.fps, dpi=self.dpi,writer=self.writer)
+                anim.save(filename, fps=self.fps, dpi=self.dpi, writer=self.writer)
             else:
                 if extension == "gif":
-                    anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
+                    anim.save(
+                        filename, fps=self.fps, dpi=self.dpi, writer="imagemagick"
+                    )
                 else:
                     anim.save(filename, fps=self.fps, dpi=self.dpi)
 
             if self.enable_progress_bar:
                 self.progress_bar.close()
-            
+
         except TypeError as e:
             raise RuntimeError(
                 "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
@@ -590,12 +591,15 @@ class _BaseChart:
         """
 
         anim = self.make_animation(self.get_frames(), self.init_func)
-        
+
         # html_tag = self.encode_html5_video(anim)
         html_tag = anim.to_html5_video()
-        if 'too large to embed' in html_tag:
+        if "too large to embed" in html_tag:
             import warnings
-            warnings.warn("HTML5 Tag is too large to embed, try another format such as mp4, GIF or otherwise.")
+
+            warnings.warn(
+                "HTML5 Tag is too large to embed, try another format such as mp4, GIF or otherwise."
+            )
         return html_tag
 
     def update_progress_bar(self) -> None:
@@ -615,11 +619,14 @@ class _BaseChart:
         """
         try:
             from tqdm import tqdm
+
             self.progress_bar = tqdm(total=len(self.get_frames()))
         except ImportError:
-            raise ImportError("Install tqdm bar with `pip install tqdm`, see more details at https://github.com/tqdm/tqdm")
+            raise ImportError(
+                "Install tqdm bar with `pip install tqdm`, see more details at https://github.com/tqdm/tqdm"
+            )
 
-    # Possibly include image 
+    # Possibly include image
     # background method?
     # def show_image(
     #     self,
