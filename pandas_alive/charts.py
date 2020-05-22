@@ -356,6 +356,8 @@ class BarChartRace(_BaseChart):
         Args:
             i (int): Frame index for animation
         """
+        if self.enable_progress_bar:
+            self.update_progress_bar()
         for bar in self.ax.containers:
             bar.remove()
         self.plot_bars(i)
@@ -384,6 +386,8 @@ class ScatterChart(_BaseChart):
     size: typing.Union[int, str] = attr.ib()
 
     def __attrs_post_init__(self):
+        """ Properties to be determined after initialization
+        """
         super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
         self._points: typing.Dict = {}
@@ -429,6 +433,8 @@ class ScatterChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        if self.enable_progress_bar:
+            self.update_progress_bar()
         self.plot_point(i)
         if self.period_fmt:
             self.show_period(i)
@@ -455,6 +461,8 @@ class LineChart(_BaseChart):
     fill_under_line_color: str = attr.ib()
 
     def __attrs_post_init__(self):
+        """ Properties to be determined after initialization
+        """
         super().__attrs_post_init__()
         self.line_colors = self.get_colors(self.cmap)
         self._lines: typing.Dict = {}
@@ -507,13 +515,14 @@ class LineChart(_BaseChart):
                     self._lines[name]["y"],
                     color=self.get_single_color(self.fill_under_line_color),
                 )
-
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
 
         Args:
             i (int): Index of frame of animation
         """
+        if self.enable_progress_bar:
+            self.update_progress_bar()
         for line in self.ax.lines:
             line.remove()
         self.plot_line(i)
@@ -538,6 +547,8 @@ class PieChart(_BaseChart):
     """
 
     def __attrs_post_init__(self):
+        """ Properties to be determined after initialization
+        """
         super().__attrs_post_init__()
         self.wedge_colors = self.get_colors(self.cmap)
 
@@ -591,6 +602,8 @@ class PieChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        if self.enable_progress_bar:
+            self.update_progress_bar()
         for wedge in self.ax.patches:
             wedge.remove()
         if self.period_fmt:
@@ -615,6 +628,8 @@ class BarChart(_BaseChart):
     """
 
     def __attrs_post_init__(self):
+        """ Properties to be determined after initialization
+        """
 
         super().__attrs_post_init__()
         self.bar_colors = self.get_colors(self.cmap)
@@ -655,6 +670,8 @@ class BarChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        if self.enable_progress_bar:
+            self.update_progress_bar()
         for bar in self.ax.containers:
             bar.remove()
         if self.period_fmt:
@@ -688,6 +705,8 @@ class BubbleChart(_BaseChart):
     color_data_label: str = attr.ib()
 
     def __attrs_post_init__(self):
+        """ Properties to be determined after initialization
+        """
         super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
         self._points: typing.Dict = {}
@@ -761,6 +780,8 @@ class BubbleChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        if self.enable_progress_bar:
+            self.update_progress_bar()
         for path in self.ax.collections:
             path.remove()
         self.plot_point(i)

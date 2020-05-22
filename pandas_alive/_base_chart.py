@@ -10,7 +10,7 @@ import typing
 import attr
 import matplotlib
 from matplotlib import ticker
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation,PillowWriter
 from matplotlib.colors import Colormap, to_rgba
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -78,6 +78,8 @@ class _BaseChart:
     period_summary_func: typing.Callable = attr.ib()
     fixed_max: bool = attr.ib()
     dpi: float = attr.ib()
+    writer: str = attr.ib()
+    enable_progress_bar: bool = attr.ib()
     kwargs = attr.ib()
 
     def __attrs_post_init__(self):
@@ -116,6 +118,8 @@ class _BaseChart:
         else:
             self.data_cols = self.df.columns.get_level_values(level=0).unique().tolist()
 
+        print(f"Generating {self.__class__.__name__}, plotting {self.data_cols}")
+
         # Careful to use self.df in later calculations (eg, df_rank), use orig_df if needed
         self.df = self.get_interpolated_df(
             self.df, self.steps_per_period, self.interpolate_period
@@ -129,8 +133,10 @@ class _BaseChart:
         self.fig.set_tight_layout(False)
         if self.title:
             self.ax.set_title(self.title)
+        if self.enable_progress_bar:
+            self.setup_progress_bar()
+        self.validate_params()
 
-        print(f"Generating {self.__class__.__name__}, plotting {self.data_cols}")
 
     def validate_params(self):
         """ Validate figure is a matplotlib Figure instance
@@ -144,6 +150,17 @@ class _BaseChart:
         """
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
             raise TypeError("`fig` must be a matplotlib Figure instance")
+        if self.writer:
+            import matplotlib.animation as manimation
+            if self.writer == "pillow":
+                raise RuntimeError(
+                    f"Pandas_Alive does not support Pillow, see list of other available writers at https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements"    
+                )
+            if self.writer not in manimation.writers.list():
+                raise RuntimeError(
+                    f"Ensure that a matplotlib writer library is installed, list of available writer librarys {manimation.writers.list()}, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
+                )
+
 
     def get_period_label(
         self,
@@ -370,7 +387,7 @@ class _BaseChart:
         """ Method for determining how many frames to animate
 
         Returns:
-            int: Number of frames to animate
+            typing.Iterable: Range with length of index in DataFrame
         """
         return range(len(self.df.index))
 
@@ -534,14 +551,34 @@ class _BaseChart:
 
         extension = filename.split(".")[-1]
         try:
-            if extension == "gif":
-                anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
+            if self.writer:
+                anim.save(filename, fps=self.fps, dpi=self.dpi,writer=self.writer)
             else:
-                anim.save(filename, fps=self.fps, dpi=self.dpi)
-        except TypeError:
+                if extension == "gif":
+                    anim.save(filename, fps=self.fps, dpi=self.dpi, writer="imagemagick")
+                else:
+                    anim.save(filename, fps=self.fps, dpi=self.dpi)
+
+            if self.enable_progress_bar:
+                self.progress_bar.close()
+            
+        except TypeError as e:
             raise RuntimeError(
                 "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
             )
+
+    # def encode_html5_video(self,anim):
+    #     VIDEO_TAG = """<video controls>
+    #         <source src="data:video/x-m4v;base64,{0}" type="video/mp4">
+    #         Your browser does not support the video tag.
+    #         </video>"""
+    #     from tempfile import NamedTemporaryFile
+    #     if not hasattr(anim, '_encoded_video'):
+    #         with NamedTemporaryFile(suffix='.mp4') as f:
+    #             anim.save(f.name, fps=20, extra_args=['-vcodec', 'libx264', '-pix_fmt', 'yuv420p'])
+    #             video = open(f.name, "rb").read()
+    #         anim._encoded_video = video.encode("base64")
+    #     return VIDEO_TAG.format(anim._encoded_video)
 
     def get_html5_video(self):
         """ Convert the animation to an HTML5 <video> tag.
@@ -553,9 +590,37 @@ class _BaseChart:
         """
 
         anim = self.make_animation(self.get_frames(), self.init_func)
-        return anim.to_html5_video()
+        
+        # html_tag = self.encode_html5_video(anim)
+        html_tag = anim.to_html5_video()
+        if 'too large to embed' in html_tag:
+            import warnings
+            warnings.warn("HTML5 Tag is too large to embed, try another format such as mp4, GIF or otherwise.")
+        return html_tag
 
-    # Possibly include image background method?
+    def update_progress_bar(self) -> None:
+        """
+        Update TQDM instance by 1
+        """
+        self.progress_bar.update(1)
+
+    def setup_progress_bar(self):
+        """
+        Create an instance of alive-progress bar in manual mode
+
+        [extended_summary]
+
+        Raises:
+            ModuleNotFoundError: [description]
+        """
+        try:
+            from tqdm import tqdm
+            self.progress_bar = tqdm(total=len(self.get_frames()))
+        except ImportError:
+            raise ImportError("Install tqdm bar with `pip install tqdm`, see more details at https://github.com/tqdm/tqdm")
+
+    # Possibly include image 
+    # background method?
     # def show_image(
     #     self,
     #     ax,
