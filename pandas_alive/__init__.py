@@ -25,3 +25,13 @@ from pandas.core.accessor import CachedAccessor
 plot_animated = CachedAccessor("plot_animated", AnimatedAccessor)
 pd.DataFrame.plot_animated = plot_animated
 pd.Series.plot_animated = plot
+
+# Define plot_animated method for GeoPandas and Series:
+try:
+    import geopandas as gpd
+
+    gpd.GeoDataFrame.plot_bokeh = geoplot
+    gpd.GeoSeries.plot_bokeh = geoplot
+
+except ImportError:
+    pass
