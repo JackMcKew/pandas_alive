@@ -5,19 +5,18 @@ This module contains functions for chart types.
 """
 
 import datetime
-
 import typing
 from typing import Mapping
 
 import attr
-from matplotlib.colors import Colormap
-from matplotlib import colors, ticker, transforms
-from matplotlib.animation import FuncAnimation
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.units as munits
 import numpy as np
 import pandas as pd
+from matplotlib import colors, ticker, transforms
+from matplotlib.animation import FuncAnimation
+from matplotlib.colors import Colormap
 
 from ._base_chart import _BaseChart
 
