@@ -9,14 +9,14 @@ import typing
 
 import attr
 import matplotlib
-from matplotlib import ticker
-from matplotlib.animation import FuncAnimation, PillowWriter
-from matplotlib.colors import Colormap, to_rgba
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.units as munits
 import numpy as np
 import pandas as pd
+from matplotlib import ticker
+from matplotlib.animation import FuncAnimation, PillowWriter
+from matplotlib.colors import Colormap, to_rgba
 
 # For conciseDateFormatter for all plots https://matplotlib.org/3.1.0/gallery/ticks_and_spines/date_concise_formatter.html
 converter = mdates.ConciseDateConverter()

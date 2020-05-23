@@ -1,12 +1,11 @@
-import pytest
+import os
+import sys
 
-import sys, os
+import pandas_alive
+import pytest
 
 myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ".")
-
-
-import pandas_alive
 
 
 @pytest.fixture(scope="function")
