@@ -267,9 +267,7 @@ class _BaseChart:
         ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         if self.fixed_max:
-            ax.set_ylim(
-                self.df.min().min(skipna=True), self.df.max().max(skipna=True),
-            )
+            ax.set_ylim(self.df.min().min(skipna=True), self.df.max().max(skipna=True))
         else:
             ax.set_ylim(
                 self.df.iloc[: i + 1]
