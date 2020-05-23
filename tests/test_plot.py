@@ -1,5 +1,11 @@
 import pytest
 
+import sys, os
+
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, ".")
+
+
 import pandas_alive
 
 
@@ -14,31 +20,14 @@ def covid_df():
 
 def test_barh(covid_df):
 
-    animated_plot = covid_df.plot_animated()
-
-    animated_plot.save("test.mp4")
+    animated_plot = covid_df.plot_animated(n_visible=5)
 
 
 def test_barv(covid_df):
 
-    animated_plot = covid_df.plot_animated(orientation="v")
-
-    animated_plot.save("test.mp4")
+    animated_plot = covid_df.plot_animated(orientation="v", n_visible=5)
 
 
 def test_line(covid_df):
 
     animated_plot = covid_df.diff().fillna(0).plot_animated(kind="line")
-
-    animated_plot.save("test.mp4")
-
-
-def test_multi(covid_df):
-
-    animated_line_chart = covid_df.diff().fillna(0).plot_animated(kind="line")
-
-    animated_bar_chart = covid_df.plot_animated(kind="barh")
-
-    pandas_alive.animate_multiple_plots(
-        "test.mp4", [animated_bar_chart, animated_line_chart]
-    )

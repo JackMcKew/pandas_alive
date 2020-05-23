@@ -1,0 +1,26 @@
+repos:
+-   repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+    - id: black
+      language_version: python3.7
+-   repo: local
+    hooks:
+    -   id: tests
+        name: run tests
+        entry: pytest -v .
+        language: system
+        types: [python]
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: debug-statements
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
+    rev: v1.0.4
+    hooks:
+    -   id: python-bandit-vulnerability-check
+        args: [-l, --recursive, -x, tests]
+        files: .py$
