@@ -18,7 +18,7 @@ import pandas as pd
 from pandas.core.accessor import CachedAccessor
 
 from .base import load_dataset
-from .geoplotting import geoplot
+
 from .plotting import AnimatedAccessor, animate_multiple_plots, plot
 
 version = "0.1.14"
@@ -32,6 +32,7 @@ pd.Series.plot_animated = plot
 try:
     import geopandas as gpd
     import descartes
+    from .geoplotting import geoplot
 
     gpd.GeoDataFrame.plot_animated = geoplot
     gpd.GeoSeries.plot_animated = geoplot
