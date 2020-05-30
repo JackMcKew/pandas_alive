@@ -31,6 +31,8 @@ class MapChart(_BaseChart):
         ValueError: [description]
     """
 
+    enable_basemap: bool = attr.ib()
+
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
         """
@@ -48,6 +50,24 @@ class MapChart(_BaseChart):
             )
             self.interpolate_period = False
             self.df = self.get_interpolated_geo_df(self.df)
+
+        temp_gdf = self.df.copy()
+        self.df = pd.DataFrame(self.df)
+        self.df = self.df.drop("geometry", axis=1)
+
+        if self.fig is None:
+            self.fig, self.ax = self.create_figure()
+            self.figsize = self.fig.get_size_inches()
+        else:
+            self.fig = plt.figure()
+            self.ax = plt.axes()
+        self.fig.set_tight_layout(False)
+        if self.title:
+            self.ax.set_title(self.title)
+        if self.enable_progress_bar:
+            self.setup_progress_bar()
+
+        self.df = temp_gdf
 
     def get_data_cols(self, gdf: geopandas.GeoDataFrame) -> typing.List:
         """
@@ -112,65 +132,59 @@ class MapChart(_BaseChart):
 
         return geopandas.GeoDataFrame(interpolated_df)
 
-    # def plot_point(self, i: int) -> None:
-    #     """
-    #     Plot points from MultiIndexed DataFrame
+    def plot_geo_data(self, i: int, gdf: geopandas.GeoDataFrame) -> None:
+        # fig, ax = plt.subplots(figsize=(5,3), dpi=100)
+        # self.ax.clear()
+        column_to_plot = gdf.columns[i]
+        gdf.plot(
+            column=column_to_plot,
+            ax=self.ax,
+            markersize=gdf[column_to_plot],
+            cmap="viridis",
+        )
 
-    #     Optionally size & colour can be provided and if so, the string provided must be present in the level 0 column labels
+        if self.enable_basemap:
+            try:
+                import contextily
 
-    #     Args:
-    #         i (int): Frame to plot, will slice DataFrame at this index
-    #     """
-    #     if self.fixed_max:
-    #         BBox = (
-    #             self.df[self.mapping["x"]].values.min(),
-    #             self.df[self.mapping["x"]].values.max(),
-    #             self.df[self.mapping["y"]].values.min(),
-    #             self.df[self.mapping["y"]].values.max(),
-    #         )
-    #         self.ax.set_xlim(BBox[0], BBox[1])
-    #         self.ax.set_ylim(BBox[2], BBox[3])
+                contextily.add_basemap(
+                    self.ax, source=contextily.providers.CartoDB.Positron
+                )
+            except ImportError:
+                import warnings
 
-    #     # TODO Add geopandas for map plots
-    #     # self.ax = self.show_image(
-    #     #     self.ax,
-    #     #     "C:\\Users\\jackm\\Documents\\GitHub\\pandas-alive\\data\\nsw_map.png",
-    #     #     extent=BBox,
-    #     #     zorder=0,
-    #     #     aspect="equal",
-    #     # )
+                warnings.warn(
+                    "Ensure contextily is installed for basemap functionality https://github.com/geopandas/contextily"
+                )
 
-    #     for output_key, column_key in self.mapping.items():
-    #         self._points[output_key] = self.df[column_key].iloc[i].values
+        return self.ax
 
-    #     self.ax.scatter(
-    #         self._points["x"],
-    #         self._points["y"],
-    #         s=self._points["size"]
-    #         if isinstance(self.size_data_label, str)
-    #         else self.size_data_label,
-    #         c=self._points["color"]
-    #         if isinstance(self.color_data_label, str)
-    #         and self.color_data_label in self.data_cols
-    #         else self.color_data_label,
-    #         **self.kwargs,
-    #     )
+    def anim_func(self, i: int) -> None:
+        """ Animation function
 
-    # def anim_func(self, i: int) -> None:
-    #     """ Animation function, removes all lines and updates legend/period annotation
+        Args:
+            i (int): Index of frame of animation
+        """
+        if self.enable_progress_bar:
+            self.update_progress_bar()
 
-    #     Args:
-    #         i (int): Index of frame of animation
-    #     """
-    #     if self.enable_progress_bar:
-    #         self.update_progress_bar()
-    #     for path in self.ax.collections:
-    #         path.remove()
-    #     self.plot_point(i)
-    #     if self.period_fmt:
-    #         self.show_period(i)
+        self.ax.clear()
+        # for path in self.ax.collections:
+        #     path.remove()
+        self.plot_geo_data(i, self.df)
+        if self.period_fmt:
+            self.show_period(i)
 
-    # def init_func(self) -> None:
-    #     """ Initialization function for animation
-    #     """
-    #     self.ax.scatter([], [])
+    def init_func(self) -> None:
+        """ Initialization function for animation
+        """
+        column_to_plot = self.df.columns[0]
+        self.df.plot(
+            column=column_to_plot,
+            markersize=self.df[column_to_plot],
+            # cmap='viridis',
+        )
+        # self.ax.scatter([], [])
+
+    def get_frames(self):
+        return range(len(self.df.columns))

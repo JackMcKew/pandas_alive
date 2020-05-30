@@ -7,6 +7,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.colors import Colormap
 
 from .geocharts import MapChart
+from pandas_alive.plotting import verify_filename
 
 
 def geoplot(
@@ -31,6 +32,8 @@ def geoplot(
     dpi: float = 144,
     writer: str = None,
     enable_progress_bar: bool = False,
+    # Geo Chart
+    enable_basemap: bool = False,
     # # Bar chart
     # orientation: str = "h",
     # sort: str = "desc",
@@ -53,7 +56,7 @@ def geoplot(
     **kwargs,
 ):
     df = input_df.copy()
-    MapChart(
+    map_chart = MapChart(
         df,
         interpolate_period=interpolate_period,
         steps_per_period=steps_per_period,
@@ -70,5 +73,9 @@ def geoplot(
         dpi=dpi,
         writer=writer,
         enable_progress_bar=enable_progress_bar,
+        enable_basemap=enable_basemap,
         kwargs=kwargs,
     )
+    if filename:
+        map_chart.save(verify_filename(filename))
+    return MapChart
