@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import matplotlib.units as munits
 import numpy as np
 import pandas as pd
+import geopandas
 from matplotlib import colors, ticker, transforms
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import Colormap
@@ -33,30 +34,83 @@ class MapChart(_BaseChart):
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
         """
-        # super().__attrs_post_init__()
-        print(self.df)
-        print(type(self.df))
-        # self.colors = self.get_colors(self.cmap)
-        # self._points: typing.Dict = {}
-        # self.column_keys = self.df.columns.get_level_values(level=0).unique().tolist()
-        # # self.data_cols = self.df.columns.get_level_values(level=1).unique().tolist()
-        # self.mapping = {"x": self.x_data_label, "y": self.y_data_label}
-        # if isinstance(self.size_data_label, str):
-        #     self.mapping["size"] = self.size_data_label
-        # if (
-        #     isinstance(self.color_data_label, str)
-        #     and self.color_data_label in self.column_keys
-        # ):
-        #     self.mapping["color"] = self.color_data_label
-        # if self.x_data_label is None or self.y_data_label is None:
-        #     raise ValueError("X Y labels must be provided at a minimum")
-        # if not (
-        #     self.x_data_label in self.column_keys
-        #     and self.y_data_label in self.column_keys
-        # ):
-        #     raise ValueError(
-        #         f"Provided keys must be in level 0 multi index, possible values: {self.column_keys}"
-        #     )
+        self.df = self.df.copy()
+
+        # Convert all columns except geometry to datetime
+        try:
+            self.df = self.convert_data_cols_to_datetime(self.df)
+            self.df = self.get_interpolated_geo_df(self.df)
+        except:
+            import warnings
+
+            warnings.warn(
+                "Pandas_Alive failed to convert columns to datetime, setting interpolate_period to False and retrying..."
+            )
+            self.interpolate_period = False
+            self.df = self.get_interpolated_geo_df(self.df)
+
+    def get_data_cols(self, gdf: geopandas.GeoDataFrame) -> typing.List:
+        """
+        Get data columns from GeoDataFrame (this excludes geometry)
+
+        Args:
+            gdf (geopandas.GeoDataFrame): Input GeoDataframe
+
+        Returns:
+            typing.List: List of columns except geometry
+        """
+        return gdf.loc[:, gdf.columns != "geometry"].columns.tolist()
+
+    def convert_data_cols_to_datetime(
+        self, gdf: geopandas.GeoDataFrame
+    ) -> geopandas.GeoDataFrame:
+        """
+        Convert all data columns to datetime with `pd.to_datetime`
+
+        Args:
+            gdf (geopandas.GeoDataFrame): Input GeoDataFrame
+
+        Returns:
+            geopandas.GeoDataFrame: GeoDataFrame with data columns converted to `Timestamp`
+        """
+        converted_column_names = []
+        for col in gdf.columns:
+            if col != "geometry":
+                col = pd.to_datetime(col)
+
+            converted_column_names.append(col)
+        gdf.columns = converted_column_names
+        return gdf
+
+    def get_interpolated_geo_df(
+        self, gdf: geopandas.GeoDataFrame
+    ) -> geopandas.GeoDataFrame:
+        """
+        Interpolates GeoDataFrame by splitting data from geometry, interpolating and joining back together
+
+        Args:
+            gdf (geopandas.GeoDataFrame): Input GeoDataFrame
+
+        Returns:
+            geopandas.GeoDataFrame: Interpolated GeoDataFrame
+        """
+
+        # Separate data from geometry
+        temp_df = pd.DataFrame(gdf)
+        temp_df = temp_df.drop("geometry", axis=1)
+        temp_df = temp_df.T
+        geometry_column = gdf.geometry
+
+        # Interpolate data
+        interpolated_df = super().get_interpolated_df(
+            temp_df, self.steps_per_period, self.interpolate_period
+        )
+
+        # Rejoin data with geometry
+        interpolated_df = interpolated_df.T
+        interpolated_df["geometry"] = geometry_column
+
+        return geopandas.GeoDataFrame(interpolated_df)
 
     # def plot_point(self, i: int) -> None:
     #     """
