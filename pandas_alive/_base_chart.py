@@ -257,14 +257,22 @@ class _BaseChart:
         """
         # TODO fix max for x and y?
         if self.fixed_max:
-            xlim_start = self.df.index.min()
+            xlim_start = df.index.min()
             # For avoiding UserWarning on first frame with identical start and end limits
-            xlim_end = self.df.index.max() + pd.Timedelta(seconds=1)
+            xlim_end = df.index.max() + pd.Timedelta(seconds=1)
         else:
-            xlim_start = self.df.index[: i + 1].min()
+            xlim_start = df.index[: i + 1].min()
             # For avoiding UserWarning on first frame with identical start and end limits
-            xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
-        ax.set_xlim(xlim_start, xlim_end)
+            xlim_end = df.index[: i + 1].max() + pd.Timedelta(seconds=1)
+        # import pdb
+        # pdb.set_trace()
+        try:
+            ax.set_xlim(xlim_start, xlim_end)
+        except Exception as e:
+            xlim_start = df.index[: i + 1].to_pydatetime().min()
+            # For avoiding UserWarning on first frame with identical start and end limits
+            xlim_end = df.index[: i + 1].to_pydatetime().max() + pd.Timedelta(seconds=1)
+            ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         if self.fixed_max:
             ax.set_ylim(self.df.min().min(skipna=True), self.df.max().max(skipna=True))
