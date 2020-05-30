@@ -68,6 +68,7 @@ class MapChart(_BaseChart):
             self.setup_progress_bar()
 
         self.df = temp_gdf
+        print(self.df)
 
     def get_data_cols(self, gdf: geopandas.GeoDataFrame) -> typing.List:
         """
@@ -187,4 +188,34 @@ class MapChart(_BaseChart):
         # self.ax.scatter([], [])
 
     def get_frames(self):
-        return range(len(self.df.columns))
+        return range(len(self.get_data_cols(self.df)))
+
+    def show_period(self, i: int) -> None:
+        """
+        Show period label on plot
+
+        Args:
+            i (int): Frame number of animation to take slice of DataFrame and retrieve current index for show as period
+
+        Raises:
+            ValueError: If custom period label location is used must contain `x`, `y` and `s` in dictionary.
+        """
+        if self.period_label:
+            if self.period_fmt:
+                idx_val = self.df.columns[i]
+                if type(idx_val) == pd.Timestamp:  # Date time
+                    s = idx_val.strftime(self.period_fmt)
+                else:
+                    s = self.period_fmt.format(x=idx_val)
+            else:
+                s = self.df.columns.astype(str)[i]
+            num_texts = len(self.ax.texts)
+            if num_texts == 0:
+                # first frame
+                self.ax.text(
+                    s=s,
+                    transform=self.ax.transAxes,
+                    **self.get_period_label(self.period_label),
+                )
+            else:
+                self.ax.texts[0].set_text(s)
