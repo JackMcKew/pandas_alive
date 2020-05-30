@@ -33,7 +33,9 @@ def geoplot(
     writer: str = None,
     enable_progress_bar: bool = False,
     # Geo Chart
-    enable_basemap: bool = False,
+    basemap_format: typing.Dict = None,
+    enable_markersize: bool = False,
+    scale_markersize: float = 1,
     # # Bar chart
     # orientation: str = "h",
     # sort: str = "desc",
@@ -73,9 +75,11 @@ def geoplot(
         dpi=dpi,
         writer=writer,
         enable_progress_bar=enable_progress_bar,
-        enable_basemap=enable_basemap,
+        basemap_format=basemap_format,
+        enable_markersize=enable_markersize,
+        scale_markersize=scale_markersize,
         kwargs=kwargs,
     )
     if filename:
         map_chart.save(verify_filename(filename))
-    return MapChart
+    return map_chart
