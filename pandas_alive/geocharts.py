@@ -31,12 +31,22 @@ class MapChart(_BaseChart):
         ValueError: [description]
     """
 
-    enable_basemap: bool = attr.ib()
+    basemap_format: typing.Dict = attr.ib()
+    enable_markersize: bool = attr.ib()
+    scale_markersize: float = attr.ib()
 
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
         """
         self.df = self.df.copy()
+
+        self.cmap = self.cmap if self.cmap else "viridis"
+        from shapely.geometry import Point
+
+        for shape in self.df.geometry:
+            if type(shape) == Point:
+                self.enable_markersize = True
+                break
 
         # Convert all columns except geometry to datetime
         try:
@@ -68,7 +78,6 @@ class MapChart(_BaseChart):
             self.setup_progress_bar()
 
         self.df = temp_gdf
-        print(self.df)
 
     def get_data_cols(self, gdf: geopandas.GeoDataFrame) -> typing.List:
         """
@@ -140,17 +149,19 @@ class MapChart(_BaseChart):
         gdf.plot(
             column=column_to_plot,
             ax=self.ax,
-            markersize=gdf[column_to_plot],
-            cmap="viridis",
+            markersize=gdf[column_to_plot] * self.scale_markersize
+            if self.enable_markersize
+            else None,
+            # cmap='Blues',
+            cmap=self.cmap,
+            **self.kwargs,
         )
 
-        if self.enable_basemap:
+        if self.basemap_format:
             try:
                 import contextily
 
-                contextily.add_basemap(
-                    self.ax, source=contextily.providers.CartoDB.Positron
-                )
+                contextily.add_basemap(self.ax, **self.basemap_format)
             except ImportError:
                 import warnings
 
@@ -170,6 +181,7 @@ class MapChart(_BaseChart):
             self.update_progress_bar()
 
         self.ax.clear()
+        self.ax.set_axis_off()
         # for path in self.ax.collections:
         #     path.remove()
         self.plot_geo_data(i, self.df)
