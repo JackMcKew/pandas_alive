@@ -145,6 +145,15 @@ class MapChart(_BaseChart):
         return geopandas.GeoDataFrame(interpolated_df)
 
     def plot_geo_data(self, i: int, gdf: geopandas.GeoDataFrame) -> None:
+        """
+        Plot GeoDataFrame using the plot accessor from Geopandas
+
+        https://geopandas.org/reference.html#geopandas.GeoDataFrame.plot
+
+        Args:
+            i (int): Frame to plot
+            gdf (geopandas.GeoDataFrame): Source GeoDataFrame
+        """
         # fig, ax = plt.subplots(figsize=(5,3), dpi=100)
         # self.ax.clear()
         column_to_plot = gdf.columns[i]
@@ -184,8 +193,6 @@ class MapChart(_BaseChart):
 
         self.ax.clear()
         self.ax.set_axis_off()
-        # for path in self.ax.collections:
-        #     path.remove()
         self.plot_geo_data(i, self.df)
         if self.period_fmt:
             self.show_period(i)
@@ -202,6 +209,9 @@ class MapChart(_BaseChart):
         # self.ax.scatter([], [])
 
     def get_frames(self):
+        """
+        Get number of frames to animate
+        """
         return range(len(self.get_data_cols(self.df)))
 
     def show_period(self, i: int) -> None:
