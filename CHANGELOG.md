@@ -3,7 +3,11 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
+## [2020.05.15]
+
+- Officially changing to version format with YYYY.MM.VERSION
+- Hotfix for anaconda environment throwing an error:
+    - `ufunc 'isfinite' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''`
 
 ## [0.1.14] - 2020-05-23
 
