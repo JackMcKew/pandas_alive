@@ -22,7 +22,7 @@ def geoplot(
     figsize: typing.Tuple[float, float] = (6.5, 3.5),
     title: str = None,
     fig: plt.figure = None,
-    cmap: typing.Union[str, Colormap, typing.List[str]] = "dark24",
+    cmap: typing.Union[str, Colormap, typing.List[str]] = "viridis",
     tick_label_size: typing.Union[int, float] = 7,
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]

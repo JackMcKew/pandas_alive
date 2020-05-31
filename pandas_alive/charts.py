@@ -355,6 +355,7 @@ class BarChartRace(_BaseChart):
         Args:
             i (int): Frame index for animation
         """
+        self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for bar in self.ax.containers:
@@ -432,6 +433,7 @@ class ScatterChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         self.plot_point(i)
@@ -521,6 +523,7 @@ class LineChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for line in self.ax.lines:
@@ -602,6 +605,7 @@ class PieChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for wedge in self.ax.patches:
@@ -670,6 +674,7 @@ class BarChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for bar in self.ax.containers:
@@ -780,6 +785,7 @@ class BubbleChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for path in self.ax.collections:

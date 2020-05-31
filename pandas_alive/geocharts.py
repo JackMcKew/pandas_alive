@@ -40,7 +40,6 @@ class MapChart(_BaseChart):
         """
         self.df = self.df.copy()
 
-        self.cmap = self.cmap if self.cmap else "viridis"
         from shapely.geometry import Point
 
         for shape in self.df.geometry:
