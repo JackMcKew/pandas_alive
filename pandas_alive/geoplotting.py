@@ -36,27 +36,21 @@ def geoplot(
     basemap_format: typing.Dict = None,
     enable_markersize: bool = False,
     scale_markersize: float = 1,
-    # # Bar chart
-    # orientation: str = "h",
-    # sort: str = "desc",
-    # label_bars: bool = True,
-    # bar_label_size: typing.Union[int, float] = 7,
-    # n_visible: int = None,
-    # fixed_order: typing.Union[bool, list] = False,
-    # perpendicular_bar_func: typing.Union[typing.Callable, str] = None,
-    # # Line Chart
-    # line_width: int = 2,
-    # label_events: typing.Dict[str, datetime.datetime] = None,
-    # fill_under_line_color: str = None,
-    # # Scatter Chart
-    # size: int = 2,
-    # # Bubble Chart
-    # x_data_label: str = None,
-    # y_data_label: str = None,
-    # size_data_label: typing.Union[int, str] = 2,
-    # color_data_label: str = "blue",
     **kwargs,
 ):
+    """
+    Animated plotting accessor for Geopandas GeoDataFrames
+
+
+    Args:
+        basemap_format (Dict, optional): If provided with a dictionary with keywords arguments as per https://contextily.readthedocs.io/en/latest/reference.html#contextily.add_basemap, this will add a basemap. Defaults to None.
+            Ensure to have contextily installed: https://contextily.readthedocs.io/en/latest/index.html
+        enable_markersize (bool, optional): Set to True if using Points, this will use the values being plotted as the size of the markers. Defaults to False.
+        scale_markersize (float, optional): To be used with enable_markersize, this will scale the size of the markers by the number specified. Defaults to 1.
+
+    Returns:
+        MapChart: Returns an instance of the MapChart class for use in multiple plots or save.
+    """
     df = input_df.copy()
     map_chart = MapChart(
         df,
