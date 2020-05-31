@@ -47,8 +47,45 @@ Table of Contents
 
 .. raw:: html
 
-   <!-- START doctoc -->
-   <!-- END doctoc -->
+   <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+   <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+
+
+
+* `Installation <#installation>`_
+* `Usage <#usage>`_
+
+  * `Currently Supported Chart Types <#currently-supported-chart-types>`_
+
+    * `Horizontal Bar Chart Races <#horizontal-bar-chart-races>`_
+    * `Vertical Bar Chart Races <#vertical-bar-chart-races>`_
+    * `Line Charts <#line-charts>`_
+    * `Bar Charts <#bar-charts>`_
+    * `Scatter Charts <#scatter-charts>`_
+    * `Pie Charts <#pie-charts>`_
+    * `Bubble Charts <#bubble-charts>`_
+
+  * `Multiple Charts <#multiple-charts>`_
+
+    * `Urban Population <#urban-population>`_
+    * `Life Expectancy in G7 Countries <#life-expectancy-in-g7-countries>`_
+
+  * `HTML 5 Videos <#html-5-videos>`_
+  * `Progress Bars! <#progress-bars>`_
+
+* `Future Features <#future-features>`_
+* `Inspiration <#inspiration>`_
+* `Requirements <#requirements>`_
+* `Documentation <#documentation>`_
+* `Contributing <#contributing>`_
+* `Changelog <#changelog>`_
+
+
+.. raw:: html
+
+   <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
@@ -72,8 +109,8 @@ Must begin with a pandas DataFrame containing 'wide' data where:
 The data below is an example of properly formatted data. It shows total deaths from COVID-19 for the highest 20 countries by date.
 
 
-.. image:: https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png
-   :target: https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png
+.. image:: https://raw.githubusercontent.com/dexplo/bar_chart_race/master/docs/images/wide_data.png
+   :target: https://raw.githubusercontent.com/dexplo/bar_chart_race/master/docs/images/wide_data.png
    :alt: Example Data Table
 
 
@@ -459,7 +496,11 @@ A list of future features that may/may not be developed is:
 
 
 * Geographic charts (currently using OSM export image, potential `geopandas <https://geopandas.org/>`_\ )
+
+  * This is currently working at a proof of concept level, stay tuned!
+
 * :raw-html-m2r:`<del>Loading bar support (potential `tqdm <https://github.com/tqdm/tqdm>`_ or `alive-progress <https://github.com/rsalmei/alive-progress>`_\ )</del>`
+* Potentially support writing to GIF in memory with https://github.com/maxhumber/gif
 
 A chart that was built using a development branch of Pandas_Alive is:
 

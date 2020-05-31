@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pandas_alive.plotting &mdash; Pandas_Alive 0.1.13 documentation</title>
+  <title>pandas_alive.plotting &mdash; Pandas_Alive 0.1.14h1 documentation</title>
   
 
   
@@ -229,7 +229,7 @@
     <span class="n">period_summary_func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fixed_max</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
-    <span class="n">writer</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">writer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">enable_progress_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="c1"># Bar chart</span>
     <span class="n">orientation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span>
@@ -255,7 +255,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create animated charts with matplotlib and pandas</span>
 
-<span class="sd">    Data must be in &#39;wide&#39; format where each row represents a single time period and each </span>
+<span class="sd">    Data must be in &#39;wide&#39; format where each row represents a single time period and each</span>
 <span class="sd">    column represents a distinct category. Optionally, the index can label the time period.</span>
 <span class="sd">    Bar height and location change linearly from one time period to the next.</span>
 <span class="sd">    This is resource intensive - Start with just a few rows of data to test.</span>
@@ -286,8 +286,8 @@
 <span class="sd">            .. code-block::</span>
 <span class="sd">                df.plot_animated(period_fmt=&#39;%B %d, %Y&#39;)</span>
 <span class="sd">            Will change 2020/03/29 to March 29, 2020</span>
-<span class="sd">        </span>
-<span class="sd">            For new-style formatted string. Use curly braces and the variable `x`, </span>
+
+<span class="sd">            For new-style formatted string. Use curly braces and the variable `x`,</span>
 <span class="sd">            which will be passed the current period&#39;s index value.</span>
 <span class="sd">            .. code-block::</span>
 <span class="sd">                &#39;Period {x:10.2f}&#39;</span>
@@ -316,7 +316,7 @@
 <span class="sd">                    }</span>
 
 <span class="sd">                df.plot_animated(period_label=custom_period_location)</span>
-<span class="sd">                </span>
+
 <span class="sd">            If `False` - don&#39;t place label on axes. Defaults to True.</span>
 
 <span class="sd">        period_summary_func (typing.Callable, optional):  Custom text added to the axes each period.</span>
@@ -343,26 +343,26 @@
 
 <span class="sd">        n_visible (int, optional): Choose the maximum number of bars to display on the graph. By default, use all bars. New bars entering the race will appear from the edge of the axes. Defaults to None.</span>
 
-<span class="sd">        fixed_order (typing.Union[bool, list], optional): When `False`, bar order changes every time period to correspond </span>
-<span class="sd">            with `sort`. When `True`, bars remained fixed according to their </span>
-<span class="sd">            final value corresponding with `sort`. Otherwise, provide a list </span>
+<span class="sd">        fixed_order (typing.Union[bool, list], optional): When `False`, bar order changes every time period to correspond</span>
+<span class="sd">            with `sort`. When `True`, bars remained fixed according to their</span>
+<span class="sd">            final value corresponding with `sort`. Otherwise, provide a list</span>
 <span class="sd">            of the exact order of the categories for the entire duration. Defaults to False.</span>
 
 <span class="sd">        fixed_max (bool, optional): Whether to fix the maximum value of the axis containing the values.</span>
 <span class="sd">            When `False`, the axis for the values will have its maximum (xlim/ylim)</span>
-<span class="sd">            just after the largest bar of the current time period. </span>
+<span class="sd">            just after the largest bar of the current time period.</span>
 <span class="sd">            The axis maximum will change along with the data.</span>
-<span class="sd">            When True, the maximum axis value will remain constant for the </span>
-<span class="sd">            duration of the animation. For example, in a horizontal bar chart, </span>
-<span class="sd">            if the largest bar has a value of 100 for the first time period and </span>
-<span class="sd">            10,000 for the last time period. The xlim maximum will be 10,000 </span>
+<span class="sd">            When True, the maximum axis value will remain constant for the</span>
+<span class="sd">            duration of the animation. For example, in a horizontal bar chart,</span>
+<span class="sd">            if the largest bar has a value of 100 for the first time period and</span>
+<span class="sd">            10,000 for the last time period. The xlim maximum will be 10,000</span>
 <span class="sd">            for each frame. Defaults to False.</span>
 
-<span class="sd">        perpendicular_bar_func (typing.Union[typing.Callable, str], optional): Creates a single bar perpendicular to the main bars that spans the length of the axis. </span>
-<span class="sd">    </span>
-<span class="sd">            Use either a string that the DataFrame `agg` method understands or a </span>
+<span class="sd">        perpendicular_bar_func (typing.Union[typing.Callable, str], optional): Creates a single bar perpendicular to the main bars that spans the length of the axis.</span>
+
+<span class="sd">            Use either a string that the DataFrame `agg` method understands or a</span>
 <span class="sd">            user-defined function.</span>
-<span class="sd">                </span>
+
 <span class="sd">            DataFrame strings - &#39;mean&#39;, &#39;median&#39;, &#39;max&#39;, &#39;min&#39;, etc..</span>
 
 <span class="sd">            The function is passed two pandas Series of the current time period&#39;s</span>
@@ -370,7 +370,7 @@
 <span class="sd">            .. code-block::</span>
 <span class="sd">                def func(values):</span>
 <span class="sd">                    return values.quantile(.75).</span>
-<span class="sd">            </span>
+
 <span class="sd">            Defaults to None.</span>
 
 <span class="sd">        line_width (int, optional): Line width provided on line charts. Defaults to 2.</span>
@@ -389,11 +389,11 @@
 <span class="sd">                            &#39;Lockdown&#39;:datetime.strptime(&quot;31/03/2020&quot;, &quot;%d/%m/%Y&quot;)</span>
 <span class="sd">                        },</span>
 <span class="sd">                    )</span>
-<span class="sd">        </span>
+
 <span class="sd">        fill_under_line_color (str,optional): Color to show under line to create an area chart equivalent</span>
 
 <span class="sd">            String passed must be in list of named colors by matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py</span>
-<span class="sd">    </span>
+
 <span class="sd">        size (int, optional): Size of scatter points on scatter charts. Defaults to 2.</span>
 
 <span class="sd">        x_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex</span>
@@ -413,7 +413,7 @@
 
 <span class="sd">            Label passed all values will be used to create a colourmap for points.</span>
 <span class="sd">            Otherwise a string can be passed of a named color by matplotlib for all points to be that color.</span>
-<span class="sd">            </span>
+
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If chart type is not supported, raise error</span>
 
@@ -750,7 +750,7 @@
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Must be overriden to enable funcctionality</span>
-<span class="sd">        </span>
+
 <span class="sd">        Calls :func: pandas_alive.plotting.plot and returns instance of constructed chart</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
