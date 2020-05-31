@@ -19,9 +19,7 @@ from pandas.core.accessor import CachedAccessor
 
 from .base import load_dataset
 
-from .plotting import AnimatedAccessor, animate_multiple_plots, plot
-
-version = "0.1.14"
+version = "2020.05.15"
 
 
 plot_animated = CachedAccessor("plot_animated", AnimatedAccessor)
