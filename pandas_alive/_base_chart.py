@@ -259,12 +259,23 @@ class _BaseChart:
         if self.fixed_max:
             xlim_start = self.df.index.min()
             # For avoiding UserWarning on first frame with identical start and end limits
-            xlim_end = self.df.index.max() + pd.Timedelta(seconds=1)
+            if isinstance(xlim_start, pd.Timestamp):
+                xlim_end = self.df.index.max() + pd.Timedelta(seconds=1)
+            else:
+                xlim_end = self.df.index.max()
         else:
             xlim_start = self.df.index[: i + 1].min()
             # For avoiding UserWarning on first frame with identical start and end limits
-            xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
-        ax.set_xlim(xlim_start, xlim_end)
+            if isinstance(xlim_start, pd.Timestamp):
+                xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
+            else:
+                xlim_end = self.df.index[: i + 1].max()
+
+        # ufunc error occurs in anaconda environments if not converted to datetime instead of Timestamp
+        if isinstance(xlim_start, pd.Timestamp):
+            ax.set_xlim(xlim_start.to_pydatetime(), xlim_end.to_pydatetime())
+        else:
+            ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
         if self.fixed_max:
             ax.set_ylim(self.df.min().min(skipna=True), self.df.max().max(skipna=True))
