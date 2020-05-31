@@ -29,13 +29,13 @@ jobs:
         find: ".. image:: examples"
         replace: ".. image:: ../../examples"
         include: "README.rst"
-        
+
     - name: Move README.rst & Build sphinx documentation
       run: |
         mv README.rst docs/source
         cd docs
         make html
-        
+
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:

@@ -515,6 +515,7 @@ class LineChart(_BaseChart):
                     self._lines[name]["y"],
                     color=self.get_single_color(self.fill_under_line_color),
                 )
+
     def anim_func(self, i: int) -> None:
         """ Animation function, removes all lines and updates legend/period annotation
 

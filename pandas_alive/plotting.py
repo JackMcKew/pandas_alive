@@ -79,7 +79,7 @@ def plot(
     period_summary_func: typing.Callable = None,
     fixed_max: bool = False,
     dpi: float = 144,
-    writer:str = None,
+    writer: str = None,
     enable_progress_bar: bool = False,
     # Bar chart
     orientation: str = "h",
@@ -105,7 +105,7 @@ def plot(
     """
     Create animated charts with matplotlib and pandas
 
-    Data must be in 'wide' format where each row represents a single time period and each 
+    Data must be in 'wide' format where each row represents a single time period and each
     column represents a distinct category. Optionally, the index can label the time period.
     Bar height and location change linearly from one time period to the next.
     This is resource intensive - Start with just a few rows of data to test.
@@ -136,8 +136,8 @@ def plot(
             .. code-block::
                 df.plot_animated(period_fmt='%B %d, %Y')
             Will change 2020/03/29 to March 29, 2020
-        
-            For new-style formatted string. Use curly braces and the variable `x`, 
+
+            For new-style formatted string. Use curly braces and the variable `x`,
             which will be passed the current period's index value.
             .. code-block::
                 'Period {x:10.2f}'
@@ -166,7 +166,7 @@ def plot(
                     }
 
                 df.plot_animated(period_label=custom_period_location)
-                
+
             If `False` - don't place label on axes. Defaults to True.
 
         period_summary_func (typing.Callable, optional):  Custom text added to the axes each period.
@@ -193,26 +193,26 @@ def plot(
 
         n_visible (int, optional): Choose the maximum number of bars to display on the graph. By default, use all bars. New bars entering the race will appear from the edge of the axes. Defaults to None.
 
-        fixed_order (typing.Union[bool, list], optional): When `False`, bar order changes every time period to correspond 
-            with `sort`. When `True`, bars remained fixed according to their 
-            final value corresponding with `sort`. Otherwise, provide a list 
+        fixed_order (typing.Union[bool, list], optional): When `False`, bar order changes every time period to correspond
+            with `sort`. When `True`, bars remained fixed according to their
+            final value corresponding with `sort`. Otherwise, provide a list
             of the exact order of the categories for the entire duration. Defaults to False.
 
         fixed_max (bool, optional): Whether to fix the maximum value of the axis containing the values.
             When `False`, the axis for the values will have its maximum (xlim/ylim)
-            just after the largest bar of the current time period. 
+            just after the largest bar of the current time period.
             The axis maximum will change along with the data.
-            When True, the maximum axis value will remain constant for the 
-            duration of the animation. For example, in a horizontal bar chart, 
-            if the largest bar has a value of 100 for the first time period and 
-            10,000 for the last time period. The xlim maximum will be 10,000 
+            When True, the maximum axis value will remain constant for the
+            duration of the animation. For example, in a horizontal bar chart,
+            if the largest bar has a value of 100 for the first time period and
+            10,000 for the last time period. The xlim maximum will be 10,000
             for each frame. Defaults to False.
 
-        perpendicular_bar_func (typing.Union[typing.Callable, str], optional): Creates a single bar perpendicular to the main bars that spans the length of the axis. 
-    
-            Use either a string that the DataFrame `agg` method understands or a 
+        perpendicular_bar_func (typing.Union[typing.Callable, str], optional): Creates a single bar perpendicular to the main bars that spans the length of the axis.
+
+            Use either a string that the DataFrame `agg` method understands or a
             user-defined function.
-                
+
             DataFrame strings - 'mean', 'median', 'max', 'min', etc..
 
             The function is passed two pandas Series of the current time period's
@@ -220,7 +220,7 @@ def plot(
             .. code-block::
                 def func(values):
                     return values.quantile(.75).
-            
+
             Defaults to None.
 
         line_width (int, optional): Line width provided on line charts. Defaults to 2.
@@ -239,11 +239,11 @@ def plot(
                             'Lockdown':datetime.strptime("31/03/2020", "%d/%m/%Y")
                         },
                     )
-        
+
         fill_under_line_color (str,optional): Color to show under line to create an area chart equivalent
 
             String passed must be in list of named colors by matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py
-    
+
         size (int, optional): Size of scatter points on scatter charts. Defaults to 2.
 
         x_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex
@@ -263,7 +263,7 @@ def plot(
 
             Label passed all values will be used to create a colourmap for points.
             Otherwise a string can be passed of a named color by matplotlib for all points to be that color.
-            
+
     Raises:
         ValueError: If chart type is not supported, raise error
 
@@ -600,7 +600,7 @@ class AnimatedAccessor(BasePlotMethods):
     def __call__(self, *args, **kwargs):
         """
         Must be overriden to enable funcctionality
-        
+
         Calls :func: pandas_alive.plotting.plot and returns instance of constructed chart
         """
         return plot(self.df, *args, **kwargs)

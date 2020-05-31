@@ -2,6 +2,7 @@ import pytest
 
 import pandas_alive
 
+
 @pytest.fixture(scope="function")
 def covid_df():
 

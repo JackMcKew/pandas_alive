@@ -9,4 +9,3 @@ jobs:
       - uses: technote-space/toc-generator@v2
         with:
           TOC_TITLE: ''
-
