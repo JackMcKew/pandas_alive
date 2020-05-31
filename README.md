@@ -32,7 +32,7 @@ Must begin with a pandas DataFrame containing 'wide' data where:
 
 The data below is an example of properly formatted data. It shows total deaths from COVID-19 for the highest 20 countries by date.
 
-![Example Data Table](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/images/wide_data.png)
+![Example Data Table](https://raw.githubusercontent.com/dexplo/bar_chart_race/master/docs/images/wide_data.png)
 
 To produce the above visualisation:
 
@@ -345,7 +345,9 @@ Example of TQDM in action:
 A list of future features that may/may not be developed is:
 
 - Geographic charts (currently using OSM export image, potential [geopandas](https://geopandas.org/))
+    - This is currently working at a proof of concept level, stay tuned!
 - ~~Loading bar support (potential [tqdm](https://github.com/tqdm/tqdm) or [alive-progress](https://github.com/rsalmei/alive-progress))~~
+- Potentially support writing to GIF in memory with <https://github.com/maxhumber/gif>
 
 A chart that was built using a development branch of Pandas_Alive is:
 
