@@ -6,22 +6,24 @@ Example:
     ``df.plot_animated()``
 """
 
-import pandas as pd
-from pandas.core.base import PandasObject
+import datetime
 import typing
+from typing import Sequence
+
 import matplotlib.pyplot as plt
-from matplotlib.colors import Colormap
+import pandas as pd
 from matplotlib.animation import FuncAnimation
+from matplotlib.colors import Colormap
+from pandas.core.base import PandasObject
+
 from .charts import (
+    BarChart,
     BarChartRace,
     BubbleChart,
     LineChart,
-    ScatterChart,
     PieChart,
-    BarChart,
+    ScatterChart,
 )
-from typing import Sequence
-import datetime
 
 
 def get_allowed_kinds() -> typing.List[str]:

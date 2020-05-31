@@ -9,14 +9,14 @@ import typing
 
 import attr
 import matplotlib
-from matplotlib import ticker
-from matplotlib.animation import FuncAnimation, PillowWriter
-from matplotlib.colors import Colormap, to_rgba
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.units as munits
 import numpy as np
 import pandas as pd
+from matplotlib import ticker
+from matplotlib.animation import FuncAnimation, PillowWriter
+from matplotlib.colors import Colormap, to_rgba
 
 # For conciseDateFormatter for all plots https://matplotlib.org/3.1.0/gallery/ticks_and_spines/date_concise_formatter.html
 converter = mdates.ConciseDateConverter()
@@ -257,16 +257,17 @@ class _BaseChart:
         """
         # TODO fix max for x and y?
         if self.fixed_max:
-            xlim_start = self.df.index.min()
+            xlim_start = df.index.min()
             # For avoiding UserWarning on first frame with identical start and end limits
             if isinstance(xlim_start, pd.Timestamp):
                 xlim_end = self.df.index.max() + pd.Timedelta(seconds=1)
             else:
                 xlim_end = self.df.index.max()
         else:
-            xlim_start = self.df.index[: i + 1].min()
-            # For avoiding UserWarning on first frame with identical start and end limits
+            xlim_start = df.index[: i + 1].min()
+
             if isinstance(xlim_start, pd.Timestamp):
+                # For avoiding UserWarning on first frame with identical start and end limits
                 xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
             else:
                 xlim_end = self.df.index[: i + 1].max()
