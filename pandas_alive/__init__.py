@@ -16,6 +16,7 @@ Must begin with a pandas DataFrame containing 'wide' data where:
 # Register animated_plot accessor for Pandas DataFrames and Series:
 import pandas as pd
 from pandas.core.accessor import CachedAccessor
+from .plotting import AnimatedAccessor, plot
 
 from .base import load_dataset
 
