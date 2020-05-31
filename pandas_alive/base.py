@@ -14,7 +14,7 @@ import pandas as pd
 def load_dataset(name: str = "covid19") -> pd.DataFrame:
     """ Returns a pandas DataFrame suitable for immediate use in `pandas_alive`
 
-    
+
     Example:
         ``df = pandas_alive.load_dataset()``
 

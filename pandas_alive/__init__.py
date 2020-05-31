@@ -1,4 +1,4 @@
-""" Create stunning, animated visualisations with matplotlib and pandas as easy as 'df.plot_animated()'. 
+""" Create stunning, animated visualisations with matplotlib and pandas as easy as 'df.plot_animated()'.
 
 Initialise Pandas_Alive functions as an accessor on Pandas DataFrames eg `df.plot_animated()`.
 Registers plot_animated as an accessor for Pandas DataFrames and Series.
