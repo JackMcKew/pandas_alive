@@ -564,8 +564,28 @@ class _BaseChart:
                 anim.save(filename, fps=self.fps, dpi=self.dpi, writer=self.writer)
             else:
                 if extension == "gif":
-                    anim.save(
-                        filename, fps=self.fps, dpi=self.dpi, writer="imagemagick"
+                    import io
+                    import matplotlib
+
+                    matplotlib.use("Agg")
+                    from PIL import Image
+
+                    frames = []
+                    for i in self.get_frames():
+                        frame = self.anim_func(i)
+                        buffer = io.BytesIO()
+                        self.fig.savefig(buffer, format="png")
+                        buffer.seek(0)
+                        image = Image.open(buffer)
+                        plt.close()
+                        frames.append(image)
+                    frames[0].save(
+                        filename,
+                        save_all=True,
+                        append_images=frames[1:],
+                        optimize=True,
+                        duration=self.fps,
+                        loop=0,
                     )
                 else:
                     anim.save(filename, fps=self.fps, dpi=self.dpi)
