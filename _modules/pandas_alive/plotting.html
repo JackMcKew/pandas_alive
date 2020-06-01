@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pandas_alive.plotting &mdash; Pandas_Alive 0.1.14h1 documentation</title>
+  <title>pandas_alive.plotting &mdash; Pandas_Alive 0.2.0 documentation</title>
   
 
   
@@ -156,22 +156,24 @@
 <span class="sd">    ``df.plot_animated()``</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas.core.base</span> <span class="kn">import</span> <span class="n">PandasObject</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">typing</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
+
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">Colormap</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">Colormap</span>
+<span class="kn">from</span> <span class="nn">pandas.core.base</span> <span class="kn">import</span> <span class="n">PandasObject</span>
+
 <span class="kn">from</span> <span class="nn">.charts</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BarChart</span><span class="p">,</span>
     <span class="n">BarChartRace</span><span class="p">,</span>
     <span class="n">BubbleChart</span><span class="p">,</span>
     <span class="n">LineChart</span><span class="p">,</span>
-    <span class="n">ScatterChart</span><span class="p">,</span>
     <span class="n">PieChart</span><span class="p">,</span>
-    <span class="n">BarChart</span><span class="p">,</span>
+    <span class="n">ScatterChart</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
 
 
 <div class="viewcode-block" id="get_allowed_kinds"><a class="viewcode-back" href="../../generated/pandas_alive.plotting.get_allowed_kinds.html#pandas_alive.plotting.get_allowed_kinds">[docs]</a><span class="k">def</span> <span class="nf">get_allowed_kinds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>

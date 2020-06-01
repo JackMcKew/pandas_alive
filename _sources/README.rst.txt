@@ -12,9 +12,9 @@ Animated plotting extension for Pandas with Matplotlib
    :target: https://jackmckew.github.io/pandas_alive/
    :alt: Inline docs
  
-.. image:: https://img.shields.io/pypi/dm/pandas_alive.svg
-   :target: https://pypi.python.org/pypi/pandas_alive/
-   :alt: PyPI download month
+.. image:: https://pepy.tech/badge/pandas-alive/month
+   :target: https://pepy.tech/project/pandas-alive/month
+   :alt: Downloads
  
 .. image:: https://img.shields.io/pypi/v/pandas_alive.svg
    :target: https://pypi.python.org/pypi/pandas_alive/
@@ -66,6 +66,10 @@ Table of Contents
     * `Scatter Charts <#scatter-charts>`_
     * `Pie Charts <#pie-charts>`_
     * `Bubble Charts <#bubble-charts>`_
+    * `GeoSpatial Charts <#geospatial-charts>`_
+
+      * `GeoSpatial Point Charts <#geospatial-point-charts>`_
+      * `Polygon GeoSpatial Charts <#polygon-geospatial-charts>`_
 
   * `Multiple Charts <#multiple-charts>`_
 
@@ -333,6 +337,74 @@ See an example multi-indexed dataframe at: https://github.com/JackMcKew/pandas_a
    :alt: Bubble Chart Example
 
 
+GeoSpatial Charts
+~~~~~~~~~~~~~~~~~
+
+GeoSpatial charts can now be animated easily using `\ ``geopandas`` <https://geopandas.org/index.html>`_\ !
+
+..
+
+   If using Windows, `anaconda <https://www.anaconda.com/>`_ is the easiest way to install with all GDAL dependancies.
+
+
+Must begin with a ``geopandas`` GeoDataFrame containing 'wide' data where:
+
+
+* Every row represents a single geometry (Point or Polygon).
+
+  * The index contains the geometry label (optional)
+
+* Each column represents a single period in time.
+
+..
+
+   These can be easily composed by transposing data compatible with the rest of the charts using ``df = df.T``.
+
+
+GeoSpatial Point Charts
+"""""""""""""""""""""""
+
+.. code-block:: python
+
+   import geopandas
+   import pandas_alive
+   import contextily
+
+   gdf = geopandas.read_file('data/nsw-covid19-cases-by-postcode.gpkg')
+   gdf.index = gdf.postcode
+   gdf = gdf.drop('postcode',axis=1)
+
+   map_chart = gdf.plot_animated(filename='examples/example-geo-point-chart.gif',basemap_format={'source':contextily.providers.Stamen.Terrain})
+
+
+.. image:: ../../examples/example-geo-point-chart.gif
+   :target: examples/example-geo-point-chart.gif
+   :alt: Example Point GeoSpatialChart
+
+
+Polygon GeoSpatial Charts
+"""""""""""""""""""""""""
+
+Supports GeoDataFrames containing Polygons!
+
+.. code-block:: python
+
+   import geopandas
+   import pandas_alive
+   import contextily
+
+   gdf = geopandas.read_file('data/italy-covid-region.gpkg')
+   gdf.index = gdf.region
+   gdf = gdf.drop('region',axis=1)
+
+   map_chart = gdf.plot_animated(filename='examples/example-geo-polygon-chart.gif',basemap_format={'source':contextily.providers.Stamen.Terrain})
+
+
+.. image:: ../../examples/example-geo-polygon-chart.gif
+   :target: examples/example-geo-polygon-chart.gif
+   :alt: Example Polygon GeoSpatialChart
+
+
 Multiple Charts
 ^^^^^^^^^^^^^^^
 
@@ -501,13 +573,20 @@ A list of future features that may/may not be developed is:
 
 * :raw-html-m2r:`<del>Loading bar support (potential `tqdm <https://github.com/tqdm/tqdm>`_ or `alive-progress <https://github.com/rsalmei/alive-progress>`_\ )</del>`
 * Potentially support writing to GIF in memory with https://github.com/maxhumber/gif
+* Support custom figures & axes for multiple plots (eg, gridspec)
 
-A chart that was built using a development branch of Pandas_Alive is:
+Some charts that was built using a development branch of Pandas_Alive is:
 
 
 .. image:: ../../examples/nsw-covid.gif
-   :target: https://www.youtube.com/watch?v=qyqiYrtpxRE
+   :target: https://www.youtube.com/watch?v=hkn-RXY_qUo
    :alt: NSW COVID19 Cases
+
+
+
+.. image:: ../../examples/italy-covid.gif
+   :target: https://youtu.be/vxAjqgFSRvQ
+   :alt: Italy COVID19 Cases
 
 
 Inspiration

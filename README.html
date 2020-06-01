@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pandas_Alive &mdash; Pandas_Alive 0.1.14h1 documentation</title>
+  <title>Pandas_Alive &mdash; Pandas_Alive 0.2.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API Reference" href="developer.html" />
-    <link rel="prev" title="Pandas_Alive 0.1.14h1" href="index.html" /> 
+    <link rel="prev" title="Pandas_Alive 0.2.0" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,23 +94,24 @@
 <li class="toctree-l4"><a class="reference internal" href="#id9">Scatter Charts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id10">Pie Charts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id11">Bubble Charts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">GeoSpatial Charts</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id12">Multiple Charts</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id13">Urban Population</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">Life Expectancy in G7 Countries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Multiple Charts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id16">Urban Population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">Life Expectancy in G7 Countries</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id15">HTML 5 Videos</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id16">Progress Bars!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">HTML 5 Videos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Progress Bars!</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id17">Future Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id20">Inspiration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id21">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id22">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id23">Contributing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id25">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">Future Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">Inspiration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id24">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id25">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id26">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id28">Changelog</a></li>
 </ul>
 </li>
 </ul>
@@ -185,7 +186,7 @@
 <h1>Pandas_Alive<a class="headerlink" href="#pandas-alive" title="Permalink to this headline">¶</a></h1>
 <p>Animated plotting extension for Pandas with Matplotlib</p>
 <a class="reference external image-reference" href="https://jackmckew.github.io/pandas_alive/"><img alt="Inline docs" src="http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master" /></a>
-<a class="reference external image-reference" href="https://pypi.python.org/pypi/pandas_alive/"><img alt="PyPI download month" src="https://img.shields.io/pypi/dm/pandas_alive.svg" /></a>
+<a class="reference external image-reference" href="https://pepy.tech/project/pandas-alive/month"><img alt="Downloads" src="https://pepy.tech/badge/pandas-alive/month" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/pandas_alive/"><img alt="PyPI version shields.io" src="https://img.shields.io/pypi/v/pandas_alive.svg" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/pandas_alive/"><img alt="PyPI license" src="https://img.shields.io/pypi/l/pandas_alive.svg" /></a>
 <a class="reference external image-reference" href="https://www.buymeacoffee.com/jackmckew"><img alt="saythanks" src="https://img.shields.io/badge/say-thanks-ff69b4.svg" /></a>
@@ -209,6 +210,12 @@
 <li><p><a class="reference external" href="#scatter-charts">Scatter Charts</a></p></li>
 <li><p><a class="reference external" href="#pie-charts">Pie Charts</a></p></li>
 <li><p><a class="reference external" href="#bubble-charts">Bubble Charts</a></p></li>
+<li><p><a class="reference external" href="#geospatial-charts">GeoSpatial Charts</a></p>
+<ul>
+<li><p><a class="reference external" href="#geospatial-point-charts">GeoSpatial Point Charts</a></p></li>
+<li><p><a class="reference external" href="#polygon-geospatial-charts">Polygon GeoSpatial Charts</a></p></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p><a class="reference external" href="#multiple-charts">Multiple Charts</a></p>
@@ -397,9 +404,59 @@
 </div>
 <a class="reference external image-reference" href="examples/example-bubble-chart.gif"><img alt="Bubble Chart Example" src="_images/example-bubble-chart.gif" /></a>
 </div>
-</div>
 <div class="section" id="id12">
-<h3>Multiple Charts<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h4>GeoSpatial Charts<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p>GeoSpatial charts can now be animated easily using <cite>``geopandas`</cite> &lt;<a class="reference external" href="https://geopandas.org/index.html">https://geopandas.org/index.html</a>&gt;`_!</p>
+<blockquote>
+<div><p>If using Windows, <a class="reference external" href="https://www.anaconda.com/">anaconda</a> is the easiest way to install with all GDAL dependancies.</p>
+</div></blockquote>
+<p>Must begin with a <code class="docutils literal notranslate"><span class="pre">geopandas</span></code> GeoDataFrame containing ‘wide’ data where:</p>
+<ul class="simple">
+<li><p>Every row represents a single geometry (Point or Polygon).</p>
+<ul>
+<li><p>The index contains the geometry label (optional)</p></li>
+</ul>
+</li>
+<li><p>Each column represents a single period in time.</p></li>
+</ul>
+<blockquote>
+<div><p>These can be easily composed by transposing data compatible with the rest of the charts using <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.T</span></code>.</p>
+</div></blockquote>
+<div class="section" id="id13">
+<h5>GeoSpatial Point Charts<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="kn">import</span> <span class="nn">pandas_alive</span>
+<span class="kn">import</span> <span class="nn">contextily</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;data/nsw-covid19-cases-by-postcode.gpkg&#39;</span><span class="p">)</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">postcode</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;postcode&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">map_chart</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-geo-point-chart.gif&#39;</span><span class="p">,</span><span class="n">basemap_format</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="p">:</span><span class="n">contextily</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">Stamen</span><span class="o">.</span><span class="n">Terrain</span><span class="p">})</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-geo-point-chart.gif"><img alt="Example Point GeoSpatialChart" src="_images/example-geo-point-chart.gif" /></a>
+</div>
+<div class="section" id="id14">
+<h5>Polygon GeoSpatial Charts<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
+<p>Supports GeoDataFrames containing Polygons!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="kn">import</span> <span class="nn">pandas_alive</span>
+<span class="kn">import</span> <span class="nn">contextily</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;data/italy-covid-region.gpkg&#39;</span><span class="p">)</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">region</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">map_chart</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-geo-polygon-chart.gif&#39;</span><span class="p">,</span><span class="n">basemap_format</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="p">:</span><span class="n">contextily</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">Stamen</span><span class="o">.</span><span class="n">Terrain</span><span class="p">})</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/example-geo-polygon-chart.gif"><img alt="Example Polygon GeoSpatialChart" src="_images/example-geo-polygon-chart.gif" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>Multiple Charts<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> supports multiple animated charts in a single visualisation.</p>
 <ul class="simple">
 <li><p>Create a list of all charts to include in animation</p></li>
@@ -418,8 +475,8 @@
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-bar-and-line-chart.gif"><img alt="Example Bar &amp; Line Chart" src="_images/example-bar-and-line-chart.gif" /></a>
-<div class="section" id="id13">
-<h4>Urban Population<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id16">
+<h4>Urban Population<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">urban_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;urban_pop&quot;</span><span class="p">)</span>
@@ -439,8 +496,8 @@
 </div>
 <a class="reference external image-reference" href="examples/example-bar-and-line-urban-chart.gif"><img alt="Urban Population Bar &amp; Line Chart" src="_images/example-bar-and-line-urban-chart.gif" /></a>
 </div>
-<div class="section" id="id14">
-<h4>Life Expectancy in G7 Countries<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id17">
+<h4>Life Expectancy in G7 Countries<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -494,8 +551,8 @@
 <a class="reference external image-reference" href="examples/life-expectancy.gif"><img alt="Life Expectancy Chart" src="_images/life-expectancy.gif" /></a>
 </div>
 </div>
-<div class="section" id="id15">
-<h3>HTML 5 Videos<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3>HTML 5 Videos<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Pandas_Alive</span></code> supports rendering HTML5 videos through the use of <code class="docutils literal notranslate"><span class="pre">df.plot_animated().get_html5_video()</span></code>. <code class="docutils literal notranslate"><span class="pre">.get_html5_video</span></code> saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.</p>
 <p>This is typically used in Jupyter notebooks.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -509,8 +566,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id16">
-<h3>Progress Bars!<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h3>Progress Bars!<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>Generating animations can take some time, so enable progress bars by installing <a class="reference external" href="https://github.com/tqdm/tqdm">tqdm</a> with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tqdm</span></code> and using the keyword <code class="docutils literal notranslate"><span class="pre">enable_progress_bar=True</span></code>.</p>
 <p>By default Pandas_Alive will create a <code class="docutils literal notranslate"><span class="pre">tqdm</span></code> progress bar for the number of frames to animate, and update the progres bar after each frame.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -524,8 +581,8 @@
 <a class="reference external image-reference" href="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"><img alt="TQDM Example" src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif" /></a>
 </div>
 </div>
-<div class="section" id="id17">
-<h2>Future Features<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id20">
+<h2>Future Features<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <p>A list of future features that may/may not be developed is:</p>
 <ul class="simple">
 <li><p>Geographic charts (currently using OSM export image, potential <a class="reference external" href="https://geopandas.org/">geopandas</a>)</p>
@@ -533,22 +590,24 @@
 <li><p>This is currently working at a proof of concept level, stay tuned!</p></li>
 </ul>
 </li>
-<li><p><a href="#id18"><span class="problematic" id="id19">:raw-html-m2r:`&lt;del&gt;Loading bar support (potential `tqdm &lt;https://github.com/tqdm/tqdm&gt;`_</span></a> or <a class="reference external" href="https://github.com/rsalmei/alive-progress">alive-progress</a>)&lt;/del&gt;`</p></li>
+<li><p><a href="#id21"><span class="problematic" id="id22">:raw-html-m2r:`&lt;del&gt;Loading bar support (potential `tqdm &lt;https://github.com/tqdm/tqdm&gt;`_</span></a> or <a class="reference external" href="https://github.com/rsalmei/alive-progress">alive-progress</a>)&lt;/del&gt;`</p></li>
 <li><p>Potentially support writing to GIF in memory with <a class="reference external" href="https://github.com/maxhumber/gif">https://github.com/maxhumber/gif</a></p></li>
+<li><p>Support custom figures &amp; axes for multiple plots (eg, gridspec)</p></li>
 </ul>
-<p>A chart that was built using a development branch of Pandas_Alive is:</p>
-<a class="reference external image-reference" href="https://www.youtube.com/watch?v=qyqiYrtpxRE"><img alt="NSW COVID19 Cases" src="_images/nsw-covid.gif" /></a>
+<p>Some charts that was built using a development branch of Pandas_Alive is:</p>
+<a class="reference external image-reference" href="https://www.youtube.com/watch?v=hkn-RXY_qUo"><img alt="NSW COVID19 Cases" src="_images/nsw-covid.gif" /></a>
+<a class="reference external image-reference" href="https://youtu.be/vxAjqgFSRvQ"><img alt="Italy COVID19 Cases" src="_images/italy-covid.gif" /></a>
 </div>
-<div class="section" id="id20">
-<h2>Inspiration<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id23">
+<h2>Inspiration<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
 <p>The inspiration for this project comes from:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/dexplo/bar_chart_race">bar_chart_race</a> by <a class="reference external" href="https://github.com/tdpetrou">Ted Petrou</a></p></li>
 <li><p><a class="reference external" href="https://github.com/PatrikHlobil/Pandas-Bokeh">Pandas-Bokeh</a> by <a class="reference external" href="https://github.com/PatrikHlobil">Patrik Hlobil</a></p></li>
 </ul>
 </div>
-<div class="section" id="id21">
-<h2>Requirements<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id24">
+<h2>Requirements<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <p>If you get an error such as <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'MovieWriterRegistry'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">an</span> <span class="pre">iterator</span></code>, this signals there isn’t a writer library installed on your machine.</p>
 <p>This package utilises the <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html">matplotlib.animation function</a>, thus requiring a writer library.</p>
 <p>Ensure to have one of the supported tooling software installed prior to use!</p>
@@ -562,16 +621,16 @@
 <p>Pillow is not supported currently, please submit a PR if you can make Pillow work!</p>
 </div></blockquote>
 </div>
-<div class="section" id="id22">
-<h2>Documentation<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id25">
+<h2>Documentation<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
 <p>Documentation is provided at <a class="reference external" href="https://jackmckew.github.io/pandas_alive/">https://jackmckew.github.io/pandas_alive/</a></p>
 </div>
-<div class="section" id="id23">
-<h2>Contributing<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id26">
+<h2>Contributing<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
 <p>Pull requests are welcome! Please help to cover more and more chart types!</p>
 </div>
-<div class="section" id="id25">
-<h2><a class="reference external" href="CHANGELOG.md">Changelog</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id28">
+<h2><a class="reference external" href="CHANGELOG.md">Changelog</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -586,7 +645,7 @@
         <a href="developer.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral float-left" title="Pandas_Alive 0.1.14h1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Pandas_Alive 0.2.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
