@@ -584,7 +584,7 @@ class _BaseChart:
                         save_all=True,
                         append_images=frames[1:],
                         optimize=True,
-                        duration=self.fps,
+                        duration=self.period_length / self.steps_per_period,
                         loop=0,
                     )
                 else:

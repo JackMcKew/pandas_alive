@@ -442,6 +442,7 @@ def plot(
 def animate_multiple_plots(
     filename: str,
     plots: typing.List[typing.Union[BarChartRace, LineChart, PieChart, ScatterChart]],
+    custom_fig: plt.Figure = None,
     title: str = None,
     title_fontsize: typing.Union[int, float] = 16,
     dpi: int = 144,
@@ -497,7 +498,16 @@ def animate_multiple_plots(
     from matplotlib import rcParams
 
     rcParams.update({"figure.autolayout": False})
-    fig, axes = plt.subplots(len(plots))
+    if not custom_fig:
+        fig, axes = plt.subplots(len(plots))
+    else:
+        fig = custom_fig
+        axes = fig.axes
+
+    if len(axes) != len(plots):
+        raise ValueError(
+            "Ensure number of axes in custom figure and number of plots match"
+        )
     # fig, axes = plt.subplots(2,2)
 
     if title is not None:
@@ -555,7 +565,30 @@ def animate_multiple_plots(
     extension = filename.split(".")[-1]
     # anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)
     if extension == "gif":
-        anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
+        import io
+        import matplotlib
+
+        matplotlib.use("Agg")
+        from PIL import Image
+
+        frames = []
+        for i in plot[0].get_frames():
+            frame = update_all_graphs(i)
+            buffer = io.BytesIO()
+            fig.savefig(buffer, format="png")
+            buffer.seek(0)
+            image = Image.open(buffer)
+            plt.close()
+            frames.append(image)
+        frames[0].save(
+            filename,
+            save_all=True,
+            append_images=frames[1:],
+            optimize=True,
+            duration=self.period_length / self.steps_per_period,
+            loop=0,
+        )
+        # anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
     else:
         anim.save(filename, fps=fps, dpi=dpi)
 
