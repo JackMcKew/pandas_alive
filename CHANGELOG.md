@@ -3,6 +3,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0]
+
+- Changing version format MAJOR.MINOR.PATCH
+- Introduces support for geospatial data with geopandas
+    - Introduces support for basemap on geospatial datasets with contextily
+
 ## [2020.05.15]
 
 - Officially changing to version format with YYYY.MM.VERSION
