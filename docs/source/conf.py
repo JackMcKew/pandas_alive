@@ -23,7 +23,7 @@ copyright = "2020, Jack McKew"
 author = "Jack McKew"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1.14h1"
+release = "0.2.0"
 
 
 # -- General configuration ---------------------------------------------------
