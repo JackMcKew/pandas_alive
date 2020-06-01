@@ -5,19 +5,18 @@ This module contains functions for chart types.
 """
 
 import datetime
-
 import typing
 from typing import Mapping
 
 import attr
-from matplotlib.colors import Colormap
-from matplotlib import colors, ticker, transforms
-from matplotlib.animation import FuncAnimation
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.units as munits
 import numpy as np
 import pandas as pd
+from matplotlib import colors, ticker, transforms
+from matplotlib.animation import FuncAnimation
+from matplotlib.colors import Colormap
 
 from ._base_chart import _BaseChart
 
@@ -433,6 +432,7 @@ class ScatterChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+
         if self.enable_progress_bar:
             self.update_progress_bar()
         self.plot_point(i)
@@ -522,6 +522,7 @@ class LineChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for line in self.ax.lines:
@@ -603,6 +604,7 @@ class PieChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for wedge in self.ax.patches:
@@ -671,6 +673,7 @@ class BarChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for bar in self.ax.containers:
@@ -781,6 +784,7 @@ class BubbleChart(_BaseChart):
         Args:
             i (int): Index of frame of animation
         """
+        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for path in self.ax.collections:
