@@ -154,7 +154,7 @@ class _BaseChart:
 
             if self.writer == "pillow":
                 raise RuntimeError(
-                    f"Pandas_Alive does not support Pillow, see list of other available writers at https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements"
+                    f"Pandas_Alive interfaces with Pillow for you, simply use the extension `.gif` and don't specify a writer"
                 )
             if self.writer not in manimation.writers.list():
                 raise RuntimeError(
