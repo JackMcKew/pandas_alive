@@ -572,7 +572,7 @@ def animate_multiple_plots(
         from PIL import Image
 
         frames = []
-        for i in plot[0].get_frames():
+        for i in plots[0].get_frames():
             frame = update_all_graphs(i)
             buffer = io.BytesIO()
             fig.savefig(buffer, format="png")
@@ -585,7 +585,7 @@ def animate_multiple_plots(
             save_all=True,
             append_images=frames[1:],
             optimize=True,
-            duration=self.period_length / self.steps_per_period,
+            duration=plots[0].period_length / plots[0].steps_per_period,
             loop=0,
         )
         # anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")

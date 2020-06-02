@@ -47,7 +47,7 @@ class MapChart(_BaseChart):
                 self.enable_markersize = True
                 break
 
-        if self.df.crs["init"] != "epsg:3857" and self.basemap_format:
+        if self.df.crs != "EPSG:3857" and self.basemap_format:
             self.df = self.df.to_crs(3857)
 
         # Convert all columns except geometry to datetime
