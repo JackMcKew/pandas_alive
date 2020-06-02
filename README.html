@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pandas_Alive &mdash; Pandas_Alive 0.2.0 documentation</title>
+  <title>Pandas_Alive &mdash; Pandas_Alive 0.2.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API Reference" href="developer.html" />
-    <link rel="prev" title="Pandas_Alive 0.2.0" href="index.html" /> 
+    <link rel="prev" title="Pandas_Alive 0.2.1" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -100,18 +100,23 @@
 <li class="toctree-l3"><a class="reference internal" href="#id15">Multiple Charts</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id16">Urban Population</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id17">Life Expectancy in G7 Countries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">NSW COVID Visualisation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">Italy COVID Visualisation</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id18">HTML 5 Videos</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id19">Progress Bars!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">HTML 5 Videos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Progress Bars!</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id20">Future Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id23">Inspiration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id24">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id25">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id26">Contributing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id28">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">Future Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id27">Inspiration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id28">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id29">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id30">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id31">Development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id33">Changelog</a></li>
 </ul>
 </li>
 </ul>
@@ -186,6 +191,7 @@
 <h1>Pandas_Alive<a class="headerlink" href="#pandas-alive" title="Permalink to this headline">¶</a></h1>
 <p>Animated plotting extension for Pandas with Matplotlib</p>
 <a class="reference external image-reference" href="https://jackmckew.github.io/pandas_alive/"><img alt="Inline docs" src="http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master" /></a>
+<a class="reference external image-reference" href="badges/interrogate_badge.svg"><img alt="Interrogate Coverage" src="badges/interrogate_badge.svg" /></a>
 <a class="reference external image-reference" href="https://pepy.tech/project/pandas-alive/month"><img alt="Downloads" src="https://pepy.tech/badge/pandas-alive/month" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/pandas_alive/"><img alt="PyPI version shields.io" src="https://img.shields.io/pypi/v/pandas_alive.svg" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/pandas_alive/"><img alt="PyPI license" src="https://img.shields.io/pypi/l/pandas_alive.svg" /></a>
@@ -222,6 +228,8 @@
 <ul>
 <li><p><a class="reference external" href="#urban-population">Urban Population</a></p></li>
 <li><p><a class="reference external" href="#life-expectancy-in-g7-countries">Life Expectancy in G7 Countries</a></p></li>
+<li><p><a class="reference external" href="#nsw-covid-visualisation">NSW COVID Visualisation</a></p></li>
+<li><p><a class="reference external" href="#italy-covid-visualisation">Italy COVID Visualisation</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference external" href="#html-5-videos">HTML 5 Videos</a></p></li>
@@ -232,7 +240,11 @@
 <li><p><a class="reference external" href="#inspiration">Inspiration</a></p></li>
 <li><p><a class="reference external" href="#requirements">Requirements</a></p></li>
 <li><p><a class="reference external" href="#documentation">Documentation</a></p></li>
-<li><p><a class="reference external" href="#contributing">Contributing</a></p></li>
+<li><p><a class="reference external" href="#contributing">Contributing</a></p>
+<ul>
+<li><p><a class="reference external" href="#development">Development</a></p></li>
+</ul>
+</li>
 <li><p><a class="reference external" href="#changelog">Changelog</a></p></li>
 </ul>
 <!-- END doctoc generated TOC please keep comment here to allow auto update --></div>
@@ -242,7 +254,7 @@
 </div>
 <div class="section" id="id2">
 <h2>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>As this package builds upon <cite>``bar_chart_race`</cite> &lt;<a class="reference external" href="https://github.com/dexplo/bar_chart_race">https://github.com/dexplo/bar_chart_race</a>&gt;`_, the example data set is sourced from there.</p>
+<p>As this package was inspired by <cite>``bar_chart_race`</cite> &lt;<a class="reference external" href="https://github.com/dexplo/bar_chart_race">https://github.com/dexplo/bar_chart_race</a>&gt;`_, the example data set is sourced from there.</p>
 <p>Must begin with a pandas DataFrame containing ‘wide’ data where:</p>
 <ul class="simple">
 <li><p>Every row represents a single period of time</p></li>
@@ -484,7 +496,7 @@
 <span class="n">animated_line_chart</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">urban_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfill&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
     <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total % Change in Population&quot;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="p">)</span>
@@ -550,9 +562,266 @@
 </div>
 <a class="reference external image-reference" href="examples/life-expectancy.gif"><img alt="Life Expectancy Chart" src="_images/life-expectancy.gif" /></a>
 </div>
-</div>
 <div class="section" id="id18">
-<h3>HTML 5 Videos<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<h4>NSW COVID Visualisation<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas_alive</span>
+<span class="kn">import</span> <span class="nn">contextily</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">urllib.request</span><span class="o">,</span> <span class="nn">json</span>
+
+<span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span>
+    <span class="s2">&quot;https://data.nsw.gov.au/data/api/3/action/package_show?id=aefcde60-3b0c-4bc0-9af1-6fe652944ec2&quot;</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">url</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+<span class="c1"># Extract url to csv component</span>
+<span class="n">covid_nsw_data_url</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">][</span><span class="s2">&quot;resources&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+
+<span class="c1"># Read csv from data API url</span>
+<span class="n">nsw_covid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">covid_nsw_data_url</span><span class="p">)</span>
+<span class="n">postcode_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/postcode-data.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Prepare data from NSW health dataset</span>
+
+
+<span class="n">nsw_covid</span> <span class="o">=</span> <span class="n">nsw_covid</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">9999</span><span class="p">)</span>
+<span class="n">nsw_covid</span><span class="p">[</span><span class="s2">&quot;postcode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nsw_covid</span><span class="p">[</span><span class="s2">&quot;postcode&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">grouped_df</span> <span class="o">=</span> <span class="n">nsw_covid</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;notification_date&quot;</span><span class="p">,</span> <span class="s2">&quot;postcode&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">grouped_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">grouped_df</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+<span class="n">grouped_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">grouped_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="n">grouped_df</span> <span class="o">=</span> <span class="n">grouped_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">grouped_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">grouped_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">cases_df</span> <span class="o">=</span> <span class="n">grouped_df</span>
+
+<span class="c1"># Clean data in postcode dataset prior to matching</span>
+
+<span class="n">grouped_df</span> <span class="o">=</span> <span class="n">grouped_df</span><span class="o">.</span><span class="n">T</span>
+<span class="n">postcode_dataset</span> <span class="o">=</span> <span class="n">postcode_dataset</span><span class="p">[</span><span class="n">postcode_dataset</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()]</span>
+<span class="n">postcode_dataset</span> <span class="o">=</span> <span class="n">postcode_dataset</span><span class="p">[</span><span class="n">postcode_dataset</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">postcode_dataset</span> <span class="o">=</span> <span class="n">postcode_dataset</span><span class="p">[</span><span class="n">postcode_dataset</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()]</span>
+<span class="n">postcode_dataset</span> <span class="o">=</span> <span class="n">postcode_dataset</span><span class="p">[</span><span class="n">postcode_dataset</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">postcode_dataset</span><span class="p">[</span><span class="s1">&#39;Postcode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">postcode_dataset</span><span class="p">[</span><span class="s1">&#39;Postcode&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="c1"># Build GeoDataFrame from Lat Long dataset and make map chart</span>
+<span class="n">grouped_df</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grouped_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">postcode_dataset</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Postcode&#39;</span><span class="p">)[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+<span class="n">grouped_df</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grouped_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">postcode_dataset</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Postcode&#39;</span><span class="p">)[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="n">grouped_df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geopandas</span><span class="o">.</span><span class="n">points_from_xy</span><span class="p">(</span><span class="n">grouped_df</span><span class="o">.</span><span class="n">Longitude</span><span class="p">,</span> <span class="n">grouped_df</span><span class="o">.</span><span class="n">Latitude</span><span class="p">),</span><span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Prepare GeoDataFrame for writing to geopackage</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Longitude&#39;</span><span class="p">,</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;postcode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">index</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;data/nsw-covid19-cases-by-postcode.gpkg&quot;</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;nsw-postcode-covid&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s2">&quot;GPKG&quot;</span><span class="p">)</span>
+
+<span class="c1"># Prepare GeoDataFrame for plotting</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">postcode</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;postcode&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s2">&quot;EPSG:3857&quot;</span><span class="p">)</span> <span class="c1">#Web Mercator</span>
+
+<span class="n">map_chart</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">basemap_format</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="p">:</span><span class="n">contextily</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">Stamen</span><span class="o">.</span><span class="n">Terrain</span><span class="p">},</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;cool&#39;</span><span class="p">)</span>
+
+<span class="n">cases_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/nsw-covid-cases-by-postcode.csv&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">bar_chart</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span>
+    <span class="n">label_events</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Ruby Princess Disembark&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;19/03/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;Lockdown&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;31/03/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="n">fill_under_line_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">map_chart</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Cases by Location&#39;</span><span class="p">)</span>
+
+<span class="n">grouped_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/nsw-covid-cases-by-postcode.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">line_chart</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">grouped_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cumulative Total Cases&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">current_total</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Total : </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">total</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">85</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+
+<span class="n">race_chart</span> <span class="o">=</span> <span class="n">grouped_df</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span>
+    <span class="n">n_visible</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cases by Postcode&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">period_summary_func</span><span class="o">=</span><span class="n">current_total</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">timestr</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">)</span>
+
+<span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">bar_chart</span><span class="p">,</span> <span class="n">line_chart</span><span class="p">,</span> <span class="n">map_chart</span><span class="p">,</span> <span class="n">race_chart</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span>
+
+<span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;figure.autolayout&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+
+<span class="n">figs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">f3_ax1</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+<span class="n">f3_ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">bar_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">bar_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax1</span>
+
+<span class="n">f3_ax2</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">f3_ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">line_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">line_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax2</span>
+
+<span class="n">f3_ax3</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">f3_ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">map_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">map_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax3</span>
+
+<span class="n">f3_ax4</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">f3_ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">race_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">race_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax4</span>
+
+<span class="n">timestr</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">)</span>
+<span class="n">figs</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;NSW COVID-19 Confirmed Cases up to </span><span class="si">{</span><span class="n">timestr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span>
+    <span class="s1">&#39;examples/nsw-covid.gif&#39;</span><span class="p">,</span>
+    <span class="n">plots</span><span class="p">,</span>
+    <span class="n">figs</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/nsw-covid.gif"><img alt="NSW COVID" src="_images/nsw-covid.gif" /></a>
+</div>
+<div class="section" id="id19">
+<h4>Italy COVID Visualisation<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas_alive</span>
+<span class="kn">import</span> <span class="nn">contextily</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="n">region_gdf</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;data\geo-data\italy-with-regions&#39;</span><span class="p">)</span>
+<span class="n">region_gdf</span><span class="o">.</span><span class="n">NOME_REG</span> <span class="o">=</span> <span class="n">region_gdf</span><span class="o">.</span><span class="n">NOME_REG</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+<span class="n">region_gdf</span> <span class="o">=</span> <span class="n">region_gdf</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Trentino-Alto Adige/Sudtirol&#39;</span><span class="p">,</span><span class="s1">&#39;Trentino-Alto Adige&#39;</span><span class="p">)</span>
+<span class="n">region_gdf</span> <span class="o">=</span> <span class="n">region_gdf</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Valle D&#39;Aosta/VallÃ©e D&#39;Aoste</span><span class="se">\r\n</span><span class="s2">Valle D&#39;Aosta/VallÃ©e D&#39;Aoste&quot;</span><span class="p">,</span><span class="s2">&quot;Valle d&#39;Aosta&quot;</span><span class="p">)</span>
+
+<span class="n">italy_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data\Regional Data - Sheet1.csv&#39;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">italy_df</span> <span class="o">=</span> <span class="n">italy_df</span><span class="p">[</span><span class="n">italy_df</span><span class="p">[</span><span class="s1">&#39;Region&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;NA&#39;</span><span class="p">]</span>
+
+<span class="n">cases_df</span> <span class="o">=</span> <span class="n">italy_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">cases_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">index</span>
+<span class="n">pivoted</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s1">&#39;New positives&#39;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Region&#39;</span><span class="p">)</span>
+<span class="n">pivoted</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pivoted</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">pivoted</span> <span class="o">=</span> <span class="n">pivoted</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nan&#39;</span><span class="p">:</span><span class="s1">&#39;Unknown Region&#39;</span><span class="p">})</span>
+
+<span class="n">cases_gdf</span> <span class="o">=</span> <span class="n">pivoted</span><span class="o">.</span><span class="n">T</span>
+<span class="n">cases_gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cases_gdf</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">region_gdf</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;NOME_REG&#39;</span><span class="p">)[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+
+<span class="n">cases_gdf</span> <span class="o">=</span> <span class="n">cases_gdf</span><span class="p">[</span><span class="n">cases_gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()]</span>
+
+<span class="n">cases_gdf</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">cases_gdf</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">region_gdf</span><span class="o">.</span><span class="n">crs</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">cases_gdf</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">cases_gdf</span>
+
+<span class="n">map_chart</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">basemap_format</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="p">:</span><span class="n">contextily</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">Stamen</span><span class="o">.</span><span class="n">Terrain</span><span class="p">},</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+
+<span class="n">cases_df</span> <span class="o">=</span> <span class="n">pivoted</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">bar_chart</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span>
+    <span class="n">label_events</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Schools Close&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;4/03/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;Phase I Lockdown&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;11/03/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;1M Global Cases&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;02/04/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;100k Global Deaths&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;10/04/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;Manufacturing Reopens&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;26/04/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;Phase II Lockdown&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;4/05/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">),</span>
+
+    <span class="p">},</span>
+    <span class="n">fill_under_line_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">map_chart</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Cases by Location&#39;</span><span class="p">)</span>
+
+<span class="n">line_chart</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cases_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cumulative Total Cases&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">current_total</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Total : </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">total</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">85</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+
+<span class="n">race_chart</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span>
+    <span class="n">n_visible</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cases by Region&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">period_summary_func</span><span class="o">=</span><span class="n">current_total</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">timestr</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">)</span>
+
+<span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">bar_chart</span><span class="p">,</span> <span class="n">race_chart</span><span class="p">,</span> <span class="n">map_chart</span><span class="p">,</span> <span class="n">line_chart</span><span class="p">]</span>
+
+<span class="c1"># Otherwise titles overlap and adjust_subplot does nothing</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
+
+<span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;figure.autolayout&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+
+<span class="n">figs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">f3_ax1</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+<span class="n">f3_ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">bar_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">bar_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax1</span>
+
+<span class="n">f3_ax2</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">f3_ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">race_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">race_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax2</span>
+
+<span class="n">f3_ax3</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">f3_ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">map_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">map_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax3</span>
+
+<span class="n">f3_ax4</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">f3_ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">line_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="n">line_chart</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">f3_ax4</span>
+
+<span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">f3_ax1</span><span class="p">,</span> <span class="n">f3_ax2</span><span class="p">,</span> <span class="n">f3_ax3</span><span class="p">,</span> <span class="n">f3_ax4</span><span class="p">]</span>
+<span class="n">timestr</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">)</span>
+<span class="n">figs</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Italy COVID-19 Confirmed Cases up to </span><span class="si">{</span><span class="n">timestr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span>
+    <span class="s1">&#39;examples/italy-covid.gif&#39;</span><span class="p">,</span>
+    <span class="n">plots</span><span class="p">,</span>
+    <span class="n">figs</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="examples/italy-covid.gif"><img alt="Italy COVID" src="_images/italy-covid.gif" /></a>
+</div>
+</div>
+<div class="section" id="id20">
+<h3>HTML 5 Videos<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Pandas_Alive</span></code> supports rendering HTML5 videos through the use of <code class="docutils literal notranslate"><span class="pre">df.plot_animated().get_html5_video()</span></code>. <code class="docutils literal notranslate"><span class="pre">.get_html5_video</span></code> saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.</p>
 <p>This is typically used in Jupyter notebooks.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -566,8 +835,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id19">
-<h3>Progress Bars!<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id21">
+<h3>Progress Bars!<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>Generating animations can take some time, so enable progress bars by installing <a class="reference external" href="https://github.com/tqdm/tqdm">tqdm</a> with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tqdm</span></code> and using the keyword <code class="docutils literal notranslate"><span class="pre">enable_progress_bar=True</span></code>.</p>
 <p>By default Pandas_Alive will create a <code class="docutils literal notranslate"><span class="pre">tqdm</span></code> progress bar for the number of frames to animate, and update the progres bar after each frame.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -581,33 +850,26 @@
 <a class="reference external image-reference" href="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"><img alt="TQDM Example" src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif" /></a>
 </div>
 </div>
-<div class="section" id="id20">
-<h2>Future Features<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id22">
+<h2>Future Features<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
 <p>A list of future features that may/may not be developed is:</p>
 <ul class="simple">
-<li><p>Geographic charts (currently using OSM export image, potential <a class="reference external" href="https://geopandas.org/">geopandas</a>)</p>
-<ul>
-<li><p>This is currently working at a proof of concept level, stay tuned!</p></li>
+<li><p><a href="#id23"><span class="problematic" id="id24">:raw-html-m2r:`&lt;del&gt;Geographic charts (currently using OSM export image, potential `geopandas &lt;https://geopandas.org/&gt;`_</span></a>)&lt;/del&gt;`</p></li>
+<li><p><a href="#id25"><span class="problematic" id="id26">:raw-html-m2r:`&lt;del&gt;Loading bar support (potential `tqdm &lt;https://github.com/tqdm/tqdm&gt;`_</span></a> or <a class="reference external" href="https://github.com/rsalmei/alive-progress">alive-progress</a>)&lt;/del&gt;`</p></li>
+<li><p><span class="raw-html-m2r"><del>Potentially support writing to GIF in memory with https://github.com/maxhumber/gif</del></span></p></li>
+<li><p><span class="raw-html-m2r"><del>Support custom figures & axes for multiple plots (eg, gridspec)</del></span></p></li>
 </ul>
-</li>
-<li><p><a href="#id21"><span class="problematic" id="id22">:raw-html-m2r:`&lt;del&gt;Loading bar support (potential `tqdm &lt;https://github.com/tqdm/tqdm&gt;`_</span></a> or <a class="reference external" href="https://github.com/rsalmei/alive-progress">alive-progress</a>)&lt;/del&gt;`</p></li>
-<li><p>Potentially support writing to GIF in memory with <a class="reference external" href="https://github.com/maxhumber/gif">https://github.com/maxhumber/gif</a></p></li>
-<li><p>Support custom figures &amp; axes for multiple plots (eg, gridspec)</p></li>
-</ul>
-<p>Some charts that was built using a development branch of Pandas_Alive is:</p>
-<a class="reference external image-reference" href="https://www.youtube.com/watch?v=hkn-RXY_qUo"><img alt="NSW COVID19 Cases" src="_images/nsw-covid.gif" /></a>
-<a class="reference external image-reference" href="https://youtu.be/vxAjqgFSRvQ"><img alt="Italy COVID19 Cases" src="_images/italy-covid.gif" /></a>
 </div>
-<div class="section" id="id23">
-<h2>Inspiration<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id27">
+<h2>Inspiration<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
 <p>The inspiration for this project comes from:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/dexplo/bar_chart_race">bar_chart_race</a> by <a class="reference external" href="https://github.com/tdpetrou">Ted Petrou</a></p></li>
 <li><p><a class="reference external" href="https://github.com/PatrikHlobil/Pandas-Bokeh">Pandas-Bokeh</a> by <a class="reference external" href="https://github.com/PatrikHlobil">Patrik Hlobil</a></p></li>
 </ul>
 </div>
-<div class="section" id="id24">
-<h2>Requirements<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id28">
+<h2>Requirements<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
 <p>If you get an error such as <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'MovieWriterRegistry'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">an</span> <span class="pre">iterator</span></code>, this signals there isn’t a writer library installed on your machine.</p>
 <p>This package utilises the <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html">matplotlib.animation function</a>, thus requiring a writer library.</p>
 <p>Ensure to have one of the supported tooling software installed prior to use!</p>
@@ -617,20 +879,23 @@
 <li><p>See more at <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes">https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes</a></p></li>
 </ul>
 <blockquote>
-<div><p>Outputting to GIF file type is only supported by ImageMagick</p>
-<p>Pillow is not supported currently, please submit a PR if you can make Pillow work!</p>
+<div><p>If the output file name has an extension of <code class="docutils literal notranslate"><span class="pre">.gif</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> will write this with <code class="docutils literal notranslate"><span class="pre">PIL</span></code> in memory</p>
 </div></blockquote>
 </div>
-<div class="section" id="id25">
-<h2>Documentation<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id29">
+<h2>Documentation<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
 <p>Documentation is provided at <a class="reference external" href="https://jackmckew.github.io/pandas_alive/">https://jackmckew.github.io/pandas_alive/</a></p>
 </div>
-<div class="section" id="id26">
-<h2>Contributing<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id30">
+<h2>Contributing<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
 <p>Pull requests are welcome! Please help to cover more and more chart types!</p>
+<div class="section" id="id31">
+<h3>Development<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<p>To get started in development, clone a copy of this repository to your PC. This will now enable you to create a Jupyter notebook or a standalone <code class="docutils literal notranslate"><span class="pre">.py</span></code> file, and import <code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> as a local module. Now you can create new chart types in <code class="docutils literal notranslate"><span class="pre">pandas_alive/charts.py</span></code> or <code class="docutils literal notranslate"><span class="pre">pandas_alive/geocharts.py</span></code> to build to your hearts content!</p>
 </div>
-<div class="section" id="id28">
-<h2><a class="reference external" href="CHANGELOG.md">Changelog</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id33">
+<h2><a class="reference external" href="CHANGELOG.md">Changelog</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -645,7 +910,7 @@
         <a href="developer.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral float-left" title="Pandas_Alive 0.2.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Pandas_Alive 0.2.1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
