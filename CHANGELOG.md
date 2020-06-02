@@ -3,6 +3,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.1
+
+- Custom figures now supported in `animate_multiple_plots`
+- Writing to GIF in memory with `PIL` now supported, no external dependancies for gifs!
+
 ## [0.2.0]
 
 - Changing version format MAJOR.MINOR.PATCH
