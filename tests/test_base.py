@@ -4,8 +4,8 @@ import sys
 import pandas_alive
 import pytest
 
-myPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, ".")
+# myPath = os.path.dirname(os.path.abspath(__file__))
+# sys.path.insert(0, "...")
 
 
 # @pytest.fixture(scope="function")

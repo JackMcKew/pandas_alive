@@ -4,17 +4,37 @@ import sys
 import pandas_alive
 import pytest
 
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+from PIL import Image
+
 myPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, ".")
+sys.path.insert(0, "../..")
 
 
 @pytest.fixture(scope="function")
-def covid_df():
+def example_dataframe():
+    test_data = [
+        [np.random.randint(0, 10000), np.random.randint(0, 10000)],
+        [np.random.randint(0, 10000), np.random.randint(0, 10000)],
+    ]
+    test_columns = ["A", "B"]
+    index_start = datetime(
+        np.random.randint(2000, 2020),
+        np.random.randint(1, 12),
+        np.random.randint(1, 28),
+    )
+    index_end = index_start + timedelta(days=np.random.randint(1, 364))
+    test_index = [index_start, index_end]
+    return pd.DataFrame(data=test_data, columns=test_columns, index=test_index)
 
-    # Load Covid Dataset:
-    covid_df = pandas_alive.load_dataset()
 
-    return covid_df
+@pytest.mark.parametrize("kind", ["race", "line", "scatter", "pie", "bar"])
+def test_plot(example_dataframe, kind):
+    animated_plot = example_dataframe.plot_animated(filename="test.gif", kind=kind)
+    im = Image.open("test.gif")
+    assert im.format == "GIF"
 
 
 @pytest.mark.parametrize("orientation", ["h", "v"])
@@ -25,7 +45,7 @@ def covid_df():
 @pytest.mark.parametrize("fixed_order", [True, False])
 @pytest.mark.parametrize("perpendicular_bar_func", ["mean", "min", "median"])
 def test_bar_chart_race(
-    covid_df,
+    example_dataframe,
     orientation,
     sort,
     label_bars,
@@ -35,7 +55,8 @@ def test_bar_chart_race(
     perpendicular_bar_func,
 ):
 
-    animated_plot = covid_df.plot_animated(
+    animated_plot = example_dataframe.plot_animated(
+        filename="test.gif",
         kind="race",
         orientation=orientation,
         sort=sort,
@@ -45,24 +66,19 @@ def test_bar_chart_race(
         fixed_order=fixed_order,
         perpendicular_bar_func=perpendicular_bar_func,
     )
+    im = Image.open("test.gif")
+    assert im.format == "GIF"
 
 
-# def test_barh(covid_df):
+@pytest.mark.parametrize("line_width", [1, 2])
+@pytest.mark.parametrize("fill_under_line_color", ["blue", "red"])
+def test_line_chart(example_dataframe, line_width, fill_under_line_color):
 
-#     animated_plot = covid_df.plot_animated()
-
-#     assert True
-
-# @pytest.mark.parametrize("orientation",["h","v"])
-# def test_barv(covid_df,orientation):
-
-#     animated_plot = covid_df.plot_animated(orientation=orientation)
-
-#     assert True
-
-
-# def test_line(covid_df):
-
-#     animated_plot = covid_df.diff().fillna(0).plot_animated(kind="line")
-
-#     assert True
+    animated_plot = example_dataframe.plot_animated(
+        filename="test.gif",
+        kind="race",
+        line_width=line_width,
+        fill_under_line_color=fill_under_line_color,
+    )
+    im = Image.open("test.gif")
+    assert im.format == "GIF"
