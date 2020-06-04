@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pandas_alive"
-version = "0.2.1"
+version = "0.2.2"
 description = "Animated plotting extension for Pandas with Matplotlib"
 authors = ["JackMcKew <jackmckew2@gmail.com>"]
 readme = "README.md"
@@ -13,6 +13,8 @@ documentation = "https://jackmckew.github.io/pandas_alive/"
 python = "^3.6.1"
 pandas = "^1.0.3"
 matplotlib = "^3.2.1"
+attrs = "^19.3.0"
+pillow = "^7.1.2"
 
 [tool.poetry.dev-dependencies]
 

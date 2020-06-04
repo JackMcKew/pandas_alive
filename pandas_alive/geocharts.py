@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import matplotlib.units as munits
 import numpy as np
 import pandas as pd
-import geopandas
+
 from matplotlib import colors, ticker, transforms
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import Colormap
@@ -39,6 +39,12 @@ class MapChart(_BaseChart):
         """ Properties to be determined after initialization
         """
         self.df = self.df.copy()
+        try:
+            import descartes
+        except:
+            raise ModuleNotFoundError(
+                "Ensure to install `descartes` if using geopandas with pandas_alive"
+            )
 
         from shapely.geometry import Point
 
@@ -172,7 +178,11 @@ class MapChart(_BaseChart):
             try:
                 import contextily
 
-                contextily.add_basemap(self.ax, **self.basemap_format)
+                if isinstance(self.basemap_format, dict):
+                    contextily.add_basemap(self.ax, **self.basemap_format)
+                else:
+                    contextily.add_basemap(self.ax)
+
             except ImportError:
                 import warnings
 
