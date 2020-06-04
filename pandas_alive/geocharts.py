@@ -6,6 +6,7 @@ import typing
 from typing import Mapping
 
 import attr
+import geopandas
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.units as munits
@@ -184,9 +185,8 @@ class MapChart(_BaseChart):
                     contextily.add_basemap(self.ax)
 
             except ImportError:
-                import warnings
 
-                warnings.warn(
+                raise ModuleNotFoundError(
                     "Ensure contextily is installed for basemap functionality https://github.com/geopandas/contextily"
                 )
 
