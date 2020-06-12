@@ -3,10 +3,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.2 - 2020-06-04
+
+- Additional error catching with warnings for modules not being installed
+- Add both attrs and pillow as dependencies, so users can install with pip and have it `just work`
+
 ## 0.2.1 - 2020-06-02
 
 - Custom figures now supported in `animate_multiple_plots`
-- Writing to GIF in memory with `PIL` now supported, no external dependancies for gifs!
+- Writing to GIF in memory with `PIL` now supported, no external dependencies for gifs!
 
 ## [0.2.0]
 
