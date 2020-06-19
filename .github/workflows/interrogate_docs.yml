@@ -2,7 +2,7 @@ name: Interrogate documentation
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   interrogate:
