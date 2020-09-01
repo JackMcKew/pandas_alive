@@ -648,7 +648,7 @@ class _BaseChart:
             ModuleNotFoundError: [description]
         """
         try:
-            from tqdm import tqdm
+            from tqdm.auto import tqdm
 
             self.progress_bar = tqdm(total=len(self.get_frames()))
         except ImportError:
