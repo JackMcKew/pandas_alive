@@ -158,7 +158,7 @@ class _BaseChart:
                 )
             if self.writer not in manimation.writers.list():
                 raise RuntimeError(
-                    f"Ensure that a matplotlib writer library is installed, list of available writer librarys {manimation.writers.list()}, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
+                    f"Ensure that a matplotlib writer library is installed, list of available writer librarys {manimation.writers.list()}, see https://github.com/JackMcKew/pandas_alive/blob/main/README.md#requirements for more details"
                 )
 
     def get_period_label(
@@ -595,7 +595,7 @@ class _BaseChart:
 
         except TypeError as e:
             raise RuntimeError(
-                "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
+                "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/main/README.md#requirements for more details"
             )
 
     # def encode_html5_video(self,anim):
