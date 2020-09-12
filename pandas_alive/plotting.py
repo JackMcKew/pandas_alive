@@ -25,6 +25,8 @@ from .charts import (
     ScatterChart,
 )
 
+# from ._base_chart import _BaseChart
+
 
 def get_allowed_kinds() -> typing.List[str]:
     """ Get list of implemented charts
@@ -80,7 +82,7 @@ def plot(
     ] = True,
     period_summary_func: typing.Callable = None,
     fixed_max: bool = False,
-    dpi: float = 144,
+    dpi: int = 144,
     writer: str = None,
     enable_progress_bar: bool = False,
     # Bar chart
@@ -103,7 +105,7 @@ def plot(
     size_data_label: typing.Union[int, str] = 2,
     color_data_label: str = "blue",
     **kwargs,
-) -> typing.Union[ScatterChart, BarChartRace, LineChart, PieChart]:
+) -> typing.Union[BarChart, BarChartRace, BubbleChart, LineChart, PieChart, ScatterChart]:
     """
     Create animated charts with matplotlib and pandas
 
@@ -270,7 +272,7 @@ def plot(
         ValueError: If chart type is not supported, raise error
 
     Returns:
-        typing.Union[ScatterChart, BarChart, LineChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.
+        typing.Union[BarChart, BarChartRace, BubbleChart, LineChart, PieChart, ScatterChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.
     """
     df = input_df.copy()
     if isinstance(df, pd.Series):
@@ -446,6 +448,7 @@ def animate_multiple_plots(
     title: str = None,
     title_fontsize: typing.Union[int, float] = 16,
     dpi: int = 144,
+    enable_progress_bar: bool = False,
     adjust_subplot_left: float = 0.15,
     adjust_subplot_right: float = 0.9,
     adjust_subplot_bottom: float = 0.1,
@@ -456,23 +459,38 @@ def animate_multiple_plots(
     """ Plot multiple animated subplots with plt.subplots()
 
     Args:
-        filename (str): Output file name with extension to rite to
-        plots (typing.List[typing.Union[BarChart, LineChart]]): List of chart instances
+        filename (str): Output file name with extension to write to.
+
+        plots (typing.List[typing.Union[BarChart, LineChart]]): List of chart instances.
+        
         title (str, optional): Overall title for plots (suptitle). Defaults to None.
+
         title_fontsize (typing.Union[int, float], optional): Font size for suptitle. Defaults to 16.
+
         dpi (int, optional): Custom DPI to increase resolution. Defaults to 144.
+
+        enable_progress_bar (bool,optional): Enable tqdm bar to show progress on generating animation, see more details at https://github.com/tqdm/tqdm. Defaults to False.
+
         adjust_subplot_left (float, optional): the left side of the subplots of the figure. Defaults to 0.125.
+
         adjust_subplot_right (float, optional): the right side of the subplots of the figure. Defaults to 0.9.
+        
         adjust_subplot_bottom (float, optional): the bottom of the subplots of the figure. Defaults to 0.1.
+        
         adjust_subplot_top (float, optional): the top of the subplots of the figure. Defaults to 0.9.
+        
         adjust_subplot_wspace (float, optional): the amount of width reserved for space between subplots, expressed as a fraction of the average axis width. Defaults to 0.2.
+        
         adjust_subplot_hspace (float, optional): the amount of height reserved for space between subplots, expressed as a fraction of the average axis height. Defaults to 0.2.
 
     Raises:
-        UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length
+        UserWarning: If Error found when plotting, prompt user to ensure indexes of plots are same length
     """
 
-    def update_all_graphs(frame: int):
+    if enable_progress_bar:
+        plots[0].setup_progress_bar()
+
+    def update_all_graphs(i: int):
         """
         Function for updating all plots provided as a list via their respective `anim_func` method
 
@@ -484,12 +502,15 @@ def animate_multiple_plots(
         """
         for plot in plots:
             try:
-                plot.anim_func(frame)
+                plot.anim_func(i)
             except:
                 raise UserWarning(
                     f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}"
                 )
-
+        # print(i)
+        if enable_progress_bar:
+            plots[0].update_progress_bar()
+    
     # Current just number of columns for number of plots
     # TODO add option for number of rows/columns
     # TODO Use gridspec?
@@ -555,10 +576,11 @@ def animate_multiple_plots(
 
     fps = 1000 / plots[0].period_length * plots[0].steps_per_period
     interval = plots[0].period_length / plots[0].steps_per_period
+    num_frames = (max(plots[0].get_frames()))+1
     anim = FuncAnimation(
-        fig,
-        update_all_graphs,
-        min([max(plot.get_frames()) for plot in plots]),
+        fig=fig,
+        func=update_all_graphs,
+        frames=num_frames,
         interval=interval,
     )
 
@@ -572,8 +594,8 @@ def animate_multiple_plots(
         from PIL import Image
 
         frames = []
-        for i in plots[0].get_frames():
-            frame = update_all_graphs(i)
+        for i in range(0, num_frames):
+            update_all_graphs(i)
             buffer = io.BytesIO()
             fig.savefig(buffer, format="png")
             buffer.seek(0)
@@ -583,14 +605,16 @@ def animate_multiple_plots(
         frames[0].save(
             filename,
             save_all=True,
-            append_images=frames[1:],
+            append_images=frames[:],
             optimize=True,
-            duration=plots[0].period_length / plots[0].steps_per_period,
+            duration=interval,
             loop=0,
         )
         # anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
     else:
         anim.save(filename, fps=fps, dpi=dpi)
+    if enable_progress_bar:
+        plots[0].progress_bar.close()
 
 
 ##############################################################################

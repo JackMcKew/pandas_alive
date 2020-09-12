@@ -158,7 +158,7 @@ class _BaseChart:
                 )
             if self.writer not in manimation.writers.list():
                 raise RuntimeError(
-                    f"Ensure that a matplotlib writer library is installed, list of available writer librarys {manimation.writers.list()}, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
+                    f"Ensure that a matplotlib writer library is installed, list of available writer librarys {manimation.writers.list()}, see https://github.com/JackMcKew/pandas_alive/blob/main/README.md#requirements for more details"
                 )
 
     def get_period_label(
@@ -393,7 +393,7 @@ class _BaseChart:
         raise NotImplementedError("Animation method not yet implemented")
 
     def get_frames(self) -> typing.Iterable:
-        """ Method for determining how many frames to animate
+        """ Method for determining range of frames to animate.
 
         Returns:
             typing.Iterable: Range with length of index in DataFrame
@@ -595,7 +595,7 @@ class _BaseChart:
 
         except TypeError as e:
             raise RuntimeError(
-                "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/master/README.md#requirements for more details"
+                "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/main/README.md#requirements for more details"
             )
 
     # def encode_html5_video(self,anim):
@@ -648,12 +648,12 @@ class _BaseChart:
             ModuleNotFoundError: [description]
         """
         try:
-            from tqdm import tqdm
+            from tqdm.auto import tqdm
 
             self.progress_bar = tqdm(total=len(self.get_frames()))
         except ImportError:
             raise ImportError(
-                "Install tqdm bar with `pip install tqdm`, see more details at https://github.com/tqdm/tqdm"
+                "Install tqdm bar with `pip install tqdm` or `conda install -c conda-forge tqdm`, see more details at https://github.com/tqdm/tqdm. Additionally, for `tqdm.auto` to work in Jupyter install `ipywidgets`, more details at https://ipywidgets.readthedocs.io/en/stable/user_install.html."
             )
 
     # Possibly include image

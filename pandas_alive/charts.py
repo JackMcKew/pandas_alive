@@ -66,7 +66,7 @@ class BarChartRace(_BaseChart):
             import warnings
 
             warnings.warn(
-                "Plotting too many bars may result in undesirable output, use `n_visible=5 to limit number of bars"
+                "Plotting too many bars may result in undesirable output, use `n_visible=15 to limit number of bars"
             )
 
         self.validate_params()
