@@ -268,11 +268,7 @@ map_chart = multi_index_df.plot_animated(
 #### Bubble Chart Example 2
 Jupyter notebook: [pendulum_sample.ipynb](examples/test_notebooks/pendulum_sample.ipynb)
 
-<!-- blank line -->
-<video src="./examples/test_notebooks/pend-bubble.mp4" type="video/mp4" controls muted autoplay>
-      Your browser does not support the <code>video</code> element.
-</video>
-<!-- blank line -->
+![Bubble Chart Example](examples/test_notebooks/pend-bubble.gif)
 
 ### GeoSpatial Charts
 
@@ -695,11 +691,7 @@ pandas_alive.animate_multiple_plots(
 ### Simple Pendulum Motion
 Jupyter notebook: [pendulum_sample.ipynb](examples/test_notebooks/pendulum_sample.ipynb)
 
-<!-- blank line -->
-<video src="./examples/test_notebooks/pend-combined-2.mp4" type="video/mp4" controls muted autoplay>
-      Your browser does not support the <code>video</code> element.
-</video>
-<!-- blank line -->
+![Bubble Chart Example](examples/test_notebooks/pend-combined-2.gif)
 
 ## HTML 5 Videos
 
