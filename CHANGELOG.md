@@ -3,6 +3,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.3 - 2020-10-18
+
+- Fixed an ongoing problem with `animate_multiple_plots` when re-using a line or scatter chart. Corresponding subplots would show a static figure from a previous single animation.
+- Fixed `fig=` for single animations not being passed properly as a custom figure.
+- Several performance improvements to speed up loops in animations.
+- Fixed a problem with line and scatter plots being chopped off near the vertical limit values.
+- Added a `colorbar` with bubble plots when a `Pandas` df column is passed as a colour. Currently only for individual animations.
+- Added options for bubble plots above to control the `colorbar` scale limits with `vmin` & `vmax`. If None, then they are automatically calculated.
+- Added option `add_legend=` for line and scatter animations for single & multiple plots. Default is `True`.
+- Added the option `enable_progress_bar=` to `animate_multiple_plots`. Default is `False`.
+- Improved the ability to re-use figures & axes in a notebook for multiple plots. Occasionally, these used to carry over old frames into a new animation.
+- Made `animate_multiple_plots` to create a `Figure()` instance instead of a `figure()` one. Note that `matplotlib` can take twice as long to generate animations with the latter instance type. Not clear why.
+- Added a new folder `./examples/test_notebooks/` for future collaborators to add new notebooks.
+- Removed the limitation for the interpolation (`interpolate_period=`) only to work with a `DateTime` index. It should now work with any numeric df index.
+
 ## 0.2.2 - 2020-06-04
 
 - Additional error catching with warnings for modules not being installed

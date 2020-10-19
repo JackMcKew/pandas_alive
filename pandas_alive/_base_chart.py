@@ -71,13 +71,13 @@ class _BaseChart:
     title: str = attr.ib()
     fig: plt.Figure = attr.ib()
     cmap: typing.Union[str, Colormap, typing.List[str]] = attr.ib()
-    tick_label_size: typing.Union[int, float] = attr.ib()
+    tick_label_size: typing.Union[int, float, str] = attr.ib()
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = attr.ib()
     period_summary_func: typing.Callable = attr.ib()
     fixed_max: bool = attr.ib()
-    dpi: float = attr.ib()
+    dpi: int = attr.ib()
     writer: str = attr.ib()
     enable_progress_bar: bool = attr.ib()
     kwargs = attr.ib()
@@ -87,25 +87,25 @@ class _BaseChart:
         Post initialisation steps to run
 
         Functionality from attrs to calculate new attributes based on input args and kwargs
-
-        Raises:
-            ValueError: If `interpolate_period=True` and DataFrame index is not DateTimeIndex
         """
+        # Raises:
+        #     ValueError: If `interpolate_period=True` and DataFrame index is not DateTimeIndex
+
         if isinstance(self.df, pd.Series):
             self.df = pd.DataFrame(self.df)
 
         self.df = self.df.copy()
-        from matplotlib import rcParams
+        # from matplotlib import rcParams
 
-        rcParams.update({"figure.autolayout": True})
+        # rcParams.update({"figure.autolayout": True})
 
-        if self.interpolate_period == True and not isinstance(
-            self.df.index, pd.DatetimeIndex
-        ):
-            raise ValueError(
-                f"If using interpolate_period, ensure the index is a DatetimeIndex (eg, use df.index = pd.to_datetime(df.index))"
-            )
-        # rcParams.update({'figure.autolayout': True})
+        # if self.interpolate_period == True and not isinstance(
+        #     self.df.index, pd.DatetimeIndex
+        # ):
+        #     raise ValueError(
+        #         f"If using interpolate_period, ensure the index is a DatetimeIndex (eg, use df.index = pd.to_datetime(df.index))"
+        #     )
+
         self.orig_df = self.df.copy()
         self.colors = self.get_colors(self.cmap)  # Get colors for plotting
         if not isinstance(self.df.columns, pd.MultiIndex):
@@ -128,13 +128,16 @@ class _BaseChart:
             self.fig, self.ax = self.create_figure()
             self.figsize = self.fig.get_size_inches()
         else:
-            self.fig = plt.figure()
-            self.ax = plt.axes()
+            # This will use `fig=` input by user and gets its first axis
+            self.ax = self.fig.get_axes()[0]
+            self.ax.tick_params(labelsize=self.tick_label_size)
+
+        if self.figsize is not None:
+            self.fig.set_size_inches(self.figsize)
         self.fig.set_tight_layout(False)
         if self.title:
             self.ax.set_title(self.title)
-        if self.enable_progress_bar:
-            self.setup_progress_bar()
+        
         self.validate_params()
 
     def validate_params(self):
@@ -145,7 +148,7 @@ class _BaseChart:
             value (plt.figure): Figure instance for chart
 
         Raises:
-            TypeError: Figure provided is not matplotlib figure
+            TypeError: figure provided is not a matplotlib Figure instance
         """
         if self.fig is not None and not isinstance(self.fig, plt.Figure):
             raise TypeError("`fig` must be a matplotlib Figure instance")
@@ -223,8 +226,7 @@ class _BaseChart:
             chart_colors = cmap.tolist()
         else:
             raise TypeError(
-                "`cmap` must be a string name of a color, colormap, list of colors or a matplotlib colormap instance"
-                "or a list of colors"
+                "`cmap` must be a string name of a color, a matplotlib colormap instance or a list of colors"
             )
 
         return chart_colors
@@ -236,7 +238,7 @@ class _BaseChart:
         From provided string return the RGB value from `to_rgba`, see more details at https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.colors.to_rgba.html
 
         Args:
-            color_string (str): Must be apart of named colors in matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py
+            color_string (str): Must be a part of named colors in matplotlib https://matplotlib.org/3.1.1/gallery/color/named_colors.html#sphx-glr-gallery-color-named-colors-py
 
         Returns:
             typing.Tuple[int,int,int,int]: Tuple of (r, g, b, a) scalars.
@@ -262,7 +264,7 @@ class _BaseChart:
             if isinstance(xlim_start, pd.Timestamp):
                 xlim_end = self.df.index.max() + pd.Timedelta(seconds=1)
             else:
-                xlim_end = self.df.index.max()
+                xlim_end = self.df.index.max() + 1e-6
         else:
             xlim_start = df.index[: i + 1].min()
 
@@ -270,7 +272,7 @@ class _BaseChart:
                 # For avoiding UserWarning on first frame with identical start and end limits
                 xlim_end = self.df.index[: i + 1].max() + pd.Timedelta(seconds=1)
             else:
-                xlim_end = self.df.index[: i + 1].max()
+                xlim_end = self.df.index[: i + 1].max() + 1e-6
 
         # ufunc error occurs in anaconda environments if not converted to datetime instead of Timestamp
         if isinstance(xlim_start, pd.Timestamp):
@@ -278,19 +280,31 @@ class _BaseChart:
         else:
             ax.set_xlim(xlim_start, xlim_end)
         # self.ax.set_xlim(self.df.index[: i + 1].min(), self.df.index[: i + 1].max())
+        
+        # Avoid lines/scatter crossing vertical ylim and looking cut off
+        ylim_scale = (self.df.values.max() - self.df.values.min())*0.05
+        ylim_bot_scale = ylim_scale
+        ylim_top_scale = ylim_scale
+        # remove tolerance on ylim_bot/_top when data doesn't cross zero values
+        if self.df.values.min() >= 0:
+            ylim_bot_scale = 0
+        if self.df.values.max() <= 0:
+            ylim_top_scale = 0
         if self.fixed_max:
-            ax.set_ylim(self.df.min().min(skipna=True), self.df.max().max(skipna=True))
+            # ax.set_ylim(self.df.min().min(skipna=True)*ylim_scale, self.df.max().max(skipna=True)*ylim_scale)
+            ax.set_ylim(self.df.values.min() - ylim_bot_scale, self.df.values.max() + ylim_top_scale)
         else:
-            ax.set_ylim(
-                self.df.iloc[: i + 1]
-                .select_dtypes(include=[np.number])
-                .min()
-                .min(skipna=True),
-                self.df.iloc[: i + 1]
-                .select_dtypes(include=[np.number])
-                .max()
-                .max(skipna=True),
-            )
+            ax.set_ylim(self.df.iloc[: i + 1].values.min() - ylim_bot_scale, self.df.iloc[: i + 1].values.max() + ylim_top_scale)
+            # ax.set_ylim(
+            #     self.df.iloc[: i + 1]
+            #     .select_dtypes(include=[np.number])
+            #     .min()
+            #     .min(skipna=True)*ylim_scale,
+            #     self.df.iloc[: i + 1]
+            #     .select_dtypes(include=[np.number])
+            #     .max()
+            #     .max(skipna=True)*ylim_scale,
+            # )
 
     def rename_data_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -365,8 +379,10 @@ class _BaseChart:
             )
 
         interpolated_df = interpolated_df.set_index(interpolated_df.columns[0])
-
-        if interpolate_period:
+        # if self.interpolate_period == True and not isinstance(
+        #     self.df.index, pd.DatetimeIndex
+        # ):
+        if interpolate_period and isinstance(self.df.index, pd.DatetimeIndex):
             interpolated_df = interpolated_df.interpolate(method="time")
         else:
             interpolated_df = interpolated_df.interpolate()
@@ -434,7 +450,8 @@ class _BaseChart:
         ax = fig.add_subplot()
 
         max_val = self.df.values.max().max()
-        ax.tick_params(labelrotation=0, axis="y", labelsize=self.tick_label_size)
+        # ax.tick_params(labelrotation=0, axis="y", labelsize=self.tick_label_size)
+        ax.tick_params(labelrotation=0, labelsize=self.tick_label_size)
 
         fig.canvas.print_figure(io.BytesIO())
         orig_pos = ax.get_position()
@@ -545,8 +562,18 @@ class _BaseChart:
             else:
                 self.ax.texts[1].set_text(text_dict["s"])
 
+    def clearing(self):
+        """
+        Function to remove all existing lines, collections, etc at the start 
+        of the animation AND after a save. This reduces the danger with old 
+        contents to be passed onto new multiple animations.
+        """
+        for ax in self.fig.axes:
+            for item in ax.lines + ax.collections + ax.containers + ax.texts:
+                item.remove()
+    
     def save(self, filename: str) -> None:
-        """ Save method for FuncAnimation
+        """ Save method for FuncAnimation.
 
         Args:
             filename (str): File name with extension to save animation to, supported formats at https://matplotlib.org/3.1.1/api/animation_api.html
@@ -554,9 +581,14 @@ class _BaseChart:
 
         # Inspiration for design pattern https://github.com/altair-viz/altair/blob/c55707730935159e4e2d2c789a6dd2bc3f1ec0f2/altair/utils/save.py
         # https://altair-viz.github.io/user_guide/saving_charts.html
+        
+        if self.enable_progress_bar:
+            self.setup_progress_bar()
 
         anim = self.make_animation(self.get_frames(), self.init_func)
         self.fps = 1000 / self.period_length * self.steps_per_period
+        interval = self.period_length / self.steps_per_period
+        num_frames = len(self.get_frames())
 
         extension = filename.split(".")[-1]
         try:
@@ -571,8 +603,8 @@ class _BaseChart:
                     from PIL import Image
 
                     frames = []
-                    for i in self.get_frames():
-                        frame = self.anim_func(i)
+                    for i in range(0, num_frames):
+                        self.anim_func(i)
                         buffer = io.BytesIO()
                         self.fig.savefig(buffer, format="png")
                         buffer.seek(0)
@@ -582,16 +614,18 @@ class _BaseChart:
                     frames[0].save(
                         filename,
                         save_all=True,
-                        append_images=frames[1:],
-                        optimize=True,
-                        duration=self.period_length / self.steps_per_period,
+                        append_images=frames[:],
+                        optimize=False,
+                        duration=interval,
                         loop=0,
                     )
                 else:
                     anim.save(filename, fps=self.fps, dpi=self.dpi)
-
             if self.enable_progress_bar:
                 self.progress_bar.close()
+            # Clearing axes contents after save, so that fig's axes can be re-used in a 
+            # consequent multiple plot after this one in a notebook.
+            self.clearing()
 
         except TypeError as e:
             raise RuntimeError(

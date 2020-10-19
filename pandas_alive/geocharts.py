@@ -74,12 +74,19 @@ class MapChart(_BaseChart):
         self.df = pd.DataFrame(self.df)
         self.df = self.df.drop("geometry", axis=1)
 
+        # if self.fig is None:
+        #     self.fig, self.ax = self.create_figure()
+        #     self.figsize = self.fig.get_size_inches()
+        # else:
+        #     self.fig = plt.figure()
+        #     self.ax = plt.axes()
         if self.fig is None:
             self.fig, self.ax = self.create_figure()
             self.figsize = self.fig.get_size_inches()
         else:
-            self.fig = plt.figure()
-            self.ax = plt.axes()
+            # This will use `fig=` input by user and gets its first axis
+            self.ax = self.fig.get_axes()[0]
+            self.ax.tick_params(labelsize=self.tick_label_size)
         self.fig.set_tight_layout(False)
         if self.title:
             self.ax.set_title(self.title)
