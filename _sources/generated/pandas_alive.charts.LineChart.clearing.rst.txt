@@ -1,0 +1,6 @@
+LineChart.clearing
+==================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: LineChart.clearing

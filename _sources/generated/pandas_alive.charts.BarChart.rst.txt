@@ -23,6 +23,8 @@ BarChart
    
       BarChart.calculate_new_figsize
    
+      BarChart.clearing
+   
       BarChart.create_figure
    
       BarChart.get_colors

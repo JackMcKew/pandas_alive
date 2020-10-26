@@ -1,0 +1,6 @@
+PieChart.clearing
+=================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: PieChart.clearing

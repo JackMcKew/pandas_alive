@@ -23,6 +23,8 @@ ScatterChart
    
       ScatterChart.calculate_new_figsize
    
+      ScatterChart.clearing
+   
       ScatterChart.create_figure
    
       ScatterChart.get_colors

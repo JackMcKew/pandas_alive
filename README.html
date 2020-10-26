@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pandas_Alive &mdash; Pandas_Alive 0.2.2 documentation</title>
+  <title>Pandas_Alive &mdash; Pandas_Alive 0.2.3 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="developer.html" />
-    <link rel="prev" title="Pandas_Alive 0.2.2" href="index.html" /> 
+    <link rel="next" title="Anaconda Tips &amp; Tricks" href="anaconda.html" />
+    <link rel="prev" title="Pandas_Alive 0.2.3" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,40 +85,49 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation &amp; Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id4">Currently Supported Chart Types</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id5">Horizontal Bar Chart Races</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">Vertical Bar Chart Races</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id7">Line Charts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">Bar Charts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">Scatter Charts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">Pie Charts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id11">Bubble Charts</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id12">GeoSpatial Charts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Currently Supported Chart Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Horizontal Bar Chart Races</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Vertical Bar Chart Races</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Line Charts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Bar Charts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Scatter Charts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Pie Charts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Bubble Charts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">Bubble Chart Example 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">Bubble Chart Example 2</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id15">Multiple Charts</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id16">Urban Population</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id17">Life Expectancy in G7 Countries</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id18">NSW COVID Visualisation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id19">Italy COVID Visualisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">GeoSpatial Charts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id15">GeoSpatial Point Charts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">Polygon GeoSpatial Charts</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id20">HTML 5 Videos</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id21">Progress Bars!</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id22">Future Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id27">Inspiration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id28">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id29">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id30">Contributing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id31">Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">Multiple Charts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Urban Population</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Life Expectancy in G7 Countries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">NSW COVID Visualisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Italy COVID Visualisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Simple Pendulum Motion</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id33">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id24">HTML 5 Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id25">Progress Bars!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id26">Future Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id31">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id32">Inspiration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id33">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id34">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id35">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id36">Development</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#id38">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anaconda.html">Anaconda Tips &amp; Tricks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developers</span></p>
 <ul>
@@ -205,8 +214,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --><ul class="simple">
 <li><p><a class="reference external" href="#installation">Installation</a></p></li>
-<li><p><a class="reference external" href="#usage">Usage</a></p>
-<ul>
+<li><p><a class="reference external" href="#usage">Usage</a></p></li>
 <li><p><a class="reference external" href="#currently-supported-chart-types">Currently Supported Chart Types</a></p>
 <ul>
 <li><p><a class="reference external" href="#horizontal-bar-chart-races">Horizontal Bar Chart Races</a></p></li>
@@ -215,7 +223,12 @@
 <li><p><a class="reference external" href="#bar-charts">Bar Charts</a></p></li>
 <li><p><a class="reference external" href="#scatter-charts">Scatter Charts</a></p></li>
 <li><p><a class="reference external" href="#pie-charts">Pie Charts</a></p></li>
-<li><p><a class="reference external" href="#bubble-charts">Bubble Charts</a></p></li>
+<li><p><a class="reference external" href="#bubble-charts">Bubble Charts</a></p>
+<ul>
+<li><p><a class="reference external" href="#bubble-chart-example-1">Bubble Chart Example 1</a></p></li>
+<li><p><a class="reference external" href="#bubble-chart-example-2">Bubble Chart Example 2</a></p></li>
+</ul>
+</li>
 <li><p><a class="reference external" href="#geospatial-charts">GeoSpatial Charts</a></p>
 <ul>
 <li><p><a class="reference external" href="#geospatial-point-charts">GeoSpatial Point Charts</a></p></li>
@@ -230,13 +243,13 @@
 <li><p><a class="reference external" href="#life-expectancy-in-g7-countries">Life Expectancy in G7 Countries</a></p></li>
 <li><p><a class="reference external" href="#nsw-covid-visualisation">NSW COVID Visualisation</a></p></li>
 <li><p><a class="reference external" href="#italy-covid-visualisation">Italy COVID Visualisation</a></p></li>
+<li><p><a class="reference external" href="#simple-pendulum-motion">Simple Pendulum Motion</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference external" href="#html-5-videos">HTML 5 Videos</a></p></li>
 <li><p><a class="reference external" href="#progress-bars">Progress Bars!</a></p></li>
-</ul>
-</li>
 <li><p><a class="reference external" href="#future-features">Future Features</a></p></li>
+<li><p><a class="reference external" href="#tutorials">Tutorials</a></p></li>
 <li><p><a class="reference external" href="#inspiration">Inspiration</a></p></li>
 <li><p><a class="reference external" href="#requirements">Requirements</a></p></li>
 <li><p><a class="reference external" href="#documentation">Documentation</a></p></li>
@@ -250,7 +263,7 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update --></div>
 <div class="section" id="id1">
 <h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>Install with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandas_alive</span></code></p>
+<p>Install with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandas_alive</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pandas_alive</span> <span class="pre">-c</span> <span class="pre">conda-forge</span></code></p>
 </div>
 <div class="section" id="id2">
 <h2>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
@@ -265,7 +278,7 @@
 <a class="reference external image-reference" href="https://raw.githubusercontent.com/dexplo/bar_chart_race/master/docs/images/wide_data.png"><img alt="Example Data Table" src="https://raw.githubusercontent.com/dexplo/bar_chart_race/master/docs/images/wide_data.png" /></a>
 <p>To produce the above visualisation:</p>
 <ul class="simple">
-<li><p>Check <a class="reference external" href="#requirements">Requirements</a> first to ensure you have the tooling installed!</p></li>
+<li><p>Check <a class="reference external" href="#Requirements">Requirements</a> first to ensure you have the tooling installed!</p></li>
 <li><p>Call <code class="docutils literal notranslate"><span class="pre">plot_animated()</span></code> on the DataFrame</p>
 <ul>
 <li><p>Either specify a file name to write to with <code class="docutils literal notranslate"><span class="pre">df.plot_animated(filename='example.mp4')</span></code> or use <code class="docutils literal notranslate"><span class="pre">df.plot_animated().get_html5_video</span></code> to return a HTML5 video</p></li>
@@ -273,6 +286,9 @@
 </li>
 <li><p>Done!</p></li>
 </ul>
+<p><strong>Note</strong> <em>on custom figures in notebooks</em>:
+When setting up custom figures for animations in <code class="docutils literal notranslate"><span class="pre">Matplotlib</span></code> make sure to use the <code class="docutils literal notranslate"><span class="pre">Figure()</span></code> syntax and not <code class="docutils literal notranslate"><span class="pre">figure()</span></code> instance type. The latter causes animations in <code class="docutils literal notranslate"><span class="pre">Matplotlib</span></code>, and in turn in <code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code>, to take twice as long to be generated when changing from ‘<strong>F</strong>igure’ to ‘<strong>f</strong>igure’ syntax.</p>
+<p>More on ‘<strong>F</strong>igure’ vs ‘<strong>f</strong>igure’ can be found in this <a class="reference external" href="https://stackoverflow.com/questions/28631741/prevent-matplotlib-statefulness/28633419#28633419">SO entry</a>, and this <a class="reference external" href="https://stackoverflow.com/questions/16334588/create-a-figure-that-is-reference-counted/16337909#16337909">other SO entry</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
@@ -280,10 +296,11 @@
 <span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-barh-chart.gif&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
 <div class="section" id="id4">
-<h3>Currently Supported Chart Types<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h2>Currently Supported Chart Types<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id5">
-<h4>Horizontal Bar Chart Races<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<h3>Horizontal Bar Chart Races<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pandas_alive</span>
 
@@ -325,7 +342,7 @@
 <a class="reference external image-reference" href="examples/perpendicular-example.gif"><img alt="Perpendicular Example" src="_images/perpendicular-example.gif" /></a>
 </div>
 <div class="section" id="id6">
-<h4>Vertical Bar Chart Races<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<h3>Vertical Bar Chart Races<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
@@ -336,31 +353,34 @@
 <a class="reference external image-reference" href="examples/example-barv-chart.gif"><img alt="Example Barv Chart" src="_images/example-barv-chart.gif" /></a>
 </div>
 <div class="section" id="id7">
-<h4>Line Charts<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<h3>Line Charts<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>With as many lines as data columns in the DataFrame.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">covid_df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-line-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.9</span><span class="p">})</span>
+<span class="n">covid_df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-line-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.25</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.9</span><span class="p">})</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-line-chart.gif"><img alt="Example Line Chart" src="_images/example-line-chart.gif" /></a>
 </div>
 <div class="section" id="id8">
-<h4>Bar Charts<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<p>Similar to line charts with time as the x-axis</p>
+<h3>Bar Charts<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Similar to line charts with time as the x-axis.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">covid_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-bar-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.9</span><span class="p">})</span>
+<span class="n">covid_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;examples/example-bar-chart.gif&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+        <span class="n">period_label</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.9</span><span class="p">},</span>
+        <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">steps_per_period</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">interpolate_period</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">period_length</span><span class="o">=</span><span class="mi">200</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-bar-chart.gif"><img alt="Example Bar Chart" src="_images/example-bar-chart.gif" /></a>
 </div>
 <div class="section" id="id9">
-<h4>Scatter Charts<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<h3>Scatter Charts<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pandas_alive</span>
 
@@ -385,7 +405,7 @@
 <a class="reference external image-reference" href="examples/example-scatter-chart.gif"><img alt="Example Scatter Chart" src="_images/example-scatter-chart.gif" /></a>
 </div>
 <div class="section" id="id10">
-<h4>Pie Charts<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<h3>Pie Charts<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
@@ -396,9 +416,10 @@
 <a class="reference external image-reference" href="examples/example-pie-chart.gif"><img alt="Example Pie Chart" src="_images/example-pie-chart.gif" /></a>
 </div>
 <div class="section" id="id11">
-<h4>Bubble Charts<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<h3>Bubble Charts<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>Bubble charts are generated from a multi-indexed dataframes. Where the index is the time period (optional) and the axes are defined with <code class="docutils literal notranslate"><span class="pre">x_data_label</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">y_data_label</span></code> which should be passed a string in the level 0 column labels.</p>
 <p>See an example multi-indexed dataframe at: <a class="reference external" href="https://github.com/JackMcKew/pandas_alive/tree/master/data/multi.csv">https://github.com/JackMcKew/pandas_alive/tree/master/data/multi.csv</a></p>
+<p>When you set <code class="docutils literal notranslate"><span class="pre">color_data_label=</span></code> to a df column name, <code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> will automatically add a <code class="docutils literal notranslate"><span class="pre">colorbar</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">multi_index_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/multi.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -411,13 +432,24 @@
     <span class="n">x_data_label</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span>
     <span class="n">y_data_label</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
     <span class="n">size_data_label</span><span class="o">=</span><span class="s2">&quot;Cases&quot;</span><span class="p">,</span>
+    <span class="n">color_data_label</span><span class="o">=</span><span class="s2">&quot;Cases&quot;</span><span class="p">,</span>
+    <span class="n">vmax</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">steps_per_period</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">interpolate_period</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">period_length</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span>
 <span class="p">)</span>
 </pre></div>
 </div>
+<div class="section" id="id12">
+<h4>Bubble Chart Example 1<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
 <a class="reference external image-reference" href="examples/example-bubble-chart.gif"><img alt="Bubble Chart Example" src="_images/example-bubble-chart.gif" /></a>
 </div>
-<div class="section" id="id12">
-<h4>GeoSpatial Charts<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id13">
+<h4>Bubble Chart Example 2<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p>Jupyter notebook: <a class="reference external" href="examples/test_notebooks/pendulum_sample.ipynb">pendulum_sample.ipynb</a></p>
+<a class="reference external image-reference" href="examples/test_notebooks/pend-bubble.gif"><img alt="Bubble Chart Example" src="_images/pend-bubble.gif" /></a>
+</div>
+</div>
+<div class="section" id="id14">
+<h3>GeoSpatial Charts<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>GeoSpatial charts can now be animated easily using <cite>``geopandas`</cite> &lt;<a class="reference external" href="https://geopandas.org/index.html">https://geopandas.org/index.html</a>&gt;`_!</p>
 <blockquote>
 <div><p>If using Windows, <a class="reference external" href="https://www.anaconda.com/">anaconda</a> is the easiest way to install with all GDAL dependancies.</p>
@@ -434,8 +466,8 @@
 <blockquote>
 <div><p>These can be easily composed by transposing data compatible with the rest of the charts using <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.T</span></code>.</p>
 </div></blockquote>
-<div class="section" id="id13">
-<h5>GeoSpatial Point Charts<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id15">
+<h4>GeoSpatial Point Charts<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
 <span class="kn">import</span> <span class="nn">pandas_alive</span>
 <span class="kn">import</span> <span class="nn">contextily</span>
@@ -449,8 +481,8 @@
 </div>
 <a class="reference external image-reference" href="examples/example-geo-point-chart.gif"><img alt="Example Point GeoSpatialChart" src="_images/example-geo-point-chart.gif" /></a>
 </div>
-<div class="section" id="id14">
-<h5>Polygon GeoSpatial Charts<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id16">
+<h4>Polygon GeoSpatial Charts<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
 <p>Supports GeoDataFrames containing Polygons!</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
 <span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -467,8 +499,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id15">
-<h3>Multiple Charts<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h2>Multiple Charts<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> supports multiple animated charts in a single visualisation.</p>
 <ul class="simple">
 <li><p>Create a list of all charts to include in animation</p></li>
@@ -479,16 +511,17 @@
 
 <span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
 
-<span class="n">animated_line_chart</span> <span class="o">=</span> <span class="n">covid_df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">animated_line_chart</span> <span class="o">=</span> <span class="n">covid_df</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">add_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">])</span>
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">],</span>
+    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-bar-and-line-chart.gif"><img alt="Example Bar &amp; Line Chart" src="_images/example-bar-and-line-chart.gif" /></a>
-<div class="section" id="id16">
-<h4>Urban Population<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id18">
+<h3>Urban Population<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">urban_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;urban_pop&quot;</span><span class="p">)</span>
@@ -498,18 +531,19 @@
     <span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
     <span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfill&#39;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total % Change in Population&quot;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total % Change in Population&quot;</span><span class="p">,</span><span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">add_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="n">animated_bar_chart</span> <span class="o">=</span> <span class="n">urban_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">n_visible</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Top 10 Populous Countries&#39;</span><span class="p">,</span><span class="n">period_fmt</span><span class="o">=</span><span class="s2">&quot;%Y&quot;</span><span class="p">)</span>
 
-<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-urban-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">],</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Urban Population 1977 - 2018&#39;</span><span class="p">,</span><span class="n">adjust_subplot_top</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span><span class="s1">&#39;examples/example-bar-and-line-urban-chart.gif&#39;</span><span class="p">,[</span><span class="n">animated_bar_chart</span><span class="p">,</span><span class="n">animated_line_chart</span><span class="p">],</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Urban Population 1977 - 2018&#39;</span><span class="p">,</span> <span class="n">adjust_subplot_top</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/example-bar-and-line-urban-chart.gif"><img alt="Urban Population Bar &amp; Line Chart" src="_images/example-bar-and-line-urban-chart.gif" /></a>
 </div>
-<div class="section" id="id17">
-<h4>Life Expectancy in G7 Countries<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id19">
+<h3>Life Expectancy in G7 Countries<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -556,14 +590,14 @@
     <span class="s2">&quot;examples/life-expectancy.gif&quot;</span><span class="p">,</span>
     <span class="n">plots</span><span class="o">=</span><span class="p">[</span><span class="n">animated_bar_chart</span><span class="p">,</span> <span class="n">animated_line_chart</span><span class="p">],</span>
     <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Life expectancy in G7 countries up to 2015&quot;</span><span class="p">,</span>
-    <span class="n">adjust_subplot_left</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">adjust_subplot_left</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">adjust_subplot_top</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/life-expectancy.gif"><img alt="Life Expectancy Chart" src="_images/life-expectancy.gif" /></a>
 </div>
-<div class="section" id="id18">
-<h4>NSW COVID Visualisation<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id20">
+<h3>NSW COVID Visualisation<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -639,7 +673,7 @@
         <span class="s1">&#39;Lockdown&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;31/03/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">)</span>
     <span class="p">},</span>
     <span class="n">fill_under_line_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
-    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">add_legend</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
 <span class="n">map_chart</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Cases by Location&#39;</span><span class="p">)</span>
@@ -650,7 +684,7 @@
     <span class="n">grouped_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
     <span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cumulative Total Cases&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cumulative Total Cases&quot;</span><span class="p">,</span> <span class="n">add_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="p">)</span>
 
 
@@ -672,8 +706,8 @@
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span>
 
 <span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;figure.autolayout&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
-
-<span class="n">figs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="c1"># make sure figures are `Figure()` instances</span>
+<span class="n">figs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
 <span class="n">gs</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">f3_ax1</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
 <span class="n">f3_ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">bar_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
@@ -697,14 +731,15 @@
 <span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span>
     <span class="s1">&#39;examples/nsw-covid.gif&#39;</span><span class="p">,</span>
     <span class="n">plots</span><span class="p">,</span>
-    <span class="n">figs</span>
+    <span class="n">figs</span><span class="p">,</span>
+    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/nsw-covid.gif"><img alt="NSW COVID" src="_images/nsw-covid.gif" /></a>
 </div>
-<div class="section" id="id19">
-<h4>Italy COVID Visualisation<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id21">
+<h3>Italy COVID Visualisation<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -754,7 +789,7 @@
 
     <span class="p">},</span>
     <span class="n">fill_under_line_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
-    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">add_legend</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
 <span class="n">map_chart</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Cases by Location&#39;</span><span class="p">)</span>
@@ -763,14 +798,14 @@
     <span class="n">cases_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
     <span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cumulative Total Cases&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cumulative Total Cases&quot;</span><span class="p">,</span><span class="n">add_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">current_total</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
     <span class="n">total</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Total : </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">total</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">85</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">85</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
 
 <span class="n">race_chart</span> <span class="o">=</span> <span class="n">cases_df</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span>
     <span class="n">n_visible</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cases by Region&quot;</span><span class="p">,</span> <span class="n">period_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">period_summary_func</span><span class="o">=</span><span class="n">current_total</span>
@@ -787,8 +822,8 @@
 <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
 
 <span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;figure.autolayout&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
-
-<span class="n">figs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="c1"># make sure figures are `Figure()` instances</span>
+<span class="n">figs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
 <span class="n">gs</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">f3_ax1</span> <span class="o">=</span> <span class="n">figs</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
 <span class="n">f3_ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">bar_chart</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
@@ -813,15 +848,21 @@
 <span class="n">pandas_alive</span><span class="o">.</span><span class="n">animate_multiple_plots</span><span class="p">(</span>
     <span class="s1">&#39;examples/italy-covid.gif&#39;</span><span class="p">,</span>
     <span class="n">plots</span><span class="p">,</span>
-    <span class="n">figs</span>
+    <span class="n">figs</span><span class="p">,</span>
+    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <a class="reference external image-reference" href="examples/italy-covid.gif"><img alt="Italy COVID" src="_images/italy-covid.gif" /></a>
 </div>
+<div class="section" id="id22">
+<h3>Simple Pendulum Motion<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>Jupyter notebook: <a class="reference external" href="examples/test_notebooks/pendulum_sample.ipynb">pendulum_sample.ipynb</a></p>
+<a class="reference external image-reference" href="examples/test_notebooks/pend-combined-2.gif"><img alt="Bubble Chart Example" src="_images/pend-combined-2.gif" /></a>
 </div>
-<div class="section" id="id20">
-<h3>HTML 5 Videos<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id24">
+<h2>HTML 5 Videos<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Pandas_Alive</span></code> supports rendering HTML5 videos through the use of <code class="docutils literal notranslate"><span class="pre">df.plot_animated().get_html5_video()</span></code>. <code class="docutils literal notranslate"><span class="pre">.get_html5_video</span></code> saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.</p>
 <p>This is typically used in Jupyter notebooks.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
@@ -835,41 +876,51 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id21">
-<h3>Progress Bars!<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
-<p>Generating animations can take some time, so enable progress bars by installing <a class="reference external" href="https://github.com/tqdm/tqdm">tqdm</a> with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tqdm</span></code> and using the keyword <code class="docutils literal notranslate"><span class="pre">enable_progress_bar=True</span></code>.</p>
-<p>By default Pandas_Alive will create a <code class="docutils literal notranslate"><span class="pre">tqdm</span></code> progress bar for the number of frames to animate, and update the progres bar after each frame.</p>
+<div class="section" id="id25">
+<h2>Progress Bars!<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<p>Generating animations can take some time, so enable progress bars by installing <a class="reference external" href="https://github.com/tqdm/tqdm">tqdm</a> with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tqdm</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tqdm</span></code> and using the keyword <code class="docutils literal notranslate"><span class="pre">enable_progress_bar=True</span></code> together with <code class="docutils literal notranslate"><span class="pre">filename=</span></code>movie file name.</p>
+<p>By default Pandas_Alive will create a <code class="docutils literal notranslate"><span class="pre">tqdm</span></code> progress bar when saving to a file, for the number of frames to animate, and update the progres bar after each frame.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_alive</span>
 
 <span class="n">covid_df</span> <span class="o">=</span> <span class="n">pandas_alive</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span>
-
+<span class="c1"># add a filename=movie.mp4 or movie.gif to save to, in order to see the progress bar in action</span>
 <span class="n">covid_df</span><span class="o">.</span><span class="n">plot_animated</span><span class="p">(</span><span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Example of TQDM in action:</p>
 <a class="reference external image-reference" href="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"><img alt="TQDM Example" src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif" /></a>
 </div>
-</div>
-<div class="section" id="id22">
-<h2>Future Features<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id26">
+<h2>Future Features<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
 <p>A list of future features that may/may not be developed is:</p>
 <ul class="simple">
-<li><p><a href="#id23"><span class="problematic" id="id24">:raw-html-m2r:`&lt;del&gt;Geographic charts (currently using OSM export image, potential `geopandas &lt;https://geopandas.org/&gt;`_</span></a>)&lt;/del&gt;`</p></li>
-<li><p><a href="#id25"><span class="problematic" id="id26">:raw-html-m2r:`&lt;del&gt;Loading bar support (potential `tqdm &lt;https://github.com/tqdm/tqdm&gt;`_</span></a> or <a class="reference external" href="https://github.com/rsalmei/alive-progress">alive-progress</a>)&lt;/del&gt;`</p></li>
+<li><p>Add to line &amp; scatter charts the ability to plot ‘X’ vs ‘Y’, as already implemented with bubble plots.</p></li>
+<li><p>Add option of a colorbar for bubble plots when included in multiple plots. Currently only available for single bubble chart animations.</p></li>
+<li><p><a href="#id27"><span class="problematic" id="id28">:raw-html-m2r:`&lt;del&gt;Geographic charts (currently using OSM export image, potential `geopandas &lt;https://geopandas.org/&gt;`_</span></a>)&lt;/del&gt;`</p></li>
+<li><p><a href="#id29"><span class="problematic" id="id30">:raw-html-m2r:`&lt;del&gt;Loading bar support (potential `tqdm &lt;https://github.com/tqdm/tqdm&gt;`_</span></a> or <a class="reference external" href="https://github.com/rsalmei/alive-progress">alive-progress</a>)&lt;/del&gt;`</p></li>
 <li><p><span class="raw-html-m2r"><del>Potentially support writing to GIF in memory with https://github.com/maxhumber/gif</del></span></p></li>
 <li><p><span class="raw-html-m2r"><del>Support custom figures & axes for multiple plots (eg, gridspec)</del></span></p></li>
 </ul>
 </div>
-<div class="section" id="id27">
-<h2>Inspiration<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id31">
+<h2>Tutorials<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<p>Find tutorials on how to use <code class="docutils literal notranslate"><span class="pre">Pandas_Alive</span></code> over at:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://jackmckew.dev/creating-animated-plots-with-pandas_alive.html">https://jackmckew.dev/creating-animated-plots-with-pandas_alive.html</a></p></li>
+<li><p><a class="reference external" href="https://jackmckew.dev/geopandas-and-pandas-alive.html">https://jackmckew.dev/geopandas-and-pandas-alive.html</a></p></li>
+<li><p>Jupyter notebooks in <a class="reference external" href="./examples/test_notebooks/">test_notebooks</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="id32">
+<h2>Inspiration<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
 <p>The inspiration for this project comes from:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/dexplo/bar_chart_race">bar_chart_race</a> by <a class="reference external" href="https://github.com/tdpetrou">Ted Petrou</a></p></li>
 <li><p><a class="reference external" href="https://github.com/PatrikHlobil/Pandas-Bokeh">Pandas-Bokeh</a> by <a class="reference external" href="https://github.com/PatrikHlobil">Patrik Hlobil</a></p></li>
 </ul>
 </div>
-<div class="section" id="id28">
-<h2>Requirements<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id33">
+<h2>Requirements<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
 <p>If you get an error such as <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'MovieWriterRegistry'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">an</span> <span class="pre">iterator</span></code>, this signals there isn’t a writer library installed on your machine.</p>
 <p>This package utilises the <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html">matplotlib.animation function</a>, thus requiring a writer library.</p>
 <p>Ensure to have one of the supported tooling software installed prior to use!</p>
@@ -879,23 +930,26 @@
 <li><p>See more at <a class="reference external" href="https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes">https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes</a></p></li>
 </ul>
 <blockquote>
-<div><p>If the output file name has an extension of <code class="docutils literal notranslate"><span class="pre">.gif</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> will write this with <code class="docutils literal notranslate"><span class="pre">PIL</span></code> in memory</p>
+<div><p>If the output file name has an extension of <code class="docutils literal notranslate"><span class="pre">.gif</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> will write this with <code class="docutils literal notranslate"><span class="pre">PIL</span></code> in memory.</p>
 </div></blockquote>
 </div>
-<div class="section" id="id29">
-<h2>Documentation<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id34">
+<h2>Documentation<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h2>
 <p>Documentation is provided at <a class="reference external" href="https://jackmckew.github.io/pandas_alive/">https://jackmckew.github.io/pandas_alive/</a></p>
 </div>
-<div class="section" id="id30">
-<h2>Contributing<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id35">
+<h2>Contributing<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h2>
 <p>Pull requests are welcome! Please help to cover more and more chart types!</p>
-<div class="section" id="id31">
-<h3>Development<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id36">
+<h3>Development<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
 <p>To get started in development, clone a copy of this repository to your PC. This will now enable you to create a Jupyter notebook or a standalone <code class="docutils literal notranslate"><span class="pre">.py</span></code> file, and import <code class="docutils literal notranslate"><span class="pre">pandas_alive</span></code> as a local module. Now you can create new chart types in <code class="docutils literal notranslate"><span class="pre">pandas_alive/charts.py</span></code> or <code class="docutils literal notranslate"><span class="pre">pandas_alive/geocharts.py</span></code> to build to your hearts content!</p>
+<p>For Python packages for a development environment check <a class="reference external" href="./requirements.txt">requirements.txt</a> if using <code class="docutils literal notranslate"><span class="pre">PIP</span></code>, or <a class="reference external" href="./py38-pandas_alive.yml">py38-pandas_alive.yml</a> if using <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
+<p>If you are using <code class="docutils literal notranslate"><span class="pre">conda</span></code> and are new to setting up environments for collaboration on projects, here are some notes from a previous contributor using <cite>conda</cite>: [Python set up with conda for project collaboration](<a class="reference external" href="https://github.com/JackMcKew/pandas_alive/issues/11#issuecomment-691663712">https://github.com/JackMcKew/pandas_alive/issues/11#issuecomment-691663712</a>)</p>
+<p>If you wish to contribute new Jupyter notebooks with different application examples, please place them in this directory: <code class="docutils literal notranslate"><span class="pre">./examples/test_notebooks/</span></code>.</p>
 </div>
 </div>
-<div class="section" id="id33">
-<h2><a class="reference external" href="CHANGELOG.md">Changelog</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id38">
+<h2><a class="reference external" href="CHANGELOG.md">Changelog</a><a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -907,10 +961,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="developer.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="anaconda.html" class="btn btn-neutral float-right" title="Anaconda Tips &amp; Tricks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral float-left" title="Pandas_Alive 0.2.2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Pandas_Alive 0.2.3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

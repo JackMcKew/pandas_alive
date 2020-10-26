@@ -23,6 +23,8 @@ PieChart
    
       PieChart.calculate_new_figsize
    
+      PieChart.clearing
+   
       PieChart.create_figure
    
       PieChart.get_colors

@@ -1,0 +1,6 @@
+ScatterChart.clearing
+=====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: ScatterChart.clearing

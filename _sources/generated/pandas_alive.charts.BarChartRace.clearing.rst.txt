@@ -1,0 +1,6 @@
+BarChartRace.clearing
+=====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BarChartRace.clearing

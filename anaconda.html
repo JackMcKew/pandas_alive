@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Anaconda Tips &amp; Tricks &mdash; Pandas_Alive 0.2.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="developer.html" />
+    <link rel="prev" title="Pandas_Alive" href="README.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pandas_Alive
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Installation &amp; Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Anaconda Tips &amp; Tricks</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pandas_Alive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Anaconda Tips &amp; Tricks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/anaconda.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anaconda-tips-tricks">
+<h1>Anaconda Tips &amp; Tricks<a class="headerlink" href="#anaconda-tips-tricks" title="Permalink to this headline">¶</a></h1>
+<p>Thank you to <cite>SoundSpinning &lt;https://github.com/SoundSpinning&gt;</cite> over on Github for these fantastic notes! A direct link to the thread is here &lt;<a class="reference external" href="https://github.com/JackMcKew/pandas_alive/issues/11">https://github.com/JackMcKew/pandas_alive/issues/11</a>&gt;.</p>
+<p>Note: these comments refer to an installation on a Windows 10 PC.</p>
+<p>Preamble:
+Anaconda is a great starter program to learn Python for Data Science and others. With a single install you get hundreds of packages which will allow you to follow most tutorials while learning. This, most likely, will be via the Jupyter notebook app already included in the main install.
+Anaconda will install a default Python environment called base, and may be at least 3GB large on your PC. The main package &amp; environment manager is called conda. However, once you start working in collaboration with other Python projects, it is not recommended to continue with the base (default environment). This is because project authors will be careful to stick to specific package versions for development. To be able to work with these projects you’ll need to create new conda environments for each project, and then install those specific package versions under your new Python project environment.
+Therefore, to simply copy (clone) your (large) base environment into a new one is not a good idea. It’ll over time eat disc space, but also conda may become slow. Worst of all, you won’t guarantee that your setup will work with the package versions for that specific project.</p>
+<p>So, what to do next? This is what it worked for me and keeps disc size to a minimum and allows for many conda environments to work fine (so far) with other projects.</p>
+<p>1.- I uninstalled the whole of the Anaconda program from my PC, including deleting manually any anaconda entries anywhere on my machine.</p>
+<p>2.- I installed Miniconda3 under C:miniconda3. Make sure you do not install it under a path with spaces in it, or else things may break later on and cause hassles.
+Miniconda installs only conda, python and pip in the base (default) environment and a very small number of dependencies.</p>
+<p>3.- Set up conda &amp; the conda-forge channel:
+In order to use conda (as the general package &amp; environment manager) from base for all other conda environments without having to install it on each of them, all you need to do is to make sure you add to the (Windows) PATH the path to the conda main installation folders. It should look something like this in your PATH: C:miniconda3;C:miniconda3condabin;C:miniconda3Scripts … (your other PATH entries).
+Once this is done you can then call (use) the conda command from any other environment while keeping a single install of conda in the base env only.</p>
+<p>conda-forge is a community driven conda packages repository, which is recommended as your main channel for installs. pandas_alive was recently added to this channel, neat. You’ll need to execute these commands once in an Anaconda terminal to set this up permanently:
+conda config –add channels conda-forge
+conda config –set channel_priority strict
+After the above, each time you do conda install package-name on any environment it’ll look 1st into the conda-forge channel.</p>
+<p>4.- Set up a new conda env example:
+conda create -n py38 python=3.8
+conda activate py38
+conda install pandas matplotlib notebook pandas-alive ffmpeg xlrd jupyter_contrib_nbextensions tqdm
+This example will install the above main packages and (many) dependencies. To keep track of what’s installed in each env, conda can export YAML files so that they can later be used to create/update an env. You can create a <a href="#id1"><span class="problematic" id="id2">*</span></a>.yml for your new env like this:
+conda env export –from-history &gt; env-name.yml
+Note the –from-history flag. This is very handy as it’ll list only the main packages versions without their dependencies. This allows for a safer cross-platform install minimising breaks from dependencies. You can then continue hand editing this file when you add any main package and its version, without having to list all dependencies.</p>
+<p>Attached is a (small) .yml file which worked for me setting/updating a conda environment to work with the pandas_alive project.
+py38-pandas_alive.zip:
+conda create -f py38-pandas_alive.yml
+or after hand editing the file adding new main packages:
+conda update -f py38-pandas_alive.yml</p>
+<p>NOTE: I found a gotcha in Windows where conda will write the 1st .yml file encoded as UTF-16. This file will not work later on with conda create/update. The trick is to open the .yml file in your text editor, change the encoding to UTF-8 and save the file. Then continue editing it if required in your text editor and should work fine from there onwards.</p>
+<p>5.- Some recommended setting in Windows:
+If you’ve come this far here, you most likely have played with GIT and have git for windows installed. From my experience I also recommend to install MINGW64 on your Windows setup. Both combined and set up properly will bring all the useful Linux tools you may need, not only on the git bash terminal, but also across the Windows Powershell command window too.</p>
+<p>The above is useful with Python via conda, because you need to use the Anaconda command window. In Windows when you 1st search for this you’ll most likely be confronted with two options: usual CMD style prompt, and the Powershell prompt version. I suggest you use the latter and pin it to your task bar for future easy access. If all set up properly then you will have access to the history of commands from all windows and with Linux commands.</p>
+<p>A very useful shortcut is Ctrl+r. This will allow you to search back in the history of commands as you type a string. Repeat the same shortcut if the 1st search is not the command you want and it’ll search back further. It saves a lot of time when trying to remember and/or go back to long or unusual commands without having to google them again.</p>
+<p>Another useful conda command when you need to clean up your overall python set up is:
+conda clean -a</p>
+<p>6.- IDE (code editor choice):
+I used for years Sublime Text. However, I recently switched to VS code and it seems brilliant, free and with monthly updates. It has an instant and excellent integration with GIT and Python environments, including conda. Well worth a try.</p>
+<p>Please add to this thread any other tips and tricks from your experience with conda installs.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="developer.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="README.html" class="btn btn-neutral float-left" title="Pandas_Alive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jack McKew
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

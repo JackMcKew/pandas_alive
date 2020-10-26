@@ -1,0 +1,6 @@
+BubbleChart.clearing
+====================
+
+.. currentmodule:: pandas_alive.charts
+
+.. automethod:: BubbleChart.clearing

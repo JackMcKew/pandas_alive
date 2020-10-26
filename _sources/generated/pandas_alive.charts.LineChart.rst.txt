@@ -23,6 +23,8 @@ LineChart
    
       LineChart.calculate_new_figsize
    
+      LineChart.clearing
+   
       LineChart.create_figure
    
       LineChart.get_colors

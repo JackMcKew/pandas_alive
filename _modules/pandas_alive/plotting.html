@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pandas_alive.plotting &mdash; Pandas_Alive 0.2.2 documentation</title>
+  <title>pandas_alive.plotting &mdash; Pandas_Alive 0.2.3 documentation</title>
   
 
   
@@ -81,6 +81,7 @@
               <p class="caption"><span class="caption-text">Getting Started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../README.html">Installation &amp; Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../anaconda.html">Anaconda Tips &amp; Tricks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developers</span></p>
 <ul>
@@ -217,20 +218,20 @@
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span>
     <span class="n">interpolate_period</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">steps_per_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">steps_per_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">period_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
     <span class="n">period_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">6.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">cmap</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Colormap</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;dark24&quot;</span><span class="p">,</span>
-    <span class="n">tick_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="n">tick_label_size</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
     <span class="n">period_label</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span>
         <span class="nb">bool</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
     <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">period_summary_func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fixed_max</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">dpi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
+    <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
     <span class="n">writer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">enable_progress_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="c1"># Bar chart</span>
@@ -245,15 +246,18 @@
     <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">label_events</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fill_under_line_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">add_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="c1"># Scatter Chart</span>
     <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="c1"># Bubble Chart</span>
     <span class="n">x_data_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">y_data_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">size_data_label</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">size_data_label</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">color_data_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">vmax</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">ScatterChart</span><span class="p">,</span> <span class="n">BarChartRace</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">PieChart</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChart</span><span class="p">,</span> <span class="n">BarChartRace</span><span class="p">,</span> <span class="n">BubbleChart</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">PieChart</span><span class="p">,</span> <span class="n">ScatterChart</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create animated charts with matplotlib and pandas</span>
 
@@ -300,11 +304,11 @@
 
 <span class="sd">        title (str, optional): Title of plot. Defaults to None.</span>
 
-<span class="sd">        fig (plt.figure, optional): For greater control over the aesthetics, supply your own figure. Defaults to None.</span>
+<span class="sd">        fig (plt.Figure, optional): For greater control over the aesthetics, supply your own figure. Defaults to None.</span>
 
 <span class="sd">        cmap (typing.Union[str, Colormap, typing.List[str]], optional): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html. Defaults to &quot;dark24&quot;.</span>
 
-<span class="sd">        tick_label_size (typing.Union[int, float], optional): Size in points of tick labels. Defaults to 7.</span>
+<span class="sd">        tick_label_size (typing.Union[int, float, str], optional): Size in points of tick labels. Defaults to 7.</span>
 
 <span class="sd">        period_label (typing.Union[bool, typing.Dict[str, typing.Union[int, float, str]]], optional): If `True` or dict, use the index as a large text label on the axes whose value changes.</span>
 <span class="sd">            Use a dictionary to supply the exact position of the period along with any valid parameters of the matplotlib `text` method.</span>
@@ -411,7 +415,7 @@
 <span class="sd">            Label passed all values will be used for the size of each point on the plot.</span>
 <span class="sd">            Otherwise a int can be passed for all points to be that size.</span>
 
-<span class="sd">        color_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults. to &quot;blue&quot;.</span>
+<span class="sd">        color_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults to &quot;blue&quot;.</span>
 
 <span class="sd">            Label passed all values will be used to create a colourmap for points.</span>
 <span class="sd">            Otherwise a string can be passed of a named color by matplotlib for all points to be that color.</span>
@@ -420,7 +424,7 @@
 <span class="sd">        ValueError: If chart type is not supported, raise error</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        typing.Union[ScatterChart, BarChart, LineChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.</span>
+<span class="sd">        typing.Union[BarChart, BarChartRace, BubbleChart, LineChart, PieChart, ScatterChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">input_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
@@ -485,6 +489,7 @@
             <span class="n">line_width</span><span class="o">=</span><span class="n">line_width</span><span class="p">,</span>
             <span class="n">label_events</span><span class="o">=</span><span class="n">label_events</span><span class="p">,</span>
             <span class="n">fill_under_line_color</span><span class="o">=</span><span class="n">fill_under_line_color</span><span class="p">,</span>
+            <span class="n">add_legend</span><span class="o">=</span><span class="n">add_legend</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
@@ -509,6 +514,7 @@
             <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
             <span class="n">enable_progress_bar</span><span class="o">=</span><span class="n">enable_progress_bar</span><span class="p">,</span>
             <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+            <span class="n">add_legend</span><span class="o">=</span><span class="n">add_legend</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
@@ -571,6 +577,8 @@
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span>
             <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+            <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
             <span class="n">tick_label_size</span><span class="o">=</span><span class="n">tick_label_size</span><span class="p">,</span>
             <span class="n">period_label</span><span class="o">=</span><span class="n">period_label</span><span class="p">,</span>
             <span class="n">period_summary_func</span><span class="o">=</span><span class="n">period_summary_func</span><span class="p">,</span>
@@ -594,8 +602,9 @@
     <span class="n">plots</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">BarChartRace</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">PieChart</span><span class="p">,</span> <span class="n">ScatterChart</span><span class="p">]],</span>
     <span class="n">custom_fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title_fontsize</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">title_fontsize</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">144</span><span class="p">,</span>
+    <span class="n">enable_progress_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">adjust_subplot_left</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span>
     <span class="n">adjust_subplot_right</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
     <span class="n">adjust_subplot_bottom</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
@@ -603,62 +612,98 @@
     <span class="n">adjust_subplot_wspace</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
     <span class="n">adjust_subplot_hspace</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Plot multiple animated subplots with plt.subplots()</span>
+    <span class="sd">&quot;&quot;&quot; Plot multiple animated subplots with plt.subplots().</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        filename (str): Output file name with extension to rite to</span>
-<span class="sd">        plots (typing.List[typing.Union[BarChart, LineChart]]): List of chart instances</span>
+<span class="sd">        filename (str): Output file name with extension to write to.</span>
+
+<span class="sd">        plots (typing.List[typing.Union[BarChartRace, LineChart, PieChart, ScatterChart]]): List of chart instances.</span>
+
+<span class="sd">        custom_fig (plt.Figure, optional): For greater control over the aesthetics, supply your own Figure. Defaults to None.</span>
+<span class="sd">        </span>
 <span class="sd">        title (str, optional): Overall title for plots (suptitle). Defaults to None.</span>
-<span class="sd">        title_fontsize (typing.Union[int, float], optional): Font size for suptitle. Defaults to 16.</span>
+
+<span class="sd">        title_fontsize (typing.Union[int, float, str], optional): Font size for suptitle. Defaults to 16.</span>
+
 <span class="sd">        dpi (int, optional): Custom DPI to increase resolution. Defaults to 144.</span>
-<span class="sd">        adjust_subplot_left (float, optional): the left side of the subplots of the figure. Defaults to 0.125.</span>
+
+<span class="sd">        enable_progress_bar (bool, optional): Enable tqdm bar to show progress on generating animation, see more details at https://github.com/tqdm/tqdm. Defaults to False.</span>
+
+<span class="sd">        adjust_subplot_left (float, optional): the left side of the subplots of the figure. Defaults to 0.15.</span>
+
 <span class="sd">        adjust_subplot_right (float, optional): the right side of the subplots of the figure. Defaults to 0.9.</span>
+<span class="sd">        </span>
 <span class="sd">        adjust_subplot_bottom (float, optional): the bottom of the subplots of the figure. Defaults to 0.1.</span>
+<span class="sd">        </span>
 <span class="sd">        adjust_subplot_top (float, optional): the top of the subplots of the figure. Defaults to 0.9.</span>
+<span class="sd">        </span>
 <span class="sd">        adjust_subplot_wspace (float, optional): the amount of width reserved for space between subplots, expressed as a fraction of the average axis width. Defaults to 0.2.</span>
-<span class="sd">        adjust_subplot_hspace (float, optional): the amount of height reserved for space between subplots, expressed as a fraction of the average axis height. Defaults to 0.2.</span>
+<span class="sd">        </span>
+<span class="sd">        adjust_subplot_hspace (float, optional): the amount of height reserved for space between subplots, expressed as a fraction of the average axis height. Defaults to 0.25.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length</span>
+<span class="sd">        UserWarning: If Error found when plotting, prompt user to ensure indexes of plots are same length.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">update_all_graphs</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="c1"># Current figure just number of rows for number of plots</span>
+    <span class="c1"># TODO add option for number of rows/columns</span>
+    <span class="c1"># TODO Use gridspec?</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">custom_fig</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">)):</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">custom_fig</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span>
+    
+    <span class="c1"># Function to remove all existing lines, collections, etc from the figure</span>
+    <span class="c1"># after saving the animation and at the start of the animation.</span>
+    <span class="c1"># It turns out that by default, `FuncAnimation()` makes 2 zero frames,</span>
+    <span class="c1"># which were then passed onto `update_all_graphs()`. Hence, partly the original problem </span>
+    <span class="c1"># with combined plots looking wrong, as they plotted 2 zero frames with old contents.</span>
+    <span class="c1"># SO entry on the matter: </span>
+    <span class="c1"># https://stackoverflow.com/questions/49451405/matplotlibs-funcanimation-calls-init-func-more-than-once</span>
+    <span class="k">def</span> <span class="nf">clearing</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function for updating all plots provided as a list via their respective `anim_func` method</span>
+<span class="sd">        Function to remove all existing lines, collections, etc at the start of the animation AND after a save. This avoids old contents to be passed onto new multiple animations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">lines</span> <span class="o">+</span> <span class="n">ax</span><span class="o">.</span><span class="n">collections</span> <span class="o">+</span> <span class="n">ax</span><span class="o">.</span><span class="n">containers</span> <span class="o">+</span> <span class="n">ax</span><span class="o">.</span><span class="n">texts</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+
+    <span class="n">num_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_frames</span><span class="p">())</span>
+    <span class="c1"># This is setup here and not based directly on a plot df (e.g. plots[0]) </span>
+    <span class="c1"># coz it causes trouble when passing a `custom_fig` and re-using axes. </span>
+    <span class="c1"># It mixes this new progress bar with the one used previously for an </span>
+    <span class="c1"># individual animation for the same plot df. At least on Jupyter notebooks.</span>
+    <span class="k">if</span> <span class="n">enable_progress_bar</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+        <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">num_frames</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">update_all_graphs</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for updating all plots provided as a list via their respective `anim_func` method.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            frame (int): Frame to animate</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            UserWarning: DataFrames apart of plots must have same length of index</span>
+<span class="sd">            UserWarning: DataFrames for each plot must have the same index length.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">plot</span><span class="o">.</span><span class="n">anim_func</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">UserWarning</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Ensure all plots share index length </span><span class="si">{</span><span class="p">[</span><span class="n">plot</span><span class="o">.</span><span class="n">get_frames</span><span class="p">()</span> <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Ensure all plots share index length </span><span class="si">{</span><span class="p">[</span><span class="n">plot</span><span class="o">.</span><span class="n">get_frames</span><span class="p">()</span> <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]</span><span class="si">}</span><span class="s2">. Also, when passing a `custom_fig=` ensure it is a `Figure()` instance, and not a `figure()` one. The latter causes very poor performance in `matplotlib` with animations.&quot;</span>
                 <span class="p">)</span>
-
-    <span class="c1"># Current just number of columns for number of plots</span>
-    <span class="c1"># TODO add option for number of rows/columns</span>
-    <span class="c1"># TODO Use gridspec?</span>
+        <span class="k">if</span> <span class="n">enable_progress_bar</span><span class="p">:</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    
 
     <span class="c1"># Otherwise titles overlap and adjust_subplot does nothing</span>
     <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span>
-
     <span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;figure.autolayout&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">custom_fig</span><span class="p">:</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">custom_fig</span>
-        <span class="n">axes</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span>
-
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;Ensure number of axes in custom figure and number of plots match&quot;</span>
-        <span class="p">)</span>
-    <span class="c1"># fig, axes = plt.subplots(2,2)</span>
 
     <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
@@ -684,9 +729,11 @@
     <span class="c1"># plt.subplots_adjust(top=0.85)</span>
     <span class="c1"># plt.subplots_adjust()</span>
     <span class="c1"># plt.rcParams.update({&#39;figure.autolayout&#39;: True})</span>
-
+    <span class="n">num_plots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">plot</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
         <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">])</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span>
         <span class="c1"># plot.set_x_y_limits(plot.df,1,axes[num])</span>
         <span class="k">if</span> <span class="n">plot</span><span class="o">.</span><span class="n">fixed_max</span><span class="p">:</span>
             <span class="c1"># Hodgepodge way of fixing this, should refactor to contain all figures and axes</span>
@@ -695,52 +742,78 @@
                 <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">plot</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">plot</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;BarChartRace&quot;</span> <span class="ow">and</span> <span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span>
                 <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">plot</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
-
-        <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">num</span><span class="p">]</span>
+        <span class="c1"># TODO: add colorbar from bubbleChart if it exists, into multiple plots</span>
 
         <span class="n">plot</span><span class="o">.</span><span class="n">init_func</span><span class="p">()</span>
 
-    <span class="c1"># fig.tight_layout()</span>
-
-    <span class="n">fps</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">/</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">period_length</span> <span class="o">*</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps_per_period</span>
-    <span class="n">interval</span> <span class="o">=</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">period_length</span> <span class="o">/</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps_per_period</span>
-    <span class="n">anim</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span>
-        <span class="n">fig</span><span class="p">,</span>
-        <span class="n">update_all_graphs</span><span class="p">,</span>
-        <span class="nb">min</span><span class="p">([</span><span class="nb">max</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">get_frames</span><span class="p">())</span> <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]),</span>
-        <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="c1"># anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)</span>
-    <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;gif&quot;</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">io</span>
-        <span class="kn">import</span> <span class="nn">matplotlib</span>
-
-        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
-        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-
-        <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_frames</span><span class="p">():</span>
-            <span class="n">frame</span> <span class="o">=</span> <span class="n">update_all_graphs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
-            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">)</span>
-            <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
-            <span class="n">filename</span><span class="p">,</span>
-            <span class="n">save_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">append_images</span><span class="o">=</span><span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
-            <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">duration</span><span class="o">=</span><span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">period_length</span> <span class="o">/</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps_per_period</span><span class="p">,</span>
-            <span class="n">loop</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="c1"># Check for number of axes vs plots here, in case a colorbar axes has been added.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_plots</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Ensure number of axes in figure and number of plots match&quot;</span>
         <span class="p">)</span>
-        <span class="c1"># anim.save(filename, fps=fps, dpi=dpi, writer=&quot;imagemagick&quot;)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span></div>
+
+    
+    <span class="k">def</span> <span class="nf">save_multiple</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Save method for `FuncAnimation` for multiple plots.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): File name with extension to save animation to, supported formats at https://matplotlib.org/3.1.1/api/animation_api.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fps</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">/</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">period_length</span> <span class="o">*</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps_per_period</span>
+        <span class="n">interval</span> <span class="o">=</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">period_length</span> <span class="o">/</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">steps_per_period</span>
+
+        <span class="c1"># Note: `init_func=` is required for multiple plots to work properly,</span>
+        <span class="c1"># or else an additional zero frame may appear in the loop showing duplicates.</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span>
+            <span class="n">func</span><span class="o">=</span><span class="n">update_all_graphs</span><span class="p">,</span>
+            <span class="n">frames</span><span class="o">=</span><span class="n">num_frames</span><span class="p">,</span>
+            <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">,</span>
+            <span class="n">init_func</span><span class="o">=</span><span class="n">clearing</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">writer</span><span class="p">:</span>
+                <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">writer</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;gif&quot;</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">io</span>
+                    <span class="kn">import</span> <span class="nn">matplotlib</span>
+                    <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
+                    <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+                    <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">):</span>
+                        <span class="n">update_all_graphs</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+                        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+                        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">)</span>
+                        <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                        <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+                    <span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+                        <span class="n">filename</span><span class="p">,</span>
+                        <span class="n">save_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">append_images</span><span class="o">=</span><span class="n">frames</span><span class="p">[:],</span>
+                        <span class="n">optimize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">duration</span><span class="o">=</span><span class="n">interval</span><span class="p">,</span>
+                        <span class="n">loop</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">enable_progress_bar</span><span class="p">:</span>
+                <span class="n">progress_bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="c1"># Clearing axes contents after save, so that fig, axes can be re-used in a </span>
+            <span class="c1"># consequent multiple plot after this one</span>
+            <span class="n">clearing</span><span class="p">()</span>
+    
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/main/README.md#requirements for more details&quot;</span>
+            <span class="p">)</span>
+    <span class="c1"># save multiple plots</span>
+    <span class="n">save_multiple</span><span class="p">(</span><span class="n">verify_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span></div>
 
 
 <span class="c1">##############################################################################</span>

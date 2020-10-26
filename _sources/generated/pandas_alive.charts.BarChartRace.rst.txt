@@ -25,6 +25,8 @@ BarChartRace
    
       BarChartRace.calculate_ranks
    
+      BarChartRace.clearing
+   
       BarChartRace.create_figure
    
       BarChartRace.get_colors

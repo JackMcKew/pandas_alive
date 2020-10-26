@@ -23,6 +23,8 @@ BubbleChart
    
       BubbleChart.calculate_new_figsize
    
+      BubbleChart.clearing
+   
       BubbleChart.create_figure
    
       BubbleChart.get_colors
