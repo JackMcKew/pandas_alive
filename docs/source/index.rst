@@ -20,6 +20,8 @@ With :mod:`Pandas_alive`, creating stunning, animated visualisations is as easy 
 
    Installation & Examples <README>
 
+   Anaconda Tips & Tricks <anaconda>
+
 
 .. toctree::
    :caption: Developers
