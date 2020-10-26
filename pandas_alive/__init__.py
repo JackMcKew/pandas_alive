@@ -21,12 +21,12 @@ from .plotting import AnimatedAccessor, plot, animate_multiple_plots
 
 from .base import load_dataset
 
-version = "0.2.2"
+version = "0.2.3"
 
 
 plot_animated = CachedAccessor("plot_animated", AnimatedAccessor)
 pd.DataFrame.plot_animated = plot_animated
-pd.Series.plot_animated = plot
+pd.Series.plot_animated = plot_animated
 
 # Define plot_animated method for GeoPandas and Series:
 

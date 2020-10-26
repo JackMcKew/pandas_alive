@@ -66,7 +66,7 @@ class BarChartRace(_BaseChart):
             import warnings
 
             warnings.warn(
-                "Plotting too many bars may result in undesirable output, use `n_visible=5 to limit number of bars"
+                "Plotting too many bars may result in undesirable output, use `n_visible=15` to limit number of bars"
             )
 
         self.validate_params()
@@ -89,6 +89,8 @@ class BarChartRace(_BaseChart):
         self.orig_index = self.df.index.astype("str")
 
         self.bar_colors = self.get_colors(self.cmap)
+
+        self.ax.tick_params(labelsize=self.tick_label_size)
 
     def validate_params(self):
         """ Validate parameters provided to chart instance
@@ -339,9 +341,9 @@ class BarChartRace(_BaseChart):
 
             if not self.ax.lines:
                 if self.orientation == "h":
-                    self.ax.axvline(val, lw=10, color=".5", zorder=0.5)
+                    self.ax.axvline(val, lw=8, color=".5", zorder=0.5)
                 else:
-                    self.ax.axhline(val, lw=10, color=".5", zorder=0.5)
+                    self.ax.axhline(val, lw=8, color=".5", zorder=0.5)
             else:
                 line = self.ax.lines[0]
                 if self.orientation == "h":
@@ -350,7 +352,7 @@ class BarChartRace(_BaseChart):
                     line.set_ydata([val] * 2)
 
     def anim_func(self, i: int) -> None:
-        """ Animation function for plot bars
+        """ Animation function, removes all bars and updates legend/period annotation.
 
         Args:
             i (int): Frame index for animation
@@ -383,6 +385,7 @@ class ScatterChart(_BaseChart):
     """
 
     size: typing.Union[int, str] = attr.ib()
+    add_legend: bool = attr.ib()
 
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
@@ -394,6 +397,11 @@ class ScatterChart(_BaseChart):
             self._points[name] = {}
             self._points[name]["x"] = []
             self._points[name]["y"] = []
+            self._points[name]["size"] = []
+        if isinstance(self.size, str) and self.size not in self.data_cols:
+            raise ValueError(
+                f"Size provided as string: {self.size}, not present in dataframe columns"
+            )
 
     def plot_point(self, i: int) -> None:
         """
@@ -406,38 +414,57 @@ class ScatterChart(_BaseChart):
         Raises:
             ValueError: Size label must be a column in DataFrame
         """
-        super().set_x_y_limits(self.df, i, self.ax)
+        if not self.fixed_max:
+            super().set_x_y_limits(self.df, i, self.ax)
+        # If fixed_max is true then run it once to improve performance
+        elif i==0:
+            super().set_x_y_limits(self.df, i, self.ax)
+        j = 0
         for name, color in zip(self.data_cols, self.colors):
-            self._points[name]["x"].append(self.df[name].index[i])
-            self._points[name]["y"].append(self.df[name].iloc[i])
-            if isinstance(self.size, str):
-                if self.size not in self.data_cols:
-                    raise ValueError(
-                        f"Size provided as string: {self.size}, not present in dataframe columns"
-                    )
-                self._points[name]["size"] = self.df[self.size].iloc[i]
+            self._points[name]["x"] = self.df[name].index[:i+1]
+            self._points[name]["y"] = self.df[name].iloc[:i+1]
+            if isinstance(self.size, str) and self.size in self.data_cols:
+                self._points[name]["size"] = abs(self.df[self.size].iloc[:i+1])
             else:
-                self._points[name]["size"] = self.size
-            self.ax.scatter(
-                self._points[name]["x"],
-                self._points[name]["y"],
-                s=self._points[name]["size"],
-                color=color,
-                **self.kwargs,
-            )
+                self._points[name]["size"] = np.full((i+1), self.size)
+            if i==0:
+                self.sc = self.ax.scatter(
+                    self._points[name]["x"],
+                    self._points[name]["y"],
+                    s=self._points[name]["size"],
+                    color=color,
+                    label=name,
+                    edgecolors='none',
+                    **self.kwargs,
+                )
+                if self.add_legend:
+                    handles, labels = self.ax.get_legend_handles_labels()
+                    legend = self.ax.legend(handles[:], labels[:], fontsize="x-small")
+                    for handle in legend.legendHandles:
+                        handle.set_sizes([15])
+            else:
+                # update all points
+                self.ax.collections[j].set_color(color)
+                if isinstance(self.df.index, pd.DatetimeIndex):
+                    # date_array = np.c_[mdates.date2num(self._points[name]["x"]), self._points[name]["y"]]
+                    self.ax.collections[j].set_offsets(np.c_[mdates.date2num(self._points[name]["x"]), self._points[name]["y"]])
+                else:
+                    self.ax.collections[j].set_offsets(np.c_[self._points[name]["x"], self._points[name]["y"]])
+                self.ax.collections[j].set_sizes(self._points[name]["size"])
+            j += 1
+            
 
     def anim_func(self, i: int) -> None:
-        """ Animation function, removes all lines and updates legend/period annotation
+        """ Animation function, plots all scatter points and updates legend/period annotation.
 
         Args:
             i (int): Index of frame of animation
         """
-
         if self.enable_progress_bar:
             self.update_progress_bar()
-        self.plot_point(i)
         if self.period_fmt:
             self.show_period(i)
+        self.plot_point(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -459,6 +486,7 @@ class LineChart(_BaseChart):
     line_width: int = attr.ib()
     label_events: typing.Dict[str, str] = attr.ib()
     fill_under_line_color: str = attr.ib()
+    add_legend: bool = attr.ib()
 
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
@@ -478,63 +506,97 @@ class LineChart(_BaseChart):
             i (int): Index of frame for animation
         """
         # TODO Somehow implement n visible lines?
-        super().set_x_y_limits(self.df, i, self.ax)
+        if not self.fixed_max:
+            super().set_x_y_limits(self.df, i, self.ax)
+        # If fixed_max is true then run it once to improve performance
+        elif i==0:
+            super().set_x_y_limits(self.df, i, self.ax)
+        j = 0
+        # fills = [""]
         for name, color in zip(self.data_cols, self.line_colors):
-
-            self._lines[name]["x"].append(self.df[name].index[i])
-            self._lines[name]["y"].append(self.df[name].iloc[i])
-            self.ax.plot(
-                self._lines[name]["x"],
-                self._lines[name]["y"],
-                self.line_width,
-                color=color,
-                **self.kwargs,
-            )
-            # TODO add option bar locations
-            if self.label_events:
-                # from datetime import datetime
-                import numpy as np
-
-                for pos, (label, date) in enumerate(self.label_events.items()):
-                    event_index = np.sum(self.df.index <= date)
-                    if i >= event_index:
-                        event_start = self.df.index[event_index]
-                        trans = transforms.blended_transform_factory(
-                            self.ax.transData, self.ax.transAxes
-                        )
-
-                        # plt.text(label, 0.9-(pos*0.1), label, transform=trans)
-                        self.ax.axvline(event_start, lw=10, color=".5", zorder=0.5)
-                        self.ax.text(
-                            event_start, 0.9 - (pos * 0.1), label, transform=trans
-                        )
-
-            if self.fill_under_line_color:
-                self.ax.fill_between(
+            self._lines[name]["x"] = self.df[name].index[:i+1]
+            self._lines[name]["y"] = self.df[name].iloc[:i+1]
+            if i==0:
+                self.ax.plot(
                     self._lines[name]["x"],
                     self._lines[name]["y"],
-                    color=self.get_single_color(self.fill_under_line_color),
+                    self.line_width,
+                    color=color,
+                    label=name,
+                    **self.kwargs,
+                    )
+                if self.add_legend:
+                    handles, labels = self.ax.get_legend_handles_labels()
+                    self.ax.legend(handles[::2], labels[::2], fontsize="x-small")
+                # if self.fill_under_line_color:
+                #     self.ax.fill_between(
+                #         self._lines[name]["x"],
+                #         self._lines[name]["y"],
+                #         color=self.get_single_color(self.fill_under_line_color),
+                #         alpha=0.5,
+                #     )
+                #     fills = self.ax.collections[-1]
+            else:
+                # update all lines
+                self.ax.lines[j].set_color(color)
+                self.ax.lines[j].set_data(self._lines[name]["x"], self._lines[name]["y"])
+            j += 1
+            if self.fill_under_line_color:
+                # Fills need to be removed and re-generated, or else `matplotlib` 
+                # adds a new one per frame, performance degrades and alpha doesn't show properly.
+                if i == 0:
+                    self.ax.fill_between(
+                        self._lines[name]["x"],
+                        self._lines[name]["y"],
+                        color=self.get_single_color(self.fill_under_line_color),
+                        alpha=0.5,
+                    )
+                    self.fills = self.ax.collections[-1]
+                else:
+                    self.fills.remove()
+                    self.ax.fill_between(
+                        self._lines[name]["x"],
+                        self._lines[name]["y"],
+                        color=self.get_single_color(self.fill_under_line_color),
+                        alpha=0.5,
+                    )
+                    self.fills = self.ax.collections[-1]
+
+        # Set label_events once, it improves loop performance by x 4.
+        if self.label_events and i==0:
+            # from datetime import datetime
+            # import numpy as np
+
+            for pos, (label, date) in enumerate(self.label_events.items()):
+                event_index = (self.df.index <= date).sum()
+                # if i >= event_index:
+                event_start = self.df.index[event_index]
+                trans = transforms.blended_transform_factory(
+                    self.ax.transData, self.ax.transAxes
                 )
 
+                self.ax.axvline(event_start, lw=8, color=".5", zorder=0.5)
+                self.ax.text(
+                    event_start, 0.9 - (pos * 0.1), label, transform=trans, fontsize="x-small"
+                )
+        
+
     def anim_func(self, i: int) -> None:
-        """ Animation function, removes all lines and updates legend/period annotation
+        """ Animation function, updates all lines and legend/period annotation.
 
         Args:
             i (int): Index of frame of animation
         """
-        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
-        for line in self.ax.lines:
-            line.remove()
-        self.plot_line(i)
         if self.period_fmt:
             self.show_period(i)
+        self.plot_line(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation
         """
-        self.ax.plot([], [], self.line_width)
+        self.ax.plot([], [])
 
 
 @attr.s
@@ -599,12 +661,11 @@ class PieChart(_BaseChart):
         #     )
 
     def anim_func(self, i: int) -> None:
-        """ Animation function, removes all lines and updates legend/period annotation
+        """ Animation function, removes all wedges and updates legend/period annotation.
 
         Args:
             i (int): Index of frame of animation
         """
-        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for wedge in self.ax.patches:
@@ -649,14 +710,17 @@ class BarChart(_BaseChart):
         Args:
             i (int): Index of frame for animation
         """
-
-        # for text in self.ax.texts[int(bool(self.period_fmt)):]:
-        #     text.remove()
-
-        super().set_x_y_limits(self.df, i, self.ax)
+        if not self.fixed_max:
+            super().set_x_y_limits(self.df, i, self.ax)
+            self.ax.set_ylim(self.df.iloc[: i + 1].values.min(), self.df.iloc[: i + 1].values.max() + 1e-6)
+        # If fixed_max is true then run it once to improve performance
+        elif i==0:
+            super().set_x_y_limits(self.df, i, self.ax)
+            # bars are flat at the bottom/top, so no need to apply a tolerance like 
+            # with line/scatter charts.
+            self.ax.set_ylim(self.df.values.min(), self.df.values.max())
 
         for name, color in zip(self.data_cols, self.bar_colors):
-
             self._bars[name]["x"].append(self.df[name].index[i])
             self._bars[name]["y"].append(self.df[name].iloc[i])
             self.ax.bar(
@@ -668,12 +732,11 @@ class BarChart(_BaseChart):
             )
 
     def anim_func(self, i: int) -> None:
-        """ Animation function, removes all lines and updates legend/period annotation
+        """ Animation function, removes all bars and updates legend/period annotation.
 
         Args:
             i (int): Index of frame of animation
         """
-        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for bar in self.ax.containers:
@@ -705,14 +768,19 @@ class BubbleChart(_BaseChart):
 
     x_data_label: str = attr.ib()
     y_data_label: str = attr.ib()
-    size_data_label: typing.Union[int, str] = attr.ib()
+    size_data_label: typing.Union[int, float, str] = attr.ib()
     color_data_label: str = attr.ib()
+    vmin: typing.Union[int, float] = attr.ib()
+    vmax: typing.Union[int, float] = attr.ib()
 
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
         """
         super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
+        # Typically bubble plots are fixed scales on X & Y. Having varying 
+        # limits will look odd in most cases. So force to True.
+        # self.fixed_max = True
         self._points: typing.Dict = {}
         self.column_keys = self.df.columns.get_level_values(level=0).unique().tolist()
         # self.data_cols = self.df.columns.get_level_values(level=1).unique().tolist()
@@ -724,6 +792,16 @@ class BubbleChart(_BaseChart):
             and self.color_data_label in self.column_keys
         ):
             self.mapping["color"] = self.color_data_label
+            # setting up colorbar axes & limits when `color` is a pd column
+            self.color_bar = True
+            if self.cmap == "dark24":  # TODO: register "dark24" as a Colormap
+                self.cmap = "jet"
+            if self.vmin is None:
+                self.vmin = np.floor(self.df[self.mapping["color"]].values.min())
+            if self.vmax is None:
+                self.vmax = np.ceil(self.df[self.mapping["color"]].values.max())
+        else:
+            self.color_bar = False
         if self.x_data_label is None or self.y_data_label is None:
             raise ValueError("X Y labels must be provided at a minimum")
         if not (
@@ -733,6 +811,28 @@ class BubbleChart(_BaseChart):
             raise ValueError(
                 f"Provided keys must be in level 0 multi index, possible values: {self.column_keys}"
             )
+        if self.fixed_max:
+            # scale to allow canvas to attempt covering for bubble size when near min/max axes values
+            ax_xscale = (self.df[self.mapping["x"]].values.max() - self.df[self.mapping["x"]].values.min())*0.05
+            ax_yscale = (self.df[self.mapping["y"]].values.max() - self.df[self.mapping["y"]].values.min())*0.05
+            BBox = (
+                self.df[self.mapping["x"]].values.min() - ax_xscale,
+                self.df[self.mapping["x"]].values.max() + ax_xscale,
+                self.df[self.mapping["y"]].values.min() - ax_yscale,
+                self.df[self.mapping["y"]].values.max() + ax_yscale,
+            )
+            self.ax.set_xlim(BBox[0], BBox[1])
+            self.ax.set_ylim(BBox[2], BBox[3])
+    
+        
+        # TODO Add geopandas for map plots
+        # self.ax = self.show_image(
+        #     self.ax,
+        #     "C:\\Users\\jackm\\Documents\\GitHub\\pandas-alive\\data\\nsw_map.png",
+        #     extent=BBox,
+        #     zorder=0,
+        #     aspect="equal",
+        # )
 
     def plot_point(self, i: int) -> None:
         """
@@ -743,55 +843,47 @@ class BubbleChart(_BaseChart):
         Args:
             i (int): Frame to plot, will slice DataFrame at this index
         """
-        if self.fixed_max:
-            BBox = (
-                self.df[self.mapping["x"]].values.min(),
-                self.df[self.mapping["x"]].values.max(),
-                self.df[self.mapping["y"]].values.min(),
-                self.df[self.mapping["y"]].values.max(),
-            )
-            self.ax.set_xlim(BBox[0], BBox[1])
-            self.ax.set_ylim(BBox[2], BBox[3])
-
-        # TODO Add geopandas for map plots
-        # self.ax = self.show_image(
-        #     self.ax,
-        #     "C:\\Users\\jackm\\Documents\\GitHub\\pandas-alive\\data\\nsw_map.png",
-        #     extent=BBox,
-        #     zorder=0,
-        #     aspect="equal",
-        # )
-
         for output_key, column_key in self.mapping.items():
-            self._points[output_key] = self.df[column_key].iloc[i].values
-
-        self.ax.scatter(
-            self._points["x"],
-            self._points["y"],
+            self._points[output_key] = self.df[column_key].iloc[i]
+        
+        self.sc = self.ax.scatter(
+            x=self._points["x"],
+            y=self._points["y"],
             s=self._points["size"]
             if isinstance(self.size_data_label, str)
             else self.size_data_label,
             c=self._points["color"]
-            if isinstance(self.color_data_label, str)
-            and self.color_data_label in self.data_cols
+            if self.color_bar
             else self.color_data_label,
+            cmap=self.cmap,
+            alpha=0.8,
             **self.kwargs,
         )
+        # setting up colorbar when color is a pd column and doesn't exist 
+        # already from a previous animation run with the same custom figure.
+        if i==0 and self.color_bar:
+            self.cbar = self.fig.colorbar(self.sc)
+            # this sets colorbar scales & settings to remain constant for all frames
+            self.cbar.ax.tick_params(labelsize="small")
+            self.cbar.set_label(label="Size & Colour = "+self.color_data_label, fontsize="x-small")
+        if self.color_bar:
+            # this is required for all iterations to update colour on bubbles
+            self.sc.set_clim(self.vmin, self.vmax)
+
 
     def anim_func(self, i: int) -> None:
-        """ Animation function, removes all lines and updates legend/period annotation
+        """ Animation function, removes bubbles and updates legend/period annotation.
 
         Args:
             i (int): Index of frame of animation
         """
-        # self.ax.clear()
         if self.enable_progress_bar:
             self.update_progress_bar()
         for path in self.ax.collections:
             path.remove()
-        self.plot_point(i)
         if self.period_fmt:
             self.show_period(i)
+        self.plot_point(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation

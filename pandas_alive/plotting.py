@@ -67,20 +67,20 @@ def plot(
     filename: str = None,
     kind: str = "race",
     interpolate_period: bool = True,
-    steps_per_period: int = 10,
+    steps_per_period: int = 5,
     period_length: int = 500,
     period_fmt: str = "%d/%m/%Y",
     figsize: typing.Tuple[float, float] = (6.5, 3.5),
     title: str = None,
-    fig: plt.figure = None,
+    fig: plt.Figure = None,
     cmap: typing.Union[str, Colormap, typing.List[str]] = "dark24",
-    tick_label_size: typing.Union[int, float] = 7,
+    tick_label_size: typing.Union[int, float, str] = 7,
     period_label: typing.Union[
         bool, typing.Dict[str, typing.Union[int, float, str]]
     ] = True,
     period_summary_func: typing.Callable = None,
     fixed_max: bool = False,
-    dpi: float = 144,
+    dpi: int = 144,
     writer: str = None,
     enable_progress_bar: bool = False,
     # Bar chart
@@ -95,15 +95,18 @@ def plot(
     line_width: int = 2,
     label_events: typing.Dict[str, datetime.datetime] = None,
     fill_under_line_color: str = None,
+    add_legend: bool = True,
     # Scatter Chart
     size: int = 2,
     # Bubble Chart
     x_data_label: str = None,
     y_data_label: str = None,
-    size_data_label: typing.Union[int, str] = 2,
+    size_data_label: typing.Union[int, float, str] = 2,
     color_data_label: str = "blue",
+    vmin: typing.Union[int, float] = None,
+    vmax: typing.Union[int, float] = None,
     **kwargs,
-) -> typing.Union[ScatterChart, BarChartRace, LineChart, PieChart]:
+) -> typing.Union[BarChart, BarChartRace, BubbleChart, LineChart, PieChart, ScatterChart]:
     """
     Create animated charts with matplotlib and pandas
 
@@ -150,11 +153,11 @@ def plot(
 
         title (str, optional): Title of plot. Defaults to None.
 
-        fig (plt.figure, optional): For greater control over the aesthetics, supply your own figure. Defaults to None.
+        fig (plt.Figure, optional): For greater control over the aesthetics, supply your own figure. Defaults to None.
 
         cmap (typing.Union[str, Colormap, typing.List[str]], optional): Provide string of colormap name, colormap instance, single color instance or list of colors as supported by https://matplotlib.org/2.0.2/api/colors_api.html. Defaults to "dark24".
 
-        tick_label_size (typing.Union[int, float], optional): Size in points of tick labels. Defaults to 7.
+        tick_label_size (typing.Union[int, float, str], optional): Size in points of tick labels. Defaults to 7.
 
         period_label (typing.Union[bool, typing.Dict[str, typing.Union[int, float, str]]], optional): If `True` or dict, use the index as a large text label on the axes whose value changes.
             Use a dictionary to supply the exact position of the period along with any valid parameters of the matplotlib `text` method.
@@ -261,7 +264,7 @@ def plot(
             Label passed all values will be used for the size of each point on the plot.
             Otherwise a int can be passed for all points to be that size.
 
-        color_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults. to "blue".
+        color_data_label (str,optional): For use with Scatter plots, label passed must be in level 0 column in multiindex. Defaults to "blue".
 
             Label passed all values will be used to create a colourmap for points.
             Otherwise a string can be passed of a named color by matplotlib for all points to be that color.
@@ -270,7 +273,7 @@ def plot(
         ValueError: If chart type is not supported, raise error
 
     Returns:
-        typing.Union[ScatterChart, BarChart, LineChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.
+        typing.Union[BarChart, BarChartRace, BubbleChart, LineChart, PieChart, ScatterChart]: Return instance of chart type. Can be used with `pandas_alive.animate_multiple_plots` or `.save()`.
     """
     df = input_df.copy()
     if isinstance(df, pd.Series):
@@ -335,6 +338,7 @@ def plot(
             line_width=line_width,
             label_events=label_events,
             fill_under_line_color=fill_under_line_color,
+            add_legend=add_legend,
             kwargs=kwargs,
         )
         if filename:
@@ -359,6 +363,7 @@ def plot(
             writer=writer,
             enable_progress_bar=enable_progress_bar,
             size=size,
+            add_legend=add_legend,
             kwargs=kwargs,
         )
         if filename:
@@ -421,6 +426,8 @@ def plot(
             title=title,
             fig=fig,
             cmap=cmap,
+            vmin=vmin,
+            vmax=vmax,
             tick_label_size=tick_label_size,
             period_label=period_label,
             period_summary_func=period_summary_func,
@@ -444,8 +451,9 @@ def animate_multiple_plots(
     plots: typing.List[typing.Union[BarChartRace, LineChart, PieChart, ScatterChart]],
     custom_fig: plt.Figure = None,
     title: str = None,
-    title_fontsize: typing.Union[int, float] = 16,
+    title_fontsize: typing.Union[int, float, str] = 16,
     dpi: int = 144,
+    enable_progress_bar: bool = False,
     adjust_subplot_left: float = 0.15,
     adjust_subplot_right: float = 0.9,
     adjust_subplot_bottom: float = 0.1,
@@ -453,62 +461,98 @@ def animate_multiple_plots(
     adjust_subplot_wspace: float = 0.2,
     adjust_subplot_hspace: float = 0.25,
 ):
-    """ Plot multiple animated subplots with plt.subplots()
+    """ Plot multiple animated subplots with plt.subplots().
 
     Args:
-        filename (str): Output file name with extension to rite to
-        plots (typing.List[typing.Union[BarChart, LineChart]]): List of chart instances
+        filename (str): Output file name with extension to write to.
+
+        plots (typing.List[typing.Union[BarChartRace, LineChart, PieChart, ScatterChart]]): List of chart instances.
+
+        custom_fig (plt.Figure, optional): For greater control over the aesthetics, supply your own Figure. Defaults to None.
+        
         title (str, optional): Overall title for plots (suptitle). Defaults to None.
-        title_fontsize (typing.Union[int, float], optional): Font size for suptitle. Defaults to 16.
+
+        title_fontsize (typing.Union[int, float, str], optional): Font size for suptitle. Defaults to 16.
+
         dpi (int, optional): Custom DPI to increase resolution. Defaults to 144.
-        adjust_subplot_left (float, optional): the left side of the subplots of the figure. Defaults to 0.125.
+
+        enable_progress_bar (bool, optional): Enable tqdm bar to show progress on generating animation, see more details at https://github.com/tqdm/tqdm. Defaults to False.
+
+        adjust_subplot_left (float, optional): the left side of the subplots of the figure. Defaults to 0.15.
+
         adjust_subplot_right (float, optional): the right side of the subplots of the figure. Defaults to 0.9.
+        
         adjust_subplot_bottom (float, optional): the bottom of the subplots of the figure. Defaults to 0.1.
+        
         adjust_subplot_top (float, optional): the top of the subplots of the figure. Defaults to 0.9.
+        
         adjust_subplot_wspace (float, optional): the amount of width reserved for space between subplots, expressed as a fraction of the average axis width. Defaults to 0.2.
-        adjust_subplot_hspace (float, optional): the amount of height reserved for space between subplots, expressed as a fraction of the average axis height. Defaults to 0.2.
+        
+        adjust_subplot_hspace (float, optional): the amount of height reserved for space between subplots, expressed as a fraction of the average axis height. Defaults to 0.25.
 
     Raises:
-        UserWarning: If Error found when plotting, prompt user to ensure indexs of plots are same length
+        UserWarning: If Error found when plotting, prompt user to ensure indexes of plots are same length.
     """
-
-    def update_all_graphs(frame: int):
+    # Current figure just number of rows for number of plots
+    # TODO add option for number of rows/columns
+    # TODO Use gridspec?
+    if not custom_fig:
+        fig = plt.Figure()
+        for i in range(len(plots)):
+            fig.add_subplot(len(plots), 1, i+1)
+        axes = fig.axes
+    else:
+        fig = custom_fig
+        axes = fig.axes
+    
+    # Function to remove all existing lines, collections, etc from the figure
+    # after saving the animation and at the start of the animation.
+    # It turns out that by default, `FuncAnimation()` makes 2 zero frames,
+    # which were then passed onto `update_all_graphs()`. Hence, partly the original problem 
+    # with combined plots looking wrong, as they plotted 2 zero frames with old contents.
+    # SO entry on the matter: 
+    # https://stackoverflow.com/questions/49451405/matplotlibs-funcanimation-calls-init-func-more-than-once
+    def clearing():
         """
-        Function for updating all plots provided as a list via their respective `anim_func` method
+        Function to remove all existing lines, collections, etc at the start of the animation AND after a save. This avoids old contents to be passed onto new multiple animations.
+        """
+        for ax in fig.axes:
+            for item in ax.lines + ax.collections + ax.containers + ax.texts:
+                item.remove()
+
+    num_frames = len(plots[0].get_frames())
+    # This is setup here and not based directly on a plot df (e.g. plots[0]) 
+    # coz it causes trouble when passing a `custom_fig` and re-using axes. 
+    # It mixes this new progress bar with the one used previously for an 
+    # individual animation for the same plot df. At least on Jupyter notebooks.
+    if enable_progress_bar:
+        from tqdm.auto import tqdm
+        progress_bar = tqdm(total=num_frames)
+    
+    def update_all_graphs(frame: int) -> None:
+        """
+        Function for updating all plots provided as a list via their respective `anim_func` method.
 
         Args:
             frame (int): Frame to animate
 
         Raises:
-            UserWarning: DataFrames apart of plots must have same length of index
+            UserWarning: DataFrames for each plot must have the same index length.
         """
         for plot in plots:
             try:
                 plot.anim_func(frame)
             except:
                 raise UserWarning(
-                    f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}"
+                    f"Ensure all plots share index length {[plot.get_frames() for plot in plots]}. Also, when passing a `custom_fig=` ensure it is a `Figure()` instance, and not a `figure()` one. The latter causes very poor performance in `matplotlib` with animations."
                 )
-
-    # Current just number of columns for number of plots
-    # TODO add option for number of rows/columns
-    # TODO Use gridspec?
+        if enable_progress_bar:
+            progress_bar.update(1)
+    
 
     # Otherwise titles overlap and adjust_subplot does nothing
     from matplotlib import rcParams
-
     rcParams.update({"figure.autolayout": False})
-    if not custom_fig:
-        fig, axes = plt.subplots(len(plots))
-    else:
-        fig = custom_fig
-        axes = fig.axes
-
-    if len(axes) != len(plots):
-        raise ValueError(
-            "Ensure number of axes in custom figure and number of plots match"
-        )
-    # fig, axes = plt.subplots(2,2)
 
     if title is not None:
         fig.suptitle(title)
@@ -534,9 +578,11 @@ def animate_multiple_plots(
     # plt.subplots_adjust(top=0.85)
     # plt.subplots_adjust()
     # plt.rcParams.update({'figure.autolayout': True})
-
+    num_plots = len(plots)
     for num, plot in enumerate(plots):
         axes[num] = plot.apply_style(axes[num])
+        axes[num].set_title(plot.title)
+        plot.ax = axes[num]
         # plot.set_x_y_limits(plot.df,1,axes[num])
         if plot.fixed_max:
             # Hodgepodge way of fixing this, should refactor to contain all figures and axes
@@ -545,52 +591,78 @@ def animate_multiple_plots(
                 axes[num].set_xlim(axes[num].get_xlim()[0], plot.df.values.max() * 1.1)
             elif plot.__class__.__name__ == "BarChartRace" and plot.orientation == "v":
                 axes[num].set_ylim(axes[num].get_ylim()[0], plot.df.values.max() * 1.1)
-
-        axes[num].set_title(plot.title)
-        plot.ax = axes[num]
+        # TODO: add colorbar from bubbleChart if it exists, into multiple plots
 
         plot.init_func()
 
-    # fig.tight_layout()
-
-    fps = 1000 / plots[0].period_length * plots[0].steps_per_period
-    interval = plots[0].period_length / plots[0].steps_per_period
-    anim = FuncAnimation(
-        fig,
-        update_all_graphs,
-        min([max(plot.get_frames()) for plot in plots]),
-        interval=interval,
-    )
-
-    extension = filename.split(".")[-1]
-    # anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)
-    if extension == "gif":
-        import io
-        import matplotlib
-
-        matplotlib.use("Agg")
-        from PIL import Image
-
-        frames = []
-        for i in plots[0].get_frames():
-            frame = update_all_graphs(i)
-            buffer = io.BytesIO()
-            fig.savefig(buffer, format="png")
-            buffer.seek(0)
-            image = Image.open(buffer)
-            plt.close()
-            frames.append(image)
-        frames[0].save(
-            filename,
-            save_all=True,
-            append_images=frames[1:],
-            optimize=True,
-            duration=plots[0].period_length / plots[0].steps_per_period,
-            loop=0,
+    # Check for number of axes vs plots here, in case a colorbar axes has been added.
+    if len(fig.axes) != num_plots:
+        raise ValueError(
+            "Ensure number of axes in figure and number of plots match"
         )
-        # anim.save(filename, fps=fps, dpi=dpi, writer="imagemagick")
-    else:
-        anim.save(filename, fps=fps, dpi=dpi)
+
+    
+    def save_multiple(filename: str) -> None:
+        """ Save method for `FuncAnimation` for multiple plots.
+
+        Args:
+            filename (str): File name with extension to save animation to, supported formats at https://matplotlib.org/3.1.1/api/animation_api.html
+        """
+        fps = 1000 / plots[0].period_length * plots[0].steps_per_period
+        interval = plots[0].period_length / plots[0].steps_per_period
+
+        # Note: `init_func=` is required for multiple plots to work properly,
+        # or else an additional zero frame may appear in the loop showing duplicates.
+        anim = FuncAnimation(
+            fig=fig,
+            func=update_all_graphs,
+            frames=num_frames,
+            interval=interval,
+            init_func=clearing,
+        )
+
+        extension = filename.split(".")[-1]
+        try:
+            if plots[0].writer:
+                anim.save(filename, fps=fps, dpi=dpi, writer=plots[0].writer)
+            else:
+                if extension == "gif":
+                    import io
+                    import matplotlib
+                    matplotlib.use("Agg")
+                    from PIL import Image
+
+                    frames = []
+                    for frame in range(0, num_frames):
+                        update_all_graphs(frame)
+                        buffer = io.BytesIO()
+                        fig.savefig(buffer, format="png")
+                        buffer.seek(0)
+                        image = Image.open(buffer)
+                        plt.close()
+                        frames.append(image)
+                    frames[0].save(
+                        filename,
+                        save_all=True,
+                        append_images=frames[:],
+                        optimize=False,
+                        duration=interval,
+                        loop=0,
+                    )
+                else:
+                    anim.save(filename, fps=fps, dpi=dpi)
+            if enable_progress_bar:
+                progress_bar.close()
+            # Clearing axes contents after save, so that fig, axes can be re-used in a 
+            # consequent multiple plot after this one
+            clearing()
+    
+        except TypeError as e:
+            raise RuntimeError(
+                "Ensure that a matplotlib writer library is installed, see https://github.com/JackMcKew/pandas_alive/blob/main/README.md#requirements for more details"
+            )
+    # save multiple plots
+    save_multiple(verify_filename(filename))
 
 
 ##############################################################################

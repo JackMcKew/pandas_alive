@@ -19,24 +19,27 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Currently Supported Chart Types](#currently-supported-chart-types)
-    - [Horizontal Bar Chart Races](#horizontal-bar-chart-races)
-    - [Vertical Bar Chart Races](#vertical-bar-chart-races)
-    - [Line Charts](#line-charts)
-    - [Bar Charts](#bar-charts)
-    - [Scatter Charts](#scatter-charts)
-    - [Pie Charts](#pie-charts)
-    - [Bubble Charts](#bubble-charts)
-    - [GeoSpatial Charts](#geospatial-charts)
-      - [GeoSpatial Point Charts](#geospatial-point-charts)
-      - [Polygon GeoSpatial Charts](#polygon-geospatial-charts)
-  - [Multiple Charts](#multiple-charts)
-    - [Urban Population](#urban-population)
-    - [Life Expectancy in G7 Countries](#life-expectancy-in-g7-countries)
-    - [NSW COVID Visualisation](#nsw-covid-visualisation)
-    - [Italy COVID Visualisation](#italy-covid-visualisation)
-  - [HTML 5 Videos](#html-5-videos)
-  - [Progress Bars!](#progress-bars)
+- [Currently Supported Chart Types](#currently-supported-chart-types)
+  - [Horizontal Bar Chart Races](#horizontal-bar-chart-races)
+  - [Vertical Bar Chart Races](#vertical-bar-chart-races)
+  - [Line Charts](#line-charts)
+  - [Bar Charts](#bar-charts)
+  - [Scatter Charts](#scatter-charts)
+  - [Pie Charts](#pie-charts)
+  - [Bubble Charts](#bubble-charts)
+    - [Bubble Chart Example 1](#bubble-chart-example-1)
+    - [Bubble Chart Example 2](#bubble-chart-example-2)
+  - [GeoSpatial Charts](#geospatial-charts)
+    - [GeoSpatial Point Charts](#geospatial-point-charts)
+    - [Polygon GeoSpatial Charts](#polygon-geospatial-charts)
+- [Multiple Charts](#multiple-charts)
+  - [Urban Population](#urban-population)
+  - [Life Expectancy in G7 Countries](#life-expectancy-in-g7-countries)
+  - [NSW COVID Visualisation](#nsw-covid-visualisation)
+  - [Italy COVID Visualisation](#italy-covid-visualisation)
+  - [Simple Pendulum Motion](#simple-pendulum-motion)
+- [HTML 5 Videos](#html-5-videos)
+- [Progress Bars!](#progress-bars)
 - [Future Features](#future-features)
 - [Tutorials](#tutorials)
 - [Inspiration](#inspiration)
@@ -50,7 +53,7 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 
 ## Installation
 
-Install with `pip install pandas_alive`
+Install with `pip install pandas_alive` or `conda install pandas_alive -c conda-forge`
 
 ## Usage
 
@@ -68,12 +71,19 @@ The data below is an example of properly formatted data. It shows total deaths f
 
 To produce the above visualisation:
 
-- Check [Requirements](#requirements) first to ensure you have the tooling installed!
+- Check [Requirements](#Requirements) first to ensure you have the tooling installed!
 - Call `plot_animated()` on the DataFrame
     - Either specify a file name to write to with `df.plot_animated(filename='example.mp4')` or use `df.plot_animated().get_html5_video` to return a HTML5 video
 - Done!
 
-``` python
+
+**Note** *on custom figures in notebooks*:
+When setting up custom figures for animations in `Matplotlib` make sure to use the `Figure()` syntax and not `figure()` instance type. The latter causes animations in `Matplotlib`, and in turn in `pandas_alive`, to take twice as long to be generated when changing from '**F**igure' to '**f**igure' syntax.
+
+More on '**F**igure' vs '**f**igure' can be found in this [SO entry](https://stackoverflow.com/questions/28631741/prevent-matplotlib-statefulness/28633419#28633419), and this [other SO entry](https://stackoverflow.com/questions/16334588/create-a-figure-that-is-reference-counted/16337909#16337909).
+
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -81,11 +91,12 @@ covid_df = pandas_alive.load_dataset()
 covid_df.plot_animated(filename='examples/example-barh-chart.gif')
 ```
 
-### Currently Supported Chart Types
+## Currently Supported Chart Types
 
-#### Horizontal Bar Chart Races
+### Horizontal Bar Chart Races
 
-``` python
+
+```python
 import pandas as pd
 import pandas_alive
 
@@ -96,7 +107,8 @@ elec_df.fillna(0).plot_animated('examples/example-electricity-generated-australi
 
 ![Electricity Example Line Chart](examples/example-electricity-generated-australia.gif)
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -111,7 +123,8 @@ covid_df.plot_animated(filename='examples/summary-func-example.gif',period_summa
 
 ![Summary Func Example](examples/summary-func-example.gif)
 
-``` python
+
+```python
 import pandas as pd
 import pandas_alive
 
@@ -122,7 +135,8 @@ elec_df.fillna(0).plot_animated('examples/fixed-example.gif',period_fmt="%Y",tit
 
 ![Fixed Example](examples/fixed-example.gif)
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -132,9 +146,10 @@ covid_df.plot_animated(filename='examples/perpendicular-example.gif',perpendicul
 
 ![Perpendicular Example](examples/perpendicular-example.gif)
 
-#### Vertical Bar Chart Races
+### Vertical Bar Chart Races
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -144,38 +159,44 @@ covid_df.plot_animated(filename='examples/example-barv-chart.gif',orientation='v
 
 ![Example Barv Chart](examples/example-barv-chart.gif)
 
-#### Line Charts
+### Line Charts
 
 With as many lines as data columns in the DataFrame.
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
 
-covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line',period_label={'x':0.1,'y':0.9})
+covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line',period_label={'x':0.25,'y':0.9})
 ```
 
 ![Example Line Chart](examples/example-line-chart.gif)
 
 
-#### Bar Charts
+### Bar Charts
 
-Similar to line charts with time as the x-axis
+Similar to line charts with time as the x-axis.
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
 
-covid_df.sum(axis=1).fillna(0).plot_animated(filename='examples/example-bar-chart.gif',kind='bar',period_label={'x':0.1,'y':0.9})
+covid_df.sum(axis=1).fillna(0).plot_animated(filename='examples/example-bar-chart.gif',kind='bar',
+        period_label={'x':0.1,'y':0.9},
+        enable_progress_bar=True, steps_per_period=2, interpolate_period=True, period_length=200
+)
 ```
 
 ![Example Bar Chart](examples/example-bar-chart.gif)
 
-#### Scatter Charts
+### Scatter Charts
 
-``` python
+
+```python
 import pandas as pd
 import pandas_alive
 
@@ -200,9 +221,10 @@ merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='exampl
 
 ![Example Scatter Chart](examples/example-scatter-chart.gif)
 
-#### Pie Charts
+### Pie Charts
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
@@ -212,13 +234,16 @@ covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rota
 
 ![Example Pie Chart](examples/example-pie-chart.gif)
 
-#### Bubble Charts
+### Bubble Charts
 
 Bubble charts are generated from a multi-indexed dataframes. Where the index is the time period (optional) and the axes are defined with `x_data_label` & `y_data_label` which should be passed a string in the level 0 column labels.
 
 See an example multi-indexed dataframe at: <https://github.com/JackMcKew/pandas_alive/tree/master/data/multi.csv>
 
-``` python
+When you set `color_data_label=` to a df column name, `pandas_alive` will automatically add a `colorbar`.
+
+
+```python
 import pandas_alive
 
 multi_index_df = pd.read_csv("data/multi.csv", header=[0, 1], index_col=0)
@@ -231,12 +256,21 @@ map_chart = multi_index_df.plot_animated(
     x_data_label="Longitude",
     y_data_label="Latitude",
     size_data_label="Cases",
+    color_data_label="Cases",
+    vmax=5, steps_per_period=3, interpolate_period=True, period_length=500,
+    dpi=100
 )
 ```
 
+#### Bubble Chart Example 1
 ![Bubble Chart Example](examples/example-bubble-chart.gif)
 
-#### GeoSpatial Charts
+#### Bubble Chart Example 2
+Jupyter notebook: [pendulum_sample.ipynb](examples/test_notebooks/pendulum_sample.ipynb)
+
+![Bubble Chart Example](examples/test_notebooks/pend-bubble.gif)
+
+### GeoSpatial Charts
 
 GeoSpatial charts can now be animated easily using [`geopandas`](https://geopandas.org/index.html)!
 
@@ -250,9 +284,10 @@ Must begin with a `geopandas` GeoDataFrame containing 'wide' data where:
 
 > These can be easily composed by transposing data compatible with the rest of the charts using `df = df.T`.
 
-##### GeoSpatial Point Charts
+#### GeoSpatial Point Charts
 
-``` python
+
+```python
 import geopandas
 import pandas_alive
 import contextily
@@ -266,11 +301,12 @@ map_chart = gdf.plot_animated(filename='examples/example-geo-point-chart.gif',ba
 
 ![Example Point GeoSpatialChart](examples/example-geo-point-chart.gif)
 
-##### Polygon GeoSpatial Charts
+#### Polygon GeoSpatial Charts
 
 Supports GeoDataFrames containing Polygons!
 
-``` python
+
+```python
 import geopandas
 import pandas_alive
 import contextily
@@ -284,7 +320,7 @@ map_chart = gdf.plot_animated(filename='examples/example-geo-polygon-chart.gif',
 
 ![Example Polygon GeoSpatialChart](examples/example-geo-polygon-chart.gif)
 
-### Multiple Charts
+## Multiple Charts
 
 `pandas_alive` supports multiple animated charts in a single visualisation.
 
@@ -292,23 +328,26 @@ map_chart = gdf.plot_animated(filename='examples/example-geo-polygon-chart.gif',
 - Use `animate_multiple_plots` with a `filename` and the list of charts (this will use `matplotlib.subplots`)
 - Done!
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
 
-animated_line_chart = covid_df.diff().fillna(0).plot_animated(kind='line',period_label=False)
+animated_line_chart = covid_df.diff().fillna(0).plot_animated(kind='line',period_label=False,add_legend=False)
 
 animated_bar_chart = covid_df.plot_animated(n_visible=10)
 
-pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart])
+pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[animated_bar_chart,animated_line_chart],
+    enable_progress_bar=True)
 ```
 
 ![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
 
-#### Urban Population
+### Urban Population
 
-``` python
+
+```python
 import pandas_alive
 
 urban_df = pandas_alive.load_dataset("urban_pop")
@@ -318,20 +357,22 @@ animated_line_chart = (
     .pct_change()
     .fillna(method='bfill')
     .mul(100)
-    .plot_animated(kind="line", title="Total % Change in Population",period_label=False)
+    .plot_animated(kind="line", title="Total % Change in Population",period_label=False,add_legend=False)
 )
 
 animated_bar_chart = urban_df.plot_animated(n_visible=10,title='Top 10 Populous Countries',period_fmt="%Y")
 
-pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],title='Urban Population 1977 - 2018',adjust_subplot_top=0.85)
+pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.gif',[animated_bar_chart,animated_line_chart],
+    title='Urban Population 1977 - 2018', adjust_subplot_top=0.85, enable_progress_bar=True)
 ```
 
 ![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
 
 
-#### Life Expectancy in G7 Countries
+### Life Expectancy in G7 Countries
 
-``` python
+
+```python
 import pandas_alive
 import pandas as pd
 
@@ -378,16 +419,16 @@ pandas_alive.animate_multiple_plots(
     "examples/life-expectancy.gif",
     plots=[animated_bar_chart, animated_line_chart],
     title="Life expectancy in G7 countries up to 2015",
-    adjust_subplot_left=0.2,
+    adjust_subplot_left=0.2, adjust_subplot_top=0.9, enable_progress_bar=True
 )
-
 ```
 
 ![Life Expectancy Chart](examples/life-expectancy.gif)
 
-#### NSW COVID Visualisation
+### NSW COVID Visualisation
 
-``` python
+
+```python
 import geopandas
 import pandas as pd
 import pandas_alive
@@ -463,7 +504,7 @@ bar_chart = cases_df.sum(axis=1).plot_animated(
         'Lockdown':datetime.strptime("31/03/2020", "%d/%m/%Y")
     },
     fill_under_line_color="blue",
-    enable_progress_bar=True
+    add_legend=False
 )
 
 map_chart.ax.set_title('Cases by Location')
@@ -474,7 +515,7 @@ line_chart = (
     grouped_df.sum(axis=1)
     .cumsum()
     .fillna(0)
-    .plot_animated(kind="line", period_label=False, title="Cumulative Total Cases")
+    .plot_animated(kind="line", period_label=False, title="Cumulative Total Cases", add_legend=False)
 )
 
 
@@ -496,8 +537,8 @@ plots = [bar_chart, line_chart, map_chart, race_chart]
 from matplotlib import rcParams
 
 rcParams.update({"figure.autolayout": False})
-
-figs = plt.figure()
+# make sure figures are `Figure()` instances
+figs = plt.Figure()
 gs = figs.add_gridspec(2, 3, hspace=0.5)
 f3_ax1 = figs.add_subplot(gs[0, :])
 f3_ax1.set_title(bar_chart.title)
@@ -521,15 +562,17 @@ figs.suptitle(f"NSW COVID-19 Confirmed Cases up to {timestr}")
 pandas_alive.animate_multiple_plots(
     'examples/nsw-covid.gif',
     plots,
-    figs
+    figs,
+    enable_progress_bar=True
 )
 ```
 
 ![NSW COVID](examples/nsw-covid.gif)
 
-#### Italy COVID Visualisation
+### Italy COVID Visualisation
 
-``` python
+
+```python
 import geopandas
 import pandas as pd
 import pandas_alive
@@ -579,7 +622,7 @@ bar_chart = cases_df.sum(axis=1).plot_animated(
 
     },
     fill_under_line_color="blue",
-    enable_progress_bar=True
+    add_legend=False
 )
 
 map_chart.ax.set_title('Cases by Location')
@@ -588,14 +631,14 @@ line_chart = (
     cases_df.sum(axis=1)
     .cumsum()
     .fillna(0)
-    .plot_animated(kind="line", period_label=False, title="Cumulative Total Cases")
+    .plot_animated(kind="line", period_label=False, title="Cumulative Total Cases",add_legend=False)
 )
 
 
 def current_total(values):
     total = values.sum()
     s = f'Total : {int(total)}'
-    return {'x': .85, 'y': .2, 's': s, 'ha': 'right', 'size': 11}
+    return {'x': .85, 'y': .1, 's': s, 'ha': 'right', 'size': 11}
 
 race_chart = cases_df.cumsum().plot_animated(
     n_visible=5, title="Cases by Region", period_label=False,period_summary_func=current_total
@@ -612,8 +655,8 @@ from matplotlib import rcParams
 from matplotlib.animation import FuncAnimation
 
 rcParams.update({"figure.autolayout": False})
-
-figs = plt.figure()
+# make sure figures are `Figure()` instances
+figs = plt.Figure()
 gs = figs.add_gridspec(2, 3, hspace=0.5)
 f3_ax1 = figs.add_subplot(gs[0, :])
 f3_ax1.set_title(bar_chart.title)
@@ -638,19 +681,26 @@ figs.suptitle(f"Italy COVID-19 Confirmed Cases up to {timestr}")
 pandas_alive.animate_multiple_plots(
     'examples/italy-covid.gif',
     plots,
-    figs
+    figs,
+    enable_progress_bar=True
 )
 ```
 
 ![Italy COVID](examples/italy-covid.gif)
 
-### HTML 5 Videos
+### Simple Pendulum Motion
+Jupyter notebook: [pendulum_sample.ipynb](examples/test_notebooks/pendulum_sample.ipynb)
+
+![Bubble Chart Example](examples/test_notebooks/pend-combined-2.gif)
+
+## HTML 5 Videos
 
 `Pandas_Alive` supports rendering HTML5 videos through the use of `df.plot_animated().get_html5_video()`. `.get_html5_video` saves the animation as an h264 video, encoded in base64 directly into the HTML5 video tag. This respects the rc parameters for the writer as well as the bitrate. This also makes use of the interval to control the speed, and uses the repeat parameter to decide whether to loop.
 
 This is typically used in Jupyter notebooks.
 
-``` python
+
+```python
 import pandas_alive
 from IPython.display import HTML
 
@@ -661,17 +711,18 @@ animated_html = covid_df.plot_animated().get_html5_video()
 HTML(animated_html)
 ```
 
-### Progress Bars!
+## Progress Bars!
 
-Generating animations can take some time, so enable progress bars by installing [tqdm](https://github.com/tqdm/tqdm) with `pip install tqdm` and using the keyword `enable_progress_bar=True`.
+Generating animations can take some time, so enable progress bars by installing [tqdm](https://github.com/tqdm/tqdm) with `pip install tqdm` or `conda install tqdm` and using the keyword `enable_progress_bar=True` together with `filename=`movie file name.
 
-By default Pandas_Alive will create a `tqdm` progress bar for the number of frames to animate, and update the progres bar after each frame.
+By default Pandas_Alive will create a `tqdm` progress bar when saving to a file, for the number of frames to animate, and update the progres bar after each frame.
 
-``` python
+
+```python
 import pandas_alive
 
 covid_df = pandas_alive.load_dataset()
-
+# add a filename=movie.mp4 or movie.gif to save to, in order to see the progress bar in action
 covid_df.plot_animated(enable_progress_bar=True)
 ```
 
@@ -682,7 +733,8 @@ Example of TQDM in action:
 ## Future Features
 
 A list of future features that may/may not be developed is:
-
+- Add to line & scatter charts the ability to plot 'X' vs 'Y', as already implemented with bubble plots.
+- Add option of a colorbar for bubble plots when included in multiple plots. Currently only available for single bubble chart animations.
 - ~~Geographic charts (currently using OSM export image, potential [geopandas](https://geopandas.org/))~~
 - ~~Loading bar support (potential [tqdm](https://github.com/tqdm/tqdm) or [alive-progress](https://github.com/rsalmei/alive-progress))~~
 - ~~Potentially support writing to GIF in memory with <https://github.com/maxhumber/gif>~~
@@ -694,6 +746,7 @@ Find tutorials on how to use `Pandas_Alive` over at:
 
 - <https://jackmckew.dev/creating-animated-plots-with-pandas_alive.html>
 - <https://jackmckew.dev/geopandas-and-pandas-alive.html>
+- Jupyter notebooks in [test_notebooks](./examples/test_notebooks/).
 
 ## Inspiration
 
@@ -714,7 +767,7 @@ Ensure to have one of the supported tooling software installed prior to use!
 - [ImageMagick](https://imagemagick.org/index.php)
 - See more at <https://matplotlib.org/3.2.1/api/animation_api.html#writer-classes>
 
-> If the output file name has an extension of `.gif`, `pandas_alive` will write this with `PIL` in memory
+> If the output file name has an extension of `.gif`, `pandas_alive` will write this with `PIL` in memory.
 
 ## Documentation
 
@@ -727,5 +780,11 @@ Pull requests are welcome! Please help to cover more and more chart types!
 ### Development
 
 To get started in development, clone a copy of this repository to your PC. This will now enable you to create a Jupyter notebook or a standalone `.py` file, and import `pandas_alive` as a local module. Now you can create new chart types in `pandas_alive/charts.py` or `pandas_alive/geocharts.py` to build to your hearts content!
+
+For Python packages for a development environment check [requirements.txt](./requirements.txt) if using `PIP`, or [py38-pandas_alive.yml](./py38-pandas_alive.yml) if using `conda`.
+
+If you are using `conda` and are new to setting up environments for collaboration on projects, here are some notes from a previous contributor using `conda`: [Python set up with conda for project collaboration](https://github.com/JackMcKew/pandas_alive/issues/11#issuecomment-691663712)
+
+If you wish to contribute new Jupyter notebooks with different application examples, please place them in this directory: `./examples/test_notebooks/`.
 
 ## [Changelog](CHANGELOG.md)
