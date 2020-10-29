@@ -10,7 +10,7 @@ With **Pandas_Alive**, creating stunning, animated visualisations is as easy as 
 
 `df.plot_animated()`
 
-![Example Bar Chart](examples/example-barh-chart.gif)
+![Example Bar Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-barh-chart.gif)
 
 ## Table of Contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -105,7 +105,7 @@ elec_df = pd.read_csv("data/Aus_Elec_Gen_1980_2018.csv",index_col=0,parse_dates=
 elec_df.fillna(0).plot_animated('examples/example-electricity-generated-australia.gif',period_fmt="%Y",title='Australian Electricity Generation Sources 1980-2018')
 ```
 
-![Electricity Example Line Chart](examples/example-electricity-generated-australia.gif)
+![Electricity Example Line Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-electricity-generated-australia.gif)
 
 
 ```python
@@ -121,7 +121,7 @@ def current_total(values):
 covid_df.plot_animated(filename='examples/summary-func-example.gif',period_summary_func=current_total)
 ```
 
-![Summary Func Example](examples/summary-func-example.gif)
+![Summary Func Example](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/summary-func-example.gif)
 
 
 ```python
@@ -133,7 +133,7 @@ elec_df = pd.read_csv("data/Aus_Elec_Gen_1980_2018.csv",index_col=0,parse_dates=
 elec_df.fillna(0).plot_animated('examples/fixed-example.gif',period_fmt="%Y",title='Australian Electricity Generation Sources 1980-2018',fixed_max=True,fixed_order=True)
 ```
 
-![Fixed Example](examples/fixed-example.gif)
+![Fixed Example](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/fixed-example.gif)
 
 
 ```python
@@ -144,7 +144,7 @@ covid_df = pandas_alive.load_dataset()
 covid_df.plot_animated(filename='examples/perpendicular-example.gif',perpendicular_bar_func='mean')
 ```
 
-![Perpendicular Example](examples/perpendicular-example.gif)
+![Perpendicular Example](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/perpendicular-example.gif)
 
 ### Vertical Bar Chart Races
 
@@ -157,7 +157,7 @@ covid_df = pandas_alive.load_dataset()
 covid_df.plot_animated(filename='examples/example-barv-chart.gif',orientation='v')
 ```
 
-![Example Barv Chart](examples/example-barv-chart.gif)
+![Example Barv Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-barv-chart.gif)
 
 ### Line Charts
 
@@ -172,7 +172,7 @@ covid_df = pandas_alive.load_dataset()
 covid_df.diff().fillna(0).plot_animated(filename='examples/example-line-chart.gif',kind='line',period_label={'x':0.25,'y':0.9})
 ```
 
-![Example Line Chart](examples/example-line-chart.gif)
+![Example Line Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-line-chart.gif)
 
 
 ### Bar Charts
@@ -191,7 +191,7 @@ covid_df.sum(axis=1).fillna(0).plot_animated(filename='examples/example-bar-char
 )
 ```
 
-![Example Bar Chart](examples/example-bar-chart.gif)
+![Example Bar Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-bar-chart.gif)
 
 ### Scatter Charts
 
@@ -219,7 +219,7 @@ merged_temp_df[keep_columns].resample("Y").mean().plot_animated(filename='exampl
 
 ```
 
-![Example Scatter Chart](examples/example-scatter-chart.gif)
+![Example Scatter Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-scatter-chart.gif)
 
 ### Pie Charts
 
@@ -232,7 +232,7 @@ covid_df = pandas_alive.load_dataset()
 covid_df.plot_animated(filename='examples/example-pie-chart.gif',kind="pie",rotatelabels=True,period_label={'x':0,'y':0})
 ```
 
-![Example Pie Chart](examples/example-pie-chart.gif)
+![Example Pie Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-pie-chart.gif)
 
 ### Bubble Charts
 
@@ -263,12 +263,12 @@ map_chart = multi_index_df.plot_animated(
 ```
 
 #### Bubble Chart Example 1
-![Bubble Chart Example](examples/example-bubble-chart.gif)
+![Bubble Chart Example](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-bubble-chart.gif)
 
 #### Bubble Chart Example 2
-Jupyter notebook: [pendulum_sample.ipynb](examples/test_notebooks/pendulum_sample.ipynb)
+Jupyter notebook: [pendulum_sample.ipynb](https://github.com/JackMcKew/pandas_alive/blob/main/examples/test_notebooks/pendulum_sample.ipynb)
 
-![Bubble Chart Example](examples/test_notebooks/pend-bubble.gif)
+![Bubble Chart Example](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/test_notebooks/pend-bubble.gif)
 
 ### GeoSpatial Charts
 
@@ -299,7 +299,7 @@ gdf = gdf.drop('postcode',axis=1)
 map_chart = gdf.plot_animated(filename='examples/example-geo-point-chart.gif',basemap_format={'source':contextily.providers.Stamen.Terrain})
 ```
 
-![Example Point GeoSpatialChart](examples/example-geo-point-chart.gif)
+![Example Point GeoSpatialChart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-geo-point-chart.gif)
 
 #### Polygon GeoSpatial Charts
 
@@ -318,7 +318,7 @@ gdf = gdf.drop('region',axis=1)
 map_chart = gdf.plot_animated(filename='examples/example-geo-polygon-chart.gif',basemap_format={'source':contextily.providers.Stamen.Terrain})
 ```
 
-![Example Polygon GeoSpatialChart](examples/example-geo-polygon-chart.gif)
+![Example Polygon GeoSpatialChart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-geo-polygon-chart.gif)
 
 ## Multiple Charts
 
@@ -342,7 +342,7 @@ pandas_alive.animate_multiple_plots('examples/example-bar-and-line-chart.gif',[a
     enable_progress_bar=True)
 ```
 
-![Example Bar & Line Chart](examples/example-bar-and-line-chart.gif)
+![Example Bar & Line Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-bar-and-line-chart.gif)
 
 ### Urban Population
 
@@ -366,7 +366,7 @@ pandas_alive.animate_multiple_plots('examples/example-bar-and-line-urban-chart.g
     title='Urban Population 1977 - 2018', adjust_subplot_top=0.85, enable_progress_bar=True)
 ```
 
-![Urban Population Bar & Line Chart](examples/example-bar-and-line-urban-chart.gif)
+![Urban Population Bar & Line Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/example-bar-and-line-urban-chart.gif)
 
 
 ### Life Expectancy in G7 Countries
@@ -423,7 +423,7 @@ pandas_alive.animate_multiple_plots(
 )
 ```
 
-![Life Expectancy Chart](examples/life-expectancy.gif)
+![Life Expectancy Chart](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/life-expectancy.gif)
 
 ### NSW COVID Visualisation
 
@@ -567,7 +567,7 @@ pandas_alive.animate_multiple_plots(
 )
 ```
 
-![NSW COVID](examples/nsw-covid.gif)
+![NSW COVID](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/nsw-covid.gif)
 
 ### Italy COVID Visualisation
 
@@ -686,12 +686,12 @@ pandas_alive.animate_multiple_plots(
 )
 ```
 
-![Italy COVID](examples/italy-covid.gif)
+![Italy COVID](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/italy-covid.gif)
 
 ### Simple Pendulum Motion
-Jupyter notebook: [pendulum_sample.ipynb](examples/test_notebooks/pendulum_sample.ipynb)
+Jupyter notebook: [pendulum_sample.ipynb](https://github.com/JackMcKew/pandas_alive/blob/main/examples/test_notebooks/pendulum_sample.ipynb)
 
-![Bubble Chart Example](examples/test_notebooks/pend-combined-2.gif)
+![Bubble Chart Example](https://raw.githubusercontent.com/JackMcKew/pandas_alive/main/examples/test_notebooks/pend-combined-2.gif)
 
 ## HTML 5 Videos
 
@@ -746,7 +746,7 @@ Find tutorials on how to use `Pandas_Alive` over at:
 
 - <https://jackmckew.dev/creating-animated-plots-with-pandas_alive.html>
 - <https://jackmckew.dev/geopandas-and-pandas-alive.html>
-- Jupyter notebooks in [test_notebooks](./examples/test_notebooks/).
+- Jupyter notebooks in [test_notebooks](https://github.com/JackMcKew/pandas_alive/tree/main/examples/test_notebooks) folder.
 
 ## Inspiration
 
@@ -781,10 +781,10 @@ Pull requests are welcome! Please help to cover more and more chart types!
 
 To get started in development, clone a copy of this repository to your PC. This will now enable you to create a Jupyter notebook or a standalone `.py` file, and import `pandas_alive` as a local module. Now you can create new chart types in `pandas_alive/charts.py` or `pandas_alive/geocharts.py` to build to your hearts content!
 
-For Python packages for a development environment check [requirements.txt](./requirements.txt) if using `PIP`, or [py38-pandas_alive.yml](./py38-pandas_alive.yml) if using `conda`.
+For Python packages for a development environment check [requirements.txt](https://github.com/JackMcKew/pandas_alive/blob/main/requirements.txt) if using `PIP`, or [py38-pandas_alive.yml](https://github.com/JackMcKew/pandas_alive/blob/main/py38-pandas_alive.yml) if using `conda`.
 
 If you are using `conda` and are new to setting up environments for collaboration on projects, here are some notes from a previous contributor using `conda`: [Python set up with conda for project collaboration](https://github.com/JackMcKew/pandas_alive/issues/11#issuecomment-691663712)
 
-If you wish to contribute new Jupyter notebooks with different application examples, please place them in this directory: `./examples/test_notebooks/`.
+If you wish to contribute new Jupyter notebooks with different application examples, please place them in this directory: [./examples/test_notebooks/](https://github.com/JackMcKew/pandas_alive/tree/main/examples/test_notebooks).
 
-## [Changelog](CHANGELOG.md)
+## [Changelog](https://github.com/JackMcKew/pandas_alive/blob/main/CHANGELOG.md)
