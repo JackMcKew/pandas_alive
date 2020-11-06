@@ -50,7 +50,7 @@ class BarChartRace(_BaseChart):
     def __attrs_post_init__(self):
         """ Properties to be determined after initialization
         """
-        self.n_visible = self.n_visible if self.n_visible else self.df.shape[1]
+        self.n_visible = self.n_visible or self.df.shape[1]
 
         if self.fixed_order is True:
             last_values = self.df.iloc[-1].sort_values(ascending=False)
@@ -216,17 +216,13 @@ class BarChartRace(_BaseChart):
         max_val = self.df.max().max()
         if self.orientation == "h":
             ax.barh(fake_cols, [1] * self.df.shape[1])
-            ax.tick_params(labelrotation=0, axis="y", labelsize=self.tick_label_size)
-            ax.set_title(self.title)
-            fig.canvas.print_figure(io.BytesIO())
+            self.extracted_from_calculate_new_figsize_15(ax, 0, "y", fig, io)
             orig_pos = ax.get_position()
             ax.set_yticklabels(self.df.columns)
             ax.set_xticklabels([max_val] * len(ax.get_xticks()))
         else:
             ax.bar(fake_cols, [1] * self.df.shape[1])
-            ax.tick_params(labelrotation=30, axis="x", labelsize=self.tick_label_size)
-            ax.set_title(self.title)
-            fig.canvas.print_figure(io.BytesIO())
+            self.extracted_from_calculate_new_figsize_15(ax, 30, "x", fig, io)
             orig_pos = ax.get_position()
             ax.set_xticklabels(self.df.columns, ha="right")
             ax.set_yticklabels([max_val] * len(ax.get_yticks()))
@@ -255,6 +251,14 @@ class BarChartRace(_BaseChart):
         width = orig_pos.x1 - left
         height = orig_pos.y1 - bottom
         return [left, bottom, width, height]
+
+    def extracted_from_calculate_new_figsize_15(self, ax, labelrotation, axis, fig, io):
+        ax.tick_params(
+            labelrotation=labelrotation, axis=axis, labelsize=self.tick_label_size
+        )
+
+        ax.set_title(self.title)
+        fig.canvas.print_figure(io.BytesIO())
 
     def plot_bars(self, i: int) -> None:
         """ Plot bars in bar chart race on axes
@@ -362,7 +366,8 @@ class BarChartRace(_BaseChart):
         for bar in self.ax.containers:
             bar.remove()
         self.plot_bars(i)
-        self.show_period(i)
+        if self.period_fmt:
+            self.show_period(i)
 
     def init_func(self):
         """ Initialization function for animation
@@ -394,10 +399,7 @@ class ScatterChart(_BaseChart):
         self.colors = self.get_colors(self.cmap)
         self._points: typing.Dict = {}
         for name in self.data_cols:
-            self._points[name] = {}
-            self._points[name]["x"] = []
-            self._points[name]["y"] = []
-            self._points[name]["size"] = []
+            self._points[name] = {"x": [], "y": [], "size": []}
         if isinstance(self.size, str) and self.size not in self.data_cols:
             raise ValueError(
                 f"Size provided as string: {self.size}, not present in dataframe columns"
@@ -417,24 +419,24 @@ class ScatterChart(_BaseChart):
         if not self.fixed_max:
             super().set_x_y_limits(self.df, i, self.ax)
         # If fixed_max is true then run it once to improve performance
-        elif i==0:
+        elif i == 0:
             super().set_x_y_limits(self.df, i, self.ax)
         j = 0
         for name, color in zip(self.data_cols, self.colors):
-            self._points[name]["x"] = self.df[name].index[:i+1]
-            self._points[name]["y"] = self.df[name].iloc[:i+1]
+            self._points[name]["x"] = self.df[name].index[: i + 1]
+            self._points[name]["y"] = self.df[name].iloc[: i + 1]
             if isinstance(self.size, str) and self.size in self.data_cols:
-                self._points[name]["size"] = abs(self.df[self.size].iloc[:i+1])
+                self._points[name]["size"] = abs(self.df[self.size].iloc[: i + 1])
             else:
-                self._points[name]["size"] = np.full((i+1), self.size)
-            if i==0:
+                self._points[name]["size"] = np.full((i + 1), self.size)
+            if i == 0:
                 self.sc = self.ax.scatter(
                     self._points[name]["x"],
                     self._points[name]["y"],
                     s=self._points[name]["size"],
                     color=color,
                     label=name,
-                    edgecolors='none',
+                    edgecolors="none",
                     **self.kwargs,
                 )
                 if self.add_legend:
@@ -447,12 +449,18 @@ class ScatterChart(_BaseChart):
                 self.ax.collections[j].set_color(color)
                 if isinstance(self.df.index, pd.DatetimeIndex):
                     # date_array = np.c_[mdates.date2num(self._points[name]["x"]), self._points[name]["y"]]
-                    self.ax.collections[j].set_offsets(np.c_[mdates.date2num(self._points[name]["x"]), self._points[name]["y"]])
+                    self.ax.collections[j].set_offsets(
+                        np.c_[
+                            mdates.date2num(self._points[name]["x"]),
+                            self._points[name]["y"],
+                        ]
+                    )
                 else:
-                    self.ax.collections[j].set_offsets(np.c_[self._points[name]["x"], self._points[name]["y"]])
+                    self.ax.collections[j].set_offsets(
+                        np.c_[self._points[name]["x"], self._points[name]["y"]]
+                    )
                 self.ax.collections[j].set_sizes(self._points[name]["size"])
             j += 1
-            
 
     def anim_func(self, i: int) -> None:
         """ Animation function, plots all scatter points and updates legend/period annotation.
@@ -462,9 +470,9 @@ class ScatterChart(_BaseChart):
         """
         if self.enable_progress_bar:
             self.update_progress_bar()
+        self.plot_point(i)
         if self.period_fmt:
             self.show_period(i)
-        self.plot_point(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -495,9 +503,7 @@ class LineChart(_BaseChart):
         self.line_colors = self.get_colors(self.cmap)
         self._lines: typing.Dict = {}
         for name in self.data_cols:
-            self._lines[name] = {}
-            self._lines[name]["x"] = []
-            self._lines[name]["y"] = []
+            self._lines[name] = {"x": [], "y": []}
 
     def plot_line(self, i: int) -> None:
         """ Function for plotting all lines in dataframe
@@ -509,14 +515,14 @@ class LineChart(_BaseChart):
         if not self.fixed_max:
             super().set_x_y_limits(self.df, i, self.ax)
         # If fixed_max is true then run it once to improve performance
-        elif i==0:
+        elif i == 0:
             super().set_x_y_limits(self.df, i, self.ax)
         j = 0
         # fills = [""]
         for name, color in zip(self.data_cols, self.line_colors):
-            self._lines[name]["x"] = self.df[name].index[:i+1]
-            self._lines[name]["y"] = self.df[name].iloc[:i+1]
-            if i==0:
+            self._lines[name]["x"] = self.df[name].index[: i + 1]
+            self._lines[name]["y"] = self.df[name].iloc[: i + 1]
+            if i == 0:
                 self.ax.plot(
                     self._lines[name]["x"],
                     self._lines[name]["y"],
@@ -524,7 +530,7 @@ class LineChart(_BaseChart):
                     color=color,
                     label=name,
                     **self.kwargs,
-                    )
+                )
                 if self.add_legend:
                     handles, labels = self.ax.get_legend_handles_labels()
                     self.ax.legend(handles[::2], labels[::2], fontsize="x-small")
@@ -539,10 +545,12 @@ class LineChart(_BaseChart):
             else:
                 # update all lines
                 self.ax.lines[j].set_color(color)
-                self.ax.lines[j].set_data(self._lines[name]["x"], self._lines[name]["y"])
+                self.ax.lines[j].set_data(
+                    self._lines[name]["x"], self._lines[name]["y"]
+                )
             j += 1
             if self.fill_under_line_color:
-                # Fills need to be removed and re-generated, or else `matplotlib` 
+                # Fills need to be removed and re-generated, or else `matplotlib`
                 # adds a new one per frame, performance degrades and alpha doesn't show properly.
                 if i == 0:
                     self.ax.fill_between(
@@ -563,7 +571,7 @@ class LineChart(_BaseChart):
                     self.fills = self.ax.collections[-1]
 
         # Set label_events once, it improves loop performance by x 4.
-        if self.label_events and i==0:
+        if self.label_events and i == 0:
             # from datetime import datetime
             # import numpy as np
 
@@ -577,9 +585,12 @@ class LineChart(_BaseChart):
 
                 self.ax.axvline(event_start, lw=8, color=".5", zorder=0.5)
                 self.ax.text(
-                    event_start, 0.9 - (pos * 0.1), label, transform=trans, fontsize="x-small"
+                    event_start,
+                    0.9 - (pos * 0.1),
+                    label,
+                    transform=trans,
+                    fontsize="x-small",
                 )
-        
 
     def anim_func(self, i: int) -> None:
         """ Animation function, updates all lines and legend/period annotation.
@@ -589,9 +600,9 @@ class LineChart(_BaseChart):
         """
         if self.enable_progress_bar:
             self.update_progress_bar()
+        self.plot_line(i)
         if self.period_fmt:
             self.show_period(i)
-        self.plot_line(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -620,8 +631,7 @@ class PieChart(_BaseChart):
 
         self._wedges: typing.Dict = {}
         for name in self.data_cols:
-            self._wedges[name] = {}
-            self._wedges[name]["size"] = []
+            self._wedges[name] = {"size": []}
 
     def plot_wedge(self, i: int) -> None:
         """ Function for plotting all lines in dataframe
@@ -670,9 +680,9 @@ class PieChart(_BaseChart):
             self.update_progress_bar()
         for wedge in self.ax.patches:
             wedge.remove()
+        self.plot_wedge(i)
         if self.period_fmt:
             self.show_period(i)
-        self.plot_wedge(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -700,9 +710,7 @@ class BarChart(_BaseChart):
 
         self._bars: typing.Dict = {}
         for name in self.data_cols:
-            self._bars[name] = {}
-            self._bars[name]["x"] = []
-            self._bars[name]["y"] = []
+            self._bars[name] = {"x": [], "y": []}
 
     def plot_bars(self, i: int) -> None:
         """ Function for plotting all lines in dataframe
@@ -712,11 +720,14 @@ class BarChart(_BaseChart):
         """
         if not self.fixed_max:
             super().set_x_y_limits(self.df, i, self.ax)
-            self.ax.set_ylim(self.df.iloc[: i + 1].values.min(), self.df.iloc[: i + 1].values.max() + 1e-6)
+            self.ax.set_ylim(
+                self.df.iloc[: i + 1].values.min(),
+                self.df.iloc[: i + 1].values.max() + 1e-6,
+            )
         # If fixed_max is true then run it once to improve performance
-        elif i==0:
+        elif i == 0:
             super().set_x_y_limits(self.df, i, self.ax)
-            # bars are flat at the bottom/top, so no need to apply a tolerance like 
+            # bars are flat at the bottom/top, so no need to apply a tolerance like
             # with line/scatter charts.
             self.ax.set_ylim(self.df.values.min(), self.df.values.max())
 
@@ -741,9 +752,9 @@ class BarChart(_BaseChart):
             self.update_progress_bar()
         for bar in self.ax.containers:
             bar.remove()
+        self.plot_bars(i)
         if self.period_fmt:
             self.show_period(i)
-        self.plot_bars(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation
@@ -778,7 +789,7 @@ class BubbleChart(_BaseChart):
         """
         super().__attrs_post_init__()
         self.colors = self.get_colors(self.cmap)
-        # Typically bubble plots are fixed scales on X & Y. Having varying 
+        # Typically bubble plots are fixed scales on X & Y. Having varying
         # limits will look odd in most cases. So force to True.
         # self.fixed_max = True
         self._points: typing.Dict = {}
@@ -813,8 +824,14 @@ class BubbleChart(_BaseChart):
             )
         if self.fixed_max:
             # scale to allow canvas to attempt covering for bubble size when near min/max axes values
-            ax_xscale = (self.df[self.mapping["x"]].values.max() - self.df[self.mapping["x"]].values.min())*0.05
-            ax_yscale = (self.df[self.mapping["y"]].values.max() - self.df[self.mapping["y"]].values.min())*0.05
+            ax_xscale = (
+                self.df[self.mapping["x"]].values.max()
+                - self.df[self.mapping["x"]].values.min()
+            ) * 0.05
+            ax_yscale = (
+                self.df[self.mapping["y"]].values.max()
+                - self.df[self.mapping["y"]].values.min()
+            ) * 0.05
             BBox = (
                 self.df[self.mapping["x"]].values.min() - ax_xscale,
                 self.df[self.mapping["x"]].values.max() + ax_xscale,
@@ -823,8 +840,7 @@ class BubbleChart(_BaseChart):
             )
             self.ax.set_xlim(BBox[0], BBox[1])
             self.ax.set_ylim(BBox[2], BBox[3])
-    
-        
+
         # TODO Add geopandas for map plots
         # self.ax = self.show_image(
         #     self.ax,
@@ -845,31 +861,30 @@ class BubbleChart(_BaseChart):
         """
         for output_key, column_key in self.mapping.items():
             self._points[output_key] = self.df[column_key].iloc[i]
-        
+
         self.sc = self.ax.scatter(
             x=self._points["x"],
             y=self._points["y"],
             s=self._points["size"]
             if isinstance(self.size_data_label, str)
             else self.size_data_label,
-            c=self._points["color"]
-            if self.color_bar
-            else self.color_data_label,
+            c=self._points["color"] if self.color_bar else self.color_data_label,
             cmap=self.cmap,
             alpha=0.8,
             **self.kwargs,
         )
-        # setting up colorbar when color is a pd column and doesn't exist 
+        # setting up colorbar when color is a pd column and doesn't exist
         # already from a previous animation run with the same custom figure.
-        if i==0 and self.color_bar:
+        if i == 0 and self.color_bar:
             self.cbar = self.fig.colorbar(self.sc)
             # this sets colorbar scales & settings to remain constant for all frames
             self.cbar.ax.tick_params(labelsize="small")
-            self.cbar.set_label(label="Size & Colour = "+self.color_data_label, fontsize="x-small")
+            self.cbar.set_label(
+                label="Size & Colour = " + self.color_data_label, fontsize="x-small"
+            )
         if self.color_bar:
             # this is required for all iterations to update colour on bubbles
             self.sc.set_clim(self.vmin, self.vmax)
-
 
     def anim_func(self, i: int) -> None:
         """ Animation function, removes bubbles and updates legend/period annotation.
@@ -881,9 +896,9 @@ class BubbleChart(_BaseChart):
             self.update_progress_bar()
         for path in self.ax.collections:
             path.remove()
+        self.plot_point(i)
         if self.period_fmt:
             self.show_period(i)
-        self.plot_point(i)
 
     def init_func(self) -> None:
         """ Initialization function for animation
