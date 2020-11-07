@@ -3,6 +3,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.4 - 2020-11-078
+
+- Fixed an issue in which certain charts were removing the `period_summary_func` label from the chart (issue #20)
+- Refactoring changes and code formatting
+- Documentation updates to direct link to images as to not break on external websites (eg, PyPI)
+
 ## 0.2.3 - 2020-10-18
 
 - Fixed an ongoing problem with `animate_multiple_plots` when re-using a line or scatter chart. Corresponding subplots would show a static figure from a previous single animation.

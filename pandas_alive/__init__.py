@@ -21,7 +21,7 @@ from .plotting import AnimatedAccessor, plot, animate_multiple_plots
 
 from .base import load_dataset
 
-version = "0.2.3"
+version = "0.2.4"
 
 
 plot_animated = CachedAccessor("plot_animated", AnimatedAccessor)
