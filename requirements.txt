@@ -74,6 +74,6 @@ toml==0.10.0
 tornado==6.0.4
 traitlets==4.3.3
 typed-ast==1.4.1
-urllib3==1.25.9
+urllib3==1.26.5
 wcwidth==0.1.9
 webencodings==0.5.1
