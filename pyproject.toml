@@ -14,7 +14,7 @@ python = "^3.6.1"
 pandas = "^1.0.3"
 matplotlib = "^3.2.1"
 attrs = "^19.3.0"
-pillow = "^7.1.2"
+pillow = ">=7.1.2,<9.0.0"
 
 [tool.poetry.dev-dependencies]
 
